@@ -1,5 +1,5 @@
 {
-  "name": "@acme/eslint-config",
+  "name": "@kosori/eslint-config",
   "private": true,
   "version": "0.3.0",
   "type": "module",
@@ -24,11 +24,11 @@
     "typescript-eslint": "rc-v8"
   },
   "devDependencies": {
-    "@acme/prettier-config": "workspace:*",
-    "@acme/tsconfig": "workspace:*",
+    "@kosori/prettier-config": "workspace:*",
+    "@kosori/tsconfig": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@kosori/prettier-config"
 }
