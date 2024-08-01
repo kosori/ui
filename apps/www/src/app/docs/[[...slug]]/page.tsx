@@ -20,7 +20,8 @@ export default async function Page({
   return (
     <DocsPage toc={page.data.exports.toc} full={page.data.full}>
       <DocsBody>
-        <h1>{page.data.title}</h1>
+        <h1 className='mb-0'>{page.data.title}</h1>
+        <p className='mt-2'>{page.data.description}</p>
         <MDX />
       </DocsBody>
     </DocsPage>
