@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { RootProvider } from 'fumadocs-ui/provider';
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
 
@@ -40,9 +41,11 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           GeistMono.variable,
         )}
       >
-        <ThemeProvider enableSystem attribute='class' defaultTheme='system'>
-          {props.children}
-        </ThemeProvider>
+        <RootProvider>
+          <ThemeProvider enableSystem attribute='class' defaultTheme='system'>
+            {props.children}
+          </ThemeProvider>
+        </RootProvider>
       </body>
     </html>
   );
