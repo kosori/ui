@@ -1,0 +1,15 @@
+{
+  "title": "ui",
+  "root": true,
+  "pages": [
+    "---Getting Started---",
+    "index",
+    "installation",
+    "changelog",
+    "---Core Concepts---",
+    "colors",
+    "---Components---",
+    "components",
+    "..."
+  ]
+}
