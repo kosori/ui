@@ -12,6 +12,7 @@ coverage
 .next/
 out/
 next-env.d.ts
+.map.ts
 
 # nitro
 .nitro/
