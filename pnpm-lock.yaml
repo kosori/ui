@@ -87,6 +87,9 @@ importers:
       fumadocs-core:
         specifier: ^13.0.1
         version: 13.0.1(@types/react@18.3.3)(next@14.2.4(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      fumadocs-docgen:
+        specifier: ^1.1.0
+        version: 1.1.0(typescript@5.5.3)
       fumadocs-mdx:
         specifier: ^9.0.0
         version: 9.0.0(fumadocs-core@13.0.1(@types/react@18.3.3)(next@14.2.4(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.4(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -2050,11 +2053,19 @@ packages:
       react: '>= 18'
       react-dom: '>= 18'
 
+  fumadocs-docgen@1.1.0:
+    resolution: {integrity: sha512-476elxwVBUnZV9LeTomGS0Tt37gNI7IRfLHl0V8sWBzEowgQ63f9sVFWFwQljoVKYTCIPP5ic5k/XVW0LkGMhw==}
+
   fumadocs-mdx@9.0.0:
     resolution: {integrity: sha512-H/TUt+43K+W/OD6ryvrFRakZ4lL3C8bh/QYpWgiGVcrhwilT4SVeXV7sSQ0riayCSHHbCvu8OzdGjdKXksNcUA==}
     peerDependencies:
       fumadocs-core: 13.x.x
       next: '>= 14.1.0'
+
+  fumadocs-typescript@2.0.1:
+    resolution: {integrity: sha512-FKgO/g23tcRbXnv47blZ+KLs6HacKB5eO13d+LmQyBZxa3J5L+Ewi3vjjQmkf33Gva1WMojhYELe4m6YXZLErA==}
+    peerDependencies:
+      typescript: '*'
 
   fumadocs-ui@13.0.1:
     resolution: {integrity: sha512-z/hK2S84pRifiOqKmCAcddfks/Wn99sWqTzPtNkcFbncADSVxMbPTthXbMDlet34isT2kHmI1BfKCyQqImGHzw==}
@@ -5912,6 +5923,17 @@ snapshots:
       - '@types/react'
       - supports-color
 
+  fumadocs-docgen@1.1.0(typescript@5.5.3):
+    dependencies:
+      estree-util-value-to-estree: 3.1.2
+      fumadocs-typescript: 2.0.1(typescript@5.5.3)
+      hast-util-to-estree: 3.1.0
+      npm-to-yarn: 2.2.1
+      unist-util-visit: 5.0.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
   fumadocs-mdx@9.0.0(fumadocs-core@13.0.1(@types/react@18.3.3)(next@14.2.4(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.4(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       '@mdx-js/mdx': 3.0.1
@@ -5922,6 +5944,17 @@ snapshots:
       gray-matter: 4.0.3
       next: 14.2.4(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       zod: 3.23.8
+    transitivePeerDependencies:
+      - supports-color
+
+  fumadocs-typescript@2.0.1(typescript@5.5.3):
+    dependencies:
+      fast-glob: 3.3.2
+      hast-util-to-jsx-runtime: 2.3.0
+      mdast-util-from-markdown: 2.0.1
+      mdast-util-gfm: 3.0.0
+      mdast-util-to-hast: 13.2.0
+      typescript: 5.5.3
     transitivePeerDependencies:
       - supports-color
 
