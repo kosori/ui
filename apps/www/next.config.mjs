@@ -1,18 +1,22 @@
-import { fileURLToPath } from "url";
-import createMDX from "fumadocs-mdx/config";
-import createJiti from "jiti";
+import { fileURLToPath } from 'url';
+import createMDX from 'fumadocs-mdx/config';
+import createJiti from 'jiti';
 
 // Import env files to validate at build time. Use jiti so we can load .ts files in here.
-createJiti(fileURLToPath(import.meta.url))("./src/env");
+createJiti(fileURLToPath(import.meta.url))('./src/env');
 
-const withMDX = createMDX();
+const withMDX = createMDX({
+  mdxOptions: {
+    lastModifiedTime: 'git',
+  },
+});
 
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
 
   /** Enables hot reloading for local packages without a build step */
-  transpilePackages: ["@kosori/ui"],
+  transpilePackages: ['@kosori/ui'],
 
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },
