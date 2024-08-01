@@ -40,6 +40,7 @@
     "react-resizable-panels": "^2.0.22",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.3.0",
+    "tailwind-variants": "^0.2.1",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
