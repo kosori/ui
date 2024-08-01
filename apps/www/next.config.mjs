@@ -1,4 +1,5 @@
 import { fileURLToPath } from 'url';
+import { remarkInstall } from 'fumadocs-docgen';
 import createMDX from 'fumadocs-mdx/config';
 import createJiti from 'jiti';
 
@@ -8,6 +9,7 @@ createJiti(fileURLToPath(import.meta.url))('./src/env');
 const withMDX = createMDX({
   mdxOptions: {
     lastModifiedTime: 'git',
+    remarkPlugins: [remarkInstall],
   },
 });
 
