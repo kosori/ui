@@ -4,7 +4,6 @@ import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
 
 import { cn } from '@kosori/ui';
-import { ThemeProvider } from '@kosori/ui/theme';
 
 import '~/app/globals.css';
 
@@ -41,10 +40,14 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           GeistMono.variable,
         )}
       >
-        <RootProvider>
-          <ThemeProvider enableSystem attribute='class' defaultTheme='system'>
-            {props.children}
-          </ThemeProvider>
+        <RootProvider
+          theme={{
+            enableSystem: true,
+            attribute: 'class',
+            defaultTheme: 'system',
+          }}
+        >
+          {props.children}
         </RootProvider>
       </body>
     </html>
