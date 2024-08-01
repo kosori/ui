@@ -1,4 +1,5 @@
 import { fileURLToPath } from 'url';
+import { rehypeCode } from 'fumadocs-core/mdx-plugins';
 import { remarkInstall } from 'fumadocs-docgen';
 import createMDX from 'fumadocs-mdx/config';
 import createJiti from 'jiti';
@@ -10,6 +11,7 @@ const withMDX = createMDX({
   mdxOptions: {
     lastModifiedTime: 'git',
     remarkPlugins: [remarkInstall],
+    rehypePlugins: [rehypeCode],
   },
 });
 
