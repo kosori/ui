@@ -79,4 +79,31 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  avatar: {
+    name: 'avatar',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Avatar').then((module) => ({
+        default: module.AvatarDemo,
+      })),
+    ),
+  },
+  'avatar-shapes': {
+    name: 'avatar-shapes',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Avatar').then((module) => ({
+        default: module.AvatarShapesDemo,
+      })),
+    ),
+  },
+  'avatar-sizes': {
+    name: 'avatar-sizes',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Avatar').then((module) => ({
+        default: module.AvatarSizesDemo,
+      })),
+    ),
+  },
 };
