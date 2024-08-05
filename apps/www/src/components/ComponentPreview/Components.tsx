@@ -70,4 +70,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'aspect-ratio': {
+    name: 'aspect-ratio',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/AspectRatio').then((module) => ({
+        default: module.AspectRatioDemo,
+      })),
+    ),
+  },
 };
