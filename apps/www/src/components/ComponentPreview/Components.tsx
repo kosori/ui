@@ -124,4 +124,49 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  button: {
+    name: 'button',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Button').then((module) => ({
+        default: module.ButtonDemo,
+      })),
+    ),
+  },
+  'button-icon': {
+    name: 'button-icon',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Button').then((module) => ({
+        default: module.ButtonIconDemo,
+      })),
+    ),
+  },
+  'button-intents': {
+    name: 'button-intents',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Button').then((module) => ({
+        default: module.ButtonIntentsDemo,
+      })),
+    ),
+  },
+  'button-sizes': {
+    name: 'button-sizes',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Button').then((module) => ({
+        default: module.ButtonSizesDemo,
+      })),
+    ),
+  },
+  'button-variants': {
+    name: 'button-variants',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Button').then((module) => ({
+        default: module.ButtonVariantsDemo,
+      })),
+    ),
+  },
 };
