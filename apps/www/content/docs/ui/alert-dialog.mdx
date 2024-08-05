@@ -1,0 +1,63 @@
+---
+title: Alert Dialog
+description: A modal dialog that interrupts the user with important content and expects a response.
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/alert-dialog
+  api: https://www.radix-ui.com/docs/primitives/components/alert-dialog#api-reference
+---
+
+<ComponentPreview name='alert-dialog'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/AlertDialog/AlertDialog.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+
+## Installation
+
+Install the primitive and copy-paste the component code in a `.tsx` file.
+
+```package-install
+@radix-ui/react-alert-dialog
+```
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/alert-dialog.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+## Usage
+
+```ts
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '~/components/ui/alert-dialog';
+```
+
+```tsx
+<Accordion type='single' collapsible>
+  <AccordionItem value='item-1'>
+    <AccordionTrigger>Is it accessible?</AccordionTrigger>
+    <AccordionContent>
+      Yes. It adheres to the WAI-ARIA design pattern.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
