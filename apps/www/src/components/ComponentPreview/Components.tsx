@@ -106,4 +106,22 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  badge: {
+    name: 'badge',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Badge').then((module) => ({
+        default: module.BadgeDemo,
+      })),
+    ),
+  },
+  'badge-intents': {
+    name: 'badge-intents',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Badge').then((module) => ({
+        default: module.BadgeIntentsDemo,
+      })),
+    ),
+  },
 };
