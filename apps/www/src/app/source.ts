@@ -1,10 +1,19 @@
 import { loader } from 'fumadocs-core/source';
-import { createMDXSource } from 'fumadocs-mdx';
+import { createMDXSource, defaultSchemas } from 'fumadocs-mdx';
+import { z } from 'zod';
 
 import { map } from '../../.map';
 
-export const { getPage, getPages, pageTree } = loader({
+export const docs = loader({
   baseUrl: '/docs',
   rootDir: 'docs',
-  source: createMDXSource(map),
+  source: createMDXSource(map, {
+    schema: {
+      frontmatter: defaultSchemas.frontmatter.extend({
+        links: z
+          .object({ doc: z.string().optional(), api: z.string().optional() })
+          .optional(),
+      }),
+    },
+  }),
 });
