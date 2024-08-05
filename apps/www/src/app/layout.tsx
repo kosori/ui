@@ -35,10 +35,17 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <html suppressHydrationWarning lang='en'>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans text-foreground antialiased',
+          'bg-background text-foreground min-h-screen font-sans antialiased',
           GeistSans.variable,
           GeistMono.variable,
         )}
+        data-accent-color='violet'
+        data-error-color='red'
+        data-grey-color='mauve'
+        data-info-color='blue'
+        data-radius='medium'
+        data-success-color='green'
+        data-warning-color='yellow'
       >
         <RootProvider
           theme={{
