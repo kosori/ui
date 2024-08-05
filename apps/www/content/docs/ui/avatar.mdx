@@ -1,0 +1,73 @@
+---
+title: Avatar
+description: An image element with a fallback for representing the user.
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/avatar
+  api: https://www.radix-ui.com/docs/primitives/components/avatar#api-reference
+---
+
+<ComponentPreview name='avatar'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Avatar/Avatar.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+
+## Installation
+
+Install the primitive and copy-paste the component code in a `.tsx` file.
+
+```package-install
+@radix-ui/react-avatar
+```
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/avatar.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+## Usage
+
+```ts
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
+```
+
+```tsx
+<Avatar>
+  <AvatarImage src='https://github.com/codingcodax.png' />
+  <AvatarFallback>CC</AvatarFallback>
+</Avatar>
+```
+
+## Examples
+
+### Shapes
+
+<ComponentPreview name='avatar-shapes'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Avatar/AvatarShapes.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+### Sizes
+
+<ComponentPreview name='avatar-sizes'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Avatar/AvatarSizes.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
