@@ -1,0 +1,97 @@
+---
+title: Button
+description: Displays a button or a component that looks like a button.
+---
+
+<ComponentPreview name='button'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Button/Button.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+
+## Installation
+
+Copy-paste the component code in a `.tsx` file.
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/button.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+## Usage
+
+```ts
+import { Button } from '@/components/ui/button';
+```
+
+```tsx
+<Button variant='outline'>Button</Button>
+```
+
+## Link
+
+You can use the `buttonStyles` helper to create a link that looks like a button.
+
+```ts
+import { buttonVariants } from '~/components/ui/button';
+```
+
+```tsx
+<Link className={buttonStyles({ variant: 'outline' })}>Click here</Link>
+```
+
+## Examples
+
+### Variants
+
+<ComponentPreview name='button-variants'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Button/ButtonVariants.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+### Intents
+
+<ComponentPreview name='button-intents'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Button/ButtonIntents.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+### Sizes
+
+<ComponentPreview name='button-sizes'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Button/ButtonSizes.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+### Icon
+
+<ComponentPreview name='button-icon'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Button/ButtonIcon.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
