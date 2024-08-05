@@ -61,4 +61,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'alert-dialog': {
+    name: 'alert-dialog',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/AlertDialog').then((module) => ({
+        default: module.AlertDialogDemo,
+      })),
+    ),
+  },
 };
