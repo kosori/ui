@@ -11,6 +11,8 @@ export default {
     ...baseConfig.content,
     '../../packages/ui/**/*.{ts,tsx}',
     '../../node_modules/fumadocs-ui/dist/**/*.js',
+    './content/**/*.{md,mdx}',
+    './src/mdx-components.{ts,tsx}',
   ],
   presets: [baseConfig, createPreset()],
   theme: {
