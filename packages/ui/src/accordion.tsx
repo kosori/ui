@@ -27,7 +27,7 @@ export const AccordionItem = forwardRef<AccordionItemRef, AccordionItemProps>(
         'w-full rounded-lg border border-grey-border bg-grey-base transition-colors duration-200',
         'focus-within:outline focus-within:outline-primary-focus-ring',
         'hover:border-grey-border-hover',
-        'data-[disabled]:border-grey-line',
+        'data-[disabled]:cursor-not-allowed data-[disabled]:border-grey-line',
         'data-[disabled]:hover:border-grey-line',
         className,
       )}
@@ -49,7 +49,7 @@ export const AccordionTrigger = forwardRef<Ref, Props>(
         ref={ref}
         className={cn(
           'group flex h-10 flex-1 items-center justify-between px-4 text-sm font-medium outline-none',
-          'data-[disabled]:text-grey-solid',
+          'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
           className,
         )}
         {...props}
@@ -78,7 +78,7 @@ export const AccordionContent = forwardRef<AccordionContentRef, AccordionProps>(
       ref={ref}
       className={cn(
         'overflow-hidden text-sm text-grey-text',
-        'data-[disabled]:text-grey-solid',
+        'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
         'data-[state=closed]:animate-accordion-up',
         'data-[state=open]:animate-accordion-down',
         className,
