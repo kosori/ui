@@ -178,4 +178,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  calendar: {
+    name: 'calendar',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Calendar').then((module) => ({
+        default: module.CalendarDemo,
+      })),
+    ),
+  },
 };
