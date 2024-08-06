@@ -124,6 +124,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  breadcrumb: {
+    name: 'breadcrumb',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Breadcrumb').then((module) => ({
+        default: module.BreadcrumbDemo,
+      })),
+    ),
+  },
   button: {
     name: 'button',
     type: 'component:example',
