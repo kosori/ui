@@ -196,4 +196,58 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  carousel: {
+    name: 'carousel',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Carousel').then((module) => ({
+        default: module.CarouselDemo,
+      })),
+    ),
+  },
+  'carousel-api': {
+    name: 'carousel-api',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Carousel').then((module) => ({
+        default: module.CarouselApiDemo,
+      })),
+    ),
+  },
+  'carousel-autoplay': {
+    name: 'carousel-autoplay',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Carousel').then((module) => ({
+        default: module.CarouselAutoplayDemo,
+      })),
+    ),
+  },
+  'carousel-orientation': {
+    name: 'carousel-orientation',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Carousel').then((module) => ({
+        default: module.CarouselOrientationDemo,
+      })),
+    ),
+  },
+  'carousel-sizes': {
+    name: 'carousel-sizes',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Carousel').then((module) => ({
+        default: module.CarouselSizesDemo,
+      })),
+    ),
+  },
+  'carousel-spacing': {
+    name: 'carousel-spacing',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Carousel').then((module) => ({
+        default: module.CarouselSpacingDemo,
+      })),
+    ),
+  },
 };
