@@ -1,0 +1,61 @@
+---
+title: Breadcrumb
+description: Displays the path to the current resource using a hierarchy of links.
+---
+
+<ComponentPreview name='breadcrumb'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Breadcrumb/Breadcrumb.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+
+## Installation
+
+Copy-paste the component code in a `.tsx` file.
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/breadcrumb.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+## Usage
+
+```ts
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '~/components/ui/breadcrumb';
+```
+
+```tsx
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href='/'>Home</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbEllipsis className='h-4 w-4' />
+    <BreadcrumbItem>
+      <BreadcrumbLink href='/docs/ui'>UI</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+```
