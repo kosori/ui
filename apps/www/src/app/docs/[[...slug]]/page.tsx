@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import { ExternalLinkIcon } from '@radix-ui/react-icons';
-import { clsx } from 'clsx';
 import { DocsBody, DocsPage } from 'fumadocs-ui/page';
 
 import { Badge } from '@kosori/ui/badge';
