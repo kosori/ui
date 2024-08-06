@@ -1,6 +1,6 @@
 import { Loader2 } from 'lucide-react';
 
-import { Button } from '@kosori/ui/Button';
+import { Button } from '@kosori/ui/button';
 
 export const ButtonIconDemo = () => {
   return (

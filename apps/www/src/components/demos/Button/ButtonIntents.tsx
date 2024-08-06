@@ -1,4 +1,4 @@
-import { Button } from '@kosori/ui/Button';
+import { Button } from '@kosori/ui/button';
 
 export const ButtonIntentsDemo = () => {
   return (

@@ -6,7 +6,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@kosori/ui/Breadcrumb';
+} from '@kosori/ui/breadcrumb';
 import {
   DropdownMenu,
   DropdownMenuContent,
