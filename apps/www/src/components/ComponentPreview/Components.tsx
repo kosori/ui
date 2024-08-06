@@ -187,4 +187,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  card: {
+    name: 'card',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Card').then((module) => ({
+        default: module.CardDemo,
+      })),
+    ),
+  },
 };
