@@ -15,7 +15,6 @@ links:
 ```
 </ComponentPreview>
 
-
 ## Installation
 
 Install the primitive and copy-paste the component code in a `.tsx` file.
@@ -93,9 +92,9 @@ To set the size of the items, you can use the `basis` utility class on the `<Car
 ```tsx
 // 50% on small screens and 33% on larger screens.
 <Carousel>
+  // [!code word:md]
   <CarouselContent>
     // [!code word:lg]
-    // [!code word:md]
     <CarouselItem className='md:basis-1/2 lg:basis-1/3'>...</CarouselItem>
     <CarouselItem className='md:basis-1/2 lg:basis-1/3'>...</CarouselItem>
     <CarouselItem className='md:basis-1/2 lg:basis-1/3'>...</CarouselItem>
@@ -108,8 +107,10 @@ To set the size of the items, you can use the `basis` utility class on the `<Car
 To set the spacing between the items, we use a `pl-[VALUE]` utility on the `<CarouselItem />` and a negative `-ml-[VALUE]` on the `<CarouselContent />`.
 
 <Callout title='Why?'>
-We tried to use the gap property or a grid layout on the `<CarouselContent />` but it required a lot of math and mental effort to get the spacing right. We found `pl-[VALUE]` and `-ml-[VALUE]` utilities much easier to use.
-You can always adjust this in your own project if you need to.
+  We tried to use the gap property or a grid layout on the `<CarouselContent />`
+  but it required a lot of math and mental effort to get the spacing right. We
+  found `pl-[VALUE]` and `-ml-[VALUE]` utilities much easier to use. You can
+  always adjust this in your own project if you need to.
 </Callout>
 
 <ComponentPreview name='carousel-spacing'>
@@ -127,7 +128,7 @@ You can always adjust this in your own project if you need to.
 <Carousel>
   // [!code word:-ml-4]
   <CarouselContent className='-ml-4'>
-  // [!code word:pl-4]
+    // [!code word:pl-4]
     <CarouselItem className='pl-4'>...</CarouselItem>
     <CarouselItem className='pl-4'>...</CarouselItem>
     <CarouselItem className='pl-4'>...</CarouselItem>
@@ -139,8 +140,8 @@ You can always adjust this in your own project if you need to.
 
 ```tsx
 <Carousel>
+  // [!code word:md]
   <CarouselContent className='-ml-2 md:-ml-4'>
-    // [!code word:md]
     <CarouselItem className='pl-2 md:pl-4'>...</CarouselItem>
     <CarouselItem className='pl-2 md:pl-4'>...</CarouselItem>
     <CarouselItem className='pl-2 md:pl-4'>...</CarouselItem>
@@ -178,10 +179,11 @@ You can pass options to the carousel using the `opts` prop. See the [Embla Carou
 
 ```tsx
 <Carousel
-  opts={{ // [!code highlight]
-    align: 'start', // [!code highlight]
-    loop: true, // [!code highlight]
-  }} // [!code highlight]
+  // [!code highlight:5]
+  opts={{
+    align: 'start',
+    loop: true,
+  }}
 >
   <CarouselContent>
     <CarouselItem>...</CarouselItem>
@@ -213,7 +215,7 @@ export const Example = () => {
   const [api, setApi] = useState<CarouselApi>(); // [!code highlight]
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
-  
+
   useEffect(() => {
     if (!api) {
       return;
@@ -228,7 +230,8 @@ export const Example = () => {
   }, [api]);
 
   return (
-    <Carousel setApi={setApi}> // [!code highlight]
+    // [!code highlight:2]
+    <Carousel setApi={setApi}>
       <CarouselContent>
         <CarouselItem>...</CarouselItem>
         <CarouselItem>...</CarouselItem>
@@ -242,6 +245,7 @@ export const Example = () => {
 ### Events
 
 You can listen to events using the api instance from `setApi`.
+
 ```tsx
 import { useEffect, useState } from 'react';
 
@@ -249,7 +253,7 @@ import type { CarouselApi } from '@kosori/ui/carousel'; // [!code highlight]
 
 export const Example = () => {
   const [api, setApi] = useState<CarouselApi>(); // [!code highlight]
-  
+
   // [!code highlight:10]
   useEffect(() => {
     if (!api) {
@@ -262,7 +266,8 @@ export const Example = () => {
   }, [api]);
 
   return (
-    <Carousel setApi={setApi}> // [!code highlight]
+    // [!code highlight:2]
+    <Carousel setApi={setApi}>
       <CarouselContent>
         <CarouselItem>...</CarouselItem>
         <CarouselItem>...</CarouselItem>
@@ -306,6 +311,5 @@ export const Example = () => {
 }
 ```
 </ComponentPreview>
-
 
 See the [Embla Carousel docs](https://www.embla-carousel.com/api/events) for more information on using events.
