@@ -7,6 +7,17 @@ export default {
   content: base.content,
   presets: [base],
   theme: {
+    borderRadius: {
+      none: '0px',
+      sm: 'calc(var(--radius) - 3px)',
+      DEFAULT: 'var(--radius)',
+      md: 'var(--radius)',
+      lg: 'calc(var(--radius) + 3px)',
+      xl: 'calc(var(--radius) + 6px)',
+      '2xl': 'calc(var(--radius) + 9px)',
+      '3xl': 'calc(var(--radius) + 12px)',
+      full: '9999px',
+    },
     container: {
       center: true,
       padding: '2rem',
@@ -15,11 +26,6 @@ export default {
       },
     },
     extend: {
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -29,10 +35,15 @@ export default {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        'caret-blink': {
+          '0%,70%,100%': { opacity: '1' },
+          '20%,50%': { opacity: '0' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'caret-blink': 'caret-blink 1.25s ease-out infinite',
       },
     },
   },
