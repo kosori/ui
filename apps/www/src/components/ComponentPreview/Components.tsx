@@ -250,4 +250,67 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  checkbox: {
+    name: 'checkbox',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Checkbox').then((module) => ({
+        default: module.CheckboxDemo,
+      })),
+    ),
+  },
+  'checkbox-caption': {
+    name: 'checkbox-caption',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Checkbox').then((module) => ({
+        default: module.CheckboxCaptionDemo,
+      })),
+    ),
+  },
+  'checkbox-form-complex': {
+    name: 'checkbox-form',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Checkbox').then((module) => ({
+        default: module.CheckboxFormComplexDemo,
+      })),
+    ),
+  },
+  'checkbox-form-simple': {
+    name: 'checkbox-form',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Checkbox').then((module) => ({
+        default: module.CheckboxFormSimpleDemo,
+      })),
+    ),
+  },
+  'checkbox-disabled': {
+    name: 'checkbox-disabled',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Checkbox').then((module) => ({
+        default: module.CheckboxDisabledDemo,
+      })),
+    ),
+  },
+  'checkbox-shapes': {
+    name: 'checkbox-shapes',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Checkbox').then((module) => ({
+        default: module.CheckboxShapesDemo,
+      })),
+    ),
+  },
+  'checkbox-sizes': {
+    name: 'checkbox-sizes',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Checkbox').then((module) => ({
+        default: module.CheckboxSizesDemo,
+      })),
+    ),
+  },
 };
