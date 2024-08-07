@@ -1,6 +1,5 @@
+import type { IconProps } from '@radix-ui/react-icons/dist/types';
 import { CubeIcon } from '@radix-ui/react-icons';
-import { IconProps } from '@radix-ui/react-icons/dist/types';
-import { LayoutIcon, LibraryIcon, PaperclipIcon } from 'lucide-react';
 
 import ui from '../../../../packages/ui/package.json';
 
