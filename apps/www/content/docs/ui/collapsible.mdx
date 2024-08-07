@@ -1,0 +1,55 @@
+---
+title: Collapsible
+description: An interactive component which expands/collapses a panel.
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/collapsible
+  api: https://www.radix-ui.com/docs/primitives/components/collapsible#api-reference
+---
+
+<ComponentPreview name='collapsible'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Collapsible/Collapsible.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+Install the primitive and copy-paste the component code in a `.tsx` file.
+
+```package-install
+@radix-ui/react-collapsible
+```
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/collapsible.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+## Usage
+
+```ts
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '~/components/ui/collapsible';
+```
+
+```tsx
+<Collapsible>
+  <CollapsibleTrigger>Can I use this in my project?</CollapsibleTrigger>
+  <CollapsibleContent>
+    Yes. Free to use for personal and commercial projects. No attribution
+    required.
+  </CollapsibleContent>
+</Collapsible>
+```
