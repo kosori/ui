@@ -358,4 +358,22 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  command: {
+    name: 'command',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Command').then((module) => ({
+        default: module.CommandDemo,
+      })),
+    ),
+  },
+  'command-dialog': {
+    name: 'command-dialog',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Command').then((module) => ({
+        default: module.CommandDialogDemo,
+      })),
+    ),
+  },
 };
