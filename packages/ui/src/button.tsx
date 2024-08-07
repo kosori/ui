@@ -110,7 +110,7 @@ export const buttonStyles = tv({
       class: cn(
         'border border-danger-border bg-danger-base text-danger-solid',
         'hover:border-danger-border-hover hover:bg-danger-bg-subtle',
-        'active:bg-dangerBg',
+        'active:bg-danger-bg',
         'focus-visible:ring-danger-focus-ring',
         'disabled:border-danger-line disabled:bg-danger-base disabled:text-danger-line',
       ),
