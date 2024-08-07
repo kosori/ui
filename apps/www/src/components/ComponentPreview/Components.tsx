@@ -322,4 +322,40 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  combobox: {
+    name: 'combobox',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Combobox').then((module) => ({
+        default: module.ComboboxDemo,
+      })),
+    ),
+  },
+  'combobox-popover': {
+    name: 'combobox-popover',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Combobox').then((module) => ({
+        default: module.ComboboxPopoverDemo,
+      })),
+    ),
+  },
+  'combobox-dropdown-menu': {
+    name: 'combobox-dropdown',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Combobox').then((module) => ({
+        default: module.ComboboxDropdownMenuDemo,
+      })),
+    ),
+  },
+  'combobox-responsive': {
+    name: 'combobox-responsive',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Combobox').then((module) => ({
+        default: module.ComboboxResponsiveDemo,
+      })),
+    ),
+  },
 };
