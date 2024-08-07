@@ -313,4 +313,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  collapsible: {
+    name: 'collapsible',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Collapsible').then((module) => ({
+        default: module.CollapsibleDemo,
+      })),
+    ),
+  },
 };
