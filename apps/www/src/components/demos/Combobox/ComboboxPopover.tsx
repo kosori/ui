@@ -67,7 +67,7 @@ export const ComboboxPopoverDemo = () => {
                     onSelect={(value) => {
                       setSelectedStatus(
                         statuses.find((priority) => priority.value === value) ??
-                        null,
+                          null,
                       );
                       setOpen(false);
                     }}
