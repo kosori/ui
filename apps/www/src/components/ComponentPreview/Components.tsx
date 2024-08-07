@@ -376,4 +376,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'context-menu': {
+    name: 'context-menu',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/ContextMenu').then((module) => ({
+        default: module.ContextMenuDemo,
+      })),
+    ),
+  },
 };
