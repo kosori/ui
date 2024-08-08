@@ -565,4 +565,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'navigation-menu': {
+    name: 'navigation-menu',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/NavigationMenu').then((module) => ({
+        default: module.NavigationMenuDemo,
+      })),
+    ),
+  },
 };
