@@ -556,4 +556,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  menubar: {
+    name: 'menubar',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Menubar').then((module) => ({
+        default: module.MenubarDemo,
+      })),
+    ),
+  },
 };
