@@ -385,4 +385,22 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  dialog: {
+    name: 'dialog',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Dialog').then((module) => ({
+        default: module.DialogDemo,
+      })),
+    ),
+  },
+  'dialog-custom-close-button': {
+    name: 'dialog-custom-close-button',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Dialog').then((module) => ({
+        default: module.DialogCustomCloseButtonDemo,
+      })),
+    ),
+  },
 };
