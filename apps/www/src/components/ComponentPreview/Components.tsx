@@ -457,4 +457,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'hover-card': {
+    name: 'hover-card',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/HoverCard').then((module) => ({
+        default: module.HoverCardDemo,
+      })),
+    ),
+  },
 };
