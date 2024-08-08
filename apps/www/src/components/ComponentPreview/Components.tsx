@@ -511,4 +511,49 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'input-otp': {
+    name: 'input-otp',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/InputOTP').then((module) => ({
+        default: module.InputOTPDemo,
+      })),
+    ),
+  },
+  'input-otp-controlled': {
+    name: 'input-otp-controlled',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/InputOTP').then((module) => ({
+        default: module.InputOTPControlledDemo,
+      })),
+    ),
+  },
+  'input-otp-form': {
+    name: 'input-otp-form',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/InputOTP').then((module) => ({
+        default: module.InputOTPFormDemo,
+      })),
+    ),
+  },
+  'input-otp-pattern': {
+    name: 'input-otp-pattern',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/InputOTP').then((module) => ({
+        default: module.InputOTPPatternDemo,
+      })),
+    ),
+  },
+  'input-otp-separator': {
+    name: 'input-otp-separator',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/InputOTP').then((module) => ({
+        default: module.InputOTPSeparatorDemo,
+      })),
+    ),
+  },
 };
