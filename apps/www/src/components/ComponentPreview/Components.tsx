@@ -466,4 +466,49 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  input: {
+    name: 'input',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Input').then((module) => ({
+        default: module.InputDemo,
+      })),
+    ),
+  },
+  'input-button': {
+    name: 'input-button',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Input').then((module) => ({
+        default: module.InputButtonDemo,
+      })),
+    ),
+  },
+  'input-disabled': {
+    name: 'input-disabled',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Input').then((module) => ({
+        default: module.InputDisabledDemo,
+      })),
+    ),
+  },
+  'input-file': {
+    name: 'input-file',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Input').then((module) => ({
+        default: module.InputFileDemo,
+      })),
+    ),
+  },
+  'input-label': {
+    name: 'input-label',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Input').then((module) => ({
+        default: module.InputLabelDemo,
+      })),
+    ),
+  },
 };
