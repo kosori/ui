@@ -448,4 +448,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  form: {
+    name: 'form',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Form').then((module) => ({
+        default: module.FormDemo,
+      })),
+    ),
+  },
 };
