@@ -1,0 +1,58 @@
+---
+title: Context Menu
+description: Displays a menu to the user — such as a set of actions or functions — triggered by a button.
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/context-menu
+  api: https://www.radix-ui.com/docs/primitives/components/context-menu#api-reference
+---
+
+<ComponentPreview name='context-menu'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/ContextMenu/ContextMenu.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+Install the primitive and copy-paste the component code in a `.tsx` file.
+
+```package-install
+@radix-ui/react-context-menu
+```
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/context-menu.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+## Usage
+
+```ts
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from '~/components/ui/context-menu';
+```
+
+```tsx
+<ContextMenu>
+  <ContextMenuTrigger>Right click</ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuItem>Profile</ContextMenuItem>
+    <ContextMenuItem>Billing</ContextMenuItem>
+    <ContextMenuItem>Team</ContextMenuItem>
+    <ContextMenuItem>Subscription</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>
+```
