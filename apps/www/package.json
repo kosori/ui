@@ -20,7 +20,7 @@
     "@trpc/client": "catalog:",
     "@trpc/react-query": "catalog:",
     "@trpc/server": "catalog:",
-    "fumadocs-core": "^13.0.1",
+    "fumadocs-core": "^13.1.0",
     "fumadocs-docgen": "^1.1.0",
     "fumadocs-mdx": "^9.0.0",
     "fumadocs-ui": "^13.0.1",
