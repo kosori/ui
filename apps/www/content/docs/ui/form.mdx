@@ -1,0 +1,262 @@
+---
+title: Form
+description: Building forms with React Hook Form and Zod.
+links:
+  doc: https://react-hook-form.com
+---
+
+Forms are tricky. They are one of the most common things you'll build in a web application, but also one of the most complex.
+
+Well-designed HTML forms are:
+
+- Well-structured and semantically correct.
+- Easy to use and navigate (keyboard).
+- Accessible with ARIA attributes and proper labels.
+- Has support for client and server side validation.
+- Well-styled and consistent with the rest of the application.
+
+In this guide, we will take a look at building forms with [`react-hook-form`](https://react-hook-form.com) and [`zod`](https://zod.dev). We're going to use a `<FormField />` component to compose accessible forms using Radix UI components.
+
+## Features
+
+The `<Form />` component is a wrapper around the `react-hook-form` library. It provides a few things:
+
+- Composable components for building forms.
+- A `<FormField />` component for building controlled form fields.
+- Form validation using `zod`.
+- Handles accessibility and error messages.
+- Uses `React.useId()` for generating unique IDs.
+- Applies the correct `aria` attributes to form fields based on states.
+- Built to work with all Radix UI components.
+- Bring your own schema library. We use `zod` but you can use anything you want.
+- **You have full control over the markup and styling**.
+
+## Anatomy
+
+```tsx
+<Form>
+  <FormField
+    control={...}
+    name='...'
+    render={() => (
+      <FormItem>
+        <FormLabel />
+        <FormControl>
+          { /* Your form field */}
+        </FormControl>
+        <FormDescription />
+        <FormMessage />
+      </FormItem>
+    )}
+  />
+</Form>
+```
+
+## Example
+
+```tsx
+const form = useForm()
+
+<FormField
+  control={form.control}
+  name='username'
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>Username</FormLabel>
+      <FormControl>
+        <Input placeholder='shadcn' {...field} />
+      </FormControl>
+      <FormDescription>This is your public display name.</FormDescription>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+```
+
+## Installation
+
+<Steps>
+  <Step>
+    ### Install the following dependencies:
+
+    ```package-install
+    @radix-ui/react-label @radix-ui/react-slot react-hook-form @hookform/resolvers zod
+    ```
+
+  </Step>
+
+  <Step>
+    ### Copy-paste the following code in a `.tsx` file:
+
+    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+    ```json doc-gen:file
+    {
+      "file": "../../packages/ui/src/form.tsx",
+      "codeblock": true
+    }
+    ```
+
+    </div>
+
+  </Step>
+
+  <Step>
+    ### Update the import paths to match your project setup.
+  </Step>
+</Steps>
+
+## Usage
+
+<Steps>
+  <Step>
+    ### Create a form schema
+
+    Define the shape of your form using a Zod schema. You can read more about using Zod in the [Zod documentation](https://zod.dev).
+
+    ```ts
+    'use client';
+
+    import { z } from 'zod'; // [!code highlight]
+
+    // [!code highlight:4]
+    const formSchema = z.object({
+      username: z.string().min(2).max(50),
+    });
+    ```
+
+  </Step>
+
+  <Step>
+    ### Define a form
+
+    ```tsx
+    'use client';
+
+    // [!code highlight:3]
+    import { zodResolver } from '@hookform/resolvers/zod';
+    import { useForm } from 'react-hook-form';
+    import { z } from 'zod';
+
+    const formSchema = z.object({
+      username: z.string().min(2, {
+        message: 'Username must be at least 2 characters.',
+      }),
+    });
+
+    export const ProfileForm = () => {
+      // [!code highlight:8]
+      // 1. Define your form.
+      const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+          username: '',
+        },
+      });
+
+      // [!code highlight:8]
+      // 2. Define a submit handler.
+      const onSubmit = (values: z.infer<typeof formSchema>) => {
+        // Do something with the form values.
+        // ✅ This will be type-safe and validated.
+        console.log(values);
+      };
+    };
+    ```
+
+    Since `FormField` is using a controlled component, you need to provide a default value for the field. See the [React Hook Form docs](https://react-hook-form.com/docs/usecontroller) to learn more about controlled components.
+
+  </Step>
+
+  <Step>
+    ### Build your form
+
+    We can now use the `<Form />` components to build our form.
+
+    ```tsx
+    'use client';
+
+    import { zodResolver } from '@hookform/resolvers/zod';
+    import { useForm } from 'react-hook-form';
+    import { z } from 'zod';
+
+    // [!code highlight:12]
+    import { Button } from '~/components/ui/button';
+    import {
+      Form,
+      FormControl,
+      FormDescription,
+      FormField,
+      FormItem,
+      FormLabel,
+      FormMessage,
+    } from '~/components/ui/form';
+    import { Input } from '~/components/ui/input';
+
+    const formSchema = z.object({
+      username: z.string().min(2, {
+        message: 'Username must be at least 2 characters.',
+      }),
+    });
+
+    export const ProfileForm = () => {
+      // ...
+
+      // [!code highlight:24]
+      return (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+            <FormField
+              control={form.control}
+              name='username'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder='codingcodax' {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    This is your public display name.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type='submit'>Submit</Button>
+          </form>
+        </Form>
+      )
+    }
+    ```
+
+  </Step>
+
+  <Step>
+    ### Done
+
+    That's it. You now have a fully accessible form that is type-safe with client-side validation.
+
+    <ComponentPreview name='form'>
+    ```json doc-gen:file
+    {
+      "file": "./src/components/demos/Form/Form.tsx",
+      "codeblock": true
+    }
+    ```
+    </ComponentPreview>
+
+  </Step>
+</Steps>
+
+## Examples
+
+See the following links for more examples on how to use the `<Form />` component with other components:
+
+- [Checkbox](/docs/ui/checkbox)
+- [Date Picker](/docs/ui/datepicker)
+- [Input](/docs/ui/input)
+- [Radio Group](/docs/ui/radiogroup)
+- [Select](/docs/ui/select)
+- [Switch](/docs/ui/switch)
+- [Textarea](/docs/ui/textarea)
+- [Checkbox](/docs/ui/checkbox)
