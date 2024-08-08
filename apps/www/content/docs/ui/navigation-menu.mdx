@@ -1,0 +1,86 @@
+---
+title: Navigation Menu
+description: A collection of links for navigating websites.
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/navigation-menu
+  api: https://www.radix-ui.com/docs/primitives/components/navigation-menu#api-reference
+---
+
+<ComponentPreview name='navigation-menu'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/NavigationMenu/NavigationMenu.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+Install the primitive and copy-paste the component code in a `.tsx` file.
+
+```package-install
+@radix-ui/react-navigation-menu
+```
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/navigation-menu.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+## Usage
+
+```ts
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from '~/components/ui/navigation-menu';
+```
+
+```tsx
+<NavigationMenu>
+  <NavigationMenuList>
+    <NavigationMenuItem>
+      <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <NavigationMenuLink>Link</NavigationMenuLink>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>
+```
+
+## Examples
+
+### Link Component
+
+When using the Next.js `<Link />` component, you can use `navigationMenuTriggerStyle()` to apply the correct styles to the trigger.
+
+```ts
+import { navigationMenuTriggerStyle } from '~/components/ui/navigation-menu';
+```
+
+```tsx
+<NavigationMenuItem>
+  <Link href='/docs' legacyBehavior passHref>
+    // [!code highlight:4]
+    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+      Documentation
+    </NavigationMenuLink>
+  </Link>
+</NavigationMenuItem>
+```
+
+See also the [Radix UI documentation](https://www.radix-ui.com/docs/primitives/components/navigation-menu#with-client-side-routing) for handling client side routing.
