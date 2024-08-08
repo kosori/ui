@@ -403,4 +403,22 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  drawer: {
+    name: 'drawer',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Drawer').then((module) => ({
+        default: module.DrawerDemo,
+      })),
+    ),
+  },
+  'drawer-dialog': {
+    name: 'drawer-dialog',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Drawer').then((module) => ({
+        default: module.DrawerDialogDemo,
+      })),
+    ),
+  },
 };
