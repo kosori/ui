@@ -11,9 +11,9 @@ export const ComponentPreview = ({ name, children }: Props) => {
 
     if (!Component) {
       return (
-        <p className='text-muted-foreground text-sm'>
+        <p className='text-sm text-grey-text'>
           Component{' '}
-          <code className='bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm'>
+          <code className='relative rounded bg-grey-bg px-[0.3rem] py-[0.2rem] font-mono text-sm'>
             {name}
           </code>{' '}
           not found in registry.
@@ -26,7 +26,7 @@ export const ComponentPreview = ({ name, children }: Props) => {
 
   return (
     <div>
-      <Tabs items={['Preview', 'Code']}>
+      <Tabs className='overflow-visible' items={['Preview', 'Code']}>
         <Tab className='p-0' value='Preview'>
           <div className='not-prose flex min-h-[350px] items-center justify-center p-4'>
             {PreviewComponent}
