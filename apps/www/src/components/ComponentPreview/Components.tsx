@@ -421,4 +421,31 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'dropdown-menu': {
+    name: 'dropdown-menu',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/DropdownMenu').then((module) => ({
+        default: module.DropdownMenuDemo,
+      })),
+    ),
+  },
+  'dropdown-menu-checkboxes': {
+    name: 'dropdown-menu-checkboxes',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/DropdownMenu').then((module) => ({
+        default: module.DropdownMenuCheckboxesDemo,
+      })),
+    ),
+  },
+  'dropdown-menu-radio-group': {
+    name: 'dropdown-menu-radio-group',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/DropdownMenu').then((module) => ({
+        default: module.DropdownMenuRadioGroupDemo,
+      })),
+    ),
+  },
 };
