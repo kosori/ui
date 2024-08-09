@@ -619,4 +619,31 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  resizable: {
+    name: 'resizable',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Resizable').then((module) => ({
+        default: module.ResizableDemo,
+      })),
+    ),
+  },
+  'resizable-handle': {
+    name: 'resizable-handle',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Resizable').then((module) => ({
+        default: module.ResizableHandleDemo,
+      })),
+    ),
+  },
+  'resizable-vertical': {
+    name: 'resizable-vertical',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Resizable').then((module) => ({
+        default: module.ResizableVerticalDemo,
+      })),
+    ),
+  },
 };
