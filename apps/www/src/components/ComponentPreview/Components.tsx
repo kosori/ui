@@ -601,4 +601,22 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'radio-group': {
+    name: 'radio-group',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/RadioGroup').then((module) => ({
+        default: module.RadioGroupDemo,
+      })),
+    ),
+  },
+  'radio-group-form': {
+    name: 'radio-group-form',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/RadioGroup').then((module) => ({
+        default: module.RadioGroupFormDemo,
+      })),
+    ),
+  },
 };
