@@ -1,0 +1,68 @@
+---
+title: Radio Group
+description: A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/radio-group
+  api: https://www.radix-ui.com/docs/primitives/components/radio-group#api-reference
+---
+
+<ComponentPreview name='radio-group'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/RadioGroup/RadioGroup.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+Install the primitive and copy-paste the component code in a `.tsx` file.
+
+```package-install
+@radix-ui/react-radio-group
+```
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/radio-group.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+## Usage
+
+```ts
+import { Label } from '~/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group';
+```
+
+```tsx
+<RadioGroup defaultValue='option-one'>
+  <div className='flex items-center space-x-2'>
+    <RadioGroupItem value='option-one' id='option-one' />
+    <Label htmlFor='option-one'>Option One</Label>
+  </div>
+  <div className='flex items-center space-x-2'>
+    <RadioGroupItem value='option-two' id='option-two' />
+    <Label htmlFor='option-two'>Option Two</Label>
+  </div>
+</RadioGroup>
+```
+
+## Examples
+
+### Form
+
+<ComponentPreview name='radio-group-form'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/RadioGroup/RadioGroupForm.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
