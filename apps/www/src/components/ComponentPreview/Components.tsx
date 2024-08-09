@@ -592,4 +592,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  progress: {
+    name: 'progress',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Progress').then((module) => ({
+        default: module.ProgressDemo,
+      })),
+    ),
+  },
 };
