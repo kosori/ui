@@ -1,0 +1,96 @@
+---
+title: Sheet
+description: Extends the Dialog component to display content that complements the main content of the screen.
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/dialog
+  api: https://www.radix-ui.com/docs/primitives/components/dialog#api-reference
+---
+
+<ComponentPreview name='sheet'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Sheet/Sheet.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+Install the primitive and copy-paste the component code in a `.tsx` file.
+
+```package-install
+@radix-ui/react-dialog
+```
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/sheet.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+## Usage
+
+```ts
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '~/components/ui/sheet';
+```
+
+```tsx
+<Sheet>
+  <SheetTrigger>Open</SheetTrigger>
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>Are you absolutely sure?</SheetTitle>
+      <SheetDescription>
+        This action cannot be undone. This will permanently delete your account
+        and remove your data from our servers.
+      </SheetDescription>
+    </SheetHeader>
+  </SheetContent>
+</Sheet>
+```
+
+## Examples
+
+### Side
+
+<ComponentPreview name='sheet-sides'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Sheet/SheetSides.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+### Size
+
+You can adjust the size of the sheet using CSS classes:
+
+```tsx
+<Sheet>
+  <SheetTrigger>Open</SheetTrigger>
+  // [!code highlight:2]
+  <SheetContent className='w-[400px] sm:w-[540px]'>
+    <SheetHeader>
+      <SheetTitle>Are you absolutely sure?</SheetTitle>
+      <SheetDescription>
+        This action cannot be undone. This will permanently delete your account
+        and remove your data from our servers.
+      </SheetDescription>
+    </SheetHeader>
+  </SheetContent>
+</Sheet>
+```
