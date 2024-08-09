@@ -1,0 +1,85 @@
+---
+title: Pagination
+description: Pagination with page navigation, next and previous links.
+---
+
+<ComponentPreview name='pagination'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Pagination/Pagination.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+Copy-paste the component code in a `.tsx` file.
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/pagination.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+## Usage
+
+```ts
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '~/components/ui/pagination';
+```
+
+```tsx
+<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious href='#' />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href='#'>1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext href='#' />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>
+```
+
+## Examples
+
+### Next.js
+
+By default the `<PaginationLink />` component will render an `<a />` tag.
+To use the Next.js `<Link />` component, make the following updates to `pagination.tsx`.
+
+```diff
++ import Link from 'next/link';
+
+- type PaginationLinkProps = ... & React.ComponentProps<'a'>;
++ type PaginationLinkProps = ... & React.ComponentProps<typeof Link>;
+
+const PaginationLink = ({...props }: PaginationLinkProps) => (
+  <PaginationItem>
+-   <a>
++   <Link>
+      // ...
+-   </a>
++   </Link>
+  </PaginationItem>
+);
+```
