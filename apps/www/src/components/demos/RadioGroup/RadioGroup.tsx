@@ -1,4 +1,4 @@
-import { Label } from '@kosori/ui/Label';
+import { Label } from '@kosori/ui/label';
 import { RadioGroup, RadioGroupItem } from '@kosori/ui/radio-group';
 
 export const RadioGroupDemo = () => {
