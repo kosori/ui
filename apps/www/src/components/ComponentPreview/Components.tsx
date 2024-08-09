@@ -700,4 +700,22 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  sheet: {
+    name: 'sheet',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Sheet').then((module) => ({
+        default: module.SheetDemo,
+      })),
+    ),
+  },
+  'sheet-sides': {
+    name: 'sheet-sides',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Sheet').then((module) => ({
+        default: module.SheetSidesDemo,
+      })),
+    ),
+  },
 };
