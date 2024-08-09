@@ -718,4 +718,22 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  skeleton: {
+    name: 'skeleton',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Skeleton').then((module) => ({
+        default: module.SkeletonDemo,
+      })),
+    ),
+  },
+  'skeleton-card': {
+    name: 'skeleton-card',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Skeleton').then((module) => ({
+        default: module.SkeletonCardDemo,
+      })),
+    ),
+  },
 };
