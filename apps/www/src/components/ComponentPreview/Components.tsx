@@ -574,4 +574,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  pagination: {
+    name: 'pagination',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Pagination').then((module) => ({
+        default: module.PaginationDemo,
+      })),
+    ),
+  },
 };
