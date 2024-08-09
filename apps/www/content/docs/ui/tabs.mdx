@@ -1,0 +1,52 @@
+---
+title: Tabs
+description: A set of layered sections of content—known as tab panels—that are displayed one at a time.
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/tabs
+  api: https://www.radix-ui.com/docs/primitives/components/tabs#api-reference
+---
+
+<ComponentPreview name='tabs'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Tabs/Tabs.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+Install the primitive and copy-paste the component code in a `.tsx` file.
+
+```package-install
+@radix-ui/react-tabs
+```
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/tabs.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+## Usage
+
+```ts
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
+```
+
+```tsx
+<Tabs defaultValue='account' className='w-[400px]'>
+  <TabsList>
+    <TabsTrigger value='account'>Account</TabsTrigger>
+    <TabsTrigger value='password'>Password</TabsTrigger>
+  </TabsList>
+  <TabsContent value='account'>Make changes to your account here.</TabsContent>
+  <TabsContent value='password'>Change your password here.</TabsContent>
+</Tabs>
+```
