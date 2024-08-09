@@ -15,10 +15,6 @@ export const SonnerDemo = () => {
             label: 'Undo',
             onClick: () => console.log('Undo'),
           },
-          cancel: {
-            label: 'Delete',
-            onClick: () => console.log('Delete'),
-          },
           duration: 10000,
         })
       }
