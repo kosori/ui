@@ -799,4 +799,58 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  textarea: {
+    name: 'textarea',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Textarea').then((module) => ({
+        default: module.TextareaDemo,
+      })),
+    ),
+  },
+  'textarea-button': {
+    name: 'textarea-button',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Textarea').then((module) => ({
+        default: module.TextareaButtonDemo,
+      })),
+    ),
+  },
+  'textarea-disabled': {
+    name: 'textarea-disabled',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Textarea').then((module) => ({
+        default: module.TextareaDisabledDemo,
+      })),
+    ),
+  },
+  'textarea-form': {
+    name: 'textarea-form',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Textarea').then((module) => ({
+        default: module.TextareaFormDemo,
+      })),
+    ),
+  },
+  'textarea-label': {
+    name: 'textarea-label',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Textarea').then((module) => ({
+        default: module.TextareaLabelDemo,
+      })),
+    ),
+  },
+  'textarea-text': {
+    name: 'textarea-text',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Textarea').then((module) => ({
+        default: module.TextareaTextDemo,
+      })),
+    ),
+  },
 };
