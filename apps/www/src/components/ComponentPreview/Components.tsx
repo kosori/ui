@@ -745,4 +745,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  sonner: {
+    name: 'sonner',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Sonner').then((module) => ({
+        default: module.SonnerDemo,
+      })),
+    ),
+  },
 };
