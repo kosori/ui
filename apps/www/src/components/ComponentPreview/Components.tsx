@@ -691,4 +691,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  separator: {
+    name: 'separator',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Separator').then((module) => ({
+        default: module.SeparatorDemo,
+      })),
+    ),
+  },
 };
