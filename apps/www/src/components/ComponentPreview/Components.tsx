@@ -1,9 +1,9 @@
 import { lazy } from 'react';
 
-type Component = {
+type Component<T = object> = {
   name: string;
   type: 'component:example';
-  component: React.LazyExoticComponent<() => JSX.Element>;
+  component: React.LazyExoticComponent<(props: T) => JSX.Element>;
 };
 
 export const Components: Record<string, Component> = {
@@ -733,6 +733,15 @@ export const Components: Record<string, Component> = {
     component: lazy(() =>
       import('../demos/Skeleton').then((module) => ({
         default: module.SkeletonCardDemo,
+      })),
+    ),
+  },
+  slider: {
+    name: 'slider',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Slider').then((module) => ({
+        default: module.SliderDemo,
       })),
     ),
   },
