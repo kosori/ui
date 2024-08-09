@@ -664,4 +664,31 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  select: {
+    name: 'select',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Select').then((module) => ({
+        default: module.SelectDemo,
+      })),
+    ),
+  },
+  'select-form': {
+    name: 'select-form',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Select').then((module) => ({
+        default: module.SelectFormDemo,
+      })),
+    ),
+  },
+  'select-scrollable': {
+    name: 'select-scrollable',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Select').then((module) => ({
+        default: module.SelectScrollableDemo,
+      })),
+    ),
+  },
 };
