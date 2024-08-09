@@ -790,4 +790,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  tabs: {
+    name: 'tabs',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Tabs').then((module) => ({
+        default: module.TabsDemo,
+      })),
+    ),
+  },
 };
