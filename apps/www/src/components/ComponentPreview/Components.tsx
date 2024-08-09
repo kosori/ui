@@ -754,4 +754,31 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  switch: {
+    name: 'switch',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Switch').then((module) => ({
+        default: module.SwitchDemo,
+      })),
+    ),
+  },
+  'switch-form': {
+    name: 'switch-form',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Switch').then((module) => ({
+        default: module.SwitchFormDemo,
+      })),
+    ),
+  },
+  'switch-sizes': {
+    name: 'switch-sizes',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Switch').then((module) => ({
+        default: module.SwitchSizesDemo,
+      })),
+    ),
+  },
 };
