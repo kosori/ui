@@ -1,0 +1,45 @@
+---
+title: Slider
+description: An input where the user selects a value from within a given range.
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/slider
+  api: https://www.radix-ui.com/docs/primitives/components/slider#api-reference
+---
+
+<ComponentPreview name='slider'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Slider/Slider.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+Install the primitive and copy-paste the component code in a `.tsx` file.
+
+```package-install
+@radix-ui/react-slider
+```
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/slider.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+## Usage
+
+```ts
+import { Slider } from '~/components/ui/slider';
+```
+
+```tsx
+<Slider defaultValue={[33]} max={100} step={1} />
+```
