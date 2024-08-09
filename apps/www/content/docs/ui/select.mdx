@@ -1,0 +1,84 @@
+---
+title: Select
+description: Displays a list of options for the user to pick from—triggered by a button.
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/select
+  api: https://www.radix-ui.com/docs/primitives/components/select#api-reference
+---
+
+<ComponentPreview name='select'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Select/Select.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+Install the primitive and copy-paste the component code in a `.tsx` file.
+
+```package-install
+@radix-ui/react-select
+```
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/select.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+## Usage
+
+```ts
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/ui/select';
+```
+
+```tsx
+<Select>
+  <SelectTrigger className='w-[180px]'>
+    <SelectValue placeholder='Theme' />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value='light'>Light</SelectItem>
+    <SelectItem value='dark'>Dark</SelectItem>
+    <SelectItem value='system'>System</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+## Examples
+
+### Scrollable
+
+<ComponentPreview name='select-scrollable'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Select/SelectScrollable.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+### Form
+
+<ComponentPreview name='select-form'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Select/SelectForm.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
