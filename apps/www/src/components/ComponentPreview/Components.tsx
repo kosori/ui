@@ -583,4 +583,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  popover: {
+    name: 'popover',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Popover').then((module) => ({
+        default: module.PopoverDemo,
+      })),
+    ),
+  },
 };
