@@ -646,4 +646,22 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'scroll-area': {
+    name: 'scroll-area',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/ScrollArea').then((module) => ({
+        default: module.ScrollAreaDemo,
+      })),
+    ),
+  },
+  'scroll-area-horizontal': {
+    name: 'scroll-area-horizontal',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/ScrollArea').then((module) => ({
+        default: module.ScrollAreaHorizontalDemo,
+      })),
+    ),
+  },
 };
