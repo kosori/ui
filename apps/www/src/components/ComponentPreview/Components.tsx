@@ -781,4 +781,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  table: {
+    name: 'table',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Table').then((module) => ({
+        default: module.TableDemo,
+      })),
+    ),
+  },
 };
