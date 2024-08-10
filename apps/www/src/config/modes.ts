@@ -1,5 +1,5 @@
 import type { IconProps } from '@radix-ui/react-icons/dist/types';
-import { CubeIcon } from '@radix-ui/react-icons';
+import { ContainerIcon, CubeIcon } from '@radix-ui/react-icons';
 
 import ui from '../../../../packages/ui/package.json';
 
@@ -22,5 +22,13 @@ export const modes: Mode[] = [
     description: 'The user interface',
     version: ui.version,
     icon: CubeIcon,
+  },
+  {
+    param: 'hooks',
+    name: 'Hooks',
+    package: '@kosori/hooks',
+    description: 'Hooks for UI',
+    version: '0.1.0',
+    icon: ContainerIcon,
   },
 ];
