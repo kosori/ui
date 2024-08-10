@@ -853,4 +853,49 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  toast: {
+    name: 'toast',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Toast').then((module) => ({
+        default: module.ToastDemo,
+      })),
+    ),
+  },
+  'toast-action': {
+    name: 'toast-action',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Toast').then((module) => ({
+        default: module.ToastActionDemo,
+      })),
+    ),
+  },
+  'toast-intents': {
+    name: 'toast-intents',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Toast').then((module) => ({
+        default: module.ToastIntentsDemo,
+      })),
+    ),
+  },
+  'toast-simple': {
+    name: 'toast-simple',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Toast').then((module) => ({
+        default: module.ToastSimpleDemo,
+      })),
+    ),
+  },
+  'toast-title': {
+    name: 'toast-title',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Toast').then((module) => ({
+        default: module.ToastTitleDemo,
+      })),
+    ),
+  },
 };
