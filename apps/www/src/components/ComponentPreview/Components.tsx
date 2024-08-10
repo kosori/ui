@@ -898,4 +898,49 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  toggle: {
+    name: 'toggle',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Toggle').then((module) => ({
+        default: module.ToggleDemo,
+      })),
+    ),
+  },
+  'toggle-disabled': {
+    name: 'toggle-disabled',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Toggle').then((module) => ({
+        default: module.ToggleDisabledDemo,
+      })),
+    ),
+  },
+  'toggle-sizes': {
+    name: 'toggle-sizes',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Toggle').then((module) => ({
+        default: module.ToggleSizesDemo,
+      })),
+    ),
+  },
+  'toggle-text': {
+    name: 'toggle-text',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Toggle').then((module) => ({
+        default: module.ToggleTextDemo,
+      })),
+    ),
+  },
+  'toggle-variants': {
+    name: 'toggle-variants',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Toggle').then((module) => ({
+        default: module.ToggleVariantsDemo,
+      })),
+    ),
+  },
 };
