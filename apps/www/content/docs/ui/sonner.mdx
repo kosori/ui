@@ -40,15 +40,15 @@ sonner next-themes
 Add the `<Toaster />` component.
 
 ```tsx title='app/layout.tsx
-import { Toaster } from '~/components/ui/sonner';
+import { Toaster } from '~/components/ui/sonner'; // [!code highlight]
 
-export default function RootLayout({ children }) {
+export default const RootLayout = ({ children }) => {
   return (
     <html lang='en'>
       <head />
       <body>
         <main>{children}</main>
-        <Toaster />
+        <Toaster /> // [!code highlight]
       </body>
     </html>
   );
