@@ -988,4 +988,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  tooltip: {
+    name: 'tooltip',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Tooltip').then((module) => ({
+        default: module.TooltipDemo,
+      })),
+    ),
+  },
 };
