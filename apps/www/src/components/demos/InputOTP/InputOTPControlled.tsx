@@ -11,8 +11,6 @@ export const InputOTPControlledDemo = () => {
     <div className='space-y-2'>
       <InputOTP
         maxLength={6}
-        value={value}
-        onChange={setValue}
         render={({ slots }) => (
           <>
             <InputOTPGroup>
@@ -22,6 +20,8 @@ export const InputOTPControlledDemo = () => {
             </InputOTPGroup>
           </>
         )}
+        value={value}
+        onChange={setValue}
       />
       <div className='text-center text-sm text-grey-text'>
         {value === '' ? (

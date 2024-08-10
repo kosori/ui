@@ -8,7 +8,7 @@ import { ToggleGroup, ToggleGroupItem } from '@kosori/ui/toggle-group';
 
 export const ToggleGroupDisabledDemo = () => {
   return (
-    <ToggleGroup type='multiple' disabled>
+    <ToggleGroup disabled type='multiple'>
       <ToggleGroupItem aria-label='Toggle bold' value='bold'>
         <FontBoldIcon className='h-4 w-4' />
       </ToggleGroupItem>

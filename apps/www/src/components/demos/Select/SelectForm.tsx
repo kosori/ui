@@ -53,14 +53,14 @@ export const SelectFormDemo = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='w-2/3 space-y-6'>
+      <form className='w-2/3 space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name='email'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder='Select a verified email to display' />

@@ -6,7 +6,8 @@ import {
 } from '@radix-ui/react-icons';
 
 import { cn } from '@kosori/ui';
-import { ButtonProps, buttonStyles } from '@kosori/ui/button';
+import type { ButtonProps} from '@kosori/ui/button';
+import { buttonStyles } from '@kosori/ui/button';
 
 export const Pagination = ({
   className,

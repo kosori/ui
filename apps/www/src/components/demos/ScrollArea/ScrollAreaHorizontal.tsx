@@ -30,11 +30,11 @@ export const ScrollAreaHorizontalDemo = () => {
           <figure key={artwork.artist} className='shrink-0'>
             <div className='overflow-hidden rounded-md'>
               <Image
-                src={artwork.art}
                 alt={`Photo by ${artwork.artist}`}
                 className='aspect-[3/4] h-fit w-fit object-cover'
-                width={300}
                 height={400}
+                src={artwork.art}
+                width={300}
               />
             </div>
             <figcaption className='pt-2 text-xs text-grey-text'>

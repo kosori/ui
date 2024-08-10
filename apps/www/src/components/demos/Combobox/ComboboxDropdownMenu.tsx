@@ -50,7 +50,7 @@ export const ComboboxDropdownMenuDemo = () => {
       </p>
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button variant='ghost' size='small'>
+          <Button size='small' variant='ghost'>
             <DotsHorizontalIcon />
           </Button>
         </DropdownMenuTrigger>
@@ -65,9 +65,9 @@ export const ComboboxDropdownMenuDemo = () => {
               <DropdownMenuSubContent className='p-0'>
                 <Command>
                   <CommandInput
-                    placeholder='Filter label...'
                     autoFocus={true}
                     className='h-9'
+                    placeholder='Filter label...'
                   />
                   <CommandList>
                     <CommandEmpty>No label found.</CommandEmpty>

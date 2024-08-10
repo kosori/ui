@@ -10,7 +10,8 @@ import {
   Trigger,
 } from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import { tv, VariantProps } from 'tailwind-variants';
+import type { VariantProps } from 'tailwind-variants';
+import { tv } from 'tailwind-variants';
 
 import { cn } from '@kosori/ui';
 
