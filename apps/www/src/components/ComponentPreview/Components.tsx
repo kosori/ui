@@ -178,15 +178,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
-  calendar: {
-    name: 'calendar',
-    type: 'component:example',
-    component: lazy(() =>
-      import('../demos/Calendar').then((module) => ({
-        default: module.CalendarDemo,
-      })),
-    ),
-  },
+  // calendar: {
+  //   name: 'calendar',
+  //   type: 'component:example',
+  //   component: lazy(() =>
+  //     import('../demos/Calendar').then((module) => ({
+  //       default: module.CalendarDemo,
+  //     })),
+  //   ),
+  // },
   card: {
     name: 'card',
     type: 'component:example',
