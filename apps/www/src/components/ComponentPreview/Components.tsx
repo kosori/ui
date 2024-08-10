@@ -943,4 +943,49 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'toggle-group': {
+    name: 'toggle-group',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/ToggleGroup').then((module) => ({
+        default: module.ToggleGroupDemo,
+      })),
+    ),
+  },
+  'toggle-group-disabled': {
+    name: 'toggle-group-disabled',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/ToggleGroup').then((module) => ({
+        default: module.ToggleGroupDisabledDemo,
+      })),
+    ),
+  },
+  'toggle-group-single': {
+    name: 'toggle-group-single',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/ToggleGroup').then((module) => ({
+        default: module.ToggleGroupSingleDemo,
+      })),
+    ),
+  },
+  'toggle-group-sizes': {
+    name: 'toggle-group-sizes',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/ToggleGroup').then((module) => ({
+        default: module.ToggleGroupSizesDemo,
+      })),
+    ),
+  },
+  'toggle-group-variants': {
+    name: 'toggle-group-variants',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/ToggleGroup').then((module) => ({
+        default: module.ToggleGroupVariantsDemo,
+      })),
+    ),
+  },
 };
