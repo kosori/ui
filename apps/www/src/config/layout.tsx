@@ -1,16 +1,39 @@
+import type { HomeLayoutProps } from 'fumadocs-ui/home-layout';
+import type { DocsLayoutProps } from 'fumadocs-ui/layout';
+import { CodeSandboxLogoIcon } from '@radix-ui/react-icons';
 import { RootToggle } from 'fumadocs-ui/components/layout/root-toggle';
-import { type HomeLayoutProps } from 'fumadocs-ui/home-layout';
-import { type DocsLayoutProps } from 'fumadocs-ui/layout';
+import { AppWindowMacIcon, LayoutTemplateIcon } from 'lucide-react';
 
 import { docs } from '~/app/source';
+import { Logo } from '~/components/Layout/Logo';
+import { NavModes } from '~/components/Layout/NavModes';
 import { modes } from '~/config/modes';
 
 // shared configuration
 export const baseOptions: HomeLayoutProps = {
-  nav: {
-    title: 'kosori/ui',
-  },
   githubUrl: 'https://github.com/kosori/ui',
+  nav: {
+    title: <Logo />,
+    transparentMode: 'always',
+    children: <NavModes />,
+  },
+  links: [
+    {
+      icon: <CodeSandboxLogoIcon />,
+      text: 'Examples',
+      url: '/examples',
+    },
+    {
+      icon: <AppWindowMacIcon />,
+      text: 'Templates',
+      url: '/templates',
+    },
+    {
+      icon: <LayoutTemplateIcon />,
+      text: 'Showcase',
+      url: '/showcase',
+    },
+  ],
 };
 
 // docs layout configuration
