@@ -1,0 +1,130 @@
+---
+title: Toast
+description: A succinct message that is displayed temporarily.
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/toast
+  api: https://www.radix-ui.com/docs/primitives/components/toast#api-reference
+---
+
+<ComponentPreview name='toast'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Toast/Toast.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+Install the primitive and copy-paste the component code in a `.tsx` file.
+
+```package-install
+@radix-ui/react-toast
+```
+
+<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+```json doc-gen:file
+{
+  "file": "../../packages/ui/src/toast.tsx",
+  "codeblock": true
+}
+```
+
+</div>
+
+Add the `<Toaster />` component.
+
+```tsx title='app/layout.tsx
+import { Toaster } from '~/components/ui/toast'; // [!code highlight]
+
+export default const RootLayout = ({ children }) => {
+  return (
+    <html lang='en'>
+      <head />
+      <body>
+        <main>{children}</main>
+        <Toaster /> // [!code highlight]
+      </body>
+    </html>
+  );
+}
+```
+
+## Usage
+
+```ts
+import { useToast } from '~/components/ui/toast';
+```
+
+```tsx
+export const ToastDemo = () => {
+  const { toast } = useToast(); // [!code highlight]
+
+  return (
+    <Button
+      onClick={() => {
+        // [!code highlight:5]
+        toast({
+          title: 'Scheduled: Catch up',
+          description: 'Friday, February 10, 2023 at 5:57 PM',
+        });
+      }}
+    >
+      Show Toast
+    </Button>
+  );
+};
+```
+
+<Callout type='info'>
+  To display multiple toasts at the same time, you can update the `TOAST_LIMIT`
+  in `toast.tsx`.
+</Callout>
+
+## Examples
+
+### Intents
+
+<ComponentPreview name='toast-intents'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Toast/ToastIntents.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+### Simple
+
+<ComponentPreview name='toast-simple'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Toast/ToastSimple.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+### With Title
+
+<ComponentPreview name='toast-title'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Toast/ToastTitle.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+### With Action
+
+<ComponentPreview name='toast-action'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Toast/ToastAction.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
