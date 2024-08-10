@@ -42,7 +42,7 @@ export const docsOptions: DocsLayoutProps = {
   tree: docs.pageTree,
   nav: {
     ...baseOptions.nav,
-    transparentMode: 'none',
+    transparentMode: 'always',
     children: undefined,
   },
   sidebar: {
@@ -52,7 +52,7 @@ export const docsOptions: DocsLayoutProps = {
         options={modes.map((mode) => ({
           url: `/docs/${mode.param}`,
           icon: (
-            <div className='flex items-center justify-center'>
+            <div className='flex items-center justify-center rounded-md bg-gradient-to-t from-grey-line to-grey-bg-subtle'>
               <mode.icon className='size-8 shrink-0 rounded-md p-1.5' />
             </div>
           ),
