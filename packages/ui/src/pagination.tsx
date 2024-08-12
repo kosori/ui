@@ -5,8 +5,8 @@ import {
   DotsHorizontalIcon,
 } from '@radix-ui/react-icons';
 
+import type { ButtonProps } from '@kosori/ui/button';
 import { cn } from '@kosori/ui';
-import type { ButtonProps} from '@kosori/ui/button';
 import { buttonStyles } from '@kosori/ui/button';
 
 export const Pagination = ({

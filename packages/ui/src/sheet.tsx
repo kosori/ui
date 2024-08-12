@@ -1,3 +1,4 @@
+import type { VariantProps } from 'tailwind-variants';
 import { forwardRef } from 'react';
 import {
   Close,
@@ -10,7 +11,6 @@ import {
   Trigger,
 } from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import type { VariantProps } from 'tailwind-variants';
 import { tv } from 'tailwind-variants';
 
 import { cn } from '@kosori/ui';
