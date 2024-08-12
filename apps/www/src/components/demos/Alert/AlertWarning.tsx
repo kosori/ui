@@ -4,7 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from '@kosori/ui/alert';
 
 export const AlertWarningDemo = () => {
   return (
-    <Alert intent='warning'>
+    <Alert className='max-w-md' intent='warning'>
       <AlertTitle>
         <AlertTriangle /> Exceeded storage limit
       </AlertTitle>

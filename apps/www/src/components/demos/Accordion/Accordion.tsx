@@ -7,7 +7,7 @@ import {
 
 export const AccordionDemo = () => {
   return (
-    <Accordion collapsible className='grid w-full gap-4' type='single'>
+    <Accordion collapsible className='grid w-full max-w-md gap-4' type='single'>
       <AccordionItem value='item-1'>
         <AccordionTrigger>Is it accessible?</AccordionTrigger>
         <AccordionContent>

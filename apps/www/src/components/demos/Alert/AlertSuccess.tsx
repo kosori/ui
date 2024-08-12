@@ -4,7 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from '@kosori/ui/alert';
 
 export const AlertSuccessDemo = () => {
   return (
-    <Alert intent='success'>
+    <Alert className='max-w-md' intent='success'>
       <AlertTitle>
         <CheckCircle2 /> Account registration complete
       </AlertTitle>

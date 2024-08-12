@@ -22,7 +22,7 @@ import {
 
 export const CommandDemo = () => {
   return (
-    <Command className='rounded-xl border border-grey-line shadow-md'>
+    <Command className='max-w-md rounded-xl border border-grey-line shadow-md'>
       <CommandInput placeholder='Type a command or search...' />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>

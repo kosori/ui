@@ -4,7 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from '@kosori/ui/alert';
 
 export const AlertErrorDemo = () => {
   return (
-    <Alert intent='error'>
+    <Alert className='max-w-md' intent='error'>
       <AlertTitle>
         <XCircle /> Connection failed
       </AlertTitle>

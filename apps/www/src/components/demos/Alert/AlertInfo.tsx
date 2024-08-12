@@ -4,7 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from '@kosori/ui/alert';
 
 export const AlertInfoDemo = () => {
   return (
-    <Alert intent='info'>
+    <Alert className='max-w-md' intent='info'>
       <AlertTitle>
         <Megaphone /> Account verification needed
       </AlertTitle>

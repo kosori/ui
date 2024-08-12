@@ -4,7 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from '@kosori/ui/alert';
 
 export const AlertDemo = () => {
   return (
-    <Alert>
+    <Alert className='max-w-md'>
       <AlertTitle>
         <AlertCircle /> Heads up!
       </AlertTitle>
