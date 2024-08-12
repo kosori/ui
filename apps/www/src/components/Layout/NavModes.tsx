@@ -9,11 +9,11 @@ export const NavModes = () => {
       {modes.map((m) => (
         <Link
           key={m.param}
-          href={`/docs/${m.param}`}
           className={clsx(
             'rounded-md px-2 py-1 text-grey-text transition-colors',
-            'hover:text-grey-text-accent',
+            'hover:text-grey-text-contrast',
           )}
+          href={`/docs/${m.param}`}
         >
           {m.name}
         </Link>
