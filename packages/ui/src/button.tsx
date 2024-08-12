@@ -1,5 +1,6 @@
 import type { VariantProps } from 'tailwind-variants';
 import { forwardRef } from 'react';
+import { Slot } from '@radix-ui/react-slot';
 import { tv } from 'tailwind-variants';
 
 import { cn } from '@kosori/ui';
@@ -153,28 +154,52 @@ export const buttonStyles = tv({
 type HTMLButtonProps = React.ComponentPropsWithoutRef<'button'>;
 type ButtonVariants = VariantProps<typeof buttonStyles>;
 export type ButtonProps = {
-  /** Change the variant of the Button */
+  /** Change the default rendered element for the one passed as a child, merging their props and behavior. */
+  asChild?: boolean;
+  /** Change the variant of the Button. Options: 'solid', 'soft', 'outline', 'ghost'. */
   variant?: ButtonVariants['variant'];
-  /** Change the intent of the Button */
+  /** Change the intent of the Button. Options: 'default', 'danger'. */
   intent?: ButtonVariants['intent'];
-  /** Change the size of the Button */
+  /** Change the size of the Button. Options: 'small', 'medium', 'large'. */
   size?: ButtonVariants['size'];
-  /** Change the size if is only an icon */
+  /** Adjust the size if the button is only an icon. */
   icon?: ButtonVariants['icon'];
 } & HTMLButtonProps;
 
 /**
- * Displays a button or a component that looks like a button.
- * @param {string} [variant='solid'] - Change the variant of the Button.
- * @param {string} [intent='default'] - Change the intent of the Button.
- * @param {string} [size='medium'] - Change the size of the BUtton.
- * @param {boolean} [icon=false] - Change the size if is only an icon.
+ * Button component that renders a customizable button or a component that looks like a button.
+ *
+ * @param {boolean} [asChild=false] - If true, renders the button as a child component, merging props and behavior.
+ * @param {string} [variant='solid'] - The visual style of the button. Choose from 'solid', 'soft', 'outline', or 'ghost'.
+ * @param {string} [intent='default'] - The intent of the button, affecting its color scheme. Options include 'default' or 'danger'.
+ * @param {string} [size='medium'] - The size of the button. Available options are 'small', 'medium', and 'large'.
+ * @param {boolean} [icon=false] - If true, adjusts the button size for icon-only usage.
+ *
+ * @example
+ * // Basic usage
+ * <Button>Click Me</Button>
+ *
+ * @example
+ * // Using variants and intents
+ * <Button variant="outline" intent="danger">Delete</Button>
+ *
+ * @example
+ * // Icon button
+ * <Button icon>
+ *   <Icon />
+ * </Button>
+ *
  * @see {@link https://dub.sh/XuNhEXJ Button Docs} for further information.
  */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant, intent, size, icon, className, ...props }, ref) => {
+  (
+    { asChild = false, variant, intent, size, icon, className, ...props },
+    ref,
+  ) => {
+    const Comp = asChild ? Slot : 'button';
+
     return (
-      <button
+      <Comp
         ref={ref}
         className={buttonStyles({
           variant,
