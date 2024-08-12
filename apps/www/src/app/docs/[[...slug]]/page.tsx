@@ -1,10 +1,12 @@
 import { notFound } from 'next/navigation';
-import { ExternalLinkIcon } from '@radix-ui/react-icons';
+import { ExternalLinkIcon, Pencil2Icon } from '@radix-ui/react-icons';
 import { DocsBody, DocsPage } from 'fumadocs-ui/page';
 
 import { Badge } from '@kosori/ui/badge';
+import { Button } from '@kosori/ui/button';
 
 import { docs } from '~/app/source';
+import { Contribute } from '../_components/Contribute';
 
 export const generateStaticParams = () => {
   return docs.getPages().map((page) => ({
@@ -35,10 +37,16 @@ const Page = ({ params }: { params: { slug?: string[] } }) => {
     notFound();
   }
 
+  const path = `apps/www/content/docs/${page.file.path}`;
   const MDX = page.data.exports.default;
 
   return (
-    <DocsPage full={page.data.full} toc={page.data.exports.toc}>
+    <DocsPage
+      full={page.data.full}
+      tableOfContent={{ footer: <Contribute path={path} /> }}
+      tableOfContentPopover={{ footer: <Contribute path={path} /> }}
+      toc={page.data.exports.toc}
+    >
       <DocsBody>
         <h1 className='mb-0'>{page.data.title}</h1>
         <p className={page.data.links ? 'my-2' : 'mb-12 mt-2'}>
