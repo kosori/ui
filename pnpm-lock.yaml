@@ -281,8 +281,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tailwind-merge:
-        specifier: ^2.3.0
-        version: 2.3.0
+        specifier: ^2.5.2
+        version: 2.5.2
       tailwind-variants:
         specifier: ^0.2.1
         version: 0.2.1(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.9)(typescript@5.5.3)))
@@ -346,7 +346,7 @@ importers:
         version: 7.35.0(eslint@9.7.0)
       eslint-plugin-react-hooks:
         specifier: rc
-        version: 5.1.0-rc-e948a5ac-20240807(eslint@9.7.0)
+        version: 5.1.0-rc-68dbd84b-20240812(eslint@9.7.0)
       eslint-plugin-turbo:
         specifier: ^2.0.11
         version: 2.0.11(eslint@9.7.0)
@@ -2343,8 +2343,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
 
-  eslint-plugin-react-hooks@5.1.0-rc-e948a5ac-20240807:
-    resolution: {integrity: sha512-cc94nzLi7ZC4ZetSaA5z5bH5o1dYBxfPckudUT3Ddn1d5WXTk9Cn1NpM+HE+OZ5zrmbq/oBLxovfllOm0P9KXg==}
+  eslint-plugin-react-hooks@5.1.0-rc-68dbd84b-20240812:
+    resolution: {integrity: sha512-4TYlNy88XzkL2JYCIHjQv+sJ7tQuqkRNeTp0py78arVCVXK4I8MA/Z3DffxH5KSeC7PcagmBnVHww7tEpbToZA==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
@@ -4064,11 +4064,11 @@ packages:
     peerDependencies:
       react: ^16.11.0 || ^17.0.0 || ^18.0.0
 
-  tailwind-merge@2.3.0:
-    resolution: {integrity: sha512-vkYrLpIP+lgR0tQCG6AP7zZXCTLc1Lnv/CCRT3BqJ9CZ3ui2++GPaGb1x/ILsINIMSYqqvrpqjUFsMNLlW99EA==}
-
   tailwind-merge@2.4.0:
     resolution: {integrity: sha512-49AwoOQNKdqKPd9CViyH5wJoSKsCDjUlzL8DxuGp3P1FsGY36NJDAa18jLZcaHAUUuTj+JB8IAo8zWgBNvBF7A==}
+
+  tailwind-merge@2.5.2:
+    resolution: {integrity: sha512-kjEBm+pvD+6eAwzJL2Bi+02/9LFLal1Gs61+QB7HvTfQQ0aXwC5LGT8PEt1gS0CWKktKe6ysPTAy3cBC5MeiIg==}
 
   tailwind-variants@0.2.1:
     resolution: {integrity: sha512-2xmhAf4UIc3PijOUcJPA1LP4AbxhpcHuHM2C26xM0k81r0maAO6uoUSHl3APmvHZcY5cZCY/bYuJdfFa4eGoaw==}
@@ -6592,7 +6592,7 @@ snapshots:
       safe-regex-test: 1.0.3
       string.prototype.includes: 2.0.0
 
-  eslint-plugin-react-hooks@5.1.0-rc-e948a5ac-20240807(eslint@9.7.0):
+  eslint-plugin-react-hooks@5.1.0-rc-68dbd84b-20240812(eslint@9.7.0):
     dependencies:
       eslint: 9.7.0
 
@@ -8811,15 +8811,13 @@ snapshots:
       react: 18.3.1
       use-sync-external-store: 1.2.2(react@18.3.1)
 
-  tailwind-merge@2.3.0:
-    dependencies:
-      '@babel/runtime': 7.24.7
-
   tailwind-merge@2.4.0: {}
+
+  tailwind-merge@2.5.2: {}
 
   tailwind-variants@0.2.1(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.9)(typescript@5.5.3))):
     dependencies:
-      tailwind-merge: 2.4.0
+      tailwind-merge: 2.5.2
       tailwindcss: 3.4.4(ts-node@10.9.2(@types/node@20.14.9)(typescript@5.5.3))
 
   tailwindcss-animate@1.0.7(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.9)(typescript@5.5.3))):
