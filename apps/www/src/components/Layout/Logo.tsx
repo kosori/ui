@@ -13,8 +13,11 @@ export const Logo = () => {
         src={LogoImage}
       />
 
-      <span className='font-medium [.uwu_&]:hidden max-md:[header_&]:hidden'>
-        kōsori/ui
+      <span className='flex items-center gap-2 font-medium [.uwu_&]:hidden max-md:[header_&]:hidden'>
+        kōsori/ui{' '}
+        <span className='rounded-full bg-grey-text-contrast px-1.5 py-1 text-[10px] leading-none text-grey-base'>
+          alpha
+        </span>
       </span>
     </>
   );
