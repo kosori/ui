@@ -5,10 +5,22 @@ import { Range, Root, Thumb, Track } from '@radix-ui/react-slider';
 
 import { cn } from '@kosori/ui';
 
-// --- Component:Slider ---
 type SliderRef = React.ElementRef<typeof Root>;
 type SliderProps = React.ComponentPropsWithoutRef<typeof Root>;
 
+/**
+ * Slider component that allows users to select a value from a range.
+ *
+ * @param {SliderProps} props - The props for the Slider component.
+ * @param {number[]} [defaultValue] - The default value(s) for the slider.
+ * @param {number} [max] - The maximum value of the slider.
+ * @param {number} [step] - The step value for the slider.
+ *
+ * @example
+ * <Slider defaultValue={[33]} max={100} step={1} />
+ *
+ * @see {@link https://dub.sh/ui-slider Slider Docs} for further information.
+ */
 export const Slider = forwardRef<SliderRef, SliderProps>(
   ({ className, ...props }, ref) => (
     <Root

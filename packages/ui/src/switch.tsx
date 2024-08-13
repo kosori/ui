@@ -29,7 +29,7 @@ const switchStyles = tv({
         '[&_span]:h-4 [&_span]:w-4',
         '[&_span]:data-[state=checked]:translate-x-4',
       ),
-      big: cn(
+      large: cn(
         'h-6 w-11',
         '[&_span]:h-5 [&_span]:w-5',
         '[&_span]:data-[state=checked]:translate-x-5',
@@ -41,12 +41,22 @@ const switchStyles = tv({
   },
 });
 
-// --- Component:Switch ---
 type SwitchRef = React.ElementRef<typeof Root>;
 type SwitchRadixProps = React.ComponentPropsWithoutRef<typeof Root>;
 type SwitchVariants = VariantProps<typeof switchStyles>;
 type SwitchProps = object & SwitchRadixProps & SwitchVariants;
 
+/**
+ * Switch component that allows users to toggle between checked and unchecked states.
+ *
+ * @param {SwitchProps} props - The props for the Switch component.
+ * @param {string} [size='medium'] - The size of the switch (e.g. 'small', 'medium', 'large').
+ *
+ * @example
+ * <Switch />
+ *
+ * @see {@link https://dub.sh/ui-switch Switch Docs} for further information.
+ */
 export const Switch = forwardRef<SwitchRef, SwitchProps>(
   ({ size, className, ...props }, ref) => (
     <Root

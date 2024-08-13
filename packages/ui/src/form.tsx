@@ -7,10 +7,22 @@ import { Controller, FormProvider, useFormContext } from 'react-hook-form';
 import { cn } from '@kosori/ui';
 import { Label } from '@kosori/ui/label';
 
-// --- Component:Form ---
+/**
+ * Form component that provides context for form fields.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof FormProvider>} props - The props for the Form component.
+ *
+ * @example
+ * <>
+ *   <Form>
+ *     <FormField control={...} name='...' render={() => <FormControl />} />
+ *   </Form>
+ * </>
+ *
+ * @see {@link https://dub.sh/ui-form Form Docs} for further information.
+ */
 export const Form = FormProvider;
 
-// --- Component:FormFieldContext ---
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -22,7 +34,18 @@ export const FormFieldContext = createContext<FormFieldContextValue>(
   {} as FormFieldContextValue,
 );
 
-// --- Component:FormField ---
+/**
+ * FormField component that wraps a Controller from react-hook-form.
+ *
+ * @param {ControllerProps<TFieldValues, TName>} props - The props for the FormField component.
+ *
+ * @example
+ * <FormField
+ *   control={...}
+ *   name='...'
+ *   render={...} />
+ * </>
+ */
 export const FormField = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -36,7 +59,6 @@ export const FormField = <
   );
 };
 
-// --- Component:FormItemContext ---
 type FormItemContextValue = {
   id: string;
 };
@@ -45,7 +67,6 @@ export const FormItemContext = createContext<FormItemContextValue>(
   {} as FormItemContextValue,
 );
 
-// --- Component:useFormField ---
 export const useFormField = () => {
   const fieldContext = useContext(FormFieldContext);
   const itemContext = useContext(FormItemContext);
@@ -70,7 +91,21 @@ export const useFormField = () => {
   };
 };
 
-// --- Component:FormItem ---
+/**
+ * FormItem component that serves as a wrapper for form fields.
+ *
+ * @param {React.HTMLAttributes<HTMLDivElement>} props - The props for the FormItem component.
+ *
+ * @example
+ * <>
+ *   <FormItem>
+ *     <FormLabel />
+ *     <FormControl />
+ *     <FormDescription />
+ *     <FormMessage />
+ *   </FormItem>
+ * </>
+ */
 export const FormItem = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -86,7 +121,14 @@ export const FormItem = forwardRef<
 
 FormItem.displayName = 'FormItem';
 
-// --- Component:FormLabel ---
+/**
+ * FormLabel component that renders a label for the form field.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the FormLabel component.
+ *
+ * @example
+ * <FormLabel>Label</FormLabel>
+ */
 export const FormLabel = forwardRef<
   React.ElementRef<typeof Root>,
   React.ComponentPropsWithoutRef<typeof Root>
@@ -105,7 +147,17 @@ export const FormLabel = forwardRef<
 
 FormLabel.displayName = 'FormLabel';
 
-// --- Component:FormControl ---
+/**
+ * FormControl component that wraps the form control element.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Slot>} props - The props for the FormControl component.
+ *
+ * @example
+ * <>
+ *   <FormControl>
+ *     {...}
+ *   </FormControl>
+ */
 export const FormControl = forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
@@ -130,7 +182,14 @@ export const FormControl = forwardRef<
 
 FormControl.displayName = 'FormControl';
 
-// --- Component:FormDescription ---
+/**
+ * FormDescription component that provides additional information about the form field.
+ *
+ * @param {React.HTMLAttributes<HTMLParagraphElement>} props - The props for the FormDescription component.
+ *
+ * @example
+ * <FormDescription>Description</FormDescription>
+ */
 export const FormDescription = forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
@@ -149,7 +208,14 @@ export const FormDescription = forwardRef<
 
 FormDescription.displayName = 'FormDescription';
 
-// --- Component:FormMessage ---
+/**
+ * FormMessage component that displays error messages for the form field.
+ *
+ * @param {React.HTMLAttributes<HTMLParagraphElement>} props - The props for the FormMessage component.
+ *
+ * @example
+ * <FormMessage>Error message</FormMessage>
+ */
 export const FormMessage = forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>

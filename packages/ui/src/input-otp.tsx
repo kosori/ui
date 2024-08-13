@@ -5,10 +5,36 @@ import { OTPInput } from 'input-otp';
 
 import { cn } from '@kosori/ui';
 
-// --- Component:InputOTP ---
 type InputOTPRef = React.ElementRef<typeof OTPInput>;
 type InputOTPProps = React.ComponentPropsWithoutRef<typeof OTPInput>;
 
+/**
+ * InputOTP component that renders an OTP input field.
+ *
+ * @param {InputOTPProps} props - The props for the InputOTP component.
+ *
+ * @example
+ * <InputOTP
+ *   maxLength={6}
+ *   render={({ slots }) => (
+ *     <>
+ *       <InputOTPGroup>
+ *         {slots.slice(0, 3).map((slot, index) => (
+ *           <InputOTPSlot key={index} {...slot} />
+ *         ))}
+ *       </InputOTPGroup>
+ *       <InputOTPSeparator />
+ *       <InputOTPGroup>
+ *         {slots.slice(3).map((slot, index) => (
+ *           <InputOTPSlot key={index + 3} {...slot} />
+ *         ))}
+ *       </InputOTPGroup>
+ *     </>
+ *   )}
+ * />
+ *
+ * @see {@link https://dub.sh/ui-input-otp InputOTP Docs} for further information.
+ */
 export const InputOTP = forwardRef<InputOTPRef, InputOTPProps>(
   ({ className, ...props }, ref) => (
     <OTPInput
@@ -21,10 +47,19 @@ export const InputOTP = forwardRef<InputOTPRef, InputOTPProps>(
 
 InputOTP.displayName = 'InputOTP';
 
-// --- Component:InputOTPGroup ---
 type InputOTPGroupRef = React.ElementRef<'div'>;
 type InputOTPGroupProps = React.ComponentPropsWithoutRef<'div'>;
 
+/**
+ * InputOTPGroup component that wraps a group of OTP input slots.
+ *
+ * @param {InputOTPGroupProps} props - The props for the InputOTPGroup component.
+ *
+ * @example
+ * <InputOTPGroup>
+ *   {Your input slots here}
+ * </InputOTPGroup>
+ */
 export const InputOTPGroup = forwardRef<InputOTPGroupRef, InputOTPGroupProps>(
   ({ className, ...props }, ref) => (
     <div ref={ref} className={cn('flex items-center', className)} {...props} />
@@ -33,10 +68,17 @@ export const InputOTPGroup = forwardRef<InputOTPGroupRef, InputOTPGroupProps>(
 
 InputOTPGroup.displayName = 'InputOTPGroup';
 
-// --- Component:InputOTPSlot ---
 type InputOTPSlotRef = React.ElementRef<'div'>;
 type InputOTPSlotProps = SlotProps & React.ComponentPropsWithoutRef<'div'>;
 
+/**
+ * InputOTPSlot component that represents a single slot in the OTP input.
+ *
+ * @param {InputOTPSlotProps} props - The props for the InputOTPSlot component.
+ *
+ * @example
+ * <InputOTPSlot />
+ */
 export const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
   ({ char, hasFakeCaret, isActive, className, ...props }, ref) => {
     return (
@@ -64,10 +106,17 @@ export const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
 
 InputOTPSlot.displayName = 'InputOTPSlot';
 
-// --- Component:InputOTPSeparator ---
 type InputOTPSeparatorRef = React.ElementRef<'div'>;
 type InputOTPSeparatorProps = React.ComponentPropsWithoutRef<'div'>;
 
+/**
+ * InputOTPSeparator component that visually separates OTP input groups.
+ *
+ * @param {InputOTPSeparatorProps} props - The props for the InputOTPSeparator component.
+ *
+ * @example
+ * <InputOTPSeparator />
+ */
 export const InputOTPSeparator = forwardRef<
   InputOTPSeparatorRef,
   InputOTPSeparatorProps

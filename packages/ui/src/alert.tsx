@@ -22,11 +22,36 @@ const alertStyles = tv({
   },
 });
 
-// --- Component:Alert ---
 type DivProps = React.HTMLAttributes<HTMLDivElement>;
 type AlertVariants = VariantProps<typeof alertStyles>;
-type AlertProps = object & DivProps & AlertVariants;
+type AlertProps = DivProps & AlertVariants;
 
+/**
+ * Alert component that displays a message with an optional title and description.
+ *
+ * @param {AlertProps} props - The props for the Alert component.
+ * @param {'default' | 'info' | 'success' | 'warning' | 'error'} [intent='default'] - The visual style of the alert (e.g., 'info', 'success', 'warning', 'error').
+ *
+ * @example
+ * // Basic usage
+ * <Alert>
+ *   <AlertTitle>Heads up!</AlertTitle>
+ *   <AlertDescription>
+ *     You can add components and dependencies to your app using the cli.
+ *   </AlertDescription>
+ * </Alert>
+ *
+ * @example
+ * // Alert with a specific intent
+ * <Alert intent="success">
+ *   <AlertTitle>Success!</AlertTitle>
+ *   <AlertDescription>
+ *     Your changes have been saved successfully.
+ *   </AlertDescription>
+ * </Alert>
+ *
+ * @see {@link https://dub.sh/ui-alert Alert Docs} for further information.
+ */
 export const Alert = forwardRef<HTMLDivElement, AlertProps>(
   ({ className, intent, ...props }, ref) => (
     <div
@@ -40,10 +65,17 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
 
 Alert.displayName = 'Alert';
 
-// --- Component:AlertTitle ---
 type AlertTitleRef = HTMLParagraphElement;
 type AlertTitleProps = React.HTMLAttributes<HTMLHeadingElement>;
 
+/**
+ * AlertTitle component for the Alert.
+ *
+ * @param {AlertTitleProps} props - Additional props to pass to the title element.
+ *
+ * @example
+ * <AlertTitle>Heads up!</AlertTitle>
+ */
 export const AlertTitle = forwardRef<AlertTitleRef, AlertTitleProps>(
   ({ className, ...props }, ref) => (
     <h5
@@ -60,10 +92,19 @@ export const AlertTitle = forwardRef<AlertTitleRef, AlertTitleProps>(
 
 AlertTitle.displayName = 'AlertTitle';
 
-// --- Component:AlertDescription ---
 type AlertDescriptionRef = HTMLParagraphElement;
 type AlertDescriptionProps = React.HTMLAttributes<HTMLParagraphElement>;
 
+/**
+ * AlertDescription component for the Alert.
+ *
+ * @param {AlertDescriptionProps} props - Additional props to pass to the description element.
+ *
+ * @example
+ * <AlertDescription>
+ *   You can add components and dependencies to your app using the cli.
+ * </AlertDescription>
+ */
 export const AlertDescription = forwardRef<
   AlertDescriptionRef,
   AlertDescriptionProps

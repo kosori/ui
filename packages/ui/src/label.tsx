@@ -14,11 +14,21 @@ const labelVariants = tv({
   ),
 });
 
-// --- Component:Label ---
 type LabelRef = React.ElementRef<typeof Root>;
 type LabelRadixProps = React.ComponentPropsWithoutRef<typeof Root>;
 type LabelVariants = VariantProps<typeof labelVariants>;
 type LabelProps = LabelRadixProps & LabelVariants;
+
+/**
+ * Label component that provides a label for form elements.
+ *
+ * @param {LabelProps} props - The props for the Label component.
+ *
+ * @example
+ * <Label htmlFor='email'>Your email address</Label>
+ *
+ * @see {@link https://dub.sh/ui-label Label Docs} for further information.
+ */
 
 export const Label = forwardRef<LabelRef, LabelProps>(
   ({ className, ...props }, ref) => (

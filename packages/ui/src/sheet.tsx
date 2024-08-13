@@ -15,18 +15,60 @@ import { tv } from 'tailwind-variants';
 
 import { cn } from '@kosori/ui';
 
-// --- Component:Sheet ---
+/**
+ * Sheet component that serves as a container for content that can be displayed in a modal-like manner.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the Sheet component.
+ *
+ * @example
+ * <Sheet>
+ *   <SheetTrigger>Open</SheetTrigger>
+ *   <SheetContent>
+ *     <SheetHeader>
+ *       <SheetTitle>Are you absolutely sure?</SheetTitle>
+ *       <SheetDescription>
+ *         This action cannot be undone. This will permanently delete your account
+ *         and remove your data from our servers.
+ *       </SheetDescription>
+ *     </SheetHeader>
+ *   </SheetContent>
+ * </Sheet>
+ *
+ * @see {@link https://dub.sh/ui-sheet Sheet Docs} for further information.
+ */
 export const Sheet = Root;
 
-// --- Component:SheetTrigger ---
+/**
+ * SheetTrigger component that triggers the display of the sheet content.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Trigger>} props - The props for the SheetTrigger component.
+ *
+ * @example
+ * <SheetTrigger>Open</SheetTrigger>
+ */
 export const SheetTrigger = Trigger;
 
-// --- Component:SheetPortal ---
+/**
+ * SheetPortal component that renders the sheet content in a portal.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Portal>} props - The props for the SheetPortal component.
+ *
+ * @example
+ * <SheetPortal>{Your portal content}</SheetPortal>
+ */
 export const SheetPortal = Portal;
 
-// --- Component:SheetOverlay ---
 type SheetOverlayRef = React.ElementRef<typeof Overlay>;
 type SheetOverlayProps = React.ComponentPropsWithoutRef<typeof Overlay>;
+
+/**
+ * SheetOverlay component that represents the overlay behind the sheet content.
+ *
+ * @param {SheetOverlayProps} props - The props for the SheetOverlay component.
+ *
+ * @example
+ * <SheetOverlay />
+ */
 
 export const SheetOverlay = forwardRef<SheetOverlayRef, SheetOverlayProps>(
   ({ className, ...props }, ref) => (
@@ -82,11 +124,22 @@ const sheetStyles = tv({
   },
 });
 
-// --- Component:SheetContent ---
 type SheetContentRadixRef = React.ElementRef<typeof Content>;
 type SheetVariants = VariantProps<typeof sheetStyles>;
 type SheetContentProps = React.ComponentPropsWithoutRef<typeof Content> &
   SheetVariants;
+
+/**
+ * SheetContent component that displays the content of the sheet.
+ *
+ * @param {SheetContentProps} props - The props for the SheetContent component.
+ * @param {'top' | 'bottom' | 'left' | 'right'} [side='right'] - The side of the sheet to display the content (e.g. 'top', 'bottom', 'left', 'right').
+ *
+ * @example
+ * <SheetContent>
+ *   {Your content here}
+ * </SheetContent>
+ */
 
 export const SheetContent = forwardRef<SheetContentRadixRef, SheetContentProps>(
   ({ side = 'right', className, children, ...props }, ref) => (
@@ -116,10 +169,26 @@ export const SheetContent = forwardRef<SheetContentRadixRef, SheetContentProps>(
 
 SheetContent.displayName = Content.displayName;
 
-// --- Component:SheetClose ---
+/**
+ * SheetClose component that allows closing the sheet.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Close>} props - The props for the SheetClose component.
+ *
+ * @example
+ * <SheetClose />
+ */
 export const SheetClose = Close;
 
-// --- Component:SheetHeader ---
+/**
+ * SheetHeader component that provides a header for the sheet content.
+ *
+ * @param {React.HTMLAttributes<HTMLDivElement>} props - The props for the SheetHeader component.
+ *
+ * @example
+ * <SheetHeader>
+ *   <SheetTitle>Title</SheetTitle>
+ * </SheetHeader>
+ */
 export const SheetHeader = ({
   className,
   ...props
@@ -136,10 +205,17 @@ export const SheetHeader = ({
 
 SheetHeader.displayName = 'SheetHeader';
 
-// --- Component:SheetTitle ---
 type SheetTitleRef = React.ElementRef<typeof Title>;
 type SheetTitleProps = React.ComponentPropsWithoutRef<typeof Title>;
 
+/**
+ * SheetTitle component that displays the title of the sheet.
+ *
+ * @param {SheetTitleProps} props - The props for the SheetTitle component.
+ *
+ * @example
+ * <SheetTitle>Title</SheetTitle>
+ */
 export const SheetTitle = forwardRef<SheetTitleRef, SheetTitleProps>(
   ({ className, ...props }, ref) => (
     <Title
@@ -152,10 +228,17 @@ export const SheetTitle = forwardRef<SheetTitleRef, SheetTitleProps>(
 
 SheetTitle.displayName = Title.displayName;
 
-// --- Component:SheetDescription ---
 type SheetDescriptionRef = React.ElementRef<typeof Description>;
 type SheetDescriptionProps = React.ComponentPropsWithoutRef<typeof Description>;
 
+/**
+ * SheetDescription component that provides a description for the sheet content.
+ *
+ * @param {SheetDescriptionProps} props - The props for the SheetDescription component.
+ *
+ * @example
+ * <SheetDescription>Description text here.</SheetDescription>
+ */
 export const SheetDescription = forwardRef<
   SheetDescriptionRef,
   SheetDescriptionProps
@@ -169,7 +252,16 @@ export const SheetDescription = forwardRef<
 
 SheetDescription.displayName = Description.displayName;
 
-// --- Component:SheetFooter ---
+/**
+ * SheetFooter component that provides a footer for the sheet content.
+ *
+ * @param {React.HTMLAttributes<HTMLDivElement>} props - The props for the SheetFooter component.
+ *
+ * @example
+ * <SheetFooter>
+ *   {Footer content here}
+ * </SheetFooter>
+ */
 export const SheetFooter = ({
   className,
   ...props

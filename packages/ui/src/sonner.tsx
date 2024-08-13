@@ -5,9 +5,18 @@ import { Toaster as Sonner } from 'sonner';
 
 import { cn } from '@kosori/ui';
 
-// --- Component:Toaster ---
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
+/**
+ * Toaster component that provides a way to display toast notifications.
+ *
+ * @param {ToasterProps} props - The props for the Toaster component.
+ *
+ * @example
+ * toast('Event has been created.');
+ *
+ * @see {@link https://dub.sh/ui-toaster Toaster Docs} for further information.
+ */
 export const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = 'system' } = useTheme();
 

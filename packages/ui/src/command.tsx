@@ -14,29 +14,61 @@ import {
 import { cn } from '@kosori/ui';
 import { Dialog, DialogContent } from '@kosori/ui/dialog';
 
-// --- Component:Command ---
-type CommandRef = React.ElementRef<typeof CMDK>;
-type CommandProps = React.ComponentPropsWithoutRef<typeof CMDK>;
-
-export const Command = forwardRef<CommandRef, CommandProps>(
-  ({ className, ...props }, ref) => (
-    <CMDK
-      ref={ref}
-      className={cn(
-        'flex h-full w-full flex-col overflow-hidden rounded-xl bg-grey-base',
-        className,
-      )}
-      {...props}
-    />
-  ),
-);
+/**
+ * Command component that provides a command palette for executing commands or searching.
+ *
+ * @param {CommandProps} props - The props for the Command component.
+ * @param {React.ReactNode} props.children - The content to be rendered inside the Command component.
+ *
+ * @example
+ * <Command>
+ *   <CommandInput placeholder='Type a command or search...' />
+ *   <CommandList>
+ *     <CommandEmpty>No results found.</CommandEmpty>
+ *     <CommandGroup heading='Suggestions'>
+ *       <CommandItem>Calendar</CommandItem>
+ *       <CommandItem>Search Emoji</CommandItem>
+ *       <CommandItem>Calculator</CommandItem>
+ *     </CommandGroup>
+ *     <CommandSeparator />
+ *     <CommandGroup heading='Settings'>
+ *       <CommandItem>Profile</CommandItem>
+ *       <CommandItem>Billing</CommandItem>
+ *       <CommandItem>Settings</CommandItem>
+ *     </CommandGroup>
+ *   </CommandList>
+ * </Command>
+ *
+ * @see {@link https://dub.sh/ui-command Command Docs} for further information.
+ */
+export const Command = forwardRef<
+  React.ElementRef<typeof CMDK>,
+  React.ComponentPropsWithoutRef<typeof CMDK>
+>(({ className, ...props }, ref) => (
+  <CMDK
+    ref={ref}
+    className={cn(
+      'flex h-full w-full flex-col overflow-hidden rounded-xl bg-grey-base',
+      className,
+    )}
+    {...props}
+  />
+));
 
 Command.displayName = CMDK.displayName;
 
-// --- Component:CommandDialog ---
-type CommandDialogProps = DialogProps;
-
-export const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
+/**
+ * CommandDialog component that wraps the Command component in a dialog.
+ *
+ * @param {DialogProps} props - The props for the CommandDialog component.
+ * @param {React.ReactNode} props.children - The content to be rendered inside the CommandDialog.
+ *
+ * @example
+ * <CommandDialog>
+ *   <Command>...</Command>
+ * </CommandDialog>
+ */
+export const CommandDialog = ({ children, ...props }: DialogProps) => {
   return (
     <Dialog {...props}>
       <DialogContent className='overflow-hidden p-0 shadow-lg'>
@@ -58,10 +90,17 @@ export const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   );
 };
 
-// --- Component:CommandInput ---
 type CommandInputRef = React.ElementRef<typeof CMDKInput>;
 type CommandInputProps = React.ComponentPropsWithoutRef<typeof CMDKInput>;
 
+/**
+ * CommandInput component that allows users to input commands or search terms.
+ *
+ * @param {CommandInputProps} props - The props for the CommandInput component.
+ *
+ * @example
+ * <CommandInput placeholder='Type a command or search...' />
+ */
 export const CommandInput = forwardRef<CommandInputRef, CommandInputProps>(
   ({ className, ...props }, ref) => (
     <div
@@ -85,10 +124,19 @@ export const CommandInput = forwardRef<CommandInputRef, CommandInputProps>(
 
 CommandInput.displayName = CMDKInput.displayName;
 
-// --- Component:CommandList ---
 type CommandListRef = React.ElementRef<typeof CMDKList>;
 type CommandListProps = React.ComponentPropsWithoutRef<typeof CMDKList>;
 
+/**
+ * CommandList component that wraps the list of command items.
+ *
+ * @param {CommandListProps} props - The props for the CommandList component.
+ *
+ * @example
+ * <CommandList>
+ *   <CommandItem>...</CommandItem>
+ * </CommandList>
+ */
 export const CommandList = forwardRef<CommandListRef, CommandListProps>(
   ({ className, ...props }, ref) => (
     <CMDKList
@@ -105,10 +153,17 @@ export const CommandList = forwardRef<CommandListRef, CommandListProps>(
 
 CommandList.displayName = CMDKList.displayName;
 
-// --- Component:CommandEmpty ---
 type CommandEmptyRef = React.ElementRef<typeof CMDKEmpty>;
 type CommandEmptyProps = React.ComponentPropsWithoutRef<typeof CMDKEmpty>;
 
+/**
+ * CommandEmpty component that displays a message when no results are found.
+ *
+ * @param {CommandEmptyProps} props - The props for the CommandEmpty component.
+ *
+ * @example
+ * <CommandEmpty>No results found.</CommandEmpty>
+ */
 export const CommandEmpty = forwardRef<CommandEmptyRef, CommandEmptyProps>(
   ({ className, ...props }, ref) => (
     <CMDKEmpty
@@ -121,10 +176,19 @@ export const CommandEmpty = forwardRef<CommandEmptyRef, CommandEmptyProps>(
 
 CommandEmpty.displayName = CMDKEmpty.displayName;
 
-// --- Component:CommandGroup ---
 type CommandGroupRef = React.ElementRef<typeof CMDKGroup>;
 type CommandGroupProps = React.ComponentPropsWithoutRef<typeof CMDKGroup>;
 
+/**
+ * CommandGroup component that groups related command items.
+ *
+ * @param {CommandGroupProps} props - The props for the CommandGroup component.
+ *
+ * @example
+ * <CommandGroup heading='Suggestions'>
+ *   <CommandItem>...</CommandItem>
+ * </CommandGroup>
+ */
 export const CommandGroup = forwardRef<CommandGroupRef, CommandGroupProps>(
   ({ className, ...props }, ref) => (
     <CMDKGroup
@@ -141,10 +205,17 @@ export const CommandGroup = forwardRef<CommandGroupRef, CommandGroupProps>(
 
 CommandGroup.displayName = CMDKGroup.displayName;
 
-// --- Component:CommandItem ---
 type CommandItemRef = React.ElementRef<typeof CMDKItem>;
 type CommandItemProps = React.ComponentPropsWithoutRef<typeof CMDKItem>;
 
+/**
+ * CommandItem component that represents a single item in the command list.
+ *
+ * @param {CommandItemProps} props - The props for the CommandItem component.
+ *
+ * @example
+ * <CommandItem>...</CommandItem>
+ */
 export const CommandItem = forwardRef<CommandItemRef, CommandItemProps>(
   ({ className, ...props }, ref) => (
     <CMDKItem
@@ -162,9 +233,16 @@ export const CommandItem = forwardRef<CommandItemRef, CommandItemProps>(
 
 CommandItem.displayName = CMDKItem.displayName;
 
-// --- Component:CommandShortcut ---
 type CommandShortcutProps = React.HTMLAttributes<HTMLSpanElement>;
 
+/**
+ * CommandShortcut component that displays a keyboard shortcut for a command item.
+ *
+ * @param {CommandShortcutProps} props - The props for the CommandShortcut component.
+ *
+ * @example
+ * <CommandShortcut>⌘K</CommandShortcut>
+ */
 export const CommandShortcut = ({
   className,
   ...props
@@ -181,12 +259,19 @@ export const CommandShortcut = ({
   );
 };
 
-// --- Component:CommandSeparator ---
 type CommandSeparatorRef = React.ElementRef<typeof CMDKSeparator>;
 type CommandSeparatorProps = React.ComponentPropsWithoutRef<
   typeof CMDKSeparator
 >;
 
+/**
+ * CommandSeparator component that visually separates command items.
+ *
+ * @param {CommandSeparatorProps} props - The props for the CommandSeparator component.
+ *
+ * @example
+ * <CommandSeparator />
+ */
 export const CommandSeparator = forwardRef<
   CommandSeparatorRef,
   CommandSeparatorProps

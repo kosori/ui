@@ -150,29 +150,22 @@ export const buttonStyles = tv({
   },
 });
 
-// --- Component:Button ---
 type HTMLButtonProps = React.ComponentPropsWithoutRef<'button'>;
 type ButtonVariants = VariantProps<typeof buttonStyles>;
 export type ButtonProps = {
   /** Change the default rendered element for the one passed as a child, merging their props and behavior. */
   asChild?: boolean;
-  /** Change the variant of the Button. Options: 'solid', 'soft', 'outline', 'ghost'. */
-  variant?: ButtonVariants['variant'];
-  /** Change the intent of the Button. Options: 'default', 'danger'. */
-  intent?: ButtonVariants['intent'];
-  /** Change the size of the Button. Options: 'small', 'medium', 'large'. */
-  size?: ButtonVariants['size'];
-  /** Adjust the size if the button is only an icon. */
-  icon?: ButtonVariants['icon'];
-} & HTMLButtonProps;
+} & HTMLButtonProps &
+  ButtonVariants;
 
 /**
  * Button component that renders a customizable button or a component that looks like a button.
  *
+ * @param {ButtonProps} props - The props for the Button component.
  * @param {boolean} [asChild=false] - If true, renders the button as a child component, merging props and behavior.
- * @param {string} [variant='solid'] - The visual style of the button. Choose from 'solid', 'soft', 'outline', or 'ghost'.
- * @param {string} [intent='default'] - The intent of the button, affecting its color scheme. Options include 'default' or 'danger'.
- * @param {string} [size='medium'] - The size of the button. Available options are 'small', 'medium', and 'large'.
+ * @param {'solid' | 'soft' | 'outline' | 'ghost'} [variant='solid'] - The visual style of the button (e.g., 'solid', 'soft', 'outline', 'ghost').
+ * @param {'default' | 'danger'} [intent='default'] - The intent of the button, affecting its color scheme (e.g., 'default', 'danger').
+ * @param {'small' | 'medium' | 'large'} [size='medium'] - The size of the button (e.g., 'small', 'medium', 'large').
  * @param {boolean} [icon=false] - If true, adjusts the button size for icon-only usage.
  *
  * @example
@@ -189,7 +182,7 @@ export type ButtonProps = {
  *   <Icon />
  * </Button>
  *
- * @see {@link https://dub.sh/XuNhEXJ Button Docs} for further information.
+ * @see {@link https://dub.sh/ui-button Button Docs} for further information.
  */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (

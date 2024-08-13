@@ -9,6 +9,31 @@ import type { ButtonProps } from '@kosori/ui/button';
 import { cn } from '@kosori/ui';
 import { buttonStyles } from '@kosori/ui/button';
 
+/**
+ * Pagination component that serves as a container for pagination controls.
+ *
+ * @param {React.ComponentProps<'nav'>} props - The props for the Pagination component.
+ *
+ * @example
+ * <Pagination>
+ *   <PaginationContent>
+ *     <PaginationItem>
+ *       <PaginationPrevious href='#' />
+ *     </PaginationItem>
+ *     <PaginationItem>
+ *       <PaginationLink href='#'>1</PaginationLink>
+ *     </PaginationItem>
+ *     <PaginationItem>
+ *       <PaginationEllipsis />
+ *     </PaginationItem>
+ *     <PaginationItem>
+ *       <PaginationNext href='#' />
+ *     </PaginationItem>
+ *   </PaginationContent>
+ * </Pagination>
+ *
+ * @see {@link https://dub.sh/ui-pagination Pagination Docs} for further information.
+ */
 export const Pagination = ({
   className,
   ...props
@@ -23,7 +48,16 @@ export const Pagination = ({
 
 Pagination.displayName = 'Pagination';
 
-// --- Component:PaginationContent ---
+/**
+ * PaginationContent component that wraps the pagination items.
+ *
+ * @param {React.ComponentProps<'ul'>} props - The props for the PaginationContent component.
+ *
+ * @example
+ * <PaginationContent>
+ *   {Pagination items here}
+ * </PaginationContent>
+ */
 export const PaginationContent = forwardRef<
   HTMLUListElement,
   React.ComponentProps<'ul'>
@@ -37,7 +71,16 @@ export const PaginationContent = forwardRef<
 
 PaginationContent.displayName = 'PaginationContent';
 
-// --- Component:PaginationItem ---
+/**
+ * PaginationItem component that represents an individual item in the pagination.
+ *
+ * @param {React.ComponentProps<'li'>} props - The props for the PaginationItem component.
+ *
+ * @example
+ * <PaginationItem>
+ *   <PaginationLink href='#'>1</PaginationLink>
+ * </PaginationItem>
+ */
 export const PaginationItem = forwardRef<
   HTMLLIElement,
   React.ComponentProps<'li'>
@@ -47,12 +90,23 @@ export const PaginationItem = forwardRef<
 
 PaginationItem.displayName = 'PaginationItem';
 
-// --- Component:PaginationLink ---
 type PaginationLinkProps = {
   isActive?: boolean;
 } & Pick<ButtonProps, 'size'> &
   Pick<ButtonProps, 'icon'> &
   React.ComponentProps<'a'>;
+
+/**
+ * PaginationLink component that represents a link to a specific page in the pagination.
+ *
+ * @param {PaginationLinkProps} props - The props for the PaginationLink component.
+ * @param {boolean} [isActive] - Indicates if the link is the active page.
+ * @param {string} [size='medium'] - The size of the button (e.g. 'small', 'medium', 'large').
+ * @param {boolean} [icon=true] - Indicates if an icon should be displayed.
+ *
+ * @example
+ * <PaginationLink href='#'>1</PaginationLink>
+ */
 
 export const PaginationLink = ({
   className,
@@ -77,8 +131,16 @@ export const PaginationLink = ({
 
 PaginationLink.displayName = 'PaginationLink';
 
-// --- Component:PaginationPrevious ---
 type PaginationPreviousProps = React.ComponentProps<typeof PaginationLink>;
+
+/**
+ * PaginationPrevious component that represents the link to the previous page.
+ *
+ * @param {PaginationPreviousProps} props - The props for the PaginationPrevious component.
+ *
+ * @example
+ * <PaginationPrevious href='#' />
+ */
 
 export const PaginationPrevious = ({
   className,
@@ -98,9 +160,16 @@ export const PaginationPrevious = ({
 
 PaginationPrevious.displayName = 'PaginationPrevious';
 
-// --- Component:PaginationNext ---
 type PaginationNextProps = React.ComponentProps<typeof PaginationLink>;
 
+/**
+ * PaginationNext component that represents the link to the next page.
+ *
+ * @param {PaginationNextProps} props - The props for the PaginationNext component.
+ *
+ * @example
+ * <PaginationNext href='#' />
+ */
 export const PaginationNext = ({
   className,
   ...props
@@ -119,9 +188,16 @@ export const PaginationNext = ({
 
 PaginationNext.displayName = 'PaginationNext';
 
-// --- Component:PaginationEllipsis ---
 type PaginationEllipsisProps = React.ComponentProps<'span'>;
 
+/**
+ * PaginationEllipsis component that indicates there are more pages in the pagination.
+ *
+ * @param {PaginationEllipsisProps} props - The props for the PaginationEllipsis component.
+ *
+ * @example
+ * <PaginationEllipsis />
+ */
 export const PaginationEllipsis = ({
   className,
   ...props

@@ -26,19 +26,56 @@ import {
 
 import { cn } from '@kosori/ui';
 
-// --- Component:ContextMenu ---
+/**
+ * ContextMenu component that provides a context menu for user interactions.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the ContextMenu component.
+ *
+ * @example
+ * <ContextMenu>
+ *   <ContextMenuTrigger>Right click</ContextMenuTrigger>
+ *   <ContextMenuContent>
+ *     <ContextMenuItem>Profile</ContextMenuItem>
+ *     <ContextMenuItem>Billing</ContextMenuItem>
+ *     <ContextMenuItem>Team</ContextMenuItem>
+ *     <ContextMenuItem>Subscription</ContextMenuItem>
+ *   </ContextMenuContent>
+ * </ContextMenu>
+ *
+ * @see {@link https://dub.sh/ui-context-menu Context Menu Docs} for further information.
+ */
 export const ContextMenu = Root;
 
-// --- Component:ContextMenuTrigger ---
+/**
+ * ContextMenuTrigger component that serves as the trigger for the ContextMenu.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Trigger>} props - The props for the ContextMenuTrigger component.
+ *
+ * @example
+ * <ContextMenuTrigger>Right click</ContextMenuTrigger>
+ */
 export const ContextMenuTrigger = Trigger;
 
-// --- Component:ContextMenuPortal ---
+/**
+ * ContextMenuPortal component that renders the ContextMenu in a portal.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Portal>} props - The props for the ContextMenuPortal component.
+ */
 export const ContextMenuPortal = Portal;
 
-// --- Component:ContextMenuContent ---
 type ContextMenuContentRef = React.ElementRef<typeof Content>;
 type ContextMenuContentProps = React.ComponentPropsWithoutRef<typeof Content>;
 
+/**
+ * ContextMenuContent component that wraps the content of the ContextMenu.
+ *
+ * @param {ContextMenuContentProps} props - The props for the ContextMenuContent component.
+ *
+ * @example
+ * <ContextMenuContent>
+ *   <ContextMenuItem>Profile</ContextMenuItem>
+ * </ContextMenuContent>
+ */
 export const ContextMenuContent = forwardRef<
   ContextMenuContentRef,
   ContextMenuContentProps
@@ -57,12 +94,20 @@ export const ContextMenuContent = forwardRef<
 
 ContextMenuContent.displayName = Content.displayName;
 
-// --- Component:ContextMenuItem ---
 type ContextMenuItemRef = React.ElementRef<typeof Item>;
 type ContextMenuItemProps = React.ComponentPropsWithoutRef<typeof Item> & {
   inset?: boolean;
 };
 
+/**
+ * ContextMenuItem component that represents a single item in the ContextMenu.
+ *
+ * @param {ContextMenuItemProps} props - The props for the ContextMenuItem component.
+ * @param {boolean} [props.inset] - Whether the item is inset.
+ *
+ * @example
+ * <ContextMenuItem>Profile</ContextMenuItem>
+ */
 export const ContextMenuItem = forwardRef<
   ContextMenuItemRef,
   ContextMenuItemProps
@@ -83,15 +128,30 @@ export const ContextMenuItem = forwardRef<
 
 ContextMenuItem.displayName = Item.displayName;
 
-// --- Component:ContextMenuGroup ---
+/**
+ * ContextMenuGroup component that groups related command items.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Group>} props - The props for the ContextMenuGroup component.
+ *
+ * @example
+ * <ContextMenuGroup>...</ContextMenuGroup>
+ */
 export const ContextMenuGroup = Group;
 
-// --- Component:ContextMenuLabel ---
 type ContextMenuLabelRef = React.ElementRef<typeof Label>;
 type ContextMenuLabelProps = React.ComponentPropsWithoutRef<typeof Label> & {
   inset?: boolean;
 };
 
+/**
+ * ContextMenuLabel component that displays a label for a group of items in the ContextMenu.
+ *
+ * @param {ContextMenuLabelProps} props - The props for the ContextMenuLabel component.
+ * @param {boolean} [props.inset] - Whether the label is inset.
+ *
+ * @example
+ * <ContextMenuLabel>Settings</ContextMenuLabel>
+ */
 export const ContextMenuLabel = forwardRef<
   ContextMenuLabelRef,
   ContextMenuLabelProps
@@ -109,12 +169,19 @@ export const ContextMenuLabel = forwardRef<
 
 ContextMenuLabel.displayName = Label.displayName;
 
-// --- Component:ContextMenuCheckboxItem ---
 type ContextMenuCheckboxItemRef = React.ElementRef<typeof CheckboxItem>;
 type ContextMenuCheckboxItemProps = React.ComponentPropsWithoutRef<
   typeof CheckboxItem
 >;
 
+/**
+ * ContextMenuCheckboxItem component that represents a checkbox item in the ContextMenu.
+ *
+ * @param {ContextMenuCheckboxItemProps} props - The props for the ContextMenuCheckboxItem component.
+ *
+ * @example
+ * <ContextMenuCheckboxItem checked={true}>Enable Notifications</ContextMenuCheckboxItem>
+ */
 export const ContextMenuCheckboxItem = forwardRef<
   ContextMenuCheckboxItemRef,
   ContextMenuCheckboxItemProps
@@ -142,15 +209,29 @@ export const ContextMenuCheckboxItem = forwardRef<
 
 ContextMenuCheckboxItem.displayName = CheckboxItem.displayName;
 
-// --- Component:ContextMenuRadioGroup ---
+/**
+ * ContextMenuRadioGroup component that represents a group of radio items in the ContextMenu.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof RadioGroup>} props - The props for the ContextMenuRadioGroup component.
+ *
+ * @example
+ * <ContextMenuRadioGroup>...</ContextMenuRadioGroup>
+ */
 export const ContextMenuRadioGroup = RadioGroup;
 
-// --- Component:ContextMenuRadioItem ---
 type ContextMenuRadioItemRef = React.ElementRef<typeof RadioItem>;
 type ContextMenuRadioItemProps = React.ComponentPropsWithoutRef<
   typeof RadioItem
 >;
 
+/**
+ * ContextMenuRadioItem component that represents a radio item in the ContextMenu.
+ *
+ * @param {ContextMenuRadioItemProps} props - The props for the ContextMenuRadioItem component.
+ *
+ * @example
+ * <ContextMenuRadioItem>Option 1</ContextMenuRadioItem>
+ */
 export const ContextMenuRadioItem = forwardRef<
   ContextMenuRadioItemRef,
   ContextMenuRadioItemProps
@@ -177,12 +258,19 @@ export const ContextMenuRadioItem = forwardRef<
 
 ContextMenuRadioItem.displayName = RadioItem.displayName;
 
-// --- Component:ContextMenuSeparator ---
 type ContextMenuSeparatorRef = React.ElementRef<typeof Separator>;
 type ContextMenuSeparatorProps = React.ComponentPropsWithoutRef<
   typeof Separator
 >;
 
+/**
+ * ContextMenuSeparator component that visually separates items in the ContextMenu.
+ *
+ * @param {ContextMenuSeparatorProps} props - The props for the ContextMenuSeparator component.
+ *
+ * @example
+ * <ContextMenuSeparator />
+ */
 export const ContextMenuSeparator = forwardRef<
   ContextMenuSeparatorRef,
   ContextMenuSeparatorProps
@@ -196,10 +284,16 @@ export const ContextMenuSeparator = forwardRef<
 
 ContextMenuSeparator.displayName = Separator.displayName;
 
-// --- Component:ContextMenuSub ---
+/**
+ * ContextMenuSub component that represents a sub-menu in the ContextMenu.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Sub>} props - The props for the ContextMenuSub component.
+ *
+ * @example
+ * <ContextMenuSub>...</ContextMenuSub>
+ */
 export const ContextMenuSub = Sub;
 
-// --- Component:ContextMenuSubTrigger ---
 type ContextMenuSubTriggerRef = React.ElementRef<typeof SubTrigger>;
 type ContextMenuSubTriggerProps = React.ComponentPropsWithoutRef<
   typeof SubTrigger
@@ -207,6 +301,15 @@ type ContextMenuSubTriggerProps = React.ComponentPropsWithoutRef<
   inset?: boolean;
 };
 
+/**
+ * ContextMenuSubTrigger component that serves as the trigger for a sub-menu in the ContextMenu.
+ *
+ * @param {ContextMenuSubTriggerProps} props - The props for the ContextMenuSubTrigger component.
+ * @param {boolean} [props.inset] - Whether the trigger is inset.
+ *
+ * @example
+ * <ContextMenuSubTrigger>More Options</ContextMenuSubTrigger>
+ */
 export const ContextMenuSubTrigger = forwardRef<
   ContextMenuSubTriggerRef,
   ContextMenuSubTriggerProps
@@ -229,12 +332,19 @@ export const ContextMenuSubTrigger = forwardRef<
 
 ContextMenuSubTrigger.displayName = SubTrigger.displayName;
 
-// --- Component:ContextMenuSubContent ---
 type ContextMenuSubContentRef = React.ElementRef<typeof SubContent>;
 type ContextMenuSubContentProps = React.ComponentPropsWithoutRef<
   typeof SubContent
 >;
 
+/**
+ * ContextMenuSubContent component that wraps the content of a sub-menu in the ContextMenu.
+ *
+ * @param {ContextMenuSubContentProps} props - The props for the ContextMenuSubContent component.
+ *
+ * @example
+ * <ContextMenuSubContent>...</ContextMenuSubContent>
+ */
 export const ContextMenuSubContent = forwardRef<
   ContextMenuSubContentRef,
   ContextMenuSubContentProps
@@ -251,9 +361,16 @@ export const ContextMenuSubContent = forwardRef<
 
 ContextMenuSubContent.displayName = SubContent.displayName;
 
-// --- Component:ContextMenuShortcut ---
 type ContextMenuShortcutProps = React.HTMLAttributes<HTMLSpanElement>;
 
+/**
+ * ContextMenuShortcut component that displays a keyboard shortcut for a command item.
+ *
+ * @param {ContextMenuShortcutProps} props - The props for the ContextMenuShortcut component.
+ *
+ * @example
+ * <ContextMenuShortcut>⌘K</ContextMenuShortcut>
+ */
 export const ContextMenuShortcut = ({
   className,
   ...props
@@ -267,3 +384,5 @@ export const ContextMenuShortcut = ({
     {...props}
   />
 );
+
+ContextMenuShortcut.displayName = 'ContextMenuShortcut';

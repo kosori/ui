@@ -5,13 +5,38 @@ import { Content, List, Root, Trigger } from '@radix-ui/react-tabs';
 
 import { cn } from '@kosori/ui';
 
-// --- Component:Tabs ---
+/**
+ * Tabs component that serves as a container for tabbed navigation.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the Tabs component.
+ *
+ * @example
+ * <Tabs defaultValue='account' className='w-[400px]'>
+ *   <TabsList>
+ *     <TabsTrigger value='account'>Account</TabsTrigger>
+ *     <TabsTrigger value='password'>Password</TabsTrigger>
+ *   </TabsList>
+ *   <TabsContent value='account'>Make changes to your account here.</TabsContent>
+ *   <TabsContent value='password'>Change your password here.</TabsContent>
+ * </Tabs>
+ *
+ * @see {@link https://dub.sh/ui-tabs Tabs Docs} for further information.
+ */
 export const Tabs = Root;
 
-// --- Component:TabsList ---
 type TabsListRef = React.ElementRef<typeof List>;
 type TabsListProps = React.ComponentPropsWithoutRef<typeof List>;
 
+/**
+ * TabsList component that represents the list of tab triggers.
+ *
+ * @param {TabsListProps} props - The props for the TabsList component.
+ *
+ * @example
+ * <TabsList>
+ *   <TabsTrigger value='account'>Account</TabsTrigger>
+ * </TabsList>
+ */
 export const TabsList = forwardRef<TabsListRef, TabsListProps>(
   ({ className, ...props }, ref) => (
     <List
@@ -27,10 +52,17 @@ export const TabsList = forwardRef<TabsListRef, TabsListProps>(
 
 TabsList.displayName = List.displayName;
 
-// --- Component:TabsTrigger ---
 type TabsTriggerRef = React.ElementRef<typeof Trigger>;
 type TabsTriggerProps = React.ComponentPropsWithoutRef<typeof Trigger>;
 
+/**
+ * TabsTrigger component that represents an individual tab trigger.
+ *
+ * @param {TabsTriggerProps} props - The props for the TabsTrigger component.
+ *
+ * @example
+ * <TabsTrigger value='account'>Account</TabsTrigger>
+ */
 export const TabsTrigger = forwardRef<TabsTriggerRef, TabsTriggerProps>(
   ({ className, ...props }, ref) => (
     <Trigger
@@ -49,10 +81,17 @@ export const TabsTrigger = forwardRef<TabsTriggerRef, TabsTriggerProps>(
 
 TabsTrigger.displayName = Trigger.displayName;
 
-// --- Component:TabsContent ---
 type TabsContentRef = React.ElementRef<typeof Content>;
 type TabsContentProps = React.ComponentPropsWithoutRef<typeof Content>;
 
+/**
+ * TabsContent component that displays the content associated with a tab.
+ *
+ * @param {TabsContentProps} props - The props for the TabsContent component.
+ *
+ * @example
+ * <TabsContent value='account'>Account details go here.</TabsContent>
+ */
 export const TabsContent = forwardRef<TabsContentRef, TabsContentProps>(
   ({ className, ...props }, ref) => (
     <Content

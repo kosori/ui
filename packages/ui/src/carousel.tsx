@@ -15,7 +15,6 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { cn } from '@kosori/ui';
 import { Button } from '@kosori/ui/button';
 
-// --- Component:CarouselContext ---
 type CarouselContextProps = {
   carouselRef: ReturnType<typeof useEmblaCarousel>[0];
   api: ReturnType<typeof useEmblaCarousel>[1];
@@ -27,7 +26,6 @@ type CarouselContextProps = {
 
 export const CarouselContext = createContext<CarouselContextProps | null>(null);
 
-// --- Component:useCarousel ---
 export const useCarousel = () => {
   const context = useContext(CarouselContext);
 
@@ -38,7 +36,6 @@ export const useCarousel = () => {
   return context;
 };
 
-// --- Component:Carousel ---
 export type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
 type CarouselOptions = UseCarouselParameters[0];
@@ -51,6 +48,28 @@ export type CarouselProps = {
   setApi?: (api: CarouselApi) => void;
 };
 
+/**
+ * Carousel component that provides a sliding interface for displaying content.
+ *
+ * @param {CarouselProps} props - The props for the Carousel component.
+ * @param {CarouselOptions} [props.opts] - Options for the carousel.
+ * @param {CarouselPlugin} [props.plugins] - Plugins for the carousel.
+ * @param {'horizontal' | 'vertical'} [props.orientation='horizontal'] - Orientation of the carousel.
+ * @param {(api: CarouselApi) => void} [props.setApi] - Callback to set the carousel API.
+ *
+ * @example
+ * <Carousel>
+ *   <CarouselContent>
+ *     <CarouselItem>...</CarouselItem>
+ *     <CarouselItem>...</CarouselItem>
+ *     <CarouselItem>...</CarouselItem>
+ *   </CarouselContent>
+ *   <CarouselPrevious />
+ *   <CarouselNext />
+ * </Carousel>
+ *
+ * @see {@link https://dub.sh/ui-carousel Carousel Docs} for further information.
+ */
 export const Carousel = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & CarouselProps
@@ -159,7 +178,16 @@ export const Carousel = forwardRef<
 
 Carousel.displayName = 'Carousel';
 
-// --- Component:CarouselContent ---
+/**
+ * CarouselContent component that wraps the content of the Carousel.
+ *
+ * @param {React.HTMLAttributes<HTMLDivElement>} props - Additional props to pass to the CarouselContent component.
+ *
+ * @example
+ * <CarouselContent>
+ *   <CarouselItem>...</CarouselItem>
+ * </CarouselContent>
+ */
 export const CarouselContent = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -183,7 +211,14 @@ export const CarouselContent = forwardRef<
 
 CarouselContent.displayName = 'CarouselContent';
 
-// --- Component:CarouselItem ---
+/**
+ * CarouselItem component that represents a single item in the Carousel.
+ *
+ * @param {React.HTMLAttributes<HTMLDivElement>} props - Additional props to pass to the CarouselItem component.
+ *
+ * @example
+ * <CarouselItem>...</CarouselItem>
+ */
 export const CarouselItem = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -207,7 +242,14 @@ export const CarouselItem = forwardRef<
 
 CarouselItem.displayName = 'CarouselItem';
 
-// --- Component:CarouselNext ---
+/**
+ * CarouselNext component that provides a button to navigate to the next item in the Carousel.
+ *
+ * @param {React.ComponentProps<typeof Button>} props - Additional props to pass to the CarouselNext component.
+ *
+ * @example
+ * <CarouselNext />
+ */
 export const CarouselNext = forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>
@@ -236,7 +278,14 @@ export const CarouselNext = forwardRef<
   );
 });
 
-// --- Component:CarouselPrevious ---
+/**
+ * CarouselPrevious component that provides a button to navigate to the previous item in the Carousel.
+ *
+ * @param {React.ComponentProps<typeof Button>} props - Additional props to pass to the CarouselPrevious component.
+ *
+ * @example
+ * <CarouselPrevious />
+ */
 export const CarouselPrevious = forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>

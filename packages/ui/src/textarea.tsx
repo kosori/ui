@@ -2,10 +2,19 @@ import { forwardRef } from 'react';
 
 import { cn } from '@kosori/ui';
 
-// --- Component:Textarea ---
 export type TextareaProps = object &
   React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
+/**
+ * Textarea component that allows users to input multi-line text.
+ *
+ * @param {TextareaProps} props - The props for the Textarea component.
+ *
+ * @example
+ * <Textarea />
+ *
+ * @see {@link https://dub.sh/ui-textarea Textarea Docs} for further information.
+ */
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, ...props }, ref) => {
     return (

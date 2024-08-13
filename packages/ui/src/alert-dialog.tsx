@@ -18,13 +18,53 @@ import type { ButtonProps } from '@kosori/ui/button';
 import { cn } from '@kosori/ui';
 import { buttonStyles } from '@kosori/ui/button';
 
-// --- Component:AlertDialog ---
+/**
+ * AlertDialog component that displays a modal dialog for user confirmation or alerts.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Root>} props - Additional props to pass to the alert dialog.
+ *
+ * @example
+ * <AlertDialog>
+ *   <AlertDialogTrigger>Open Alert</AlertDialogTrigger>
+ *   <AlertDialogContent>
+ *     <AlertDialogHeader>
+ *       <AlertDialogTitle>Confirm Action</AlertDialogTitle>
+ *       <AlertDialogDescription>
+ *         Are you sure you want to proceed with this action?
+ *       </AlertDialogDescription>
+ *     </AlertDialogHeader>
+ *     <AlertDialogFooter>
+ *       <AlertDialogCancel>Cancel</AlertDialogCancel>
+ *       <AlertDialogAction>Confirm</AlertDialogAction>
+ *     </AlertDialogFooter>
+ *   </AlertDialogContent>
+ * </AlertDialog>
+ *
+ * @see {@link https://dub.sh/ui-alert-dialog Alert Dialog Docs} for further information.
+ */
 export const AlertDialog = Root;
 
-// --- Component:AlertDialogTrigger ---
+/**
+ * AlertDialogTrigger component for the AlertDialog that activates the dialog when clicked.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Trigger>} props - Additional props to pass to the alert dialog trigger.
+ *
+ * @example
+ * <AlertDialogTrigger>Open Alert</AlertDialogTrigger>
+ */
 export const AlertDialogTrigger = Trigger;
 
-// --- Component:AlertDialogPortal ---
+/**
+ * AlertDialogPortal component for rendering the AlertDialog in a separate part of the DOM.
+ *
+ * @param {AlertDialogPortalProps} props - Additional props to pass to the alert dialog portal.
+ *
+ * @example
+ * <AlertDialogPortal>
+ *   <AlertDialogOverlay />
+ *   <AlertDialogContent>...</AlertDialogContent>
+ * </AlertDialogPortal>
+ */
 export const AlertDialogPortal = ({
   children,
   ...props
@@ -32,10 +72,17 @@ export const AlertDialogPortal = ({
 
 AlertDialogPortal.displayName = Portal.displayName;
 
-// --- Component:AlertDialogOverlay ---
 type AlertDialogOverlayRef = React.ElementRef<typeof Overlay>;
 type AlertDialogOverlayProps = React.ComponentPropsWithoutRef<typeof Overlay>;
 
+/**
+ * AlertDialogOverlay component that covers the background when the AlertDialog is open.
+ *
+ * @param {AlertDialogOverlayProps} props - Additional props to pass to the alert dialog overlay.
+ *
+ * @example
+ * <AlertDialogOverlay />
+ */
 export const AlertDialogOverlay = forwardRef<
   AlertDialogOverlayRef,
   AlertDialogOverlayProps
@@ -54,10 +101,22 @@ export const AlertDialogOverlay = forwardRef<
 
 AlertDialogOverlay.displayName = Overlay.displayName;
 
-// --- Component:AlertDialogContent ---
 type AlertDialogContentRef = React.ElementRef<typeof Content>;
 type AlertDialogContentProps = React.ComponentPropsWithoutRef<typeof Content>;
 
+/**
+ * AlertDialogContent component for the AlertDialog that contains the main dialog content.
+ *
+ * @param {AlertDialogContentProps} props - Additional props to pass to the alert dialog content.
+ *
+ * @example
+ * <AlertDialogContent>
+ *   <AlertDialogTitle>Confirm Action</AlertDialogTitle>
+ *   <AlertDialogDescription>
+ *     Are you sure you want to proceed with this action?
+ *   </AlertDialogDescription>
+ * </AlertDialogContent>
+ */
 export const AlertDialogContent = forwardRef<
   AlertDialogContentRef,
   AlertDialogContentProps
@@ -81,11 +140,22 @@ export const AlertDialogContent = forwardRef<
 
 AlertDialogContent.displayName = Content.displayName;
 
-// --- Component:AlertDialogCancel ---
 type AlertDialogCancelRef = React.ElementRef<typeof Cancel>;
-type CancelProps = React.ComponentPropsWithoutRef<typeof Cancel>;
-type AlertDialogCancelProps = object & CancelProps & ButtonProps;
+type AlertDialogRadixCancelProps = React.ComponentPropsWithoutRef<
+  typeof Cancel
+>;
+type AlertDialogCancelProps = object &
+  AlertDialogRadixCancelProps &
+  ButtonProps;
 
+/**
+ * AlertDialogCancel button component for the AlertDialog that closes the dialog without taking action.
+ *
+ * @param {AlertDialogCancelProps} props - Additional props to pass to the cancel button.
+ *
+ * @example
+ * <AlertDialogCancel>Cancel</AlertDialogCancel>
+ */
 export const AlertDialogCancel = forwardRef<
   AlertDialogCancelRef,
   AlertDialogCancelProps
@@ -105,7 +175,6 @@ export const AlertDialogCancel = forwardRef<
 
 AlertDialogCancel.displayName = Cancel.displayName;
 
-// --- Component:AlertDialogAction ---
 type AlertDialogActionRef = React.ElementRef<typeof Action>;
 type AlertDialogRadixActionProps = React.ComponentPropsWithoutRef<
   typeof Action
@@ -114,6 +183,14 @@ type AlertDialogActionProps = object &
   AlertDialogRadixActionProps &
   ButtonProps;
 
+/**
+ * AlertDialogAction button component for the AlertDialog that confirms the action.
+ *
+ * @param {AlertDialogActionProps} props - Additional props to pass to the action button.
+ *
+ * @example
+ * <AlertDialogAction>Confirm</AlertDialogAction>
+ */
 export const AlertDialogAction = forwardRef<
   AlertDialogActionRef,
   AlertDialogActionProps
@@ -133,9 +210,21 @@ export const AlertDialogAction = forwardRef<
 
 AlertDialogAction.displayName = Action.displayName;
 
-// --- Component:AlertDialogHeader ---
 type AlertDialogHeaderProps = React.HTMLAttributes<HTMLDivElement>;
 
+/**
+ * AlertDialogHeader component for the AlertDialog that contains the title and description.
+ *
+ * @param {AlertDialogHeaderProps} props - Additional props to pass to the alert dialog header.
+ *
+ * @example
+ * <AlertDialogHeader>
+ *   <AlertDialogTitle>Confirm Action</AlertDialogTitle>
+ *   <AlertDialogDescription>
+ *     Are you sure you want to proceed with this action?
+ *   </AlertDialogDescription>
+ * </AlertDialogHeader>
+ */
 export const AlertDialogHeader = ({
   className,
   ...props
@@ -152,10 +241,17 @@ export const AlertDialogHeader = ({
 
 AlertDialogHeader.displayName = 'AlertDialogHeader';
 
-// --- Component:AlertDialogTitle ---
 type AlertDialogTitleRef = React.ElementRef<typeof Title>;
 type AlertDialogTitleProps = React.ComponentPropsWithoutRef<typeof Title>;
 
+/**
+ * AlertDialogTitle component for the AlertDialog that displays the dialog title.
+ *
+ * @param {AlertDialogTitleProps} props - Additional props to pass to the alert dialog title.
+ *
+ * @example
+ * <AlertDialogTitle>Confirm Action</AlertDialogTitle>
+ */
 export const AlertDialogTitle = forwardRef<
   AlertDialogTitleRef,
   AlertDialogTitleProps
@@ -169,12 +265,21 @@ export const AlertDialogTitle = forwardRef<
 
 AlertDialogTitle.displayName = Title.displayName;
 
-// --- Component:AlertDialogDescription ---
 type AlertDialogDescriptionRef = React.ElementRef<typeof Description>;
 type AlertDialogDescriptionProps = React.ComponentPropsWithoutRef<
   typeof Description
 >;
 
+/**
+ * AlertDialogDescription component for the AlertDialog that provides additional information.
+ *
+ * @param {AlertDialogDescriptionProps} props - Additional props to pass to the alert dialog description.
+ *
+ * @example
+ * <AlertDialogDescription>
+ *   Are you sure you want to proceed with this action?
+ * </AlertDialogDescription>
+ */
 export const AlertDialogDescription = forwardRef<
   AlertDialogDescriptionRef,
   AlertDialogDescriptionProps
@@ -188,9 +293,19 @@ export const AlertDialogDescription = forwardRef<
 
 AlertDialogDescription.displayName = Description.displayName;
 
-// --- Component:AlertDialogFooter ---
 type AlertDialogFooterProps = React.HTMLAttributes<HTMLDivElement>;
 
+/**
+ * AlertDialogFooter component for the AlertDialog that contains action buttons.
+ *
+ * @param {AlertDialogFooterProps} props - Additional props to pass to the alert dialog footer.
+ *
+ * @example
+ * <AlertDialogFooter>
+ *   <AlertDialogCancel>Cancel</AlertDialogCancel>
+ *   <AlertDialogAction>Confirm</AlertDialogAction>
+ * </AlertDialogFooter>
+ */
 export const AlertDialogFooter = ({
   className,
   ...props

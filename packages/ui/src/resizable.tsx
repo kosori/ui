@@ -3,9 +3,22 @@ import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
 import { cn } from '@kosori/ui';
 
-// --- Component:ResizablePanelGroup ---
 type ResizablePanelGroupProps = React.ComponentProps<typeof PanelGroup>;
 
+/**
+ * ResizablePanelGroup component that serves as a container for resizable panels.
+ *
+ * @param {ResizablePanelGroupProps} props - The props for the ResizablePanelGroup component.
+ *
+ * @example
+ * <ResizablePanelGroup direction='horizontal'>
+ *   <ResizablePanel>One</ResizablePanel>
+ *   <ResizableHandle />
+ *   <ResizablePanel>Two</ResizablePanel>
+ * </ResizablePanelGroup>
+ *
+ * @see {@link https://dub.sh/ui-resizable-panel-group ResizablePanelGroup Docs} for further information.
+ */
 export const ResizablePanelGroup = ({
   className,
   ...props
@@ -20,14 +33,29 @@ export const ResizablePanelGroup = ({
   />
 );
 
-// --- Component:ResizablePanel ---
+/**
+ * ResizablePanel component that represents an individual panel within the ResizablePanelGroup.
+ *
+ * @param {React.ComponentProps<typeof Panel>} props - The props for the ResizablePanel component.
+ *
+ * @example
+ * <ResizablePanel>Content</ResizablePanel>
+ */
 export const ResizablePanel = Panel;
 
-// --- Component:ResizableHandle ---
 type ResizableHandleProps = React.ComponentProps<typeof PanelResizeHandle> & {
   withHandle?: boolean;
 };
 
+/**
+ * ResizableHandle component that allows for resizing of panels within the ResizablePanelGroup.
+ *
+ * @param {ResizableHandleProps} props - The props for the ResizableHandle component.
+ * @param {boolean} [withHandle] - Indicates if the handle should be displayed.
+ *
+ * @example
+ * <ResizableHandle withHandle />
+ */
 export const ResizableHandle = ({
   withHandle,
   className,

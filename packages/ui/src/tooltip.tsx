@@ -3,19 +3,60 @@ import { Content, Provider, Root, Trigger } from '@radix-ui/react-tooltip';
 
 import { cn } from '@kosori/ui';
 
-// --- Component:TooltipProvider ---
+/**
+ * TooltipProvider component that provides context for tooltips.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Provider>} props - The props for the TooltipProvider component.
+ *
+ * @example
+ * <TooltipProvider>
+ *   <Tooltip>
+ *     <TooltipTrigger>Hover</TooltipTrigger>
+ *     <TooltipContent>
+ *       <p>Add to library</p>
+ *     </TooltipContent>
+ *   </Tooltip>
+ * </TooltipProvider>
+ */
 export const TooltipProvider = Provider;
 
-// --- Component:Tooltip ---
+/**
+ * Tooltip component that serves as a container for the tooltip content.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the Tooltip component.
+ *
+ * @example
+ * <Tooltip>
+ *   <TooltipTrigger>Hover</TooltipTrigger>
+ *   <TooltipContent>Tooltip text</TooltipContent>
+ * </Tooltip>
+ */
 export const Tooltip = Root;
 
-// --- Component:TooltipTrigger ---
+/**
+ * TooltipTrigger component that triggers the display of the tooltip content.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Trigger>} props - The props for the TooltipTrigger component.
+ *
+ * @example
+ * <TooltipTrigger>Hover me</TooltipTrigger>
+ */
 export const TooltipTrigger = Trigger;
 
-// --- Component:TooltipContent ---
 type Ref = React.ElementRef<typeof Content>;
 type Props = React.ComponentPropsWithoutRef<typeof Content>;
 
+/**
+ * TooltipContent component that displays the content of the tooltip.
+ *
+ * @param {Props} props - The props for the TooltipContent component.
+ * @param {number} [sideOffset=4] - The offset for the tooltip from its trigger.
+ *
+ * @example
+ * <TooltipContent>
+ *   <p>Tooltip description</p>
+ * </TooltipContent>
+ */
 export const TooltipContent = forwardRef<Ref, Props>(
   ({ className, sideOffset = 4, ...props }, ref) => (
     <Content

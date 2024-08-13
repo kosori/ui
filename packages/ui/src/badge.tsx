@@ -25,11 +25,21 @@ const badgeStyles = tv({
   },
 });
 
-// --- Component:Badge ---
 type HTMLDivProps = React.ComponentPropsWithoutRef<'div'>;
 type BadgeVariants = VariantProps<typeof badgeStyles>;
-type BadgeProps = object & HTMLDivProps & BadgeVariants;
+type BadgeProps = HTMLDivProps & BadgeVariants;
 
+/**
+ * Badge component that displays a small label or indicator.
+ *
+ * @param {BadgeProps} props - The props for the Badge component.
+ * @param {'default' | 'info' | 'success' | 'warning' | 'danger'} [props.intent='default'] - The visual style of the badge (e.g., 'default', 'info', 'success', 'warning', 'danger').
+ *
+ * @example
+ * <Badge intent='info'>Badge</Badge>
+ *
+ * @see {@link https://dub.sh/ui-badge Badge Docs} for further information.
+ */
 export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
   ({ intent, className, ...props }, ref) => (
     <div

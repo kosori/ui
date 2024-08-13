@@ -1,11 +1,37 @@
+'use client';
+
 import { forwardRef } from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';
 
 import { cn } from '@kosori/ui';
 
-// --- Component:Drawer ---
 type DrawerProps = React.ComponentProps<typeof DrawerPrimitive.Root>;
 
+/**
+ * Drawer component that provides a sliding panel for displaying content.
+ *
+ * @param {DrawerProps} props - The props for the Drawer component.
+ * @param {boolean} [props.shouldScaleBackground=true] - Whether to scale the background when the drawer is open.
+ *
+ * @example
+ * <Drawer>
+ *   <DrawerTrigger>Open</DrawerTrigger>
+ *   <DrawerContent>
+ *     <DrawerHeader>
+ *       <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+ *       <DrawerDescription>This action cannot be undone.</DrawerDescription>
+ *     </DrawerHeader>
+ *     <DrawerFooter>
+ *       <Button>Submit</Button>
+ *       <DrawerClose>
+ *         <Button variant='outline'>Cancel</Button>
+ *       </DrawerClose>
+ *     </DrawerFooter>
+ *   </DrawerContent>
+ * </Drawer>
+ *
+ * @see {@link https://dub.sh/ui-drawer Drawer Docs} for further information.
+ */
 export const Drawer = ({
   shouldScaleBackground = true,
   ...props
@@ -18,18 +44,23 @@ export const Drawer = ({
 
 Drawer.displayName = 'Drawer';
 
-// --- Component:DrawerTrigger ---
 export const DrawerTrigger = DrawerPrimitive.Trigger;
 
-// --- Component:DrawerPortal ---
 export const DrawerPortal = DrawerPrimitive.Portal;
 
-// --- Component:DrawerOverlay ---
 type DrawerOverlayRef = React.ElementRef<typeof DrawerPrimitive.Overlay>;
 type DrawerOverlayProps = React.ComponentPropsWithoutRef<
   typeof DrawerPrimitive.Overlay
 >;
 
+/**
+ * DrawerOverlay component that covers the background when the Drawer is open.
+ *
+ * @param {DrawerOverlayProps} props - The props for the DrawerOverlay component.
+ *
+ * @example
+ * <DrawerOverlay />
+ */
 export const DrawerOverlay = forwardRef<DrawerOverlayRef, DrawerOverlayProps>(
   ({ className, ...props }, ref) => (
     <DrawerPrimitive.Overlay
@@ -42,12 +73,22 @@ export const DrawerOverlay = forwardRef<DrawerOverlayRef, DrawerOverlayProps>(
 
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
 
-// --- Component:DrawerContent ---
 type DrawerContentRef = React.ElementRef<typeof DrawerPrimitive.Content>;
 type DrawerContentProps = React.ComponentPropsWithoutRef<
   typeof DrawerPrimitive.Content
 >;
 
+/**
+ * DrawerContent component that wraps the content of the Drawer.
+ *
+ * @param {DrawerContentProps} props - The props for the DrawerContent component.
+ * @param {React.ReactNode} props.children - The content to be rendered inside the DrawerContent.
+ *
+ * @example
+ * <DrawerContent>
+ *   <p>Your content goes here.</p>
+ * </DrawerContent>
+ */
 export const DrawerContent = forwardRef<DrawerContentRef, DrawerContentProps>(
   ({ className, children, ...props }, ref) => (
     <DrawerPortal>
@@ -69,9 +110,18 @@ export const DrawerContent = forwardRef<DrawerContentRef, DrawerContentProps>(
 
 DrawerContent.displayName = 'DrawerContent';
 
-// --- Component:DrawerHeader ---
 type DrawerHeaderProps = React.HTMLAttributes<HTMLDivElement>;
 
+/**
+ * DrawerHeader component that wraps the header content of the Drawer.
+ *
+ * @param {DrawerHeaderProps} props - The props for the DrawerHeader component.
+ *
+ * @example
+ * <DrawerHeader>
+ *   <DrawerTitle>Drawer Title</DrawerTitle>
+ * </DrawerHeader>
+ */
 export const DrawerHeader = ({ className, ...props }: DrawerHeaderProps) => (
   <div
     className={cn('grid gap-1.5 p-4 text-center', 'sm:text-left', className)}
@@ -81,12 +131,19 @@ export const DrawerHeader = ({ className, ...props }: DrawerHeaderProps) => (
 
 DrawerHeader.displayName = 'DrawerHeader';
 
-// --- Component:DrawerTitle ---
 type DrawerTitleRef = React.ElementRef<typeof DrawerPrimitive.Title>;
 type DrawerTitleProps = React.ComponentPropsWithoutRef<
   typeof DrawerPrimitive.Title
 >;
 
+/**
+ * DrawerTitle component that displays the title of the Drawer.
+ *
+ * @param {DrawerTitleProps} props - The props for the DrawerTitle component.
+ *
+ * @example
+ * <DrawerTitle>Drawer Title</DrawerTitle>
+ */
 export const DrawerTitle = forwardRef<DrawerTitleRef, DrawerTitleProps>(
   ({ className, ...props }, ref) => (
     <DrawerPrimitive.Title
@@ -102,7 +159,6 @@ export const DrawerTitle = forwardRef<DrawerTitleRef, DrawerTitleProps>(
 
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName;
 
-// --- Component:DrawerDescription ---
 type DrawerDescriptionRef = React.ElementRef<
   typeof DrawerPrimitive.Description
 >;
@@ -110,6 +166,14 @@ type DrawerDescriptionProps = React.ComponentPropsWithoutRef<
   typeof DrawerPrimitive.Description
 >;
 
+/**
+ * DrawerDescription component that provides a description for the Drawer.
+ *
+ * @param {DrawerDescriptionProps} props - The props for the DrawerDescription component.
+ *
+ * @example
+ * <DrawerDescription>Drawer Description</DrawerDescription>
+ */
 export const DrawerDescription = forwardRef<
   DrawerDescriptionRef,
   DrawerDescriptionProps
@@ -123,9 +187,18 @@ export const DrawerDescription = forwardRef<
 
 DrawerDescription.displayName = DrawerPrimitive.Description.displayName;
 
-// --- Component:DrawerFooter ---
 type DrawerFooterProps = React.HTMLAttributes<HTMLDivElement>;
 
+/**
+ * DrawerFooter component that wraps the footer content of the Drawer.
+ *
+ * @param {DrawerFooterProps} props - The props for the DrawerFooter component.
+ *
+ * @example
+ * <DrawerFooter>
+ *   <Button>Close</Button>
+ * </DrawerFooter>
+ */
 export const DrawerFooter = ({ className, ...props }: DrawerFooterProps) => (
   <div
     className={cn('mt-auto flex flex-col gap-2 p-4', className)}
@@ -135,5 +208,4 @@ export const DrawerFooter = ({ className, ...props }: DrawerFooterProps) => (
 
 DrawerFooter.displayName = 'DrawerFooter';
 
-// --- Component:DrawerClose ---
 export const DrawerClose = DrawerPrimitive.Close;

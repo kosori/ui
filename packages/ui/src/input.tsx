@@ -19,10 +19,20 @@ const inputVariants = tv({
   ),
 });
 
-// --- Component:Input ---
 type HTMLInputProps = React.InputHTMLAttributes<HTMLInputElement>;
 type InputVariants = VariantProps<typeof inputVariants>;
 type InputProps = HTMLInputProps & InputVariants;
+
+/**
+ * Input component that renders a styled input field.
+ *
+ * @param {InputProps} props - The props for the Input component.
+ *
+ * @example
+ * <Input />
+ *
+ * @see {@link https://dub.sh/ui-input Input Docs} for further information.
+ */
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => (

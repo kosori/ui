@@ -42,12 +42,23 @@ export const toggleStyles = tv({
   },
 });
 
-// --- Component:Toggle ---
 type ToggleRef = React.ElementRef<typeof Root>;
 type ToggleRadixProps = React.ComponentPropsWithoutRef<typeof Root>;
 export type ToggleVariants = VariantProps<typeof toggleStyles>;
 type ToggleProps = object & ToggleRadixProps & ToggleVariants;
 
+/**
+ * Toggle component that allows users to switch between on and off states.
+ *
+ * @param {ToggleProps} props - The props for the Toggle component.
+ * @param {'ghost' | 'outline'} [variant] - The variant style of the toggle (e.g. 'ghost', 'outline').
+ * @param {'small' | 'medium' | 'large'} [size] - The size of the toggle (e.g. 'small', 'medium', 'large').
+ *
+ * @example
+ * <Toggle>Toggle</Toggle>
+ *
+ * @see {@link https://dub.sh/ui-toggle Toggle Docs} for further information.
+ */
 export const Toggle = forwardRef<ToggleRef, ToggleProps>(
   ({ className, variant, size, ...props }, ref) => (
     <Root

@@ -2,10 +2,37 @@ import { forwardRef } from 'react';
 
 import { cn } from '@kosori/ui';
 
-// --- Component:Table ---
 type TableRef = HTMLTableElement;
 type TableProps = React.HTMLAttributes<HTMLTableElement>;
 
+/**
+ * Table component that serves as a container for tabular data.
+ *
+ * @param {TableProps} props - The props for the Table component.
+ *
+ * @example
+ * <Table>
+ *   <TableCaption>A list of your recent invoices.</TableCaption>
+ *   <TableHeader>
+ *     <TableRow>
+ *       <TableHead className='w-[100px]'>Invoice</TableHead>
+ *       <TableHead>Status</TableHead>
+ *       <TableHead>Method</TableHead>
+ *       <TableHead className='text-right'>Amount</TableHead>
+ *     </TableRow>
+ *   </TableHeader>
+ *   <TableBody>
+ *     <TableRow>
+ *       <TableCell className='font-medium'>INV001</TableCell>
+ *       <TableCell>Paid</TableCell>
+ *       <TableCell>Credit Card</TableCell>
+ *       <TableCell className='text-right'>$250.00</TableCell>
+ *     </TableRow>
+ *   </TableBody>
+ * </Table>
+ *
+ * @see {@link https://dub.sh/ui-table Table Docs} for further information.
+ */
 export const Table = forwardRef<TableRef, TableProps>(
   ({ className, ...props }, ref) => (
     <div className='relative w-full overflow-auto'>
@@ -20,7 +47,18 @@ export const Table = forwardRef<TableRef, TableProps>(
 
 Table.displayName = 'Table';
 
-// --- Component:TableHeader ---
+/**
+ * TableHeader component that represents the header section of the table.
+ *
+ * @param {React.HTMLAttributes<HTMLTableSectionElement>} props - The props for the TableHeader component.
+ *
+ * @example
+ * <TableHeader>
+ *   <TableRow>
+ *     <TableHead>Header</TableHead>
+ *   </TableRow>
+ * </TableHeader>
+ */
 export const TableHeader = forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
@@ -34,10 +72,21 @@ export const TableHeader = forwardRef<
 
 TableHeader.displayName = 'TableHeader';
 
-// --- Component:TableBody ---
 type TableBodyRef = HTMLTableSectionElement;
 type TableBodyProps = React.HTMLAttributes<HTMLTableSectionElement>;
 
+/**
+ * TableBody component that represents the body section of the table.
+ *
+ * @param {TableBodyProps} props - The props for the TableBody component.
+ *
+ * @example
+ * <TableBody>
+ *   <TableRow>
+ *     <TableCell>Data</TableCell>
+ *   </TableRow>
+ * </TableBody>
+ */
 export const TableBody = forwardRef<TableBodyRef, TableBodyProps>(
   ({ className, ...props }, ref) => (
     <tbody
@@ -50,10 +99,21 @@ export const TableBody = forwardRef<TableBodyRef, TableBodyProps>(
 
 TableBody.displayName = 'TableBody';
 
-// --- Component:TableFooter ---
 type TableFooterRef = HTMLTableSectionElement;
 type TableFooterProps = React.HTMLAttributes<HTMLTableSectionElement>;
 
+/**
+ * TableFooter component that represents the footer section of the table.
+ *
+ * @param {TableFooterProps} props - The props for the TableFooter component.
+ *
+ * @example
+ * <TableFooter>
+ *   <TableRow>
+ *     <TableCell>Footer Data</TableCell>
+ *   </TableRow>
+ * </TableFooter>
+ */
 export const TableFooter = forwardRef<TableFooterRef, TableFooterProps>(
   ({ className, ...props }, ref) => (
     <tfoot
@@ -70,10 +130,17 @@ export const TableFooter = forwardRef<TableFooterRef, TableFooterProps>(
 
 TableFooter.displayName = 'TableFooter';
 
-// --- Component:TableHead ---
 type TableHeadRef = HTMLTableCellElement;
 type TableHeadProps = React.HTMLAttributes<HTMLTableCellElement>;
 
+/**
+ * TableHead component that represents a header cell in the table.
+ *
+ * @param {TableHeadProps} props - The props for the TableHead component.
+ *
+ * @example
+ * <TableHead>Header</TableHead>
+ */
 export const TableHead = forwardRef<TableHeadRef, TableHeadProps>(
   ({ className, ...props }, ref) => (
     <th
@@ -91,10 +158,19 @@ export const TableHead = forwardRef<TableHeadRef, TableHeadProps>(
 
 TableHead.displayName = 'TableHead';
 
-// --- Component:TableRow ---
 type TableRowRef = HTMLTableRowElement;
 type TableRowProps = React.HTMLAttributes<HTMLTableRowElement>;
 
+/**
+ * TableRow component that represents a row in the table.
+ *
+ * @param {TableRowProps} props - The props for the TableRow component.
+ *
+ * @example
+ * <TableRow>
+ *   <TableCell>Row Data</TableCell>
+ * </TableRow>
+ */
 export const TableRow = forwardRef<TableRowRef, TableRowProps>(
   ({ className, ...props }, ref) => (
     <tr
@@ -112,10 +188,17 @@ export const TableRow = forwardRef<TableRowRef, TableRowProps>(
 
 TableRow.displayName = 'TableRow';
 
-// --- Component:TableCell ---
 type TableCellRef = HTMLTableCellElement;
 type TableCellProps = React.TdHTMLAttributes<HTMLTableCellElement>;
 
+/**
+ * TableCell component that represents a cell in the table.
+ *
+ * @param {TableCellProps} props - The props for the TableCell component.
+ *
+ * @example
+ * <TableCell>Cell Data</TableCell>
+ */
 export const TableCell = forwardRef<TableCellRef, TableCellProps>(
   ({ className, ...props }, ref) => (
     <td
@@ -133,10 +216,17 @@ export const TableCell = forwardRef<TableCellRef, TableCellProps>(
 
 TableCell.displayName = 'TableCell';
 
-// --- Component:TableCaption ---
 type TableCaptionRef = HTMLTableCaptionElement;
 type TableCaptionProps = React.HTMLAttributes<HTMLTableCaptionElement>;
 
+/**
+ * TableCaption component that provides a caption for the table.
+ *
+ * @param {TableCaptionProps} props - The props for the TableCaption component.
+ *
+ * @example
+ * <TableCaption>Table Caption</TableCaption>
+ */
 export const TableCaption = forwardRef<TableCaptionRef, TableCaptionProps>(
   ({ className, ...props }, ref) => (
     <caption

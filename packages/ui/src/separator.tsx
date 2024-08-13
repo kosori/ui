@@ -5,9 +5,21 @@ import { Root } from '@radix-ui/react-separator';
 
 import { cn } from '@kosori/ui';
 
-// --- Component:Separator ---
 type SeparatorRef = React.ElementRef<typeof Root>;
 type SeparatorProps = React.ComponentPropsWithoutRef<typeof Root>;
+
+/**
+ * Separator component that visually divides content.
+ *
+ * @param {SeparatorProps} props - The props for the Separator component.
+ * @param {string} [orientation='horizontal'] - The orientation of the separator, either 'horizontal' or 'vertical'.
+ * @param {boolean} [decorative=true] - Indicates whether the separator is decorative.
+ *
+ * @example
+ * <Separator />
+ *
+ * @see {@link https://dub.sh/ui-separator Separator Docs} for further information.
+ */
 
 export const Separator = forwardRef<SeparatorRef, SeparatorProps>(
   (

@@ -34,12 +34,23 @@ const checkboxStyles = tv({
   },
 });
 
-// --- Component:Checkbox ---
 type CheckboxRef = React.ElementRef<typeof Root>;
 type CheckboxRadixProps = React.ComponentPropsWithoutRef<typeof Root>;
 type CheckboxVariants = VariantProps<typeof checkboxStyles>;
 type CheckboxProps = object & CheckboxRadixProps & CheckboxVariants;
 
+/**
+ * Checkbox component that allows users to select or deselect an option.
+ *
+ * @param {CheckboxProps} props - The props for the Checkbox component.
+ * @param {'square' | 'round'} [props.shape='square'] - The shape of the checkbox.
+ * @param {'small' | 'medium'} [props.size='small'] - The size of the checkbox.
+ *
+ * @example
+ * <Checkbox />
+ *
+ * @see {@link https://dub.sh/ui-checkbox Checkbox Docs} for further information.
+ */
 export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>(
   ({ shape, size, className, ...props }, ref) => (
     <Root

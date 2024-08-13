@@ -6,10 +6,28 @@ import { Circle } from 'lucide-react';
 
 import { cn } from '@kosori/ui';
 
-// --- Component:RadioGroup ---
 type RadioGroupRef = React.ElementRef<typeof Root>;
 type RadioGroupProps = React.ComponentPropsWithoutRef<typeof Root>;
 
+/**
+ * RadioGroup component that serves as a container for radio button items.
+ *
+ * @param {RadioGroupProps} props - The props for the RadioGroup component.
+ *
+ * @example
+ * <RadioGroup defaultValue='option-one'>
+ *   <div className='flex items-center space-x-2'>
+ *     <RadioGroupItem value='option-one' id='option-one' />
+ *     <Label htmlFor='option-one'>Option One</Label>
+ *   </div>
+ *   <div className='flex items-center space-x-2'>
+ *     <RadioGroupItem value='option-two' id='option-two' />
+ *     <Label htmlFor='option-two'>Option Two</Label>
+ *   </div>
+ * </RadioGroup>
+ *
+ * @see {@link https://dub.sh/ui-radio-group RadioGroup Docs} for further information.
+ */
 export const RadioGroup = forwardRef<RadioGroupRef, RadioGroupProps>(
   ({ className, ...props }, ref) => (
     <Root ref={ref} className={cn('grid gap-2', className)} {...props} />
@@ -18,10 +36,17 @@ export const RadioGroup = forwardRef<RadioGroupRef, RadioGroupProps>(
 
 RadioGroup.displayName = Root.displayName;
 
-// --- Component:RadioGroupItem ---
 type RadioGroupItemRef = React.ElementRef<typeof Item>;
 type RadioGroupItemProps = React.ComponentPropsWithoutRef<typeof Item>;
 
+/**
+ * RadioGroupItem component that represents an individual radio button in the group.
+ *
+ * @param {RadioGroupItemProps} props - The props for the RadioGroupItem component.
+ *
+ * @example
+ * <RadioGroupItem value='option-one' id='option-one' />
+ */
 export const RadioGroupItem = forwardRef<
   RadioGroupItemRef,
   RadioGroupItemProps

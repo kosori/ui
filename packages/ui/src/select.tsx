@@ -27,13 +27,38 @@ import {
 
 import { cn } from '@kosori/ui';
 
-// --- Component:Select ---
+/**
+ * Select component that serves as a container for selectable items.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the Select component.
+ *
+ * @example
+ * <Select>
+ *   <SelectTrigger className='w-[180px]'>
+ *     <SelectValue placeholder='Theme' />
+ *   </SelectTrigger>
+ *   <SelectContent>
+ *     <SelectItem value='light'>Light</SelectItem>
+ *     <SelectItem value='dark'>Dark</SelectItem>
+ *     <SelectItem value='system'>System</SelectItem>
+ *   </SelectContent>
+ * </Select>
+ *
+ * @see {@link https://dub.sh/ui-select Select Docs} for further information.
+ */
 export const Select = Root;
 
-// --- Component:SelectTrigger ---
 type SelectTriggerRef = React.ElementRef<typeof Trigger>;
 type SelectTriggerProps = React.ComponentPropsWithoutRef<typeof Trigger>;
 
+/**
+ * SelectTrigger component that triggers the display of the select options.
+ *
+ * @param {SelectTriggerProps} props - The props for the SelectTrigger component.
+ *
+ * @example
+ * <SelectTrigger className='w-[180px]'>Select an option</SelectTrigger>
+ */
 export const SelectTrigger = forwardRef<SelectTriggerRef, SelectTriggerProps>(
   ({ className, children, ...props }, ref) => (
     <Trigger
@@ -60,13 +85,30 @@ export const SelectTrigger = forwardRef<SelectTriggerRef, SelectTriggerProps>(
 
 SelectTrigger.displayName = Trigger.displayName;
 
-// --- Component:SelectValue ---
+/**
+ * SelectValue component that displays the currently selected value.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Value>} props - The props for the SelectValue component.
+ *
+ * @example
+ * <SelectValue placeholder='Select an option' />
+ */
 export const SelectValue = Value;
 
-// --- Component:SelectContent ---
 type SelectContentRef = React.ElementRef<typeof Content>;
 type SelectContentProps = React.ComponentPropsWithoutRef<typeof Content>;
 
+/**
+ * SelectContent component that displays the selectable options.
+ *
+ * @param {SelectContentProps} props - The props for the SelectContent component.
+ *
+ * @example
+ * <SelectContent>
+ *   <SelectItem value='light'>Light</SelectItem>
+ *   <SelectItem value='dark'>Dark</SelectItem>
+ * </SelectContent>
+ */
 export const SelectContent = forwardRef<SelectContentRef, SelectContentProps>(
   ({ className, children, position, ...props }, ref) => (
     <Portal>
@@ -94,7 +136,7 @@ export const SelectContent = forwardRef<SelectContentRef, SelectContentProps>(
           className={cn(
             'p-1',
             position === 'popper' &&
-              'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
+            'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
           )}
         >
           {children}
@@ -107,10 +149,17 @@ export const SelectContent = forwardRef<SelectContentRef, SelectContentProps>(
 
 SelectContent.displayName = Content.displayName;
 
-// --- Component:SelectItem ---
 type SelectItemRef = React.ElementRef<typeof Item>;
 type SelectItemProps = React.ComponentPropsWithoutRef<typeof Item>;
 
+/**
+ * SelectItem component that represents an individual option in the select.
+ *
+ * @param {SelectItemProps} props - The props for the SelectItem component.
+ *
+ * @example
+ * <SelectItem value='light'>Light</SelectItem>
+ */
 export const SelectItem = forwardRef<SelectItemRef, SelectItemProps>(
   ({ className, children, ...props }, ref) => (
     <Item
@@ -136,12 +185,19 @@ export const SelectItem = forwardRef<SelectItemRef, SelectItemProps>(
 
 SelectItem.displayName = Item.displayName;
 
-// --- Component:SelectScrollUpButton ---
 type SelectScrollUpButtonRef = React.ElementRef<typeof ScrollUpButton>;
 type SelectScrollUpButtonProps = React.ComponentPropsWithoutRef<
   typeof ScrollUpButton
 >;
 
+/**
+ * SelectScrollUpButton component that allows scrolling up in the select options.
+ *
+ * @param {SelectScrollUpButtonProps} props - The props for the SelectScrollUpButton component.
+ *
+ * @example
+ * <SelectScrollUpButton />
+ */
 export const SelectScrollUpButton = forwardRef<
   SelectScrollUpButtonRef,
   SelectScrollUpButtonProps
@@ -160,12 +216,19 @@ export const SelectScrollUpButton = forwardRef<
 
 SelectScrollUpButton.displayName = ScrollUpButton.displayName;
 
-// --- Component:SelectScrollDownButton ---
 type SelectScrollDownButtonRef = React.ElementRef<typeof ScrollDownButton>;
 type SelectScrollDownButtonProps = React.ComponentPropsWithoutRef<
   typeof ScrollDownButton
 >;
 
+/**
+ * SelectScrollDownButton component that allows scrolling down in the select options.
+ *
+ * @param {SelectScrollDownButtonProps} props - The props for the SelectScrollDownButton component.
+ *
+ * @example
+ * <SelectScrollDownButton />
+ */
 export const SelectScrollDownButton = forwardRef<
   SelectScrollDownButtonRef,
   SelectScrollDownButtonProps
@@ -184,13 +247,29 @@ export const SelectScrollDownButton = forwardRef<
 
 SelectScrollDownButton.displayName = ScrollDownButton.displayName;
 
-// --- Component:SelectGroup ---
+/**
+ * SelectGroup component that groups related select items.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Group>} props - The props for the SelectGroup component.
+ *
+ * @example
+ * <SelectGroup>
+ *   <SelectItem value='light'>Light</SelectItem>
+ * </SelectGroup>
+ */
 export const SelectGroup = Group;
 
-// --- Component:SelectLabel ---
 type SelectLabelRef = React.ElementRef<typeof Label>;
 type SelectLabelProps = React.ComponentPropsWithoutRef<typeof Label>;
 
+/**
+ * SelectLabel component that provides a label for the select group.
+ *
+ * @param {SelectLabelProps} props - The props for the SelectLabel component.
+ *
+ * @example
+ * <SelectLabel>Choose a theme</SelectLabel>
+ */
 export const SelectLabel = forwardRef<SelectLabelRef, SelectLabelProps>(
   ({ className, ...props }, ref) => (
     <Label
@@ -206,10 +285,17 @@ export const SelectLabel = forwardRef<SelectLabelRef, SelectLabelProps>(
 
 SelectLabel.displayName = Label.displayName;
 
-// --- Component:SelectSeparator ---
 type SelectSeparatorRef = React.ElementRef<typeof Separator>;
 type SelectSeparatorProps = React.ComponentPropsWithoutRef<typeof Separator>;
 
+/**
+ * SelectSeparator component that visually separates items in the select.
+ *
+ * @param {SelectSeparatorProps} props - The props for the SelectSeparator component.
+ *
+ * @example
+ * <SelectSeparator />
+ */
 export const SelectSeparator = forwardRef<
   SelectSeparatorRef,
   SelectSeparatorProps

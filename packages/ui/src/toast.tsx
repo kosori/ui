@@ -39,12 +39,25 @@ const toastStyles = tv({
   },
 });
 
-// --- Component:Toast ---
 type ToastRef = React.ElementRef<typeof Root>;
 type ToastRadixProps = React.ComponentPropsWithoutRef<typeof Root>;
 type ToastVariants = VariantProps<typeof toastStyles>;
 export type ToastProps = object & ToastRadixProps & ToastVariants;
 
+/**
+ * Toast component that displays a toast notification.
+ *
+ * @param {ToastProps} props - The props for the Toast component.
+ * @param {string} [intent='default'] - The intent of the toast, which determines its styling (e.g., 'default', 'info', 'success', 'warning', 'error').
+ *
+ * @example
+ * toast({
+ *   title: 'Scheduled: Catch up',
+ *   description: 'Friday, February 10, 2023 at 5:57 PM',
+ * });
+ *
+ * @see {@link https://dub.sh/ui-toast Toast Docs} for further information.
+ */
 export const Toast = forwardRef<ToastRef, ToastProps>(
   ({ intent, className, ...props }, ref) => (
     <Root
@@ -57,11 +70,18 @@ export const Toast = forwardRef<ToastRef, ToastProps>(
 
 Toast.displayName = Root.displayName;
 
-// --- Component:ToastAction ---
 type ToastActionElement = React.ReactElement<typeof Action>;
 type ToastActionRef = React.ElementRef<typeof Action>;
 type ToastActionProps = React.ComponentProps<typeof Action>;
 
+/**
+ * ToastAction component that represents an action button within the toast.
+ *
+ * @param {ToastActionProps} props - The props for the ToastAction component.
+ *
+ * @example
+ * <ToastAction onClick={handleClick}>Undo</ToastAction>
+ */
 export const ToastAction = forwardRef<ToastActionRef, ToastActionProps>(
   ({ className, ...props }, ref) => (
     <Action
@@ -92,10 +112,17 @@ export const ToastAction = forwardRef<ToastActionRef, ToastActionProps>(
 
 ToastAction.displayName = Action.displayName;
 
-// --- Component:ToastClose ---
 type ToastCloseRef = React.ElementRef<typeof Close>;
 type ToastCloseProps = React.ComponentPropsWithoutRef<typeof Close>;
 
+/**
+ * ToastClose component that allows the user to close the toast.
+ *
+ * @param {ToastCloseProps} props - The props for the ToastClose component.
+ *
+ * @example
+ * <ToastClose />
+ */
 export const ToastClose = forwardRef<ToastCloseRef, ToastCloseProps>(
   ({ className, ...props }, ref) => (
     <Close
@@ -128,10 +155,17 @@ export const ToastClose = forwardRef<ToastCloseRef, ToastCloseProps>(
 
 ToastClose.displayName = Close.displayName;
 
-// --- Component:ToastDescription ---
 type ToastDescriptionRef = React.ElementRef<typeof Description>;
 type ToastDescriptionProps = React.ComponentPropsWithoutRef<typeof Description>;
 
+/**
+ * ToastDescription component that provides additional information about the toast.
+ *
+ * @param {ToastDescriptionProps} props - The props for the ToastDescription component.
+ *
+ * @example
+ * <ToastDescription>Details about the toast notification.</ToastDescription>
+ */
 export const ToastDescription = forwardRef<
   ToastDescriptionRef,
   ToastDescriptionProps
@@ -145,13 +179,27 @@ export const ToastDescription = forwardRef<
 
 ToastDescription.displayName = Description.displayName;
 
-// --- Component:ToastProvider ---
+/**
+ * ToastProvider component that provides context for managing toasts.
+ *
+ * @param {React.ComponentProps<typeof Provider>} props - The props for the ToastProvider component.
+ *
+ * @example
+ * <ToastProvider>{Toasts will be rendered here}</ToastProvider>
+ */
 export const ToastProvider = Provider;
 
-// --- Component:ToastTitle ---
 type ToastTitleRef = React.ElementRef<typeof Title>;
 type ToastTitleProps = React.ComponentPropsWithoutRef<typeof Title>;
 
+/**
+ * ToastTitle component that displays the title of the toast.
+ *
+ * @param {ToastTitleProps} props - The props for the ToastTitle component.
+ *
+ * @example
+ * <ToastTitle>Notification Title</ToastTitle>
+ */
 export const ToastTitle = forwardRef<ToastTitleRef, ToastTitleProps>(
   ({ className, ...props }, ref) => (
     <Title
@@ -164,10 +212,17 @@ export const ToastTitle = forwardRef<ToastTitleRef, ToastTitleProps>(
 
 ToastTitle.displayName = Title.displayName;
 
-// --- Component:ToastViewport ---
 type ToastViewportRef = React.ElementRef<typeof Viewport>;
 type ToastViewportProps = React.ComponentPropsWithoutRef<typeof Viewport>;
 
+/**
+ * ToastViewport component that defines the area where toasts are displayed.
+ *
+ * @param {ToastViewportProps} props - The props for the ToastViewport component.
+ *
+ * @example
+ * <ToastViewport />
+ */
 export const ToastViewport = forwardRef<ToastViewportRef, ToastViewportProps>(
   ({ className, ...props }, ref) => (
     <Viewport
@@ -185,7 +240,12 @@ export const ToastViewport = forwardRef<ToastViewportRef, ToastViewportProps>(
 
 ToastViewport.displayName = Viewport.displayName;
 
-// --- Component:Toaster ---
+/**
+ * Toaster component that renders toast notifications.
+ *
+ * @example
+ * <Toaster />
+ */
 export const Toaster = () => {
   const { toasts } = useToast();
 
@@ -238,21 +298,21 @@ type ActionType = typeof _ACTION_TYPES;
 
 type Action =
   | {
-      type: ActionType['ADD_TOAST'];
-      toast: ToasterToast;
-    }
+    type: ActionType['ADD_TOAST'];
+    toast: ToasterToast;
+  }
   | {
-      type: ActionType['UPDATE_TOAST'];
-      toast: Partial<ToasterToast>;
-    }
+    type: ActionType['UPDATE_TOAST'];
+    toast: Partial<ToasterToast>;
+  }
   | {
-      type: ActionType['DISMISS_TOAST'];
-      toastId?: ToasterToast['id'];
-    }
+    type: ActionType['DISMISS_TOAST'];
+    toastId?: ToasterToast['id'];
+  }
   | {
-      type: ActionType['REMOVE_TOAST'];
-      toastId?: ToasterToast['id'];
-    };
+    type: ActionType['REMOVE_TOAST'];
+    toastId?: ToasterToast['id'];
+  };
 
 type State = {
   toasts: ToasterToast[];
@@ -310,9 +370,9 @@ export const reducer = (state: State, action: Action): State => {
         toasts: state.toasts.map((t) =>
           t.id === toastId || toastId === undefined
             ? {
-                ...t,
-                open: false,
-              }
+              ...t,
+              open: false,
+            }
             : t,
         ),
       };
@@ -342,9 +402,20 @@ const dispatch = (action: Action) => {
   });
 };
 
-// --- Component:toast ---
 type Toast = Omit<ToasterToast, 'id'>;
 
+/**
+ * toast function that triggers a toast notification.
+ *
+ * @param {Toast} props - The properties for the toast notification, including title and description.
+ *
+ * @example
+ * const { toast } = useToast();
+ * toast({
+ *   title: 'Scheduled: Catch up',
+ *   description: 'Friday, February 10, 2023 at 5:57 PM',
+ * });
+ */
 export const toast = ({ ...props }: Toast) => {
   const id = genId();
 
@@ -374,7 +445,16 @@ export const toast = ({ ...props }: Toast) => {
   };
 };
 
-// --- Component:useToast ---
+/**
+ * useToast hook that provides access to the current toast state and methods to manage toasts.
+ *
+ * @example
+ * const { toast } = useToast();
+ * toast({
+ *   title: 'New message!',
+ *   description: 'You have received a new message.',
+ * });
+ */
 export const useToast = () => {
   const [state, setState] = useState<State>(memoryState);
 
