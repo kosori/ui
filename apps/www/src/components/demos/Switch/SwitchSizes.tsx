@@ -15,8 +15,8 @@ export const SwitchSizesDemo = () => {
       </div>
 
       <div className='inline-flex items-center gap-x-2'>
-        <Switch id='big' size='big' />
-        <Label htmlFor='big'>Big</Label>
+        <Switch id='large' size='large' />
+        <Label htmlFor='large'>Large</Label>
       </div>
     </div>
   );
