@@ -1,9 +1,8 @@
 import { notFound } from 'next/navigation';
-import { ExternalLinkIcon, Pencil2Icon } from '@radix-ui/react-icons';
+import { ExternalLinkIcon } from '@radix-ui/react-icons';
 import { DocsBody, DocsPage } from 'fumadocs-ui/page';
 
 import { Badge } from '@kosori/ui/badge';
-import { Button } from '@kosori/ui/button';
 
 import { docs } from '~/app/source';
 import { Contribute } from '../_components/Contribute';
