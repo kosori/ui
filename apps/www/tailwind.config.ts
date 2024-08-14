@@ -14,7 +14,7 @@ export default {
     './content/**/*.{md,mdx}',
     './src/mdx-components.{ts,tsx}',
   ],
-  presets: [baseConfig, createPreset()],
+  presets: [createPreset(), baseConfig],
   theme: {
     extend: {
       fontFamily: {
