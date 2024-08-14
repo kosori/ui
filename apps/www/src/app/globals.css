@@ -23,7 +23,6 @@
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
-    --radius: 0.5rem;
 
     --dark-gray-1: 0 0% 98.8%;
     --dark-gray-2: 0 0% 97.6%;
@@ -1967,5 +1966,21 @@
     --info-10: var(--cyan-10);
     --info-11: var(--cyan-11);
     --info-12: var(--cyan-12);
+  }
+
+  [data-radius='none'] {
+    --radius: -0rem;
+  }
+
+  [data-radius='small'] {
+    --radius: 0.125rem;
+  }
+
+  [data-radius='medium'] {
+    --radius: 0.25rem;
+  }
+
+  [data-radius='large'] {
+    --radius: 0.5rem;
   }
 }
