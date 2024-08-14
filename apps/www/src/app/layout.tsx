@@ -39,7 +39,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           GeistSans.variable,
           GeistMono.variable,
         )}
-        data-accent-color='violet'
+        data-accent-color='dark-mauve'
         data-error-color='red'
         data-grey-color='mauve'
         data-info-color='blue'
