@@ -2,7 +2,6 @@
 
 import { forwardRef } from 'react';
 import { Indicator, Item, Root } from '@radix-ui/react-radio-group';
-import { Circle } from 'lucide-react';
 
 import { cn } from '@kosori/ui';
 
@@ -65,10 +64,10 @@ export const RadioGroupItem = forwardRef<
     {...props}
   >
     <Indicator className='flex items-center justify-center'>
-      <Circle
+      <div
         className={cn(
-          'h-1.5 w-1.5 fill-grey-base stroke-grey-base',
-          'group-disabled:fill-grey-bg',
+          'size-1.5 rounded-full bg-grey-base',
+          'group-disabled:bg-grey-bg',
         )}
       />
     </Indicator>
