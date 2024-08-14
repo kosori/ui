@@ -20,7 +20,7 @@ export const buttonStyles = tv({
     },
     intent: {
       default: '',
-      danger: '',
+      error: '',
     },
     size: {
       small: cn(
@@ -86,45 +86,45 @@ export const buttonStyles = tv({
     },
     {
       variant: 'solid',
-      intent: 'danger',
+      intent: 'error',
       class: cn(
-        'bg-danger-solid text-white',
-        'hover:bg-danger-solid-hover',
-        'focus-visible:ring-danger-focus-ring',
-        'disabled:bg-danger-border',
+        'bg-error-solid text-white',
+        'hover:bg-error-solid-hover',
+        'focus-visible:ring-error-focus-ring',
+        'disabled:bg-error-border',
       ),
     },
     {
       variant: 'soft',
-      intent: 'danger',
+      intent: 'error',
       class: cn(
-        'border border-danger-border bg-danger-bg text-danger-solid',
-        'hover:border-danger-border-hover hover:bg-danger-bg-hover',
-        'active:bg-danger-bg-active',
-        'focus-visible:ring-danger-focus-ring',
-        'disabled:border-danger-line disabled:bg-danger-bg-subtle disabled:text-danger-line',
+        'border border-error-border bg-error-bg text-error-solid',
+        'hover:border-error-border-hover hover:bg-error-bg-hover',
+        'active:bg-error-bg-active',
+        'focus-visible:ring-error-focus-ring',
+        'disabled:border-error-line disabled:bg-error-bg-subtle disabled:text-error-line',
       ),
     },
     {
       variant: 'outline',
-      intent: 'danger',
+      intent: 'error',
       class: cn(
-        'border border-danger-border bg-danger-base text-danger-solid',
-        'hover:border-danger-border-hover hover:bg-danger-bg-subtle',
-        'active:bg-danger-bg',
-        'focus-visible:ring-danger-focus-ring',
-        'disabled:border-danger-line disabled:bg-danger-base disabled:text-danger-line',
+        'border border-error-border bg-error-base text-error-solid',
+        'hover:border-error-border-hover hover:bg-error-bg-subtle',
+        'active:bg-error-bg',
+        'focus-visible:ring-error-focus-ring',
+        'disabled:border-error-line disabled:bg-error-base disabled:text-error-line',
       ),
     },
     {
       variant: 'ghost',
-      intent: 'danger',
+      intent: 'error',
       class: cn(
-        'text-danger-solid',
-        'hover:bg-danger-bg',
-        'active:bg-danger-bg-hover',
-        'focus-visible:ring-danger-focus-ring',
-        'disabled:bg-transparent disabled:text-danger-line',
+        'text-error-solid',
+        'hover:bg-error-bg',
+        'active:bg-error-bg-hover',
+        'focus-visible:ring-error-focus-ring',
+        'disabled:bg-transparent disabled:text-error-line',
       ),
     },
     {
@@ -164,7 +164,7 @@ export type ButtonProps = {
  * @param {ButtonProps} props - The props for the Button component.
  * @param {boolean} [asChild=false] - If true, renders the button as a child component, merging props and behavior.
  * @param {'solid' | 'soft' | 'outline' | 'ghost'} [variant='solid'] - The visual style of the button (e.g., 'solid', 'soft', 'outline', 'ghost').
- * @param {'default' | 'danger'} [intent='default'] - The intent of the button, affecting its color scheme (e.g., 'default', 'danger').
+ * @param {'default' | 'error'} [intent='default'] - The intent of the button, affecting its color scheme (e.g., 'default', 'error').
  * @param {'small' | 'medium' | 'large'} [size='medium'] - The size of the button (e.g., 'small', 'medium', 'large').
  * @param {boolean} [icon=false] - If true, adjusts the button size for icon-only usage.
  *
@@ -174,7 +174,7 @@ export type ButtonProps = {
  *
  * @example
  * // Using variants and intents
- * <Button variant="outline" intent="danger">Delete</Button>
+ * <Button variant="outline" intent="error">Delete</Button>
  *
  * @example
  * // Icon button
