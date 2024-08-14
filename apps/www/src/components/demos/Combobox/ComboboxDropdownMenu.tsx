@@ -90,9 +90,9 @@ export const ComboboxDropdownMenuDemo = () => {
               </DropdownMenuSubContent>
             </DropdownMenuSub>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className='text-danger-solid'>
+            <DropdownMenuItem className='text-error-solid'>
               Delete
-              <DropdownMenuShortcut className='text-danger-solid'>
+              <DropdownMenuShortcut className='text-error-solid'>
                 ⌘⌫
               </DropdownMenuShortcut>
             </DropdownMenuItem>

@@ -7,7 +7,7 @@ export const BadgeIntentsDemo = () => {
       <Badge intent='info'>Info</Badge>
       <Badge intent='success'>Success</Badge>
       <Badge intent='warning'>Warning</Badge>
-      <Badge intent='danger'>Danger</Badge>
+      <Badge intent='error'>Error</Badge>
     </div>
   );
 };

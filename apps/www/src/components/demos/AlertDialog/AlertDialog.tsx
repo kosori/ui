@@ -31,7 +31,7 @@ export const AlertDialogDemo = () => {
 
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction intent='danger'>
+          <AlertDialogAction intent='error'>
             Yes, delete account
           </AlertDialogAction>
         </AlertDialogFooter>

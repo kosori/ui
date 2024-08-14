@@ -11,14 +11,14 @@ export const ButtonVariantsDemo = () => {
       </div>
 
       <div className='flex gap-2'>
-        <Button intent='danger'>Solid</Button>
-        <Button intent='danger' variant='soft'>
+        <Button intent='error'>Solid</Button>
+        <Button intent='error' variant='soft'>
           Soft
         </Button>
-        <Button intent='danger' variant='outline'>
+        <Button intent='error' variant='outline'>
           Outline
         </Button>
-        <Button intent='danger' variant='ghost'>
+        <Button intent='error' variant='ghost'>
           Ghost
         </Button>
       </div>
