@@ -5,11 +5,9 @@ description: How to set up Kõsori UI in your Next.js project.
 
 <Callout type='warn'>
   The following guide assumes that you have a Next.js project created with:
-  
   <div className='[&_figure]:mt-0'>
-  ```bash
-  npm create next-app@latest kosori-example --typescript --tailwind --eslint
-  ```
+    ```bash npm create next-app@latest kosori-example --typescript --tailwind
+    --eslint ```
   </div>
 </Callout>
 
@@ -75,6 +73,7 @@ description: How to set up Kõsori UI in your Next.js project.
       // ...
     };
     ```
+
   </Step>
 
   <Step>
@@ -237,6 +236,7 @@ description: How to set up Kõsori UI in your Next.js project.
       },
     };
     ```
+
   </Step>
 
   <Step>
@@ -259,7 +259,7 @@ description: How to set up Kõsori UI in your Next.js project.
   <Step>
     ### Add css colors
     
-    Add the color variables to your CSS file. You can learn more about using CSS variables for theming in the [colors section](/docs/ui/colors). 
+    Add the color variables to your CSS file. You can learn more about using CSS variables for theming in the [colors section](/docs/ui/colors).
 
     <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
     ```css title="app/globals.css"
@@ -481,6 +481,7 @@ description: How to set up Kõsori UI in your Next.js project.
 
     export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
     ```
+
   </Step>
 
 </Steps>
