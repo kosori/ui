@@ -1,4 +1,172 @@
 ---
 title: Colors
-description: Color design system.
+description: Learn how to set and customize the colors of your app.
 ---
+
+Kõsori UI uses [Radix UI colors](https://www.radix-ui.com/colors) and is built on top of [Tailwind CSS](https://tailwindcss.com), which means that you can customize the colors by changing the `colors` object in the `tailwind.config.ts` file.
+
+## Structure
+
+Kõsori UI is composed of 6 main colors and their aliases.
+
+| Name                                                                         | Class             |
+| ---------------------------------------------------------------------------- | ----------------- |
+| <div className='size-3 rounded-full inline-flex bg-primary-solid' /> Primary | `primary-[alias]` |
+| <div className='size-3 rounded-full inline-flex bg-grey-solid' /> Grey       | `grey-[alias]`    |
+| <div className='size-3 rounded-full inline-flex bg-info-solid' /> Info       | `info-[alias]`    |
+| <div className='size-3 rounded-full inline-flex bg-success-solid' /> Success | `success-[alias]` |
+| <div className='size-3 rounded-full inline-flex bg-warning-solid' /> Warning | `warning-[alias]` |
+| <div className='size-3 rounded-full inline-flex bg-error-solid' /> Error     | `error-[alias]`   |
+
+## Semantic aliases
+
+As Radix UI recommends using semantic color names based on use cases, in Kõsori UI we use the following aliases:
+
+| Step | Class                                | Use Case                                |
+| ---- | ------------------------------------ | --------------------------------------- |
+| 1    | `[color]-base`                       | App background                          |
+| 2    | `[color]-bg-subtle`                  | Subtle background                       |
+| 3    | `[color]-bg`                         | UI background                           |
+| 4    | `[color]-bg-hover`                   | Hovered UI element background           |
+| 5    | `[color]-bg-active`                  | Active / Selected UI element background |
+| 6    | `[color]-line`                       | Subtle borders and separators           |
+| 7    | `[color]-border`                     | UI element border and focus rings       |
+| 8    | `[color]-border-hover \| focus-ring` | Hovered UI element border               |
+| 9    | `[color]-solid \| placeholder-text`  | Solid backgrounds                       |
+| 10   | `[color]-solid-hover`                | Hovered solid backgrounds               |
+| 11   | `[color]-text`                       | Low-contrast text                       |
+| 12   | `[color]-text-contrast`              | High-contrast text                      |
+
+Check out the "[Understanding the scale](https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale)" documentation of Radix UI for more details.
+
+## Palette
+
+You can choose any of the Radix UI colors as you want.
+By default, the colors that Kõsori UI uses are the following:
+
+| Type    | Color                                                                           |
+| ------- | ------------------------------------------------------------------------------- |
+| Primary | <div className='size-3 rounded-full inline-flex bg-primary-solid' /> Dark Mauve |
+| Grey    | <div className='size-3 rounded-full inline-flex bg-grey-solid' /> Mauve         |
+| Info    | <div className='size-3 rounded-full inline-flex bg-info-solid' /> Blue          |
+| Success | <div className='size-3 rounded-full inline-flex bg-success-solid' /> Green      |
+| Warning | <div className='size-3 rounded-full inline-flex bg-warning-solid' /> Yellow     |
+| Error   | <div className='size-3 rounded-full inline-flex bg-error-solid' /> Red          |
+
+### Radix UI colors
+
+Some colors can be used in multiple types. For example the `Tomato` color can be used in `Error` and `Primary` types.
+
+| Name    | Color                                                                    | Type               |
+| ------- | ------------------------------------------------------------------------ | ------------------ |
+| Gray    | <div className='size-3 rounded-full inline-flex bg-gray-9' /> Gray       | Grey               |
+| Mauve   | <div className='size-3 rounded-full inline-flex bg-mauve-9' /> Mauve     | Grey               |
+| Slate   | <div className='size-3 rounded-full inline-flex bg-slate-9' /> Slate     | Grey               |
+| Olive   | <div className='size-3 rounded-full inline-flex bg-olive-9' /> Olive     | Grey               |
+| Sand    | <div className='size-3 rounded-full inline-flex bg-sand-9' /> Sand       | Grey               |
+| Bronze  | <div className='size-3 rounded-full inline-flex bg-bronze-9' /> Bronze   | Primary            |
+| Gold    | <div className='size-3 rounded-full inline-flex bg-gold-9' /> Gold       | Primary            |
+| Brown   | <div className='size-3 rounded-full inline-flex bg-brown-9' /> Brown     | Primary            |
+| Pink    | <div className='size-3 rounded-full inline-flex bg-pink-9' /> Pink       | Primary            |
+| Plum    | <div className='size-3 rounded-full inline-flex bg-plum-9' /> Plum       | Primary            |
+| Purple  | <div className='size-3 rounded-full inline-flex bg-purple-9' /> Purple   | Primary            |
+| Violet  | <div className='size-3 rounded-full inline-flex bg-violet-9' /> Violet   | Primary            |
+| Iris    | <div className='size-3 rounded-full inline-flex bg-iris-9' /> Iris       | Primary            |
+| Indigo  | <div className='size-3 rounded-full inline-flex bg-indigo-9' /> Indigo   | Primary \| Info    |
+| Blue    | <div className='size-3 rounded-full inline-flex bg-blue-9' /> Blue       | Primary \| Info    |
+| Cyan    | <div className='size-3 rounded-full inline-flex bg-cyan-9' /> Cyan       | Primary \| Info    |
+| Sky     | <div className='size-3 rounded-full inline-flex bg-sky-9' /> Sky         | Primary \| Info    |
+| Mint    | <div className='size-3 rounded-full inline-flex bg-mint-9' /> Mint       | Primary \| Success |
+| Teal    | <div className='size-3 rounded-full inline-flex bg-teal-9' /> Teal       | Primary \| Success |
+| Jade    | <div className='size-3 rounded-full inline-flex bg-jade-9' /> Jade       | Primary \| Success |
+| Green   | <div className='size-3 rounded-full inline-flex bg-green-9' /> Green     | Primary \| Success |
+| Grass   | <div className='size-3 rounded-full inline-flex bg-grass-9' /> Grass     | Primary \| Success |
+| Lime    | <div className='size-3 rounded-full inline-flex bg-lime-9' /> Lime       | Primary \| Success |
+| Amber   | <div className='size-3 rounded-full inline-flex bg-amber-9' /> Amber     | Primary \| Warning |
+| Yellow  | <div className='size-3 rounded-full inline-flex bg-yellow-9' /> Yellow   | Primary \| Warning |
+| Orange  | <div className='size-3 rounded-full inline-flex bg-orange-9' /> Orange   | Primary \| Warning |
+| Tomato  | <div className='size-3 rounded-full inline-flex bg-tomato-9' /> Tomato   | Primary \| Error   |
+| Red     | <div className='size-3 rounded-full inline-flex bg-red-9' /> Red         | Primary \| Error   |
+| Ruby    | <div className='size-3 rounded-full inline-flex bg-ruby-9' /> Ruby       | Primary \| Error   |
+| Crimson | <div className='size-3 rounded-full inline-flex bg-crimson-9' /> Crimson | Primary \| Error   |
+
+Use the "[Theme builder](/theme-builder)" to preview the colors in different components and copy them into your app.
+
+### Kõsori UI colors
+
+Radix UI lets you create custom colors by using their "[Create custom palette](https://www.radix-ui.com/colors/custom)" tool.
+I used to create the `Dark [Grey]` colors to have a similar look of the zinc, slate, stone, gray and neutral colors by Shadcn.
+
+| Name       | Color                                                               |
+| ---------- | ------------------------------------------------------------------- |
+| Dark Gray  | <div className='size-3 rounded-full inline-flex bg-dark-gray-9' />  |
+| Dark Mauve | <div className='size-3 rounded-full inline-flex bg-dark-mauve-9' /> |
+| Dark Slate | <div className='size-3 rounded-full inline-flex bg-dark-slate-9' /> |
+| Dark Sage  | <div className='size-3 rounded-full inline-flex bg-dark-sage-9' />  |
+| Dark Olive | <div className='size-3 rounded-full inline-flex bg-dark-olive-9' /> |
+| Dark Sand  | <div className='size-3 rounded-full inline-flex bg-dark-sand-9' />  |
+
+### Custom colors
+
+Using the "[Create custom palette](https://www.radix-ui.com/colors/custom)" tool, you can create your own custom colors.
+You will need to convert the colors to HSL format.
+
+Please read "[Using CSS variables](https://tailwindcss.com/docs/customizing-colors#using-css-variables)" to learn more about how to define your colors as CSS variables.
+
+```css title="globals.css"
+:root {
+  --grey-1: 300 20% 99%; /* [!code highlight] */
+  /* ... */
+
+  --primary-1: 240 20% 99%; /* [!code highlight] */
+  /* ... */
+}
+
+.dark {
+  :root {
+    --grey-1: 300 4.2% 9.4%; /* [!code highlight] */
+    /* ... */
+
+    --primary-1: 260 8.11% 7.25%; /* [!code highlight] */
+    /* ... */
+  }
+}
+```
+
+## Dark mode
+
+You need to set the `darkMode` strategy to `class` in your Tailwind CSS config file.
+
+```ts title="tailwind.config.ts"
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  darkMode: 'class', // [!code highlight]
+  // ...
+};
+```
+
+With this strategy, we can use the `light` class to apply light mode styles and the `dark` class to apply dark mode styles.
+
+```html
+<!-- [!code word:ligh | dark] -->
+<html class="ligh | dark" />
+```
+
+## Using the colors
+
+These are some little examples of how to use the colors in Kõsori UI.
+
+```tsx
+<button className='bg-primary-solid text-grey-base hover:bg-primary-solid-hover focus-visible:outline-primary-focus-ring'>
+  Hello
+</button>
+```
+
+```tsx
+<hr className='border-t border-grey-line' />
+```
+
+```tsx
+<input className='border border-grey-border placeholder:text-grey-placeholder-text hover:border-grey-border-hover' />
+```
