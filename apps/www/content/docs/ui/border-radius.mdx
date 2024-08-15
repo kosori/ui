@@ -1,0 +1,95 @@
+---
+title: Border radius
+description: Learn how to set and customize the border radius of your app.
+---
+
+Adjust the border radius of your components using the `--radius` CSS variable in the `globals.css` file.
+
+```css title="globals.css"
+:root {
+  --radius: 0.5rem; /* [!code highlight] */
+  /* ... */
+}
+```
+
+## Sizes
+
+By default, the "[Theme builder](/theme-builder)" allows 4 border radius values.
+
+| Size   | Value      |
+| ------ | ---------- |
+| None   | `-0.5rem`  |
+| Small  | `0.125rem` |
+| Medium | `0.25rem`  |
+| Large  | `0.5rem`   |
+
+But you can use any value you want. Like: `3px` or `1rem`.
+
+## Preview
+
+### None
+
+<div data-radius='none'>
+  <ComponentPreview name='tabs'>
+  ```json doc-gen:file
+  {
+    "file": "./src/components/demos/Tabs/Tabs.tsx",
+    "codeblock": true
+  }
+  ```
+  </ComponentPreview>
+</div>
+
+### Small
+
+<div data-radius='small'>
+  <ComponentPreview name='tabs'>
+  ```json doc-gen:file
+  {
+    "file": "./src/components/demos/Tabs/Tabs.tsx",
+    "codeblock": true
+  }
+  ```
+  </ComponentPreview>
+</div>
+
+### Medium
+
+<div data-radius='medium'>
+  <ComponentPreview name='tabs'>
+  ```json doc-gen:file
+  {
+    "file": "./src/components/demos/Tabs/Tabs.tsx",
+    "codeblock": true
+  }
+  ```
+  </ComponentPreview>
+</div>
+
+### Large
+
+<div data-radius='large'>
+  <ComponentPreview name='tabs'>
+  ```json doc-gen:file
+  {
+    "file": "./src/components/demos/Tabs/Tabs.tsx",
+    "codeblock": true
+  }
+  ```
+  </ComponentPreview>
+</div>
+
+### Custom
+
+This is how will look if the `--radius` CSS variable is set to `1rem`.
+
+<div style={{ '--radius': '1rem' }}>
+  <ComponentPreview name='tabs'>
+  ```json doc-gen:file
+  {
+    "file": "./src/components/demos/Tabs/Tabs.tsx",
+    "codeblock": true
+  }
+  ```
+  </ComponentPreview>
+</div>
