@@ -1009,7 +1009,7 @@
     --sky-12: 191.8 100% 88%;
   }
 
-  [data-accent-color='gold'] {
+  [data-primary-color='gold'] {
     --primary-1: var(--gold-1);
     --primary-2: var(--gold-2);
     --primary-3: var(--gold-3);
@@ -1024,7 +1024,7 @@
     --primary-12: var(--gold-12);
   }
 
-  [data-accent-color='bronze'] {
+  [data-primary-color='bronze'] {
     --primary-1: var(--bronze-1);
     --primary-2: var(--bronze-2);
     --primary-3: var(--bronze-3);
@@ -1039,7 +1039,7 @@
     --primary-12: var(--bronze-12);
   }
 
-  [data-accent-color='brown'] {
+  [data-primary-color='brown'] {
     --primary-1: var(--brown-1);
     --primary-2: var(--brown-2);
     --primary-3: var(--brown-3);
@@ -1054,7 +1054,7 @@
     --primary-12: var(--brown-12);
   }
 
-  [data-accent-color='yellow'] {
+  [data-primary-color='yellow'] {
     --primary-1: var(--yellow-1);
     --primary-2: var(--yellow-2);
     --primary-3: var(--yellow-3);
@@ -1069,7 +1069,7 @@
     --primary-12: var(--yellow-12);
   }
 
-  [data-accent-color='amber'] {
+  [data-primary-color='amber'] {
     --primary-1: var(--amber-1);
     --primary-2: var(--amber-2);
     --primary-3: var(--amber-3);
@@ -1084,7 +1084,7 @@
     --primary-12: var(--amber-12);
   }
 
-  [data-accent-color='orange'] {
+  [data-primary-color='orange'] {
     --primary-1: var(--orange-1);
     --primary-2: var(--orange-2);
     --primary-3: var(--orange-3);
@@ -1099,7 +1099,7 @@
     --primary-12: var(--orange-12);
   }
 
-  [data-accent-color='tomato'] {
+  [data-primary-color='tomato'] {
     --primary-1: var(--tomato-1);
     --primary-2: var(--tomato-2);
     --primary-3: var(--tomato-3);
@@ -1114,7 +1114,7 @@
     --primary-12: var(--tomato-12);
   }
 
-  [data-accent-color='red'] {
+  [data-primary-color='red'] {
     --primary-1: var(--red-1);
     --primary-2: var(--red-2);
     --primary-3: var(--red-3);
@@ -1129,7 +1129,7 @@
     --primary-12: var(--red-12);
   }
 
-  [data-accent-color='ruby'] {
+  [data-primary-color='ruby'] {
     --primary-1: var(--ruby-1);
     --primary-2: var(--ruby-2);
     --primary-3: var(--ruby-3);
@@ -1144,7 +1144,7 @@
     --primary-12: var(--ruby-12);
   }
 
-  [data-accent-color='crimson'] {
+  [data-primary-color='crimson'] {
     --primary-1: var(--crimson-1);
     --primary-2: var(--crimson-2);
     --primary-3: var(--crimson-3);
@@ -1159,7 +1159,7 @@
     --primary-12: var(--crimson-12);
   }
 
-  [data-accent-color='pink'] {
+  [data-primary-color='pink'] {
     --primary-1: var(--pink-1);
     --primary-2: var(--pink-2);
     --primary-3: var(--pink-3);
@@ -1174,7 +1174,7 @@
     --primary-12: var(--pink-12);
   }
 
-  [data-accent-color='plum'] {
+  [data-primary-color='plum'] {
     --primary-1: var(--plum-1);
     --primary-2: var(--plum-2);
     --primary-3: var(--plum-3);
@@ -1189,7 +1189,7 @@
     --primary-12: var(--plum-12);
   }
 
-  [data-accent-color='purple'] {
+  [data-primary-color='purple'] {
     --primary-1: var(--purple-1);
     --primary-2: var(--purple-2);
     --primary-3: var(--purple-3);
@@ -1204,7 +1204,7 @@
     --primary-12: var(--purple-12);
   }
 
-  [data-accent-color='violet'] {
+  [data-primary-color='violet'] {
     --primary-1: var(--violet-1);
     --primary-2: var(--violet-2);
     --primary-3: var(--violet-3);
@@ -1219,7 +1219,7 @@
     --primary-12: var(--violet-12);
   }
 
-  [data-accent-color='iris'] {
+  [data-primary-color='iris'] {
     --primary-1: var(--iris-1);
     --primary-2: var(--iris-2);
     --primary-3: var(--iris-3);
@@ -1234,7 +1234,7 @@
     --primary-12: var(--iris-12);
   }
 
-  [data-accent-color='indigo'] {
+  [data-primary-color='indigo'] {
     --primary-1: var(--indigo-1);
     --primary-2: var(--indigo-2);
     --primary-3: var(--indigo-3);
@@ -1249,7 +1249,7 @@
     --primary-12: var(--indigo-12);
   }
 
-  [data-accent-color='blue'] {
+  [data-primary-color='blue'] {
     --primary-1: var(--blue-1);
     --primary-2: var(--blue-2);
     --primary-3: var(--blue-3);
@@ -1264,7 +1264,7 @@
     --primary-12: var(--blue-12);
   }
 
-  [data-accent-color='cyan'] {
+  [data-primary-color='cyan'] {
     --primary-1: var(--cyan-1);
     --primary-2: var(--cyan-2);
     --primary-3: var(--cyan-3);
@@ -1279,7 +1279,7 @@
     --primary-12: var(--cyan-12);
   }
 
-  [data-accent-color='teal'] {
+  [data-primary-color='teal'] {
     --primary-1: var(--teal-1);
     --primary-2: var(--teal-2);
     --primary-3: var(--teal-3);
@@ -1294,7 +1294,7 @@
     --primary-12: var(--teal-12);
   }
 
-  [data-accent-color='jade'] {
+  [data-primary-color='jade'] {
     --primary-1: var(--jade-1);
     --primary-2: var(--jade-2);
     --primary-3: var(--jade-3);
@@ -1309,7 +1309,7 @@
     --primary-12: var(--jade-12);
   }
 
-  [data-accent-color='green'] {
+  [data-primary-color='green'] {
     --primary-1: var(--green-1);
     --primary-2: var(--green-2);
     --primary-3: var(--green-3);
@@ -1324,7 +1324,7 @@
     --primary-12: var(--green-12);
   }
 
-  [data-accent-color='grass'] {
+  [data-primary-color='grass'] {
     --primary-1: var(--grass-1);
     --primary-2: var(--grass-2);
     --primary-3: var(--grass-3);
@@ -1339,7 +1339,7 @@
     --primary-12: var(--grass-12);
   }
 
-  [data-accent-color='lime'] {
+  [data-primary-color='lime'] {
     --primary-1: var(--lime-1);
     --primary-2: var(--lime-2);
     --primary-3: var(--lime-3);
@@ -1354,7 +1354,7 @@
     --primary-12: var(--lime-12);
   }
 
-  [data-accent-color='mint'] {
+  [data-primary-color='mint'] {
     --primary-1: var(--mint-1);
     --primary-2: var(--mint-2);
     --primary-3: var(--mint-3);
@@ -1369,7 +1369,7 @@
     --primary-12: var(--mint-12);
   }
 
-  [data-accent-color='sky'] {
+  [data-primary-color='sky'] {
     --primary-1: var(--sky-1);
     --primary-2: var(--sky-2);
     --primary-3: var(--sky-3);
@@ -1384,7 +1384,7 @@
     --primary-12: var(--sky-12);
   }
 
-  [data-accent-color='dark-gray'] {
+  [data-primary-color='dark-gray'] {
     --primary-1: var(--dark-gray-1);
     --primary-2: var(--dark-gray-2);
     --primary-3: var(--dark-gray-3);
@@ -1399,7 +1399,7 @@
     --primary-12: var(--dark-gray-12);
   }
 
-  [data-accent-color='dark-mauve'] {
+  [data-primary-color='dark-mauve'] {
     --primary-1: var(--dark-mauve-1);
     --primary-2: var(--dark-mauve-2);
     --primary-3: var(--dark-mauve-3);
@@ -1414,7 +1414,7 @@
     --primary-12: var(--dark-mauve-12);
   }
 
-  [data-accent-color='dark-slate'] {
+  [data-primary-color='dark-slate'] {
     --primary-1: var(--dark-slate-1);
     --primary-2: var(--dark-slate-2);
     --primary-3: var(--dark-slate-3);
