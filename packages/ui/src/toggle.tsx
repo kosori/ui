@@ -51,8 +51,8 @@ type ToggleProps = object & ToggleRadixProps & ToggleVariants;
  * Toggle component that allows users to switch between on and off states.
  *
  * @param {ToggleProps} props - The props for the Toggle component.
- * @param {'ghost' | 'outline'} [variant] - The variant style of the toggle (e.g. 'ghost', 'outline').
- * @param {'small' | 'medium' | 'large'} [size] - The size of the toggle (e.g. 'small', 'medium', 'large').
+ * @param {'ghost' | 'outline'} [variant='ghost'] - The variant style of the toggle (e.g. 'ghost', 'outline').
+ * @param {'small' | 'medium' | 'large'} [size='medium'] - The size of the toggle (e.g. 'small', 'medium', 'large').
  *
  * @example
  * <Toggle>Toggle</Toggle>
