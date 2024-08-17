@@ -5,7 +5,6 @@ import { Indicator, Root } from '@radix-ui/react-progress';
 
 import { cn } from '@kosori/ui';
 
-// --- Component:Progress ---
 type ProgressRef = React.ElementRef<typeof Root>;
 type ProgressProps = React.ComponentPropsWithoutRef<typeof Root>;
 
