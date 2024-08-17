@@ -18,7 +18,6 @@ type ToggleGroupProps = React.ComponentPropsWithoutRef<typeof Root> &
  * @param {ToggleGroupProps} props - The props for the ToggleGroup component.
  * @param {'ghost' | 'outline'} [variant='solid'] - The visual style of the toggle group (e.g. 'ghost', 'outline').
  * @param {'small' | 'medium' | 'large'} [size='medium'] - The size of the toggle group (e.g. 'small', 'medium', 'large').
- * @param {'single' | 'multiple'} [type] - The type of toggle group (e.g. 'single', 'multiple').
  *
  * @example
  * <ToggleGroup type='single'>
