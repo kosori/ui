@@ -50,7 +50,6 @@ type Props = React.ComponentPropsWithoutRef<typeof Content>;
  * TooltipContent component that displays the content of the tooltip.
  *
  * @param {Props} props - The props for the TooltipContent component.
- * @param {number} [sideOffset=4] - The offset for the tooltip from its trigger.
  *
  * @example
  * <TooltipContent>
