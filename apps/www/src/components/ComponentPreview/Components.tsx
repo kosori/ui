@@ -385,6 +385,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'data-table': {
+    name: 'data-table',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/DataTable').then((module) => ({
+        default: module.DataTableDemo,
+      })),
+    ),
+  },
   dialog: {
     name: 'dialog',
     type: 'component:example',
