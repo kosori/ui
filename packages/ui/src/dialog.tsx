@@ -75,7 +75,7 @@ type DialogOverlayProps = React.ComponentPropsWithoutRef<typeof Overlay>;
 /**
  * DialogOverlay component that covers the background when the Dialog is open.
  *
- * @param {React.ComponentPropsWithoutRef<typeof Overlay>} props - The props for the DialogOverlay component.
+ * @param {DialogOverlayProps} props - The props for the DialogOverlay component.
  *
  * @example
  * <DialogOverlay />
@@ -103,8 +103,7 @@ type DialogContentProps = React.ComponentPropsWithoutRef<typeof Content>;
 /**
  * DialogContent component that wraps the content of the Dialog.
  *
- * @param {React.ComponentPropsWithoutRef<typeof Content>} props - The props for the DialogContent component.
- * @param {React.ReactNode} props.children - The content to be rendered inside the DialogContent.
+ * @param {DialogContentProps} props - The props for the DialogContent component.
  *
  * @example
  * <DialogContent>
@@ -162,7 +161,7 @@ type DialogHeaderProps = React.HTMLAttributes<HTMLDivElement>;
 /**
  * DialogHeader component that wraps the header content of the Dialog.
  *
- * @param {React.HTMLAttributes<HTMLDivElement>} props - The props for the DialogHeader component.
+ * @param {DialogHeaderProps} props - The props for the DialogHeader component.
  *
  * @example
  * <DialogHeader>
@@ -189,7 +188,7 @@ type DialogTitleProps = React.ComponentPropsWithoutRef<typeof Title>;
 /**
  * DialogTitle component that displays the title of the Dialog.
  *
- * @param {React.ComponentPropsWithoutRef<typeof Title>} props - The props for the DialogTitle component.
+ * @param {DialogTitleProps} props - The props for the DialogTitle component.
  *
  * @example
  * <DialogTitle>Dialog Title</DialogTitle>
@@ -217,7 +216,7 @@ type DialogDescriptionProps = React.ComponentPropsWithoutRef<
 /**
  * DialogDescription component that provides a description for the Dialog.
  *
- * @param {React.ComponentPropsWithoutRef<typeof Description>} props - The props for the DialogDescription component.
+ * @param {DialogDescriptionProps} props - The props for the DialogDescription component.
  *
  * @example
  * <DialogDescription>Dialog Description</DialogDescription>
@@ -240,7 +239,7 @@ type DialogFooterProps = React.HTMLAttributes<HTMLDivElement>;
 /**
  * DialogFooter component that wraps the footer content of the Dialog.
  *
- * @param {React.HTMLAttributes<HTMLDivElement>} props - The props for the DialogFooter component.
+ * @param {DialogFooterProps} props - The props for the DialogFooter component.
  *
  * @example
  * <DialogFooter>

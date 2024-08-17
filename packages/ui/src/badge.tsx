@@ -33,7 +33,7 @@ type BadgeProps = HTMLDivProps & BadgeVariants;
  * Badge component that displays a small label or indicator.
  *
  * @param {BadgeProps} props - The props for the Badge component.
- * @param {'default' | 'info' | 'success' | 'warning' | 'error'} [props.intent='default'] - The visual style of the badge (e.g., 'default', 'info', 'success', 'warning', 'error').
+ * @param {'default' | 'info' | 'success' | 'warning' | 'error'} [intent='default'] - The visual style of the badge (e.g., 'default', 'info', 'success', 'warning', 'error').
  *
  * @example
  * <Badge intent='info'>Badge</Badge>

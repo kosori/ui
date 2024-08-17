@@ -43,8 +43,8 @@ type CheckboxProps = object & CheckboxRadixProps & CheckboxVariants;
  * Checkbox component that allows users to select or deselect an option.
  *
  * @param {CheckboxProps} props - The props for the Checkbox component.
- * @param {'square' | 'round'} [props.shape='square'] - The shape of the checkbox.
- * @param {'small' | 'medium'} [props.size='small'] - The size of the checkbox.
+ * @param {'square' | 'round'} [shape='square'] - The shape of the checkbox.
+ * @param {'small' | 'medium'} [size='small'] - The size of the checkbox.
  *
  * @example
  * <Checkbox />

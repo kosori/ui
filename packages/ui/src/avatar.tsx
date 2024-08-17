@@ -52,8 +52,8 @@ type AvatarProps = AvatarVariants & AvatarRadixProps;
  * Avatar component that displays a user's image or a fallback if the image is not available.
  *
  * @param {AvatarProps} props - The props for the Avatar component.
- * @param {'round' | 'square'} [props.shape='round'] - The shape of the avatar (e.g., 'round', 'square').
- * @param {'small' | 'medium' | 'large'} [props.size='small'] - The size of the avatar (e.g., 'small', 'medium', 'large').
+ * @param {'round' | 'square'} [shape='round'] - The shape of the avatar (e.g., 'round', 'square').
+ * @param {'small' | 'medium' | 'large'} [size='small'] - The size of the avatar (e.g., 'small', 'medium', 'large').
  *
  * @example
  * <Avatar>

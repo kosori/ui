@@ -179,7 +179,7 @@ type MenubarItemProps = React.ComponentPropsWithoutRef<typeof Item> & {
  * MenubarItem component that represents an individual item in the menu.
  *
  * @param {MenubarItemProps} props - The props for the MenubarItem component.
- * @param {boolean} props.inset - Whether to add an inset to the item.
+ * @param {boolean} [inset] - Whether to add an inset to the item.
  *
  * @example
  * <MenubarItem>New Tab</MenubarItem>
@@ -224,7 +224,7 @@ type MenubarLabelProps = React.ComponentPropsWithoutRef<typeof Label> & {
  * MenubarLabel component that provides a label for a group of menu items.
  *
  * @param {MenubarLabelProps} props - The props for the MenubarLabel component.
- * @param {boolean} props.inset - Whether to add an inset to the label.
+ * @param {boolean} [inset] - Whether to add an inset to the label.
  *
  * @example
  * <MenubarLabel>File</MenubarLabel>

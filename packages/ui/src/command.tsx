@@ -18,7 +18,6 @@ import { Dialog, DialogContent } from '@kosori/ui/dialog';
  * Command component that provides a command palette for executing commands or searching.
  *
  * @param {CommandProps} props - The props for the Command component.
- * @param {React.ReactNode} props.children - The content to be rendered inside the Command component.
  *
  * @example
  * <Command>
@@ -61,7 +60,6 @@ Command.displayName = CMDK.displayName;
  * CommandDialog component that wraps the Command component in a dialog.
  *
  * @param {DialogProps} props - The props for the CommandDialog component.
- * @param {React.ReactNode} props.children - The content to be rendered inside the CommandDialog.
  *
  * @example
  * <CommandDialog>

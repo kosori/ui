@@ -52,10 +52,10 @@ export type CarouselProps = {
  * Carousel component that provides a sliding interface for displaying content.
  *
  * @param {CarouselProps} props - The props for the Carousel component.
- * @param {CarouselOptions} [props.opts] - Options for the carousel.
- * @param {CarouselPlugin} [props.plugins] - Plugins for the carousel.
- * @param {'horizontal' | 'vertical'} [props.orientation='horizontal'] - Orientation of the carousel.
- * @param {(api: CarouselApi) => void} [props.setApi] - Callback to set the carousel API.
+ * @param {CarouselOptions} [opts] - Options for the carousel.
+ * @param {CarouselPlugin} [plugins] - Plugins for the carousel.
+ * @param {'horizontal' | 'vertical'} [orientation='horizontal'] - Orientation of the carousel.
+ * @param {(api: CarouselApi) => void} [setApi] - Callback to set the carousel API.
  *
  * @example
  * <Carousel>

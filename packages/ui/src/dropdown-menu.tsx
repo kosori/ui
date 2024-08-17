@@ -30,7 +30,6 @@ import { cn } from '@kosori/ui';
  * DropdownMenu component that provides a dropdown menu for user interactions.
  *
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the DropdownMenu component.
- * @param {React.ReactNode} props.children - The content to be rendered inside the DropdownMenu.
  *
  * @example
  * <DropdownMenu>
@@ -92,7 +91,7 @@ type DropdownMenuItemProps = React.ComponentPropsWithoutRef<typeof Item> & {
  * DropdownMenuItem component that represents a single item in the DropdownMenu.
  *
  * @param {DropdownMenuItemProps} props - The props for the DropdownMenuItem component.
- * @param {boolean} [props.inset] - Whether the item is inset.
+ * @param {boolean} [inset] - Whether the item is inset.
  *
  * @example
  * <DropdownMenuItem>Profile</DropdownMenuItem>
@@ -154,7 +153,7 @@ type DropdownMenuLabelProps = React.ComponentPropsWithoutRef<typeof Label> & {
  * DropdownMenuLabel component that displays a label for a group of items in the DropdownMenu.
  *
  * @param {DropdownMenuLabelProps} props - The props for the DropdownMenuLabel component.
- * @param {boolean} [props.inset] - Whether the label is inset.
+ * @param {boolean} [inset] - Whether the label is inset.
  *
  * @example
  * <DropdownMenuLabel>Settings</DropdownMenuLabel>
@@ -296,7 +295,7 @@ type DropdownMenuSubTriggerProps = React.ComponentPropsWithoutRef<
  * DropdownMenuSubTrigger component that serves as the trigger for a sub-menu in the DropdownMenu.
  *
  * @param {DropdownMenuSubTriggerProps} props - The props for the DropdownMenuSubTrigger component.
- * @param {boolean} [props.inset] - Whether the trigger is inset.
+ * @param {boolean} [inset] - Whether the trigger is inset.
  *
  * @example
  * <DropdownMenuSubTrigger>More Options</DropdownMenuSubTrigger>
