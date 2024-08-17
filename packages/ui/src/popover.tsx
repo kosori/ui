@@ -37,8 +37,6 @@ type PopoverContentProps = React.ComponentPropsWithoutRef<typeof Content>;
  * PopoverContent component that displays the content of the popover.
  *
  * @param {PopoverContentProps} props - The props for the PopoverContent component.
- * @param {string} [align='center'] - The alignment of the popover content (e.g. 'start', 'center', 'end').
- * @param {number} [sideOffset=4] - The offset from the side.
  *
  * @example
  * <PopoverContent>Place content for the popover here.</PopoverContent>
