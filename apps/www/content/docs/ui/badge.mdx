@@ -14,18 +14,34 @@ description: Displays a badge or a component that looks like a badge.
 
 ## Installation
 
-Copy-paste the component code in a `.tsx` file.
+<Steps>
 
-<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+  <Step>
+    ### Copy-paste the component
+    
+    Copy and paste the component code in a `.tsx` file.
 
-```json doc-gen:file
-{
-  "file": "../../packages/ui/src/badge.tsx",
-  "codeblock": true
-}
-```
+    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
 
-</div>
+    ```json doc-gen:file
+    {
+      "file": "../../packages/ui/src/badge.tsx",
+      "codeblock": true
+    }
+    ```
+
+    </div>
+
+  </Step>
+
+  <Step>
+    ### Update import paths
+
+    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+  </Step>
+
+</Steps>
 
 ## Usage
 
@@ -36,6 +52,19 @@ import { Badge } from '~/components/ui/badge';
 ```tsx
 <Badge intent='info'>Badge</Badge>
 ```
+
+## Reference
+
+<TypeTable
+  type={{
+    intent: {
+      default: 'default',
+      description: 'The visual style of the badge',
+      type: 'enum',
+      typeDescription: "'default' | 'info' | 'success' | 'warning' | 'error'",
+    },
+  }}
+/>
 
 ## Examples
 

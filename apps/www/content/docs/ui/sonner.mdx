@@ -20,40 +20,68 @@ Sonner is built and maintained by [@emilkowalski\_](https://x.com/emilkowalski_)
 
 ## Installation
 
-Install the following dependencies and copy-paste the component code in a `.tsx` file.
+<Steps>
 
-```package-install
-sonner next-themes
-```
+  <Step>
+    ### Install the dependencies
+    
+    Install the `sonner` and `next-themes` package.
 
-<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+    ```package-install
+    sonner next-themes
+    ```
 
-```json doc-gen:file
-{
-  "file": "../../packages/ui/src/sonner.tsx",
-  "codeblock": true
-}
-```
+  </Step>
+    
+  <Step>
+    ### Copy-paste the component
+    
+    Copy and paste the component code in a `.tsx` file.
 
-</div>
+    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
 
-Add the `<Toaster />` component.
+    ```json doc-gen:file
+    {
+      "file": "../../packages/ui/src/sonner.tsx",
+      "codeblock": true
+    }
+    ```
 
-```tsx title="app/layout.tsx"
-import { Toaster } from '~/components/ui/sonner'; // [!code highlight]
+    </div>
 
-export default const RootLayout = ({ children }) => {
-  return (
-    <html lang='en'>
-      <head />
-      <body>
-        <main>{children}</main>
-        <Toaster /> // [!code highlight]
-      </body>
-    </html>
-  );
-}
-```
+  </Step>
+
+  <Step>
+    ### Update import paths
+
+    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+  </Step>
+
+  <Step>
+    ### Add Toaster component
+
+    Add the `<Toaster />` component to the root of your app.
+
+    ```tsx title="app/layout.tsx"
+    import { Toaster } from '~/components/ui/sonner'; // [!code highlight]
+
+    export default const RootLayout = ({ children }) => {
+      return (
+        <html lang='en'>
+          <head />
+          <body>
+            <main>{children}</main>
+            <Toaster /> // [!code highlight]
+          </body>
+        </html>
+      );
+    }
+    ```
+
+  </Step>
+
+</Steps>
 
 ## Usage
 

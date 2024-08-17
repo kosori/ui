@@ -17,22 +17,75 @@ links:
 
 ## Installation
 
-Install the primitive and copy-paste the component code in a `.tsx` file.
+<Steps>
+  <Step>
+    ### Install the primitive
 
-```package-install
-@radix-ui/react-accordion
-```
+    Install the `@radix-ui/react-accordion` package.
 
-<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+    ```package-install
+    @radix-ui/react-accordion
+    ```
 
-```json doc-gen:file
-{
-  "file": "../../packages/ui/src/accordion.tsx",
-  "codeblock": true
-}
-```
+  </Step>
 
-</div>
+  <Step>
+    ### Copy-paste the component
+
+    Copy and paste the component code in a `.tsx` file.
+
+    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+    ```json doc-gen:file
+    {
+      "file": "../../packages/ui/src/accordion.tsx",
+      "codeblock": true
+    }
+    ```
+
+    </div>
+
+  </Step>
+
+  <Step>
+    ### Update import paths
+
+    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+  </Step>
+
+  <Step>
+    ### Add keyframes animation
+    
+    Add the `accordion-down` and `accordion-up` keyframes animation to your Tailwind CSS config.
+
+    ```ts title="tailwind.config.ts"
+    import type { Config } from 'tailwindcss';
+
+    const config: Config = {
+      // ...,
+      keyframes: {
+        // [!code highlight:9]
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
+      },
+      animation: {
+        // [!code highlight:3]
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+      }
+    };
+    ```
+
+  </Step>
+
+</Steps>
 
 ## Usage
 

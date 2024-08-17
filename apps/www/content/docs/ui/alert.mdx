@@ -14,18 +14,34 @@ description: Displays a callout for user attention.
 
 ## Installation
 
-Copy-paste the component code in a `.tsx` file.
+<Steps>
 
-<div className='not-prose [&_figure]:max-h-[500px] [&_figure]:overflow-y-auto'>
+  <Step>
+    ### Copy-paste the component
+    
+    Copy and paste the component code in a `.tsx` file.
+    
+    <div className='not-prose [&_figure]:max-h-[500px] [&_figure]:overflow-y-auto'>
 
-```json doc-gen:file
-{
-  "file": "../../packages/ui/src/alert.tsx",
-  "codeblock": true
-}
-```
+    ```json doc-gen:file
+    {
+      "file": "../../packages/ui/src/alert.tsx",
+      "codeblock": true
+    }
+    ```
 
-</div>
+    </div>
+
+  </Step>
+
+  <Step>
+    ### Update import paths
+
+    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+  </Step>
+
+</Steps>
 
 ## Usage
 
@@ -43,9 +59,24 @@ import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
 </Alert>
 ```
 
+## Reference
+
+<TypeTable
+  type={{
+    intent: {
+      default: 'default',
+      description: 'The visual style of the alert',
+      type: 'enum',
+      typeDescription: "'default' | 'info' | 'success' | 'warning' | 'error'",
+    },
+  }}
+/>
+
 ## Examples
 
-### Default
+### Intents
+
+#### Default
 
 <ComponentPreview name='alert'>
 ```json doc-gen:file
@@ -56,7 +87,7 @@ import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
 ```
 </ComponentPreview>
 
-### Info
+#### Info
 
 <ComponentPreview name='alert-info'>
 ```json doc-gen:file
@@ -67,7 +98,7 @@ import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
 ```
 </ComponentPreview>
 
-### Success
+#### Success
 
 <ComponentPreview name='alert-success'>
 ```json doc-gen:file
@@ -78,7 +109,7 @@ import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
 ```
 </ComponentPreview>
 
-### Warning
+#### Warning
 
 <ComponentPreview name='alert-warning'>
 ```json doc-gen:file
@@ -89,7 +120,7 @@ import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
 ```
 </ComponentPreview>
 
-### Error
+#### Error
 
 <ComponentPreview name='alert-error'>
 ```json doc-gen:file

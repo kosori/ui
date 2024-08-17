@@ -17,22 +17,45 @@ links:
 
 ## Installation
 
-Install the primitive and copy-paste the component code in a `.tsx` file.
+<Steps>
 
-```package-install
-@radix-ui/react-avatar
-```
+  <Step>
+    ### Install the primitive
+    
+    Install the `@radix-ui/react-avatar` package.
 
-<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+    ```package-install
+    @radix-ui/react-avatar
+    ```
 
-```json doc-gen:file
-{
-  "file": "../../packages/ui/src/avatar.tsx",
-  "codeblock": true
-}
-```
+  </Step>
+    
+  <Step>
+    ### Copy-paste the component
+    
+    Copy and paste the component code in a `.tsx` file.
 
-</div>
+    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+    ```json doc-gen:file
+    {
+      "file": "../../packages/ui/src/avatar.tsx",
+      "codeblock": true
+    }
+    ```
+
+    </div>
+
+  </Step>
+
+  <Step>
+    ### Update import paths
+
+    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+  </Step>
+
+</Steps>
 
 ## Usage
 
@@ -46,6 +69,25 @@ import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
   <AvatarFallback>CC</AvatarFallback>
 </Avatar>
 ```
+
+## Reference
+
+<TypeTable
+  type={{
+    shape: {
+      default: 'round',
+      description: 'The shape of the avatar',
+      type: 'enum',
+      typeDescription: "'round' | 'square'",
+    },
+    size: {
+      default: 'medium',
+      description: 'The size of the avatar',
+      type: 'enum',
+      typeDescription: "'small' | 'medium' | 'large'",
+    },
+  }}
+/>
 
 ## Examples
 

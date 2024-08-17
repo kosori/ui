@@ -69,10 +69,10 @@ description: How to set up Kõsori UI in your Next.js project.
     Set `darkMode` strategy to `class` in your Tailwind CSS config file.
     
     ```ts title="tailwind.config.ts"
-    import type { Config } from "tailwindcss";
+    import type { Config } from 'tailwindcss';
 
     const config: Config = {
-      darkMode: "class",  // [!code highlight]
+      darkMode: 'class',  // [!code highlight]
       // ...
     };
     ```
@@ -86,12 +86,12 @@ description: How to set up Kõsori UI in your Next.js project.
     
     <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
     ```ts title="tailwind.config.ts"
-    import type { Config } from "tailwindcss";
+    import type { Config } from 'tailwindcss';
 
     const config: Config = {
-      darkMode: "class",
+      darkMode: 'class',
       content: [
-        "...",
+        '...',
       ],
       theme: {
         // ...
@@ -99,95 +99,95 @@ description: How to set up Kõsori UI in your Next.js project.
           // ...
           // [!code highlight:15]
           colors: {
-            "primary-base": "hsl(var(--primary-1))",
-            "primary-bg-subtle": "hsl(var(--primary-2))",
-            "primary-bg": "hsl(var(--primary-3))",
-            "primary-bg-hover": "hsl(var(--primary-4))",
-            "primary-bg-active": "hsl(var(--primary-5))",
-            "primary-line": "hsl(var(--primary-6))",
-            "primary-border": "hsl(var(--primary-7))",
-            "primary-border-hover": "hsl(var(--primary-8))",
-            "primary-focus-ring": "hsl(var(--primary-8))",
-            "primary-solid": "hsl(var(--primary-9))",
-            "primary-solid-hover": "hsl(var(--primary-10))",
-            "primary-text": "hsl(var(--primary-11))",
-            "primary-text-contrast": "hsl(var(--primary-12))",
+            'primary-base': 'hsl(var(--primary-1))',
+            'primary-bg-subtle': 'hsl(var(--primary-2))',
+            'primary-bg': 'hsl(var(--primary-3))',
+            'primary-bg-hover': 'hsl(var(--primary-4))',
+            'primary-bg-active': 'hsl(var(--primary-5))',
+            'primary-line': 'hsl(var(--primary-6))',
+            'primary-border': 'hsl(var(--primary-7))',
+            'primary-border-hover': 'hsl(var(--primary-8))',
+            'primary-focus-ring': 'hsl(var(--primary-8))',
+            'primary-solid': 'hsl(var(--primary-9))',
+            'primary-solid-hover': 'hsl(var(--primary-10))',
+            'primary-text': 'hsl(var(--primary-11))',
+            'primary-text-contrast': 'hsl(var(--primary-12))',
 
             // [!code highlight:14]
-            "success-base": "hsl(var(--success-1))",
-            "success-bg-subtle": "hsl(var(--success-2))",
-            "success-bg": "hsl(var(--success-3))",
-            "success-bg-hover": "hsl(var(--success-4))",
-            "success-bg-active": "hsl(var(--success-5))",
-            "success-line": "hsl(var(--success-6))",
-            "success-border": "hsl(var(--success-7))",
-            "success-border-hover": "hsl(var(--success-8))",
-            "success-focus-ring": "hsl(var(--success-8))",
-            "success-solid": "hsl(var(--success-9))",
-            "success-solid-hover": "hsl(var(--success-10))",
-            "success-text": "hsl(var(--success-11))",
-            "success-text-contrast": "hsl(var(--success-12))",
+            'success-base': 'hsl(var(--success-1))',
+            'success-bg-subtle': 'hsl(var(--success-2))',
+            'success-bg': 'hsl(var(--success-3))',
+            'success-bg-hover': 'hsl(var(--success-4))',
+            'success-bg-active': 'hsl(var(--success-5))',
+            'success-line': 'hsl(var(--success-6))',
+            'success-border': 'hsl(var(--success-7))',
+            'success-border-hover': 'hsl(var(--success-8))',
+            'success-focus-ring': 'hsl(var(--success-8))',
+            'success-solid': 'hsl(var(--success-9))',
+            'success-solid-hover': 'hsl(var(--success-10))',
+            'success-text': 'hsl(var(--success-11))',
+            'success-text-contrast': 'hsl(var(--success-12))',
 
             // [!code highlight:14]
-            "warning-base": "hsl(var(--warning-1))",
-            "warning-bg-subtle": "hsl(var(--warning-2))",
-            "warning-bg": "hsl(var(--warning-3))",
-            "warning-bg-hover": "hsl(var(--warning-4))",
-            "warning-bg-active": "hsl(var(--warning-5))",
-            "warning-line": "hsl(var(--warning-6))",
-            "warning-border": "hsl(var(--warning-7))",
-            "warning-border-hover": "hsl(var(--warning-8))",
-            "warning-focus-ring": "hsl(var(--warning-8))",
-            "warning-solid": "hsl(var(--warning-9))",
-            "warning-solid-hover": "hsl(var(--warning-10))",
-            "warning-text": "hsl(var(--warning-11))",
-            "warning-text-contrast": "hsl(var(--warning-12))",
+            'warning-base': 'hsl(var(--warning-1))',
+            'warning-bg-subtle': 'hsl(var(--warning-2))',
+            'warning-bg': 'hsl(var(--warning-3))',
+            'warning-bg-hover': 'hsl(var(--warning-4))',
+            'warning-bg-active': 'hsl(var(--warning-5))',
+            'warning-line': 'hsl(var(--warning-6))',
+            'warning-border': 'hsl(var(--warning-7))',
+            'warning-border-hover': 'hsl(var(--warning-8))',
+            'warning-focus-ring': 'hsl(var(--warning-8))',
+            'warning-solid': 'hsl(var(--warning-9))',
+            'warning-solid-hover': 'hsl(var(--warning-10))',
+            'warning-text': 'hsl(var(--warning-11))',
+            'warning-text-contrast': 'hsl(var(--warning-12))',
 
             // [!code highlight:14]
-            "error-base": "hsl(var(--danger-1))",
-            "error-bg-subtle": "hsl(var(--danger-2))",
-            "error-bg": "hsl(var(--danger-3))",
-            "error-bg-hover": "hsl(var(--danger-4))",
-            "error-bg-active": "hsl(var(--danger-5))",
-            "error-line": "hsl(var(--danger-6))",
-            "error-border": "hsl(var(--danger-7))",
-            "error-border-hover": "hsl(var(--danger-8))",
-            "error-focus-ring": "hsl(var(--danger-8))",
-            "error-solid": "hsl(var(--danger-9))",
-            "error-solid-hover": "hsl(var(--danger-10))",
-            "error-text": "hsl(var(--danger-11))",
-            "error-text-contrast": "hsl(var(--danger-12))",
+            'error-base': 'hsl(var(--danger-1))',
+            'error-bg-subtle': 'hsl(var(--danger-2))',
+            'error-bg': 'hsl(var(--danger-3))',
+            'error-bg-hover': 'hsl(var(--danger-4))',
+            'error-bg-active': 'hsl(var(--danger-5))',
+            'error-line': 'hsl(var(--danger-6))',
+            'error-border': 'hsl(var(--danger-7))',
+            'error-border-hover': 'hsl(var(--danger-8))',
+            'error-focus-ring': 'hsl(var(--danger-8))',
+            'error-solid': 'hsl(var(--danger-9))',
+            'error-solid-hover': 'hsl(var(--danger-10))',
+            'error-text': 'hsl(var(--danger-11))',
+            'error-text-contrast': 'hsl(var(--danger-12))',
 
             // [!code highlight:14]
-            "info-base": "hsl(var(--info-1))",
-            "info-bg-subtle": "hsl(var(--info-2))",
-            "info-bg": "hsl(var(--info-3))",
-            "info-bg-hover": "hsl(var(--info-4))",
-            "info-bg-active": "hsl(var(--info-5))",
-            "info-line": "hsl(var(--info-6))",
-            "info-border": "hsl(var(--info-7))",
-            "info-border-hover": "hsl(var(--info-8))",
-            "info-focus-ring": "hsl(var(--info-8))",
-            "info-solid": "hsl(var(--info-9))",
-            "info-solid-hover": "hsl(var(--info-10))",
-            "info-text": "hsl(var(--info-11))",
-            "info-text-contrast": "hsl(var(--info-12))",
+            'info-base': 'hsl(var(--info-1))',
+            'info-bg-subtle': 'hsl(var(--info-2))',
+            'info-bg': 'hsl(var(--info-3))',
+            'info-bg-hover': 'hsl(var(--info-4))',
+            'info-bg-active': 'hsl(var(--info-5))',
+            'info-line': 'hsl(var(--info-6))',
+            'info-border': 'hsl(var(--info-7))',
+            'info-border-hover': 'hsl(var(--info-8))',
+            'info-focus-ring': 'hsl(var(--info-8))',
+            'info-solid': 'hsl(var(--info-9))',
+            'info-solid-hover': 'hsl(var(--info-10))',
+            'info-text': 'hsl(var(--info-11))',
+            'info-text-contrast': 'hsl(var(--info-12))',
 
             // [!code highlight:15]
-            "grey-base": "hsl(var(--grey-1))",
-            "grey-bg-subtle": "hsl(var(--grey-2))",
-            "grey-bg": "hsl(var(--grey-3))",
-            "grey-bg-hover": "hsl(var(--grey-4))",
-            "grey-bg-active": "hsl(var(--grey-5))",
-            "grey-line": "hsl(var(--grey-6))",
-            "grey-border": "hsl(var(--grey-7))",
-            "grey-border-hover": "hsl(var(--grey-8))",
-            "grey-focus-ring": "hsl(var(--grey-8))",
-            "grey-solid": "hsl(var(--grey-9))",
-            "grey-placeholder-text": "hsl(var(--grey-9))",
-            "grey-solid-hover": "hsl(var(--grey-10))",
-            "grey-text": "hsl(var(--grey-11))",
-            "grey-text-contrast": "hsl(var(--grey-12))",
+            'grey-base': 'hsl(var(--grey-1))',
+            'grey-bg-subtle': 'hsl(var(--grey-2))',
+            'grey-bg': 'hsl(var(--grey-3))',
+            'grey-bg-hover': 'hsl(var(--grey-4))',
+            'grey-bg-active': 'hsl(var(--grey-5))',
+            'grey-line': 'hsl(var(--grey-6))',
+            'grey-border': 'hsl(var(--grey-7))',
+            'grey-border-hover': 'hsl(var(--grey-8))',
+            'grey-focus-ring': 'hsl(var(--grey-8))',
+            'grey-solid': 'hsl(var(--grey-9))',
+            'grey-placeholder-text': 'hsl(var(--grey-9))',
+            'grey-solid-hover': 'hsl(var(--grey-10))',
+            'grey-text': 'hsl(var(--grey-11))',
+            'grey-text-contrast': 'hsl(var(--grey-12))',
           },
         },
       },
@@ -207,9 +207,9 @@ description: How to set up Kõsori UI in your Next.js project.
 
     ```ts title="tailwind.config.ts"
     const config: Config = {
-      darkMode: "class",
+      darkMode: 'class',
       content: [
-        "...",
+        '...',
       ],
       theme: {
         // ...
@@ -217,23 +217,23 @@ description: How to set up Kõsori UI in your Next.js project.
           // ...
           // [!code highlight:20]
           keyframes: {
-            "accordion-down": {
-              from: { height: "0" },
-              to: { height: "var(--radix-accordion-content-height)" },
+            'accordion-down': {
+              from: { height: '0' },
+              to: { height: 'var(--radix-accordion-content-height)' },
             },
-            "accordion-up": {
-              from: { height: "var(--radix-accordion-content-height)" },
-              to: { height: "0" },
+            'accordion-up': {
+              from: { height: 'var(--radix-accordion-content-height)' },
+              to: { height: '0' },
             },
-            "caret-blink": {
-              "0%,70%,100%": { opacity: "1" },
-              "20%,50%": { opacity: "0" },
+            'caret-blink': {
+              '0%,70%,100%': { opacity: '1' },
+              '20%,50%': { opacity: '0' },
             },
           },
           animation: {
-            "accordion-down": "accordion-down 0.2s ease-out",
-            "accordion-up": "accordion-up 0.2s ease-out",
-            "caret-blink": "caret-blink 1.25s ease-out infinite",
+            'accordion-down': 'accordion-down 0.2s ease-out',
+            'accordion-up': 'accordion-up 0.2s ease-out',
+            'caret-blink': 'caret-blink 1.25s ease-out infinite',
           },
         },
       },
@@ -248,8 +248,8 @@ description: How to set up Kõsori UI in your Next.js project.
     Add the `tailwindcss-animate` plugin to your Tailwind CSS config.
 
     ```ts title="tailwind.config.ts"
-    import type { Config } from "tailwindcss";
-    import animate from "tailwindcss-animate"; // [!code highlight]
+    import type { Config } from 'tailwindcss';
+    import animate from 'tailwindcss-animate'; // [!code highlight]
 
     const config: Config = {
       // ...,
@@ -478,9 +478,9 @@ description: How to set up Kõsori UI in your Next.js project.
     Create the `cn()` utility function.
 
     ```ts title="app/utils/cn.ts"
-    import type { ClassValue } from "clsx";
-    import { clsx } from "clsx";
-    import { twMerge } from "tailwind-merge";
+    import type { ClassValue } from 'clsx';
+    import { clsx } from 'clsx';
+    import { twMerge } from 'tailwind-merge';
 
     export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
     ```

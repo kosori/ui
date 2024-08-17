@@ -14,28 +14,85 @@ description: Displays a button or a component that looks like a button.
 
 ## Installation
 
-Copy-paste the component code in a `.tsx` file.
+<Steps>
 
-<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+  <Step>
+    ### Install the primitive
+    
+    Install the `@radix-ui/react-slot` package.
 
-```json doc-gen:file
-{
-  "file": "../../packages/ui/src/button.tsx",
-  "codeblock": true
-}
-```
+    ```package-install
+    @radix-ui/react-slot
+    ```
 
-</div>
+  </Step>
+    
+  <Step>
+    ### Copy-paste the component
+    
+    Copy and paste the component code in a `.tsx` file.
+
+    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+    ```json doc-gen:file
+    {
+      "file": "../../packages/ui/src/button.tsx",
+      "codeblock": true
+    }
+    ```
+
+    </div>
+
+  </Step>
+
+  <Step>
+    ### Update import paths
+
+    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+  </Step>
+
+</Steps>
 
 ## Usage
 
 ```ts
-import { Button } from '@/components/ui/button';
+import { Button } from '~/components/ui/button';
 ```
 
 ```tsx
 <Button variant='outline'>Button</Button>
 ```
+
+## Reference
+
+<TypeTable
+  type={{
+    variant: {
+      default: 'solid',
+      description: 'The visual style of the button',
+      type: 'enum',
+      typeDescription: "'solid' | 'soft' | 'outline' | 'ghost'",
+    },
+    intent: {
+      default: 'default',
+      description: 'The intent of the button',
+      type: 'enum',
+      typeDescription: "'default' | 'error'",
+    },
+    size: {
+      default: 'medium',
+      description: 'The size of the button',
+      type: 'enum',
+      typeDescription: "'small' | 'medium' | 'large'",
+    },
+    icon: {
+      default: 'false',
+      description: 'If true, adjusts the button size for icon-only usage',
+      type: 'boolean',
+    },
+  }}
+/>
 
 ## Link
 

@@ -20,22 +20,45 @@ The `<Command />` component uses the [`cmdk`](https://cmdk.paco.me) component by
 
 ## Installation
 
-Install the primitive and copy-paste the component code in a `.tsx` file.
+<Steps>
 
-```package-install
-cmdk
-```
+  <Step>
+    ### Install the primitive
+    
+    Install the `cmdk` package.
 
-<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+    ```package-install
+    cmdk
+    ```
 
-```json doc-gen:file
-{
-  "file": "../../packages/ui/src/command.tsx",
-  "codeblock": true
-}
-```
+  </Step>
+    
+  <Step>
+    ### Copy-paste the component
+    
+    Copy and paste the component code in a `.tsx` file.
 
-</div>
+    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+    ```json doc-gen:file
+    {
+      "file": "../../packages/ui/src/command.tsx",
+      "codeblock": true
+    }
+    ```
+
+    </div>
+
+  </Step>
+
+  <Step>
+    ### Update import paths
+
+    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+  </Step>
+
+</Steps>
 
 ## Usage
 
@@ -90,7 +113,7 @@ To show the command menu in a dialog, use the `<CommandDialog />` component.
 
 ```tsx
 export const CommandMenu = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); // [!code highlight]
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -105,9 +128,8 @@ export const CommandMenu = () => {
   }, []);
 
   return (
+    // [!code highlight:2]
     <CommandDialog open={open} onOpenChange={setOpen}>
-      {' '}
-      // [!code highlight]
       <CommandInput placeholder='Type a command or search...' />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>

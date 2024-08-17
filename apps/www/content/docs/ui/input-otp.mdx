@@ -20,22 +20,45 @@ Input OTP is built on top of [`input-otp`](https://github.com/guilhermerodz/inpu
 
 ## Installation
 
-Install the primitive and copy-paste the component code in a `.tsx` file.
+<Steps>
 
-```package-install
-input-otp
-```
+  <Step>
+    ### Install the primitive
+    
+    Install the `input-otp` package.
 
-<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+    ```package-install
+    input-otp
+    ```
 
-```json doc-gen:file
-{
-  "file": "../../packages/ui/src/input-otp.tsx",
-  "codeblock": true
-}
-```
+  </Step>
+    
+  <Step>
+    ### Copy-paste the component
+    
+    Copy and paste the component code in a `.tsx` file.
 
-</div>
+    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+    ```json doc-gen:file
+    {
+      "file": "../../packages/ui/src/input-otp.tsx",
+      "codeblock": true
+    }
+    ```
+
+    </div>
+
+  </Step>
+
+  <Step>
+    ### Update import paths
+
+    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+  </Step>
+
+</Steps>
 
 ## Usage
 
@@ -49,19 +72,24 @@ import {
 ```
 
 ```tsx
-<InputOTP maxLength={6}>
-  <InputOTPGroup>
-    <InputOTPSlot index={0} />
-    <InputOTPSlot index={1} />
-    <InputOTPSlot index={2} />
-  </InputOTPGroup>
-  <InputOTPSeparator />
-  <InputOTPGroup>
-    <InputOTPSlot index={3} />
-    <InputOTPSlot index={4} />
-    <InputOTPSlot index={5} />
-  </InputOTPGroup>
-</InputOTP>
+<InputOTP
+  maxLength={6}
+  render={({ slots }) => (
+    <>
+      <InputOTPGroup>
+        {slots.slice(0, 3).map((slot, index) => (
+          <InputOTPSlot key={index} {...slot} />
+        ))}
+      </InputOTPGroup>
+      <InputOTPSeparator />
+      <InputOTPGroup>
+        {slots.slice(3).map((slot, index) => (
+          <InputOTPSlot key={index + 3} {...slot} />
+        ))}
+      </InputOTPGroup>
+    </>
+  )}
+/>
 ```
 
 ## Examples
