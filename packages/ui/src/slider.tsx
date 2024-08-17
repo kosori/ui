@@ -12,9 +12,6 @@ type SliderProps = React.ComponentPropsWithoutRef<typeof Root>;
  * Slider component that allows users to select a value from a range.
  *
  * @param {SliderProps} props - The props for the Slider component.
- * @param {number[]} [defaultValue] - The default value(s) for the slider.
- * @param {number} [max] - The maximum value of the slider.
- * @param {number} [step] - The step value for the slider.
  *
  * @example
  * <Slider defaultValue={[33]} max={100} step={1} />
