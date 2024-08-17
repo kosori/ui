@@ -5,9 +5,7 @@ import { Slot } from '@radix-ui/react-slot';
 import { cn } from '@kosori/ui';
 
 type BreadcrumbRef = HTMLElement;
-type BreadcrumbProps = React.ComponentPropsWithoutRef<'nav'> & {
-  separator?: React.ReactNode;
-};
+type BreadcrumbProps = React.ComponentPropsWithoutRef<'nav'>;
 
 /**
  * Breadcrumb component that serves as a navigation aid, indicating the current page's location within a hierarchy.
