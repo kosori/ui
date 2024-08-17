@@ -48,7 +48,7 @@ export type ToastProps = object & ToastRadixProps & ToastVariants;
  * Toast component that displays a toast notification.
  *
  * @param {ToastProps} props - The props for the Toast component.
- * @param {string} [intent='default'] - The intent of the toast, which determines its styling (e.g., 'default', 'info', 'success', 'warning', 'error').
+ * @param {string} [intent='default'] - The visual style of the toast (e.g., 'default', 'info', 'success', 'warning', 'error').
  *
  * @example
  * toast({
