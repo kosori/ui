@@ -48,6 +48,9 @@ export const Pagination = ({
 
 Pagination.displayName = 'Pagination';
 
+type PaginationContentRef = HTMLUListElement;
+type PaginationContentProps = React.ComponentProps<'ul'>;
+
 /**
  * PaginationContent component that wraps the pagination items.
  *
@@ -59,8 +62,8 @@ Pagination.displayName = 'Pagination';
  * </PaginationContent>
  */
 export const PaginationContent = forwardRef<
-  HTMLUListElement,
-  React.ComponentProps<'ul'>
+  PaginationContentRef,
+  PaginationContentProps
 >(({ className, ...props }, ref) => (
   <ul
     ref={ref}
@@ -70,6 +73,9 @@ export const PaginationContent = forwardRef<
 ));
 
 PaginationContent.displayName = 'PaginationContent';
+
+type PaginationItemRef = HTMLLIElement;
+type PaginationItemProps = React.ComponentProps<'li'>;
 
 /**
  * PaginationItem component that represents an individual item in the pagination.
@@ -82,8 +88,8 @@ PaginationContent.displayName = 'PaginationContent';
  * </PaginationItem>
  */
 export const PaginationItem = forwardRef<
-  HTMLLIElement,
-  React.ComponentProps<'li'>
+  PaginationItemRef,
+  PaginationItemProps
 >(({ className, ...props }, ref) => (
   <li ref={ref} className={cn(className)} {...props} />
 ));
