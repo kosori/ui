@@ -59,21 +59,44 @@ import { Badge } from '~/components/ui/badge';
   type={{
     intent: {
       default: 'default',
-      description: 'The visual style of the badge',
+      description: 'The intent of the badge',
       type: 'enum',
       typeDescription: "'default' | 'info' | 'success' | 'warning' | 'error'",
+    },
+    size: {
+      default: 'medium',
+      description: 'The size of the badge',
+      type: 'enum',
+      typeDescription: "'small' | 'medium' | 'large'",
+    },
+    variant: {
+      default: 'solid',
+      description: 'The visual style of the badge',
+      type: 'enum',
+      typeDescription: "'solid' | 'soft' | 'outline' | 'ghost'",
     },
   }}
 />
 
 ## Examples
 
-### Intents
+### Intents & Variants
 
 <ComponentPreview name='badge-intents'>
 ```json doc-gen:file
 {
   "file": "./src/components/demos/Badge/BadgeIntents.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+### Sizes
+
+<ComponentPreview name='badge-sizes'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Badge/BadgeSizes.tsx",
   "codeblock": true
 }
 ```
