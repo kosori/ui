@@ -109,7 +109,7 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => (
-      <div className='capitalize'>{row.getValue('status')}</div>
+      <div className='font-medium capitalize'>{row.getValue('status')}</div>
     ),
   },
   {
@@ -117,11 +117,12 @@ export const columns: ColumnDef<Payment>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className='font-medium text-grey-text'
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Email
-          <CaretSortIcon className='ml-2 h-4 w-4' />
+          <CaretSortIcon />
         </Button>
       );
     },
@@ -151,9 +152,9 @@ export const columns: ColumnDef<Payment>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className='h-8 w-8 p-0' variant='ghost'>
+            <Button icon size='small' variant='ghost'>
               <span className='sr-only'>Open menu</span>
-              <DotsHorizontalIcon className='h-4 w-4' />
+              <DotsHorizontalIcon />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
@@ -216,7 +217,7 @@ export const DataTableDemo = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button className='ml-auto' variant='outline'>
-              Columns <ChevronDownIcon className='ml-2 h-4 w-4' />
+              Columns <ChevronDownIcon />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
