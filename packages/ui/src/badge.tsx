@@ -4,21 +4,110 @@ import { clsx } from 'clsx/lite';
 import { tv } from 'tailwind-variants';
 
 const badgeStyles = tv({
-  base: 'inline-flex h-fit select-none items-center rounded-full px-2.5 py-1 text-xs font-semibold text-grey-base',
+  base: 'inline-flex h-fit w-fit select-none items-center font-semibold rounded-lg',
   variants: {
     intent: {
-      default: 'bg-grey-text-contrast',
-      info: 'bg-info-solid',
-      success: 'bg-success-solid',
+      default: '',
+      info: '',
+      success: '',
       warning: clsx(
         'bg-warning-solid text-grey-text-contrast',
         'dark:text-grey-base',
       ),
-      error: 'bg-error-solid',
+      error: '',
+    },
+    size: {
+      small: 'px-1.5 py-0.5 text-xs',
+      medium: 'px-2 py-0.5 text-sm',
+      large: 'px-2.5 py-0.5 text-base',
+    },
+    variant: {
+      solid: '',
+      outline: '',
+      soft: '',
     },
   },
+  compoundVariants: [
+    {
+      intent: 'default',
+      variant: 'solid',
+      class: 'bg-grey-text-contrast text-grey-base',
+    },
+    {
+      intent: 'default',
+      variant: 'outline',
+      class: 'bg-grey-base border text-grey-text-contrast',
+    },
+    {
+      intent: 'default',
+      variant: 'soft',
+      class: 'bg-grey-bg text-grey-text-contrast',
+    },
+    {
+      intent: 'info',
+      variant: 'solid',
+      class: 'bg-info-solid text-info-base',
+    },
+    {
+      intent: 'info',
+      variant: 'outline',
+      class: 'bg-info-base border border-info-line text-info-solid',
+    },
+    {
+      intent: 'info',
+      variant: 'soft',
+      class: 'bg-info-bg text-info-solid',
+    },
+    {
+      intent: 'success',
+      variant: 'solid',
+      class: 'bg-success-solid text-success-base',
+    },
+    {
+      intent: 'success',
+      variant: 'outline',
+      class: 'bg-success-base border border-success-line text-success-solid',
+    },
+    {
+      intent: 'success',
+      variant: 'soft',
+      class: 'bg-success-bg text-success-solid',
+    },
+    {
+      intent: 'warning',
+      variant: 'solid',
+      class: 'bg-warning-solid text-warning-text-contrast',
+    },
+    {
+      intent: 'warning',
+      variant: 'outline',
+      class: 'bg-warning-base border border-warning-line text-warning-text',
+    },
+    {
+      intent: 'warning',
+      variant: 'soft',
+      class: 'bg-warning-bg text-warning-text',
+    },
+    {
+      intent: 'error',
+      variant: 'solid',
+      class: 'bg-error-solid text-error-base',
+    },
+    {
+      intent: 'error',
+      variant: 'outline',
+      class: 'bg-error-base border border-error-line text-error-solid',
+    },
+    {
+      intent: 'error',
+      variant: 'soft',
+      class: 'bg-error-bg text-error-solid',
+    },
+  ],
   defaultVariants: {
     intent: 'default',
+    size: 'medium',
+    variant: 'solid',
   },
 });
 
@@ -30,7 +119,9 @@ type BadgeProps = HTMLDivProps & BadgeVariants;
  * Badge component that displays a small label or indicator.
  *
  * @param {BadgeProps} props - The props for the Badge component.
- * @param {'default' | 'info' | 'success' | 'warning' | 'error'} [intent='default'] - The visual style of the badge (e.g., 'default', 'info', 'success', 'warning', 'error').
+ * @param {'default' | 'info' | 'success' | 'warning' | 'error'} [intent='default'] - The intent of the badge, affecting its color scheme (e.g., 'default', 'info', 'success', 'warning', 'error').
+ * @param {'small' | 'medium' | 'large'} [size='medium'] - The size of the badge (e.g., 'small', 'medium', 'large').
+ * @param {'solid' | 'outline' | 'soft'} [variant='solid'] - The visual style of the badge (e.g., 'solid', 'outline', 'soft').
  *
  * @example
  * <Badge intent='info'>Badge</Badge>
@@ -38,10 +129,10 @@ type BadgeProps = HTMLDivProps & BadgeVariants;
  * @see {@link https://dub.sh/ui-badge Badge Docs} for further information.
  */
 export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
-  ({ intent, className, ...props }, ref) => (
+  ({ intent, size, variant, className, ...props }, ref) => (
     <div
       ref={ref}
-      className={badgeStyles({ intent, class: className })}
+      className={badgeStyles({ intent, size, variant, class: className })}
       {...props}
     />
   ),
