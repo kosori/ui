@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from 'next';
+import { clsx } from 'clsx/lite';
 import { RootProvider } from 'fumadocs-ui/provider';
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
-
-import { cn } from '@kosori/ui';
 
 import '~/app/globals.css';
 
@@ -34,8 +33,8 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning lang='en'>
       <body
-        className={cn(
-          'bg-background text-foreground min-h-screen font-sans antialiased',
+        className={clsx(
+          'min-h-screen font-sans antialiased',
           GeistSans.variable,
           GeistMono.variable,
         )}
@@ -54,7 +53,9 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             defaultTheme: 'system',
           }}
         >
-          {props.children}
+          <div className='bg-grey-base text-grey-text' vaul-drawer-wrapper=''>
+            {props.children}
+          </div>
         </RootProvider>
       </body>
     </html>
