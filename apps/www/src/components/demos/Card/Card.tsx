@@ -37,7 +37,7 @@ export const CardDemo = () => {
                 <SelectTrigger id='framework'>
                   <SelectValue placeholder='Select' />
                 </SelectTrigger>
-                <SelectContent position='popper'>
+                <SelectContent>
                   <SelectItem value='next'>Next.js</SelectItem>
                   <SelectItem value='sveltekit'>SvelteKit</SelectItem>
                   <SelectItem value='astro'>Astro</SelectItem>
