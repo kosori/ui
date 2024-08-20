@@ -66,7 +66,7 @@ export const DrawerDemo = () => {
   }
 
   return (
-    <Drawer>
+    <Drawer shouldScaleBackground>
       <DrawerTrigger asChild>
         <Button variant='outline'>Open Drawer</Button>
       </DrawerTrigger>
