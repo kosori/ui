@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { clsx } from 'clsx/lite';
 
-import { cn } from '@kosori/ui';
 import { Button } from '@kosori/ui/button';
 import {
   Dialog,
@@ -77,7 +77,7 @@ export const DrawerDialogDemo = () => {
 
 const ProfileForm = ({ className }: React.ComponentProps<'form'>) => {
   return (
-    <form className={cn('grid items-start gap-4', className)}>
+    <form className={clsx('grid items-start gap-4', className)}>
       <div className='grid gap-2'>
         <Label htmlFor='email'>Email</Label>
         <Input defaultValue='shadcn@example.com' id='email' type='email' />

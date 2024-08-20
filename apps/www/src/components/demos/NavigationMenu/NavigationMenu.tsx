@@ -2,8 +2,8 @@
 
 import { forwardRef } from 'react';
 import Link from 'next/link';
+import { clsx } from 'clsx/lite';
 
-import { cn } from '@kosori/ui';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -60,7 +60,7 @@ export const NavigationMenuDemo = () => {
           <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul
-              className={cn(
+              className={clsx(
                 'grid gap-3 p-4',
                 'md:w-[400px]',
                 'lg:w-[500px] lg:grid-cols-[.75fr_1fr]',
@@ -69,7 +69,7 @@ export const NavigationMenuDemo = () => {
               <li className='row-span-3'>
                 <NavigationMenuLink asChild>
                   <a
-                    className={cn(
+                    className={clsx(
                       'flex h-full w-full select-none flex-col justify-end rounded-lg bg-gradient-to-b from-grey-line/50 to-grey-bg-subtle p-6 no-underline outline-none',
                       'focus:shadow-md',
                     )}
@@ -102,7 +102,7 @@ export const NavigationMenuDemo = () => {
           <NavigationMenuTrigger>Components</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul
-              className={cn(
+              className={clsx(
                 'grid w-[400px] gap-3 p-4',
                 'md:w-[500px] md:grid-cols-2',
                 'lg:w-[600px]',
@@ -122,7 +122,7 @@ export const NavigationMenuDemo = () => {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link legacyBehavior passHref href='/docs'>
-            <NavigationMenuLink className={navigationMenuTriggerStyle}>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Documentation
             </NavigationMenuLink>
           </Link>
@@ -141,7 +141,7 @@ const ListItem = forwardRef<
       <NavigationMenuLink asChild>
         <a
           ref={ref}
-          className={cn(
+          className={clsx(
             'block select-none space-y-1 rounded-lg p-3 leading-none no-underline outline-none transition-colors',
             'hover:bg-primary-bg-hover',
             'focus:bg-primary-bg-hover',
