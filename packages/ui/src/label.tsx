@@ -3,12 +3,11 @@
 import type { VariantProps } from 'tailwind-variants';
 import { forwardRef } from 'react';
 import { Root } from '@radix-ui/react-label';
+import { clsx } from 'clsx/lite';
 import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
-
-const labelVariants = tv({
-  base: cn(
+const labelStyles = tv({
+  base: clsx(
     'text-sm font-medium leading-none',
     'peer-disabled:cursor-not-allowed peer-disabled:text-grey-solid',
   ),
@@ -16,7 +15,7 @@ const labelVariants = tv({
 
 type LabelRef = React.ElementRef<typeof Root>;
 type LabelRadixProps = React.ComponentPropsWithoutRef<typeof Root>;
-type LabelVariants = VariantProps<typeof labelVariants>;
+type LabelVariants = VariantProps<typeof labelStyles>;
 type LabelProps = LabelRadixProps & LabelVariants;
 
 /**
@@ -32,11 +31,7 @@ type LabelProps = LabelRadixProps & LabelVariants;
 
 export const Label = forwardRef<LabelRef, LabelProps>(
   ({ className, ...props }, ref) => (
-    <Root
-      ref={ref}
-      className={labelVariants({ class: className })}
-      {...props}
-    />
+    <Root ref={ref} className={labelStyles({ class: className })} {...props} />
   ),
 );
 

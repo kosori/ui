@@ -1,12 +1,11 @@
 import type { VariantProps } from 'tailwind-variants';
 import { forwardRef } from 'react';
 import { Slot } from '@radix-ui/react-slot';
+import { clsx } from 'clsx/lite';
 import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
-
 export const buttonStyles = tv({
-  base: cn(
+  base: clsx(
     'flex h-fit w-fit items-center justify-center font-semibold outline-none transition-colors duration-200',
     'focus-visible:ring-4',
     'disabled:cursor-not-allowed',
@@ -23,18 +22,12 @@ export const buttonStyles = tv({
       error: '',
     },
     size: {
-      small: cn(
+      small: clsx(
         'h-8 gap-x-1.5 rounded-lg px-2.5 text-xs leading-4',
-        '[&_svg]:h-3.5 [&_svg]:w-3.5',
+        '[&_svg]:size-3.5',
       ),
-      medium: cn(
-        'h-9 gap-x-2 rounded-lg px-3 text-sm',
-        '[&_svg]:h-[18px] [&_svg]:w-[18px]',
-      ),
-      large: cn(
-        'text-md h-10 gap-x-2.5 rounded-xl px-4',
-        '[&_svg]:h-5 [&_svg]:w-5',
-      ),
+      medium: clsx('h-9 gap-x-2 rounded-lg px-3 text-sm', '[&_svg]:size-4'),
+      large: clsx('text-md h-10 gap-x-2.5 rounded-xl px-4', '[&_svg]:size-5'),
     },
     icon: {
       true: '',
@@ -44,7 +37,7 @@ export const buttonStyles = tv({
     {
       variant: 'solid',
       intent: 'default',
-      class: cn(
+      class: clsx(
         'bg-primary-solid text-grey-base',
         'hover:bg-primary-solid-hover',
         'focus-visible:ring-primary-focus-ring',
@@ -54,7 +47,7 @@ export const buttonStyles = tv({
     {
       variant: 'soft',
       intent: 'default',
-      class: cn(
+      class: clsx(
         'border border-primary-border bg-primary-bg text-primary-solid',
         'hover:border-primary-border-hover hover:bg-primary-bg-hover',
         'active:bg-primary-bg-active',
@@ -65,7 +58,7 @@ export const buttonStyles = tv({
     {
       variant: 'outline',
       intent: 'default',
-      class: cn(
+      class: clsx(
         'border border-grey-border bg-grey-base text-grey-text-contrast',
         'hover:border-grey-border-hover hover:bg-grey-bg-subtle',
         'active:bg-grey-bg',
@@ -76,7 +69,7 @@ export const buttonStyles = tv({
     {
       variant: 'ghost',
       intent: 'default',
-      class: cn(
+      class: clsx(
         'text-grey-text-contrast',
         'hover:bg-grey-bg-hover',
         'active:bg-grey-bg-active',
@@ -87,7 +80,7 @@ export const buttonStyles = tv({
     {
       variant: 'solid',
       intent: 'error',
-      class: cn(
+      class: clsx(
         'bg-error-solid text-white',
         'hover:bg-error-solid-hover',
         'focus-visible:ring-error-focus-ring',
@@ -97,7 +90,7 @@ export const buttonStyles = tv({
     {
       variant: 'soft',
       intent: 'error',
-      class: cn(
+      class: clsx(
         'border border-error-border bg-error-bg text-error-solid',
         'hover:border-error-border-hover hover:bg-error-bg-hover',
         'active:bg-error-bg-active',
@@ -108,7 +101,7 @@ export const buttonStyles = tv({
     {
       variant: 'outline',
       intent: 'error',
-      class: cn(
+      class: clsx(
         'border border-error-border bg-error-base text-error-solid',
         'hover:border-error-border-hover hover:bg-error-bg-subtle',
         'active:bg-error-bg',
@@ -119,7 +112,7 @@ export const buttonStyles = tv({
     {
       variant: 'ghost',
       intent: 'error',
-      class: cn(
+      class: clsx(
         'text-error-solid',
         'hover:bg-error-bg',
         'active:bg-error-bg-hover',

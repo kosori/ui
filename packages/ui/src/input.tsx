@@ -1,11 +1,10 @@
 import type { VariantProps } from 'tailwind-variants';
 import { forwardRef } from 'react';
+import { clsx } from 'clsx/lite';
 import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
-
-const inputVariants = tv({
-  base: cn(
+const inputStyles = tv({
+  base: clsx(
     'flex h-9 w-full justify-center rounded-lg border border-grey-border bg-grey-base px-3 py-1 text-sm outline-none transition-colors duration-200',
     'placeholder:text-grey-placeholder-text',
     'hover:border-grey-border-hover',
@@ -20,7 +19,7 @@ const inputVariants = tv({
 });
 
 type HTMLInputProps = React.InputHTMLAttributes<HTMLInputElement>;
-type InputVariants = VariantProps<typeof inputVariants>;
+type InputVariants = VariantProps<typeof inputStyles>;
 type InputProps = HTMLInputProps & InputVariants;
 
 /**
@@ -38,7 +37,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => (
     <input
       ref={ref}
-      className={inputVariants({ class: className })}
+      className={inputStyles({ class: className })}
       type={type}
       {...props}
     />

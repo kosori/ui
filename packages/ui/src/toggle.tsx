@@ -1,19 +1,18 @@
 import type { VariantProps } from 'tailwind-variants';
 import { forwardRef } from 'react';
 import { Root } from '@radix-ui/react-toggle';
+import { clsx } from 'clsx/lite';
 import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
-
 export const toggleStyles = tv({
-  base: cn(
+  base: clsx(
     'inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium outline-none transition-colors duration-200',
     'focus-visible:ring-4',
     'disabled:cursor-not-allowed',
   ),
   variants: {
     variant: {
-      ghost: cn(
+      ghost: clsx(
         'hover:bg-grey-bg-hover',
         'active:bg-grey-bg-active',
         'data-[state=on]:bg-grey-bg-active',
@@ -21,7 +20,7 @@ export const toggleStyles = tv({
         'disabled:text-grey-solid',
         'disabled:hover:bg-transparent',
       ),
-      outline: cn(
+      outline: clsx(
         'border border-grey-border',
         'hover:border-grey-border-hover hover:bg-grey-bg-hover',
         'hover:border-grey-border-hover active:bg-grey-bg-active',
@@ -63,7 +62,7 @@ export const Toggle = forwardRef<ToggleRef, ToggleProps>(
   ({ className, variant, size, ...props }, ref) => (
     <Root
       ref={ref}
-      className={cn(toggleStyles({ variant, size, className }))}
+      className={toggleStyles({ className, size, variant })}
       {...props}
     />
   ),
