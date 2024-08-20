@@ -269,8 +269,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-day-picker:
-        specifier: ^8.10.1
-        version: 8.10.1(date-fns@3.6.0)(react@18.3.1)
+        specifier: ^9.0.8
+        version: 9.0.8(react@18.3.1)
       react-hook-form:
         specifier: ^7.52.2
         version: 7.52.2(react@18.3.1)
@@ -349,7 +349,7 @@ importers:
         version: 7.35.0(eslint@9.9.0(jiti@1.21.6))
       eslint-plugin-react-hooks:
         specifier: rc
-        version: 5.1.0-rc-1eaccd82-20240816(eslint@9.9.0(jiti@1.21.6))
+        version: 5.1.0-rc-a960b92c-20240819(eslint@9.9.0(jiti@1.21.6))
       eslint-plugin-turbo:
         specifier: ^2.0.12
         version: 2.0.12(eslint@9.9.0(jiti@1.21.6))
@@ -2337,8 +2337,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
 
-  eslint-plugin-react-hooks@5.1.0-rc-1eaccd82-20240816:
-    resolution: {integrity: sha512-hEgkysGdyuEW0uL6ZUVzipHSoV5433VoxL9WRgRo5uUUaB7Niz++w4WFk0V44oXjLPu7ZlG8M1mprCBSfKtcYg==}
+  eslint-plugin-react-hooks@5.1.0-rc-a960b92c-20240819:
+    resolution: {integrity: sha512-18xsW8xcNX40F3O9Z66URXZjRQ7Vjjb1sOG3164D9nArpkzqxmagY3E9D0B+lbldpMQlROpQ4YJk7DLjSR2JhA==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
@@ -3638,11 +3638,10 @@ packages:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
     hasBin: true
 
-  react-day-picker@8.10.1:
-    resolution: {integrity: sha512-TMx7fNbhLk15eqcMt+7Z7S2KF7mfTId/XJDjKE8f+IUcFn0l08/kI4FiYTL/0yuOLmEcbR4Fwe3GJf/NiiMnPA==}
+  react-day-picker@9.0.8:
+    resolution: {integrity: sha512-dZM94abRNnc2jC/wkWn56358GHJcfAHfyC2Th9asyIUQhFIC5D2Ef5qUG9n1b5t8PeCJst7eCWJ6b+XZaAjxhA==}
     peerDependencies:
-      date-fns: ^2.28.0 || ^3.0.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: '>=16.8.0'
 
   react-dom@18.3.1:
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
@@ -6572,7 +6571,7 @@ snapshots:
       safe-regex-test: 1.0.3
       string.prototype.includes: 2.0.0
 
-  eslint-plugin-react-hooks@5.1.0-rc-1eaccd82-20240816(eslint@9.9.0(jiti@1.21.6)):
+  eslint-plugin-react-hooks@5.1.0-rc-a960b92c-20240819(eslint@9.9.0(jiti@1.21.6)):
     dependencies:
       eslint: 9.9.0(jiti@1.21.6)
 
@@ -8294,7 +8293,7 @@ snapshots:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
 
-  react-day-picker@8.10.1(date-fns@3.6.0)(react@18.3.1):
+  react-day-picker@9.0.8(react@18.3.1):
     dependencies:
       date-fns: 3.6.0
       react: 18.3.1
