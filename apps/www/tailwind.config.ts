@@ -9,7 +9,7 @@ export default {
   // those classes are included correctly.
   content: [
     ...baseConfig.content,
-    '../../packages/ui/**/*.{ts,tsx}',
+    '../../packages/ui/**/*.tsx',
     '../../node_modules/fumadocs-ui/dist/**/*.js',
     './content/**/*.{md,mdx}',
     './src/mdx-components.{ts,tsx}',
