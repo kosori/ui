@@ -48,11 +48,11 @@ export const buttonStyles = tv({
       variant: 'soft',
       intent: 'default',
       class: clsx(
-        'border border-primary-border bg-primary-bg text-primary-solid',
-        'hover:border-primary-border-hover hover:bg-primary-bg-hover',
+        'bg-primary-bg text-primary-solid',
+        'hover:bg-primary-bg-hover',
         'active:bg-primary-bg-active',
         'focus-visible:ring-primary-focus-ring',
-        'disabled:border-primary-line disabled:bg-primary-bg-subtle disabled:text-primary-line',
+        'disabled:bg-primary-bg-subtle disabled:text-primary-line',
       ),
     },
     {
@@ -91,11 +91,11 @@ export const buttonStyles = tv({
       variant: 'soft',
       intent: 'error',
       class: clsx(
-        'border border-error-border bg-error-bg text-error-solid',
-        'hover:border-error-border-hover hover:bg-error-bg-hover',
+        'bg-error-bg text-error-solid',
+        'hover:bg-error-bg-hover',
         'active:bg-error-bg-active',
         'focus-visible:ring-error-focus-ring',
-        'disabled:border-error-line disabled:bg-error-bg-subtle disabled:text-error-line',
+        'disabled:bg-error-bg-subtle disabled:text-error-line',
       ),
     },
     {
