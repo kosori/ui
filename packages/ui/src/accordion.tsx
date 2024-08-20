@@ -26,7 +26,7 @@ const accordionStyles = tv({
       'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
     ),
     triggerIcon: clsx(
-      'size-5 transition-transform duration-200 ease-in-out',
+      'size-4 transition-transform duration-200 ease-in-out',
       'group-data-[state=open]:rotate-180',
     ),
     content: clsx(
