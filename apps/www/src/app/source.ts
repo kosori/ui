@@ -13,6 +13,7 @@ export const docs = loader({
         links: z
           .object({ doc: z.string().optional(), api: z.string().optional() })
           .optional(),
+        dependencies: z.array(z.string()).optional(),
       }),
     },
   }),
