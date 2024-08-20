@@ -3,10 +3,18 @@
 import type { VariantProps } from 'tailwind-variants';
 import { createContext, forwardRef, useContext } from 'react';
 import { Item, Root } from '@radix-ui/react-toggle-group';
+import { tv } from 'tailwind-variants';
 
 import type { ToggleVariants } from '@kosori/ui/toggle';
-import { cn } from '@kosori/ui';
 import { toggleStyles } from '@kosori/ui/toggle';
+
+const toggleGroupStyles = tv({
+  slots: {
+    base: 'flex items-center justify-center gap-1',
+  },
+});
+
+const { base } = toggleGroupStyles();
 
 type ToggleGroupRef = React.ElementRef<typeof Root>;
 type ToggleGroupProps = React.ComponentPropsWithoutRef<typeof Root> &
@@ -30,11 +38,7 @@ type ToggleGroupProps = React.ComponentPropsWithoutRef<typeof Root> &
  */
 export const ToggleGroup = forwardRef<ToggleGroupRef, ToggleGroupProps>(
   ({ className, variant, size, children, ...props }, ref) => (
-    <Root
-      ref={ref}
-      className={cn('flex items-center justify-center gap-1', className)}
-      {...props}
-    >
+    <Root ref={ref} className={base({ className })} {...props}>
       <ToggleGroupContext.Provider value={{ variant, size }}>
         {children}
       </ToggleGroupContext.Provider>

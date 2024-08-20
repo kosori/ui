@@ -1,4 +1,8 @@
-import { cn } from '@kosori/ui';
+import { tv } from 'tailwind-variants';
+
+const skeletonStyles = tv({
+  base: 'animate-pulse rounded-md bg-grey-bg',
+});
 
 type SkeletonProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -14,10 +18,5 @@ type SkeletonProps = React.HTMLAttributes<HTMLDivElement>;
  */
 
 export const Skeleton = ({ className, ...props }: SkeletonProps) => {
-  return (
-    <div
-      className={cn('animate-pulse rounded-md bg-grey-bg', className)}
-      {...props}
-    />
-  );
+  return <div className={skeletonStyles({ className })} {...props} />;
 };

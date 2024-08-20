@@ -3,9 +3,27 @@ import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
 import { createContext, forwardRef, useContext, useId } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { Controller, FormProvider, useFormContext } from 'react-hook-form';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
 import { Label } from '@kosori/ui/label';
+
+const formStyles = tv({
+  slots: {
+    item: 'space-y-2',
+    label: '',
+    description: 'text-sm text-grey-text',
+    message: 'text-sm font-medium text-error-solid',
+  },
+  variants: {
+    error: {
+      true: {
+        label: 'text-error-solid',
+      },
+    },
+  },
+});
+
+const { item, label, description, message } = formStyles();
 
 /**
  * Form component that provides context for form fields.
@@ -115,7 +133,7 @@ export const FormItem = forwardRef<FormItemRef, FormItemProps>(
 
     return (
       <FormItemContext.Provider value={{ id }}>
-        <div ref={ref} className={cn('space-y-2', className)} {...props} />
+        <div ref={ref} className={item({ className })} {...props} />
       </FormItemContext.Provider>
     );
   },
@@ -141,7 +159,7 @@ export const FormLabel = forwardRef<FormLabelRef, FormLabelProps>(
     return (
       <Label
         ref={ref}
-        className={cn(error && 'text-error-solid', className)}
+        className={label({ className, error: error ? true : false })}
         htmlFor={formItemId}
         {...props}
       />
@@ -208,7 +226,7 @@ export const FormDescription = forwardRef<
   return (
     <p
       ref={ref}
-      className={cn('text-sm text-grey-text', className)}
+      className={description({ className })}
       id={formDescriptionId}
       {...props}
     />
@@ -240,7 +258,7 @@ export const FormMessage = forwardRef<FormMessageRef, FormMessageProps>(
     return (
       <p
         ref={ref}
-        className={cn('text-sm font-medium text-error-solid', className)}
+        className={message({ className })}
         id={formMessageId}
         {...props}
       >

@@ -1,9 +1,35 @@
 import type { SlotProps } from 'input-otp';
 import { forwardRef } from 'react';
 import { DashIcon } from '@radix-ui/react-icons';
+import { clsx } from 'clsx/lite';
 import { OTPInput } from 'input-otp';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
+const inputOTPStyles = tv({
+  slots: {
+    base: 'flex items-center gap-2',
+    group: 'flex items-center',
+    slot: clsx(
+      'relative flex h-9 w-9 items-center justify-center border-y border-r border-grey-border text-sm shadow-sm transition-all',
+      'first:rounded-l-lg first:border-l',
+      'last:rounded-r-lg',
+    ),
+    slotFakeCaretWraper:
+      'pointer-events-none absolute inset-0 flex items-center justify-center',
+    slotFakeCaret:
+      'h-4 w-px animate-caret-blink bg-grey-text-contrast duration-1000',
+  },
+  variants: {
+    active: {
+      true: {
+        slot: 'z-10 ring-3 ring-grey-focus-ring',
+      },
+    },
+  },
+});
+
+const { base, group, slot, slotFakeCaretWraper, slotFakeCaret } =
+  inputOTPStyles();
 
 type InputOTPRef = React.ElementRef<typeof OTPInput>;
 type InputOTPProps = React.ComponentPropsWithoutRef<typeof OTPInput>;
@@ -37,11 +63,7 @@ type InputOTPProps = React.ComponentPropsWithoutRef<typeof OTPInput>;
  */
 export const InputOTP = forwardRef<InputOTPRef, InputOTPProps>(
   ({ className, ...props }, ref) => (
-    <OTPInput
-      ref={ref}
-      containerClassName={cn('flex items-center gap-2', className)}
-      {...props}
-    />
+    <OTPInput ref={ref} containerClassName={base({ className })} {...props} />
   ),
 );
 
@@ -62,7 +84,7 @@ type InputOTPGroupProps = React.ComponentPropsWithoutRef<'div'>;
  */
 export const InputOTPGroup = forwardRef<InputOTPGroupRef, InputOTPGroupProps>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex items-center', className)} {...props} />
+    <div ref={ref} className={group({ className })} {...props} />
   ),
 );
 
@@ -84,19 +106,13 @@ export const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
     return (
       <div
         ref={ref}
-        className={cn(
-          'relative flex h-9 w-9 items-center justify-center border-y border-r border-grey-border text-sm shadow-sm transition-all',
-          'first:rounded-l-md first:border-l',
-          'last:rounded-r-md',
-          isActive && 'z-10 ring-4 ring-grey-focus-ring',
-          className,
-        )}
+        className={slot({ className, active: isActive })}
         {...props}
       >
         {char}
         {hasFakeCaret && (
-          <div className='pointer-events-none absolute inset-0 flex items-center justify-center'>
-            <div className='h-4 w-px animate-caret-blink bg-grey-text-contrast duration-1000' />
+          <div className={slotFakeCaretWraper()}>
+            <div className={slotFakeCaret()} />
           </div>
         )}
       </div>

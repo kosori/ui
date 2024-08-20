@@ -13,10 +13,38 @@ import {
   Title,
   Trigger,
 } from '@radix-ui/react-alert-dialog';
+import { clsx } from 'clsx/lite';
+import { tv } from 'tailwind-variants';
 
 import type { ButtonProps } from '@kosori/ui/button';
-import { cn } from '@kosori/ui';
 import { buttonStyles } from '@kosori/ui/button';
+
+const alertDialogStyles = tv({
+  slots: {
+    overlay: clsx(
+      'fixed inset-0 z-50 bg-black-a6 backdrop-blur-sm',
+      'data-[state=open]:animate-in data-[state=open]:fade-in-0',
+      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
+    ),
+    content: clsx(
+      'fixed inset-1/2 z-50 grid h-fit w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 border border-grey-line bg-grey-base p-6 shadow-md duration-200',
+      'sm:rounded-lg',
+      'md:w-full',
+      'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]',
+      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]',
+    ),
+    header: clsx('flex flex-col space-y-2', 'first-letter:sm:text-left'),
+    title: 'text-lg font-semibold',
+    description: 'text-sm text-grey-text',
+    footer: clsx(
+      'flex flex-col-reverse',
+      'sm:flex-row sm:justify-end sm:space-x-2',
+    ),
+  },
+});
+
+const { overlay, content, header, title, description, footer } =
+  alertDialogStyles();
 
 /**
  * AlertDialog component that displays a modal dialog for user confirmation or alerts.
@@ -87,16 +115,7 @@ export const AlertDialogOverlay = forwardRef<
   AlertDialogOverlayRef,
   AlertDialogOverlayProps
 >(({ className, ...props }, ref) => (
-  <Overlay
-    ref={ref}
-    className={cn(
-      'fixed inset-0 z-50 bg-black-a6 backdrop-blur-sm',
-      'data-[state=open]:animate-in data-[state=open]:fade-in-0',
-      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
-      className,
-    )}
-    {...props}
-  />
+  <Overlay ref={ref} className={overlay({ className })} {...props} />
 ));
 
 AlertDialogOverlay.displayName = Overlay.displayName;
@@ -123,18 +142,7 @@ export const AlertDialogContent = forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPortal>
     <AlertDialogOverlay />
-    <Content
-      ref={ref}
-      className={cn(
-        'fixed inset-1/2 z-50 grid h-fit w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 border border-grey-line bg-grey-base p-6 shadow-md duration-200',
-        'sm:rounded-lg',
-        'md:w-full',
-        'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]',
-        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]',
-        className,
-      )}
-      {...props}
-    />
+    <Content ref={ref} className={content({ className })} {...props} />
   </AlertDialogPortal>
 ));
 
@@ -167,7 +175,7 @@ export const AlertDialogCancel = forwardRef<
       intent,
       size,
       icon,
-      class: className,
+      className,
     })}
     {...props}
   />
@@ -202,7 +210,7 @@ export const AlertDialogAction = forwardRef<
       intent,
       size,
       icon,
-      class: className,
+      className,
     })}
     {...props}
   />
@@ -229,14 +237,7 @@ export const AlertDialogHeader = ({
   className,
   ...props
 }: AlertDialogHeaderProps) => (
-  <div
-    className={cn(
-      'flex flex-col space-y-2',
-      'first-letter:sm:text-left',
-      className,
-    )}
-    {...props}
-  />
+  <div className={header({ className })} {...props} />
 );
 
 AlertDialogHeader.displayName = 'AlertDialogHeader';
@@ -256,11 +257,7 @@ export const AlertDialogTitle = forwardRef<
   AlertDialogTitleRef,
   AlertDialogTitleProps
 >(({ className, ...props }, ref) => (
-  <Title
-    ref={ref}
-    className={cn('text-lg font-semibold', className)}
-    {...props}
-  />
+  <Title ref={ref} className={title({ className })} {...props} />
 ));
 
 AlertDialogTitle.displayName = Title.displayName;
@@ -284,11 +281,7 @@ export const AlertDialogDescription = forwardRef<
   AlertDialogDescriptionRef,
   AlertDialogDescriptionProps
 >(({ className, ...props }, ref) => (
-  <Description
-    ref={ref}
-    className={cn('text-sm text-grey-text', className)}
-    {...props}
-  />
+  <Description ref={ref} className={description({ className })} {...props} />
 ));
 
 AlertDialogDescription.displayName = Description.displayName;
@@ -310,14 +303,7 @@ export const AlertDialogFooter = ({
   className,
   ...props
 }: AlertDialogFooterProps) => (
-  <div
-    className={cn(
-      'flex flex-col-reverse',
-      'sm:flex-row sm:justify-end sm:space-x-2',
-      className,
-    )}
-    {...props}
-  />
+  <div className={footer({ className })} {...props} />
 );
 
 AlertDialogFooter.displayName = 'AlertDialogFooter';

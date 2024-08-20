@@ -2,8 +2,26 @@
 
 import { forwardRef } from 'react';
 import { Content, List, Root, Trigger } from '@radix-ui/react-tabs';
+import { clsx } from 'clsx/lite';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
+const tabsStyles = tv({
+  slots: {
+    list: 'inline-flex h-9 items-center justify-center rounded-lg bg-grey-bg p-1 text-grey-text',
+    trigger: clsx(
+      'inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium outline-none transition-all',
+      'focus-visible:ring-4 focus-visible:ring-primary-focus-ring',
+      'disabled:cursor-not-allowed disabled:text-grey-solid',
+      'data-[state=active]:bg-grey-base data-[state=active]:text-grey-text-contrast data-[state=active]:shadow-sm',
+    ),
+    content: clsx(
+      'mt-2 outline-none',
+      'focus-visible:ring-4 focus-visible:ring-primary-focus-ring',
+    ),
+  },
+});
+
+const { list, trigger, content } = tabsStyles();
 
 /**
  * Tabs component that serves as a container for tabbed navigation.
@@ -39,14 +57,7 @@ type TabsListProps = React.ComponentPropsWithoutRef<typeof List>;
  */
 export const TabsList = forwardRef<TabsListRef, TabsListProps>(
   ({ className, ...props }, ref) => (
-    <List
-      ref={ref}
-      className={cn(
-        'inline-flex h-9 items-center justify-center rounded-lg bg-grey-bg p-1 text-grey-text',
-        className,
-      )}
-      {...props}
-    />
+    <List ref={ref} className={list({ className })} {...props} />
   ),
 );
 
@@ -65,17 +76,7 @@ type TabsTriggerProps = React.ComponentPropsWithoutRef<typeof Trigger>;
  */
 export const TabsTrigger = forwardRef<TabsTriggerRef, TabsTriggerProps>(
   ({ className, ...props }, ref) => (
-    <Trigger
-      ref={ref}
-      className={cn(
-        'inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium outline-none transition-all',
-        'focus-visible:ring-4 focus-visible:ring-primary-focus-ring',
-        'disabled:cursor-not-allowed disabled:text-grey-solid',
-        'data-[state=active]:bg-grey-base data-[state=active]:text-grey-text-contrast data-[state=active]:shadow-sm',
-        className,
-      )}
-      {...props}
-    />
+    <Trigger ref={ref} className={trigger({ className })} {...props} />
   ),
 );
 
@@ -94,15 +95,7 @@ type TabsContentProps = React.ComponentPropsWithoutRef<typeof Content>;
  */
 export const TabsContent = forwardRef<TabsContentRef, TabsContentProps>(
   ({ className, ...props }, ref) => (
-    <Content
-      ref={ref}
-      className={cn(
-        'mt-2 outline-none',
-        'focus-visible:ring-4 focus-visible:ring-primary-focus-ring',
-        className,
-      )}
-      {...props}
-    />
+    <Content ref={ref} className={content({ className })} {...props} />
   ),
 );
 

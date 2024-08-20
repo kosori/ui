@@ -1,6 +1,18 @@
 import { forwardRef } from 'react';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
+const cardStyles = tv({
+  slots: {
+    base: 'rounded-2xl border border-grey-line bg-grey-base text-grey-text-contrast shadow-sm',
+    header: 'flex flex-col gap-y-1.5 p-6',
+    title: 'font-semibold leading-none tracking-tight',
+    description: 'text-sm text-grey-text',
+    content: 'p-6 pt-0',
+    footer: 'flex items-center p-6 pt-0',
+  },
+});
+
+const { base, header, title, description, content, footer } = cardStyles();
 
 type CardProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -27,14 +39,7 @@ type CardProps = React.HTMLAttributes<HTMLDivElement>;
  */
 export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(
-        'rounded-2xl border border-grey-line bg-grey-base text-grey-text-contrast shadow-sm',
-        className,
-      )}
-      {...props}
-    />
+    <div ref={ref} className={base({ className })} {...props} />
   ),
 );
 
@@ -49,11 +54,7 @@ type CardHeaderProps = React.HTMLAttributes<HTMLDivElement>;
  */
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn('flex flex-col gap-y-1.5 p-6', className)}
-      {...props}
-    />
+    <div ref={ref} className={header({ className })} {...props} />
   ),
 );
 
@@ -68,11 +69,7 @@ type CardTitleProps = React.HTMLAttributes<HTMLHeadingElement>;
  */
 export const CardTitle = forwardRef<HTMLParagraphElement, CardTitleProps>(
   ({ className, ...props }, ref) => (
-    <h3
-      ref={ref}
-      className={cn('font-semibold leading-none tracking-tight', className)}
-      {...props}
-    />
+    <h3 ref={ref} className={title({ className })} {...props} />
   ),
 );
 
@@ -89,7 +86,7 @@ export const CardDescription = forwardRef<
   HTMLParagraphElement,
   CardDescriptionProps
 >(({ className, ...props }, ref) => (
-  <p ref={ref} className={cn('text-sm text-grey-text', className)} {...props} />
+  <p ref={ref} className={description({ className })} {...props} />
 ));
 
 CardDescription.displayName = 'CardDescription';
@@ -103,7 +100,7 @@ type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
  */
 export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('p-6 pt-0', className)} {...props} />
+    <div ref={ref} className={content({ className })} {...props} />
   ),
 );
 
@@ -118,11 +115,7 @@ type CardFooterProps = React.HTMLAttributes<HTMLDivElement>;
  */
 export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
   ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn('flex items-center p-6 pt-0', className)}
-      {...props}
-    />
+    <div ref={ref} className={footer({ className })} {...props} />
   ),
 );
 

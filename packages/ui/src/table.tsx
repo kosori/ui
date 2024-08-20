@@ -1,6 +1,38 @@
 import { forwardRef } from 'react';
+import { clsx } from 'clsx/lite';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
+const tableStyles = tv({
+  slots: {
+    baseWrapper: 'relative w-full overflow-auto',
+    base: 'w-full caption-bottom text-sm',
+    header: '[&_tr]:border-b [&_tr]:border-grey-line',
+    body: '[&_tr:last-child]:border-0',
+    footer: clsx(
+      'border-t border-grey-line bg-grey-bg font-medium',
+      '[&>tr]:last:border-b-0',
+    ),
+    head: clsx(
+      'h-10 px-2 text-left align-middle font-medium text-grey-text',
+      '[&:has([role=checkbox])]:pr-0',
+      '[&>[role=checkbox]]:translate-y-[2px]',
+    ),
+    row: clsx(
+      'border-b border-grey-line transition-colors',
+      'hover:bg-grey-bg-subtle',
+      'data-[state=selected]:bg-grey-bg-active',
+    ),
+    cell: clsx(
+      'p-2 align-middle',
+      '[&:has([role=checkbox])]:pr-0',
+      '[&>[role=checkbox]]:translate-y-[0px]',
+    ),
+    caption: 'mt-4 text-sm text-grey-text',
+  },
+});
+
+const { baseWrapper, base, header, body, footer, head, row, cell, caption } =
+  tableStyles();
 
 type TableRef = HTMLTableElement;
 type TableProps = React.HTMLAttributes<HTMLTableElement>;
@@ -35,12 +67,8 @@ type TableProps = React.HTMLAttributes<HTMLTableElement>;
  */
 export const Table = forwardRef<TableRef, TableProps>(
   ({ className, ...props }, ref) => (
-    <div className='relative w-full overflow-auto'>
-      <table
-        ref={ref}
-        className={cn('w-full caption-bottom text-sm', className)}
-        {...props}
-      />
+    <div className={baseWrapper()}>
+      <table ref={ref} className={base({ className })} {...props} />
     </div>
   ),
 );
@@ -63,11 +91,7 @@ export const TableHeader = forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-  <thead
-    ref={ref}
-    className={cn('[&_tr]:border-b [&_tr]:border-grey-line', className)}
-    {...props}
-  />
+  <thead ref={ref} className={header({ className })} {...props} />
 ));
 
 TableHeader.displayName = 'TableHeader';
@@ -89,11 +113,7 @@ type TableBodyProps = React.HTMLAttributes<HTMLTableSectionElement>;
  */
 export const TableBody = forwardRef<TableBodyRef, TableBodyProps>(
   ({ className, ...props }, ref) => (
-    <tbody
-      ref={ref}
-      className={cn('[&_tr:last-child]:border-0', className)}
-      {...props}
-    />
+    <tbody ref={ref} className={body({ className })} {...props} />
   ),
 );
 
@@ -116,15 +136,7 @@ type TableFooterProps = React.HTMLAttributes<HTMLTableSectionElement>;
  */
 export const TableFooter = forwardRef<TableFooterRef, TableFooterProps>(
   ({ className, ...props }, ref) => (
-    <tfoot
-      ref={ref}
-      className={cn(
-        'border-t border-grey-line bg-grey-bg font-medium',
-        '[&>tr]:last:border-b-0',
-        className,
-      )}
-      {...props}
-    />
+    <tfoot ref={ref} className={footer({ className })} {...props} />
   ),
 );
 
@@ -143,16 +155,7 @@ type TableHeadProps = React.HTMLAttributes<HTMLTableCellElement>;
  */
 export const TableHead = forwardRef<TableHeadRef, TableHeadProps>(
   ({ className, ...props }, ref) => (
-    <th
-      ref={ref}
-      className={cn(
-        'h-10 px-2 text-left align-middle font-medium text-grey-text',
-        '[&:has([role=checkbox])]:pr-0',
-        '[&>[role=checkbox]]:translate-y-[2px]',
-        className,
-      )}
-      {...props}
-    />
+    <th ref={ref} className={head({ className })} {...props} />
   ),
 );
 
@@ -173,16 +176,7 @@ type TableRowProps = React.HTMLAttributes<HTMLTableRowElement>;
  */
 export const TableRow = forwardRef<TableRowRef, TableRowProps>(
   ({ className, ...props }, ref) => (
-    <tr
-      ref={ref}
-      className={cn(
-        'border-b border-grey-line transition-colors',
-        'hover:bg-grey-bg-hover',
-        'data-[state=selected]:bg-grey-bg-active',
-        className,
-      )}
-      {...props}
-    />
+    <tr ref={ref} className={row({ className })} {...props} />
   ),
 );
 
@@ -201,16 +195,7 @@ type TableCellProps = React.TdHTMLAttributes<HTMLTableCellElement>;
  */
 export const TableCell = forwardRef<TableCellRef, TableCellProps>(
   ({ className, ...props }, ref) => (
-    <td
-      ref={ref}
-      className={cn(
-        'p-2 align-middle',
-        '[&:has([role=checkbox])]:pr-0',
-        '[&>[role=checkbox]]:translate-y-[0px]',
-        className,
-      )}
-      {...props}
-    />
+    <td ref={ref} className={cell({ className })} {...props} />
   ),
 );
 
@@ -229,11 +214,7 @@ type TableCaptionProps = React.HTMLAttributes<HTMLTableCaptionElement>;
  */
 export const TableCaption = forwardRef<TableCaptionRef, TableCaptionProps>(
   ({ className, ...props }, ref) => (
-    <caption
-      ref={ref}
-      className={cn('mt-4 text-sm text-grey-text', className)}
-      {...props}
-    />
+    <caption ref={ref} className={caption({ className })} {...props} />
   ),
 );
 

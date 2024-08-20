@@ -24,8 +24,73 @@ import {
   Value,
   Viewport,
 } from '@radix-ui/react-select';
+import { clsx } from 'clsx/lite';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
+const selectStyles = tv({
+  slots: {
+    trigger: clsx(
+      'flex h-9 w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-lg border border-grey-border bg-grey-base px-3 py-2 text-sm shadow-sm outline-none transition-colors duration-200',
+      'placeholder:text-grey-placeholder-text',
+      'focus:ring-4 focus:ring-grey-focus-ring',
+      'hover:border-grey-border-hover',
+      'disabled:cursor-not-allowed disabled:bg-grey-bg disabled:text-grey-solid',
+      '[&>span]:line-clamp-1',
+    ),
+    triggerIcon: 'size-4 fill-grey-text',
+    content: clsx(
+      'relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-lg border border-grey-line bg-grey-base shadow-md',
+      'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
+      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+      'data-[side=bottom]:slide-in-from-top-2',
+      'data-[side=left]:slide-in-from-right-2',
+      'data-[side=right]:slide-in-from-left-2',
+      'data-[side=top]:slide-in-from-bottom-2',
+    ),
+    viewport: 'p-1',
+    item: clsx(
+      'relative flex w-full cursor-pointer select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm outline-none transition-colors duration-200',
+      'focus:bg-primary-bg-hover',
+      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
+    ),
+    itemIndicator: 'absolute left-2 flex items-center justify-center',
+    itemIcon: 'size-4',
+    scrollUpButton: 'flex cursor-default items-center justify-center py-1',
+    scrollDownButton: 'flex cursor-default items-center justify-center py-1',
+    label:
+      'flex select-none items-center py-1.5 pl-8 pr-2 text-xs font-medium text-grey-text',
+    separator: '-mx-1 my-1 h-px bg-grey-line',
+  },
+  variants: {
+    position: {
+      popper: {
+        content: clsx(
+          'data-[side=bottom]:translate-y-1',
+          'data-[side=left]:-translate-x-1',
+          'data-[side=right]:translate-x-1',
+          'data-[side=top]:-translate-y-1',
+        ),
+        viewport:
+          'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
+      },
+      'item-aligned': '',
+    },
+  },
+});
+
+const {
+  trigger,
+  triggerIcon,
+  content,
+  viewport,
+  item,
+  itemIndicator,
+  itemIcon,
+  scrollUpButton,
+  scrollDownButton,
+  label,
+  separator,
+} = selectStyles();
 
 /**
  * Select component that serves as a container for selectable items.
@@ -61,23 +126,11 @@ type SelectTriggerProps = React.ComponentPropsWithoutRef<typeof Trigger>;
  */
 export const SelectTrigger = forwardRef<SelectTriggerRef, SelectTriggerProps>(
   ({ className, children, ...props }, ref) => (
-    <Trigger
-      ref={ref}
-      className={cn(
-        'flex h-9 w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-lg border border-grey-border bg-grey-base px-3 py-2 text-sm shadow-sm outline-none transition-colors duration-200',
-        'placeholder:text-grey-placeholder-text',
-        'focus:ring-4 focus:ring-grey-focus-ring',
-        'hover:border-grey-border-hover',
-        'disabled:cursor-not-allowed disabled:bg-grey-bg disabled:text-grey-solid',
-        '[&>span]:line-clamp-1',
-        className,
-      )}
-      {...props}
-    >
+    <Trigger ref={ref} className={trigger({ className })} {...props}>
       {children}
 
       <Icon asChild>
-        <CaretSortIcon className='h=4 w-4 fill-grey-text' />
+        <CaretSortIcon className={triggerIcon()} />
       </Icon>
     </Trigger>
   ),
@@ -114,33 +167,12 @@ export const SelectContent = forwardRef<SelectContentRef, SelectContentProps>(
     <Portal>
       <Content
         ref={ref}
-        className={cn(
-          'relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-lg border border-grey-line bg-grey-base shadow-md',
-          'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
-          'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
-          'data-[side=bottom]:slide-in-from-top-2',
-          'data-[side=left]:slide-in-from-right-2',
-          'data-[side=right]:slide-in-from-left-2',
-          'data-[side=top]:slide-in-from-bottom-2',
-          position === 'popper' && 'data-[side=bottom]:translate-y-1',
-          position === 'popper' && 'data-[side=left]:-translate-x-1',
-          position === 'popper' && 'data-[side=right]:translate-x-1',
-          position === 'popper' && 'data-[side=top]:-translate-y-1',
-          className,
-        )}
+        className={content({ className, position })}
         position={position}
         {...props}
       >
         <SelectScrollUpButton />
-        <Viewport
-          className={cn(
-            'p-1',
-            position === 'popper' &&
-              'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
-          )}
-        >
-          {children}
-        </Viewport>
+        <Viewport className={viewport({ position })}>{children}</Viewport>
         <SelectScrollDownButton />
       </Content>
     </Portal>
@@ -162,19 +194,10 @@ type SelectItemProps = React.ComponentPropsWithoutRef<typeof Item>;
  */
 export const SelectItem = forwardRef<SelectItemRef, SelectItemProps>(
   ({ className, children, ...props }, ref) => (
-    <Item
-      ref={ref}
-      className={cn(
-        'relative flex w-full cursor-pointer select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm outline-none transition-colors duration-200',
-        'focus:bg-primary-bg-hover',
-        'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
-        className,
-      )}
-      {...props}
-    >
-      <span className='absolute left-2 flex items-center justify-center'>
+    <Item ref={ref} className={item({ className })} {...props}>
+      <span className={itemIndicator()}>
         <ItemIndicator>
-          <CheckIcon className='h-4 w-4' />
+          <CheckIcon className={itemIcon()} />
         </ItemIndicator>
       </span>
 
@@ -204,10 +227,7 @@ export const SelectScrollUpButton = forwardRef<
 >(({ className, ...props }, ref) => (
   <ScrollUpButton
     ref={ref}
-    className={cn(
-      'flex cursor-default items-center justify-center py-1',
-      className,
-    )}
+    className={scrollUpButton({ className })}
     {...props}
   >
     <ChevronUpIcon />
@@ -235,10 +255,7 @@ export const SelectScrollDownButton = forwardRef<
 >(({ className, ...props }, ref) => (
   <ScrollDownButton
     ref={ref}
-    className={cn(
-      'flex cursor-default items-center justify-center py-1',
-      className,
-    )}
+    className={scrollDownButton({ className })}
     {...props}
   >
     <ChevronDownIcon />
@@ -272,14 +289,7 @@ type SelectLabelProps = React.ComponentPropsWithoutRef<typeof Label>;
  */
 export const SelectLabel = forwardRef<SelectLabelRef, SelectLabelProps>(
   ({ className, ...props }, ref) => (
-    <Label
-      ref={ref}
-      className={cn(
-        'flex select-none items-center py-1.5 pl-8 pr-2 text-xs font-medium text-grey-text',
-        className,
-      )}
-      {...props}
-    />
+    <Label ref={ref} className={label({ className })} {...props} />
   ),
 );
 
@@ -300,11 +310,7 @@ export const SelectSeparator = forwardRef<
   SelectSeparatorRef,
   SelectSeparatorProps
 >(({ className, ...props }, ref) => (
-  <Separator
-    ref={ref}
-    className={cn('-mx-1 my-1 h-px bg-grey-line', className)}
-    {...props}
-  />
+  <Separator ref={ref} className={separator({ className })} {...props} />
 ));
 
 SelectSeparator.displayName = Separator.displayName;

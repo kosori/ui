@@ -23,8 +23,98 @@ import {
   ChevronRightIcon,
   DotFilledIcon,
 } from '@radix-ui/react-icons';
+import { clsx } from 'clsx/lite';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
+const contextMenuStyles = tv({
+  slots: {
+    content: clsx(
+      'z-50 min-w-[8rem] overflow-hidden rounded-lg border bg-grey-base p-1 shadow-md',
+      'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
+      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+      'data-[side=top]:slide-in-from-bottom-2',
+      'data-[side=right]:slide-in-from-left-2',
+      'data-[side=bottom]:slide-in-from-top-2',
+      'data-[side=left]:slide-in-from-right-2',
+    ),
+    item: clsx(
+      'group relative flex h-8 cursor-pointer select-none items-center rounded-md px-2 text-sm outline-none transition-colors',
+      'focus:bg-primary-bg-hover',
+      'active:bg-primary-bg-active',
+      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
+    ),
+    label:
+      'flex h-8 select-none items-center px-2 text-xs font-medium text-grey-text',
+    checkboxItem: clsx(
+      'group relative flex h-8 cursor-pointer select-none items-center rounded-md pl-8 pr-2 text-sm outline-none transition-colors duration-200',
+      'focus:bg-primary-bg-hover',
+      'active:bg-primary-bg-active',
+      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
+    ),
+    checkboxItemIndicator:
+      'absolute left-2 flex size-3.5 items-center justify-center',
+    checkboxItemIcon: 'size-4',
+    radioItem: clsx(
+      'relative flex h-8 cursor-pointer select-none items-center rounded-md pl-8 pr-2 text-sm outline-none transition-colors duration-200',
+      'focus:bg-primary-bg-hover',
+      'active:bg-primary-bg-active',
+      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
+    ),
+    radioItemIndicator:
+      'absolute left-2 flex size-3.5 items-center justify-center',
+    radioItemIcon: 'size-4',
+    separator: '-mx-2 my-1 h-px bg-grey-line',
+    subTrigger: clsx(
+      'group flex h-8 cursor-pointer select-none items-center rounded-md px-2 text-sm outline-none transition-colors',
+      'focus:bg-primary-bg-hover',
+      'data-[state=open]:bg-primary-bg-hover',
+      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
+    ),
+    subTriggerIcon: clsx(
+      'ml-auto size-4',
+      'group-data-[disabled]:text-grey-solid',
+    ),
+    subContent: clsx(
+      'z-50 min-w-[8rem] overflow-hidden rounded-lg border border-grey-line bg-grey-base p-1 shadow-md',
+      'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
+      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+      'data-[side=top]:slide-in-from-bottom-2',
+      'data-[side=right]:slide-in-from-left-2',
+      'data-[side=bottom]:slide-in-from-top-2',
+      'data-[side=left]:slide-in-from-right-2',
+    ),
+    shortcut: clsx(
+      'ml-auto text-xs tracking-widest text-grey-text',
+      'group-data-[disabled]:text-grey-solid',
+    ),
+  },
+  variants: {
+    inset: {
+      true: {
+        item: 'pl-8',
+        label: 'pl-8',
+        subTrigger: 'pl-8',
+      },
+    },
+  },
+});
+
+const {
+  content,
+  item,
+  label,
+  checkboxItem,
+  checkboxItemIndicator,
+  checkboxItemIcon,
+  radioItem,
+  radioItemIndicator,
+  radioItemIcon,
+  separator,
+  subTrigger,
+  subTriggerIcon,
+  subContent,
+  shortcut,
+} = contextMenuStyles();
 
 /**
  * ContextMenu component that provides a context menu for user interactions.
@@ -81,14 +171,7 @@ export const ContextMenuContent = forwardRef<
   ContextMenuContentProps
 >(({ className, ...props }, ref) => (
   <Portal>
-    <Content
-      ref={ref}
-      className={cn(
-        'z-50 min-w-[8rem] overflow-hidden rounded-xl border border-grey-line bg-grey-base p-1 shadow-md',
-        className,
-      )}
-      {...props}
-    />
+    <Content ref={ref} className={content({ className })} {...props} />
   </Portal>
 ));
 
@@ -112,18 +195,7 @@ export const ContextMenuItem = forwardRef<
   ContextMenuItemRef,
   ContextMenuItemProps
 >(({ className, inset, ...props }, ref) => (
-  <Item
-    ref={ref}
-    className={cn(
-      'group relative flex cursor-pointer select-none items-center rounded-md px-2 py-1.5 text-sm outline-none transition-colors duration-200',
-      'focus:bg-primary-bg-hover',
-      'active:bg-primary-bg-active',
-      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
-      inset && 'pl-8',
-      className,
-    )}
-    {...props}
-  />
+  <Item ref={ref} className={item({ className, inset })} {...props} />
 ));
 
 ContextMenuItem.displayName = Item.displayName;
@@ -156,15 +228,7 @@ export const ContextMenuLabel = forwardRef<
   ContextMenuLabelRef,
   ContextMenuLabelProps
 >(({ className, inset, ...props }, ref) => (
-  <Label
-    ref={ref}
-    className={cn(
-      'flex select-none items-center px-2 py-1.5 text-xs font-medium text-grey-text',
-      inset && 'pl-8',
-      className,
-    )}
-    {...props}
-  />
+  <Label ref={ref} className={label({ className, inset })} {...props} />
 ));
 
 ContextMenuLabel.displayName = Label.displayName;
@@ -189,18 +253,12 @@ export const ContextMenuCheckboxItem = forwardRef<
   <CheckboxItem
     ref={ref}
     checked={checked}
-    className={cn(
-      'group relative flex cursor-pointer select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm outline-none transition-colors duration-200',
-      'focus:bg-primary-bg-hover',
-      'active:bg-primary-bg-active',
-      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
-      className,
-    )}
+    className={checkboxItem({ className })}
     {...props}
   >
-    <span className='absolute left-2 flex items-center justify-center'>
+    <span className={checkboxItemIndicator()}>
       <ItemIndicator>
-        <CheckIcon className='h-4 w-4' />
+        <CheckIcon className={checkboxItemIcon()} />
       </ItemIndicator>
     </span>
     {children}
@@ -236,20 +294,10 @@ export const ContextMenuRadioItem = forwardRef<
   ContextMenuRadioItemRef,
   ContextMenuRadioItemProps
 >(({ className, children, ...props }, ref) => (
-  <RadioItem
-    ref={ref}
-    className={cn(
-      'relative flex cursor-pointer select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm outline-none transition-colors duration-200',
-      'focus:bg-primary-bg-hover',
-      'active:bg-primary-bg-active',
-      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
-      className,
-    )}
-    {...props}
-  >
-    <span className='absolute left-2 flex h-3.5 w-3.5 items-center justify-center'>
+  <RadioItem ref={ref} className={radioItem({ className })} {...props}>
+    <span className={radioItemIndicator()}>
       <ItemIndicator>
-        <DotFilledIcon className='h-4 w-4 fill-current' />
+        <DotFilledIcon className={radioItemIcon()} />
       </ItemIndicator>
     </span>
     {children}
@@ -275,11 +323,7 @@ export const ContextMenuSeparator = forwardRef<
   ContextMenuSeparatorRef,
   ContextMenuSeparatorProps
 >(({ className, ...props }, ref) => (
-  <Separator
-    ref={ref}
-    className={cn('-mx-2 my-1 h-px bg-grey-line', className)}
-    {...props}
-  />
+  <Separator ref={ref} className={separator({ className })} {...props} />
 ));
 
 ContextMenuSeparator.displayName = Separator.displayName;
@@ -314,19 +358,9 @@ export const ContextMenuSubTrigger = forwardRef<
   ContextMenuSubTriggerRef,
   ContextMenuSubTriggerProps
 >(({ className, inset, children, ...props }, ref) => (
-  <SubTrigger
-    ref={ref}
-    className={cn(
-      'flex cursor-pointer select-none items-center rounded-md px-2 py-1.5 text-sm outline-none transition-colors duration-200',
-      'focus:bg-primary-bg-hover',
-      'data-[state=open]:bg-primary-bg-hover',
-      inset && 'pl-8',
-      className,
-    )}
-    {...props}
-  >
+  <SubTrigger ref={ref} className={subTrigger({ className, inset })} {...props}>
     {children}
-    <ChevronRightIcon className='ml-auto h-4 w-4' />
+    <ChevronRightIcon className={subTriggerIcon()} />
   </SubTrigger>
 ));
 
@@ -349,14 +383,7 @@ export const ContextMenuSubContent = forwardRef<
   ContextMenuSubContentRef,
   ContextMenuSubContentProps
 >(({ className, ...props }, ref) => (
-  <SubContent
-    ref={ref}
-    className={cn(
-      'z-50 min-w-[8rem] overflow-hidden rounded-xl border border-grey-line bg-grey-base p-1 shadow-md',
-      className,
-    )}
-    {...props}
-  />
+  <SubContent ref={ref} className={subContent({ className })} {...props} />
 ));
 
 ContextMenuSubContent.displayName = SubContent.displayName;
@@ -375,14 +402,7 @@ export const ContextMenuShortcut = ({
   className,
   ...props
 }: ContextMenuShortcutProps) => (
-  <span
-    className={cn(
-      'ml-auto text-xs tracking-widest text-grey-text',
-      'group-data-[disabled]:text-grey-solid',
-      className,
-    )}
-    {...props}
-  />
+  <span className={shortcut({ className })} {...props} />
 );
 
 ContextMenuShortcut.displayName = 'ContextMenuShortcut';

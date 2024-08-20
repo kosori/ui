@@ -1,19 +1,16 @@
 import type { VariantProps } from 'tailwind-variants';
 import { forwardRef } from 'react';
+import { clsx } from 'clsx/lite';
 import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
-
 const badgeStyles = tv({
-  base: cn(
-    'inline-flex h-fit select-none items-center rounded-full px-2.5 py-1 text-xs font-semibold text-grey-base',
-  ),
+  base: 'inline-flex h-fit select-none items-center rounded-full px-2.5 py-1 text-xs font-semibold text-grey-base',
   variants: {
     intent: {
       default: 'bg-grey-text-contrast',
       info: 'bg-info-solid',
       success: 'bg-success-solid',
-      warning: cn(
+      warning: clsx(
         'bg-warning-solid text-grey-text-contrast',
         'dark:text-grey-base',
       ),

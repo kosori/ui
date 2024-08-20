@@ -4,10 +4,26 @@ import {
   ChevronRightIcon,
   DotsHorizontalIcon,
 } from '@radix-ui/react-icons';
+import { clsx } from 'clsx/lite';
+import { tv } from 'tailwind-variants';
 
 import type { ButtonProps } from '@kosori/ui/button';
-import { cn } from '@kosori/ui';
 import { buttonStyles } from '@kosori/ui/button';
+
+const paginationStyles = tv({
+  slots: {
+    base: 'mx-auto flex w-full justify-center',
+    content: 'flex flex-row items-center gap-1',
+    item: '',
+    previous: 'gap-1 pl-2.5',
+    next: 'gap-1 pr-2.5',
+    ellipsis: 'flex h-9 w-9 items-center justify-center',
+    ellipsisIcon: 'size-4',
+  },
+});
+
+const { base, content, item, previous, next, ellipsis, ellipsisIcon } =
+  paginationStyles();
 
 /**
  * Pagination component that serves as a container for pagination controls.
@@ -40,7 +56,7 @@ export const Pagination = ({
 }: React.ComponentProps<'nav'>) => (
   <nav
     aria-label='pagination'
-    className={cn('mx-auto flex w-full justify-center', className)}
+    className={base({ className })}
     role='navigation'
     {...props}
   />
@@ -65,11 +81,7 @@ export const PaginationContent = forwardRef<
   PaginationContentRef,
   PaginationContentProps
 >(({ className, ...props }, ref) => (
-  <ul
-    ref={ref}
-    className={cn('flex flex-row items-center gap-1', className)}
-    {...props}
-  />
+  <ul ref={ref} className={content({ className })} {...props} />
 ));
 
 PaginationContent.displayName = 'PaginationContent';
@@ -91,7 +103,7 @@ export const PaginationItem = forwardRef<
   PaginationItemRef,
   PaginationItemProps
 >(({ className, ...props }, ref) => (
-  <li ref={ref} className={cn(className)} {...props} />
+  <li ref={ref} className={item({ className })} {...props} />
 ));
 
 PaginationItem.displayName = 'PaginationItem';
@@ -123,13 +135,13 @@ export const PaginationLink = ({
 }: PaginationLinkProps) => (
   <a
     aria-current={isActive ? 'page' : undefined}
-    className={cn(
+    className={clsx(
       buttonStyles({
+        className,
         variant: isActive ? 'outline' : 'ghost',
         size,
         icon,
       }),
-      className,
     )}
     {...props}
   />
@@ -154,12 +166,12 @@ export const PaginationPrevious = ({
 }: PaginationPreviousProps) => (
   <PaginationLink
     aria-label='Go to previous page'
-    className={cn('gap-1 pl-2.5', className)}
+    className={previous({ className })}
     icon={false}
     size='medium'
     {...props}
   >
-    <ChevronLeftIcon className='h-4 w-4' />
+    <ChevronLeftIcon />
     <span>Previous</span>
   </PaginationLink>
 );
@@ -182,13 +194,13 @@ export const PaginationNext = ({
 }: PaginationNextProps) => (
   <PaginationLink
     aria-label='Go to next page'
-    className={cn('gap-1 pr-2.5', className)}
+    className={next({ className })}
     icon={false}
     size='medium'
     {...props}
   >
     <span>Next</span>
-    <ChevronRightIcon className='h-4 w-4' />
+    <ChevronRightIcon />
   </PaginationLink>
 );
 
@@ -208,12 +220,8 @@ export const PaginationEllipsis = ({
   className,
   ...props
 }: PaginationEllipsisProps) => (
-  <span
-    aria-hidden
-    className={cn('flex h-9 w-9 items-center justify-center', className)}
-    {...props}
-  >
-    <DotsHorizontalIcon className='h-4 w-4' />
+  <span aria-hidden className={ellipsis({ className })} {...props}>
+    <DotsHorizontalIcon className={ellipsisIcon()} />
     <span className='sr-only'>More pages</span>
   </span>
 );

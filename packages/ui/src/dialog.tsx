@@ -1,6 +1,5 @@
 'use client';
 
-import type { DialogPortalProps } from '@radix-ui/react-dialog';
 import { forwardRef } from 'react';
 import {
   Close,
@@ -13,8 +12,48 @@ import {
   Trigger,
 } from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
+import { clsx } from 'clsx/lite';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
+const dialogStyles = tv({
+  slots: {
+    overlay: clsx(
+      'fixed inset-0 z-50 bg-black-a6 backdrop-blur-sm',
+      'data-[state=open]:animate-in data-[state=open]:fade-in-0',
+      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
+    ),
+    content: clsx(
+      'fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-4 border border-grey-line bg-grey-base p-6 shadow-lg duration-200',
+      'sm:max-w-lg sm:rounded-lg',
+      'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]',
+      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]',
+    ),
+    contentClose: clsx(
+      'absolute right-4 top-4 rounded ring-offset-grey-bg transition-opacity',
+      'focus:outline focus:outline-grey-focus-ring',
+      'disabled:cursor-not-allowed disabled:text-grey-text',
+    ),
+    contentIcon: 'size-4',
+    header: clsx('flex flex-col gap-y-1.5 text-center', 'sm:text-left'),
+    title: 'text-lg font-semibold leading-none tracking-tight',
+    description: 'text-sm text-grey-text',
+    footer: clsx(
+      'flex flex-col-reverse',
+      'sm:flex-row sm:justify-end sm:gap-x-2',
+    ),
+  },
+});
+
+const {
+  overlay,
+  content,
+  contentClose,
+  contentIcon,
+  header,
+  title,
+  description,
+  footer,
+} = dialogStyles();
 
 /**
  * Dialog component that provides a modal dialog for user interactions.
@@ -54,20 +93,7 @@ export const DialogTrigger = Trigger;
  *
  * @param {DialogPortalProps} props - The props for the DialogPortal component.
  */
-export const DialogPortal = ({ children, ...props }: DialogPortalProps) => (
-  <Portal {...props}>
-    <div
-      className={cn(
-        'fixed inset-0 z-50 flex items-start justify-center',
-        'sm:items-center',
-      )}
-    >
-      {children}
-    </div>
-  </Portal>
-);
-
-DialogPortal.displayName = Portal.displayName;
+export const DialogPortal = Portal;
 
 type DialogOverlayRef = React.ElementRef<typeof Overlay>;
 type DialogOverlayProps = React.ComponentPropsWithoutRef<typeof Overlay>;
@@ -82,16 +108,7 @@ type DialogOverlayProps = React.ComponentPropsWithoutRef<typeof Overlay>;
  */
 export const DialogOverlay = forwardRef<DialogOverlayRef, DialogOverlayProps>(
   ({ className, ...props }, ref) => (
-    <Overlay
-      ref={ref}
-      className={cn(
-        'fixed inset-0 z-50 bg-black-a6 backdrop-blur-sm',
-        'data-[state=open]:animate-in data-[state=open]:fade-in-0',
-        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
-        className,
-      )}
-      {...props}
-    />
+    <Overlay ref={ref} className={overlay({ className })} {...props} />
   ),
 );
 
@@ -117,26 +134,10 @@ export const DialogContent = forwardRef<DialogContentRef, DialogContentProps>(
   ({ className, children, ...props }, ref) => (
     <DialogPortal>
       <DialogOverlay />
-      <Content
-        ref={ref}
-        className={cn(
-          'fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-4 border border-grey-line bg-grey-base p-6 shadow-lg duration-200',
-          'sm:max-w-lg sm:rounded-lg',
-          'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]',
-          'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]',
-          className,
-        )}
-        {...props}
-      >
+      <Content ref={ref} className={content({ className })} {...props}>
         {children}
-        <Close
-          className={cn(
-            'absolute right-4 top-4 rounded ring-offset-grey-bg transition-opacity',
-            'focus:outline focus:outline-grey-focus-ring',
-            'disabled:cursor-not-allowed disabled:text-grey-text',
-          )}
-        >
-          <Cross2Icon className='h-4 w-4' />
+        <Close className={contentClose()}>
+          <Cross2Icon className={contentIcon()} />
           <span className='sr-only'>Close</span>
         </Close>
       </Content>
@@ -170,14 +171,7 @@ type DialogHeaderProps = React.HTMLAttributes<HTMLDivElement>;
  * </DialogHeader>
  */
 export const DialogHeader = ({ className, ...props }: DialogHeaderProps) => (
-  <div
-    className={cn(
-      'flex flex-col gap-y-1.5 text-center',
-      'sm:text-left',
-      className,
-    )}
-    {...props}
-  />
+  <div className={header({ className })} {...props} />
 );
 
 DialogHeader.displayName = 'DialogHeader';
@@ -195,14 +189,7 @@ type DialogTitleProps = React.ComponentPropsWithoutRef<typeof Title>;
  */
 export const DialogTitle = forwardRef<DialogTitleRef, DialogTitleProps>(
   ({ className, ...props }, ref) => (
-    <Title
-      ref={ref}
-      className={cn(
-        'text-lg font-semibold leading-none tracking-tight',
-        className,
-      )}
-      {...props}
-    />
+    <Title ref={ref} className={title({ className })} {...props} />
   ),
 );
 
@@ -225,11 +212,7 @@ export const DialogDescription = forwardRef<
   DialogDescriptionRef,
   DialogDescriptionProps
 >(({ className, ...props }, ref) => (
-  <Description
-    ref={ref}
-    className={cn('text-sm text-grey-text', className)}
-    {...props}
-  />
+  <Description ref={ref} className={description({ className })} {...props} />
 ));
 
 DialogDescription.displayName = Description.displayName;
@@ -247,14 +230,7 @@ type DialogFooterProps = React.HTMLAttributes<HTMLDivElement>;
  * </DialogFooter>
  */
 export const DialogFooter = ({ className, ...props }: DialogFooterProps) => (
-  <div
-    className={cn(
-      'flex flex-col-reverse',
-      'sm:flex-row sm:justify-end sm:gap-x-2',
-      className,
-    )}
-    {...props}
-  />
+  <div className={footer({ className })} {...props} />
 );
 
 DialogFooter.displayName = 'DialogFooter';

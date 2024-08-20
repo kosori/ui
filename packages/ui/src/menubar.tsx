@@ -22,8 +22,104 @@ import {
   SubTrigger,
   Trigger,
 } from '@radix-ui/react-menubar';
+import { clsx } from 'clsx/lite';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
+const menubarStyles = tv({
+  slots: {
+    base: 'flex h-9 items-center space-x-1 rounded-lg border border-grey-line bg-grey-base p-1 shadow-sm',
+    trigger: clsx(
+      'flex h-full select-none items-center rounded-md px-3 py-1 text-sm font-medium outline-none transition-colors duration-200',
+      'focus:bg-primary-bg-hover',
+      'data-[state=open]:bg-primary-bg-hover',
+    ),
+    content: clsx(
+      'z-50 min-w-[12rem] overflow-hidden rounded-lg border border-grey-line bg-grey-base p-1 shadow-md',
+      'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
+      'data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+      'data-[side=bottom]:slide-in-from-top-2',
+      'data-[side=left]:slide-in-from-right-2',
+      'data-[side=right]:slide-in-from-left-2',
+      'data-[side=top]:slide-in-from-bottom-2',
+    ),
+    item: clsx(
+      'group relative flex h-8 cursor-pointer select-none items-center rounded-md px-2 text-sm outline-none transition-colors duration-200',
+      'focus:bg-primary-bg-hover',
+      'active:bg-primary-bg-active',
+      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
+    ),
+    label:
+      'flex h-8 select-none items-center px-2 text-xs font-medium text-grey-text',
+    checkboxItem: clsx(
+      'group relative flex h-8 cursor-pointer select-none items-center rounded-md pl-8 pr-2 text-sm outline-none transition-colors duration-200',
+      'focus:bg-primary-bg-hover',
+      'active:bg-primary-bg-active',
+      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
+    ),
+    checkboxItemIndicator: 'absolute left-2 flex items-center justify-center',
+    checkboxItemIcon: 'size-4',
+    radioItem: clsx(
+      'relative flex h-8 cursor-pointer select-none items-center rounded-md pl-8 pr-2 text-sm outline-none transition-colors duration-200',
+      'focus:bg-primary-bg-hover',
+      'active:bg-primary-bg-active',
+      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
+    ),
+    radioItemIndicator: 'absolute left-2 flex items-center justify-center',
+    radioItemIcon: 'size-4',
+    separator: '-mx-1 my-1 h-px bg-grey-line',
+    subTrigger: clsx(
+      'group flex h-8 cursor-pointer select-none items-center rounded-md px-2 text-sm outline-none transition-colors duration-200',
+      'focus:bg-primary-bg-hover',
+      'data-[state=open]:bg-primary-bg-hover',
+      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
+    ),
+    subTriggerIcon: clsx(
+      'ml-auto size-4',
+      'group-data-[disabled]:text-grey-solid',
+    ),
+    subContent: clsx(
+      'z-50 min-w-[8rem] overflow-hidden rounded-lg border border-grey-line bg-grey-base p-1 shadow-md',
+      'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
+      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+      'data-[side=bottom]:slide-in-from-top-2',
+      'data-[side=left]:slide-in-from-right-2',
+      'data-[side=right]:slide-in-from-left-2',
+      'data-[side=top]:slide-in-from-bottom-2',
+    ),
+    shortcut: clsx(
+      'ml-auto text-xs tracking-widest text-grey-text',
+      'group-data-[disabled]:text-grey-solid',
+    ),
+  },
+  variants: {
+    inset: {
+      true: {
+        item: 'pl-8',
+        label: 'pl-8',
+        subTrigger: 'pl-8',
+      },
+    },
+  },
+});
+
+const {
+  base,
+  trigger,
+  content,
+  item,
+  label,
+  checkboxItem,
+  checkboxItemIndicator,
+  checkboxItemIcon,
+  radioItem,
+  radioItemIndicator,
+  radioItemIcon,
+  separator,
+  subTrigger,
+  subTriggerIcon,
+  subContent,
+  shortcut,
+} = menubarStyles();
 
 type MenubarRef = React.ElementRef<typeof Root>;
 type MenubarProps = React.ComponentPropsWithoutRef<typeof Root>;
@@ -54,14 +150,7 @@ type MenubarProps = React.ComponentPropsWithoutRef<typeof Root>;
  */
 export const Menubar = forwardRef<MenubarRef, MenubarProps>(
   ({ className, ...props }, ref) => (
-    <Root
-      ref={ref}
-      className={cn(
-        'flex h-9 items-center space-x-1 rounded-lg border border-grey-line bg-grey-base p-1 shadow-sm',
-        className,
-      )}
-      {...props}
-    />
+    <Root ref={ref} className={base({ className })} {...props} />
   ),
 );
 
@@ -97,16 +186,7 @@ export const MenubarTrigger = forwardRef<
   MenubarTriggerRef,
   MenubarTriggerProps
 >(({ className, ...props }, ref) => (
-  <Trigger
-    ref={ref}
-    className={cn(
-      'flex h-full select-none items-center rounded-md px-3 py-1 text-sm font-medium outline-none transition-colors duration-200',
-      'focus:bg-primary-bg-hover',
-      'data-[state=open]:bg-primary-bg-hover',
-      className,
-    )}
-    {...props}
-  />
+  <Trigger ref={ref} className={trigger({ className })} {...props} />
 ));
 
 MenubarTrigger.displayName = Trigger.displayName;
@@ -151,16 +231,7 @@ export const MenubarContent = forwardRef<
         ref={ref}
         align={align}
         alignOffset={alignOffset}
-        className={cn(
-          'z-50 min-w-[12rem] overflow-hidden rounded-lg border border-grey-line bg-grey-base p-1 shadow-md',
-          'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
-          'data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
-          'data-[side=bottom]:slide-in-from-top-2',
-          'data-[side=left]:slide-in-from-right-2',
-          'data-[side=right]:slide-in-from-left-2',
-          'data-[side=top]:slide-in-from-bottom-2',
-          className,
-        )}
+        className={content({ className })}
         sideOffset={sideOffset}
         {...props}
       />
@@ -186,18 +257,7 @@ type MenubarItemProps = React.ComponentPropsWithoutRef<typeof Item> & {
  */
 export const MenubarItem = forwardRef<MenubarItemRef, MenubarItemProps>(
   ({ className, inset, ...props }, ref) => (
-    <Item
-      ref={ref}
-      className={cn(
-        'group relative flex select-none items-center rounded-md px-2 py-1.5 text-sm outline-none transition-colors duration-200',
-        'focus:bg-primary-bg-hover',
-        'active:bg-primary-bg-active',
-        'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
-        inset && 'pl-8',
-        className,
-      )}
-      {...props}
-    />
+    <Item ref={ref} className={item({ className, inset })} {...props} />
   ),
 );
 
@@ -231,15 +291,7 @@ type MenubarLabelProps = React.ComponentPropsWithoutRef<typeof Label> & {
  */
 export const MenubarLabel = forwardRef<MenubarLabelRef, MenubarLabelProps>(
   ({ className, inset, ...props }, ref) => (
-    <Label
-      ref={ref}
-      className={cn(
-        'select-none px-2 py-1.5 text-xs font-medium text-grey-text',
-        inset && 'pl-8',
-        className,
-      )}
-      {...props}
-    />
+    <Label ref={ref} className={label({ className, inset })} {...props} />
   ),
 );
 
@@ -265,18 +317,12 @@ export const MenubarCheckboxItem = forwardRef<
   <CheckboxItem
     ref={ref}
     checked={checked}
-    className={cn(
-      'group relative flex select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm outline-none transition-colors duration-200',
-      'focus:bg-primary-gg-hover',
-      'active:bg-primary-bg-active',
-      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
-      className,
-    )}
+    className={checkboxItem({ className })}
     {...props}
   >
-    <span className='absolute left-2 flex items-center justify-center'>
+    <span className={checkboxItemIndicator()}>
       <ItemIndicator>
-        <CheckIcon className='h-4 w-4' />
+        <CheckIcon className={checkboxItemIcon()} />
       </ItemIndicator>
     </span>
     {children}
@@ -312,20 +358,10 @@ export const MenubarRadioItem = forwardRef<
   MenubarRadioItemRef,
   MenubarRadioItemProps
 >(({ className, children, ...props }, ref) => (
-  <RadioItem
-    ref={ref}
-    className={cn(
-      'relative flex select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm outline-none transition-colors duration-200',
-      'focus:bg-primary-bg-hover',
-      'active:bg-primary-bg-active',
-      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
-      className,
-    )}
-    {...props}
-  >
-    <span className='absolute left-2 flex items-center justify-center'>
+  <RadioItem ref={ref} className={radioItem({ className })} {...props}>
+    <span className={radioItemIndicator()}>
       <ItemIndicator>
-        <DotFilledIcon className='h-4 w-4 fill-current' />
+        <DotFilledIcon className={radioItemIcon()} />
       </ItemIndicator>
     </span>
     {children}
@@ -349,11 +385,7 @@ export const MenubarSeparator = forwardRef<
   MenubarSeparatorRef,
   MenubarSeparatorProps
 >(({ className, ...props }, ref) => (
-  <Separator
-    ref={ref}
-    className={cn('-mx-1 my-1 h-px bg-grey-line', className)}
-    {...props}
-  />
+  <Separator ref={ref} className={separator({ className })} {...props} />
 ));
 
 MenubarSeparator.displayName = Separator.displayName;
@@ -389,20 +421,9 @@ export const MenubarSubTrigger = forwardRef<
   MenubarSubTriggerRef,
   MenubarSubTriggerProps
 >(({ className, inset, children, ...props }, ref) => (
-  <SubTrigger
-    ref={ref}
-    className={cn(
-      'flex select-none items-center rounded-md px-2 py-1.5 text-sm outline-none transition-colors duration-200',
-      'focus:bg-primary-bg-hover',
-      'data-[state=open]:bg-primary-bg-hover',
-      'data-[disabled]:text-grey-solid',
-      inset && 'pl-8',
-      className,
-    )}
-    {...props}
-  >
+  <SubTrigger ref={ref} className={subTrigger({ className, inset })} {...props}>
     {children}
-    <ChevronRightIcon className='ml-auto h-4 w-4' />
+    <ChevronRightIcon className={subTriggerIcon()} />
   </SubTrigger>
 ));
 
@@ -425,20 +446,7 @@ export const MenubarSubContent = forwardRef<
   MenubarSubContentRef,
   MenubarSubContentProps
 >(({ className, ...props }, ref) => (
-  <SubContent
-    ref={ref}
-    className={cn(
-      'z-50 min-w-[8rem] overflow-hidden rounded-lg border border-grey-line bg-grey-base p-1 shadow-md',
-      'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
-      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
-      'data-[side=bottom]:slide-in-from-top-2',
-      'data-[side=left]:slide-in-from-right-2',
-      'data-[side=right]:slide-in-from-left-2',
-      'data-[side=top]:slide-in-from-bottom-2',
-      className,
-    )}
-    {...props}
-  />
+  <SubContent ref={ref} className={subContent({ className })} {...props} />
 ));
 
 MenubarSubContent.displayName = SubContent.displayName;
@@ -457,14 +465,7 @@ export const MenubarShortcut = ({
   className,
   ...props
 }: MenubarShortcutProps) => (
-  <span
-    className={cn(
-      'ml-auto text-xs tracking-widest text-grey-text',
-      'group-data-[disabled]:text-grey-solid',
-      className,
-    )}
-    {...props}
-  />
+  <span className={shortcut({ className })} {...props} />
 );
 
 MenubarShortcut.displayName = 'MenubarShortcut';

@@ -8,8 +8,28 @@ import {
   ScrollAreaScrollbar as Scrollbar,
   Viewport,
 } from '@radix-ui/react-scroll-area';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
+const scrollAreaStyles = tv({
+  slots: {
+    base: 'relative overflow-hidden',
+    viewport: 'size-full rounded-[inherit]',
+    scrollbar: 'flex touch-none select-none transition-colors',
+    thumb: 'relative flex-1 rounded-full bg-grey-line',
+  },
+  variants: {
+    orientation: {
+      vertical: {
+        scrollbar: 'h-full w-2.5 border-l border-l-transparent p-px',
+      },
+      horizontal: {
+        scrollbar: 'h-2.5 w-full border-t border-t-transparent p-px',
+      },
+    },
+  },
+});
+
+const { base, viewport, scrollbar, thumb } = scrollAreaStyles();
 
 type ScrollAreaRef = React.ElementRef<typeof Root>;
 type ScrollAreaProps = React.ComponentPropsWithoutRef<typeof Root>;
@@ -41,14 +61,8 @@ type ScrollAreaProps = React.ComponentPropsWithoutRef<typeof Root>;
  */
 export const ScrollArea = forwardRef<ScrollAreaRef, ScrollAreaProps>(
   ({ className, children, ...props }, ref) => (
-    <Root
-      ref={ref}
-      className={cn('relative overflow-hidden', className)}
-      {...props}
-    >
-      <Viewport className='h-full w-full rounded-[inherit]'>
-        {children}
-      </Viewport>
+    <Root ref={ref} className={base({ className })} {...props}>
+      <Viewport className={viewport()}>{children}</Viewport>
       <ScrollAreaScrollbar />
       <Corner />
     </Root>
@@ -76,18 +90,11 @@ export const ScrollAreaScrollbar = forwardRef<
 >(({ className, orientation = 'vertical', ...props }, ref) => (
   <Scrollbar
     ref={ref}
-    className={cn(
-      'flex touch-none select-none transition-colors',
-      orientation === 'vertical' &&
-        'h-full w-2.5 border-l border-l-transparent p-px',
-      orientation === 'horizontal' &&
-        'h-2.5 border-t border-t-transparent p-px',
-      className,
-    )}
+    className={scrollbar({ className, orientation })}
     orientation={orientation}
     {...props}
   >
-    <ScrollAreaThumb className='relative flex-1 rounded-full bg-grey-line' />
+    <ScrollAreaThumb className={thumb()} />
   </Scrollbar>
 ));
 

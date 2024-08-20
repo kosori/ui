@@ -2,8 +2,29 @@
 
 import { forwardRef } from 'react';
 import { Indicator, Item, Root } from '@radix-ui/react-radio-group';
+import { clsx } from 'clsx/lite';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
+const radioGroupStyles = tv({
+  slots: {
+    base: 'grid gap-2',
+    item: clsx(
+      'group peer h-4 w-4 rounded-full border border-grey-border bg-grey-base outline-none transition-colors',
+      'hover:border-grey-border-hover',
+      'focus-visible:ring-4 focus-visible:ring-primary-focus-ring',
+      'data-[state=checked]:border-primary-solid data-[state=checked]:bg-primary-solid',
+      'disabled:cursor-not-allowed disabled:bg-grey-bg disabled:text-grey-solid',
+      'disabled:hover:border-grey-border',
+    ),
+    itemIndicator: 'flex items-center justify-center',
+    itemIndicatorIcon: clsx(
+      'size-1.5 rounded-full bg-grey-base',
+      'group-disabled:bg-grey-bg',
+    ),
+  },
+});
+
+const { base, item, itemIndicator, itemIndicatorIcon } = radioGroupStyles();
 
 type RadioGroupRef = React.ElementRef<typeof Root>;
 type RadioGroupProps = React.ComponentPropsWithoutRef<typeof Root>;
@@ -29,7 +50,7 @@ type RadioGroupProps = React.ComponentPropsWithoutRef<typeof Root>;
  */
 export const RadioGroup = forwardRef<RadioGroupRef, RadioGroupProps>(
   ({ className, ...props }, ref) => (
-    <Root ref={ref} className={cn('grid gap-2', className)} {...props} />
+    <Root ref={ref} className={base({ className })} {...props} />
   ),
 );
 
@@ -50,26 +71,9 @@ export const RadioGroupItem = forwardRef<
   RadioGroupItemRef,
   RadioGroupItemProps
 >(({ className, ...props }, ref) => (
-  <Item
-    ref={ref}
-    className={cn(
-      'group peer h-4 w-4 rounded-full border border-grey-border bg-grey-base outline-none transition-colors',
-      'hover:border-grey-border-hover',
-      'focus-visible:ring-4 focus-visible:ring-primary-focus-ring',
-      'data-[state=checked]:border-primary-solid data-[state=checked]:bg-primary-solid',
-      'disabled:cursor-not-allowed disabled:bg-grey-bg disabled:text-grey-solid',
-      'disabled:hover:border-grey-border',
-      className,
-    )}
-    {...props}
-  >
-    <Indicator className='flex items-center justify-center'>
-      <div
-        className={cn(
-          'size-1.5 rounded-full bg-grey-base',
-          'group-disabled:bg-grey-bg',
-        )}
-      />
+  <Item ref={ref} className={item({ className })} {...props}>
+    <Indicator className={itemIndicator()}>
+      <div className={itemIndicatorIcon()} />
     </Indicator>
   </Item>
 ));

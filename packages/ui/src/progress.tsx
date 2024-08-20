@@ -2,8 +2,16 @@
 
 import { forwardRef } from 'react';
 import { Indicator, Root } from '@radix-ui/react-progress';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
+const progressStyles = tv({
+  slots: {
+    base: 'relative h-2 w-full overflow-hidden rounded-full bg-grey-bg',
+    indicator: 'h-full w-full flex-1 bg-grey-text-contrast transition-all',
+  },
+});
+
+const { base, indicator } = progressStyles();
 
 type ProgressRef = React.ElementRef<typeof Root>;
 type ProgressProps = React.ComponentPropsWithoutRef<typeof Root>;
@@ -21,16 +29,9 @@ type ProgressProps = React.ComponentPropsWithoutRef<typeof Root>;
  */
 export const Progress = forwardRef<ProgressRef, ProgressProps>(
   ({ className, value, ...props }, ref) => (
-    <Root
-      ref={ref}
-      className={cn(
-        'relative h-2 w-full overflow-hidden rounded-full bg-grey-bg',
-        className,
-      )}
-      {...props}
-    >
+    <Root ref={ref} className={base({ className })} {...props}>
       <Indicator
-        className='h-full w-full flex-1 bg-grey-text-contrast transition-all'
+        className={indicator()}
         style={{ transform: `translateX(-${100 - (value ?? 0)}%)` }}
       />
     </Root>

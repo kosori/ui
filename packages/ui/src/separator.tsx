@@ -2,8 +2,17 @@
 
 import { forwardRef } from 'react';
 import { Root } from '@radix-ui/react-separator';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
+const separatorStyles = tv({
+  base: 'shrink-0 bg-grey-line',
+  variants: {
+    orientation: {
+      horizontal: 'h-px w-full',
+      vertical: 'h-full w-px',
+    },
+  },
+});
 
 type SeparatorRef = React.ElementRef<typeof Root>;
 type SeparatorProps = React.ComponentPropsWithoutRef<typeof Root>;
@@ -28,11 +37,7 @@ export const Separator = forwardRef<SeparatorRef, SeparatorProps>(
   ) => (
     <Root
       ref={ref}
-      className={cn(
-        'shrink-0 bg-grey-line',
-        orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px',
-        className,
-      )}
+      className={separatorStyles({ className, orientation })}
       decorative={decorative}
       orientation={orientation}
       {...props}

@@ -1,9 +1,25 @@
 'use client';
 
 import { forwardRef } from 'react';
+import { clsx } from 'clsx/lite';
+import { tv } from 'tailwind-variants';
 import { Drawer as DrawerPrimitive } from 'vaul';
 
-import { cn } from '@kosori/ui';
+const drawerStyles = tv({
+  slots: {
+    overlay: 'fixed inset-0 z-50 bg-black-a6',
+    content:
+      'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border border-grey-line bg-grey-base',
+    contentHandle: 'bg-grey-bg-hover mx-auto mt-4 h-2 w-[100px] rounded-full',
+    header: clsx('grid gap-1.5 p-4 text-center', 'sm:text-left'),
+    title: 'text-lg font-semibold leading-none tracking-tight',
+    description: 'text-sm text-grey-text',
+    footer: 'mt-auto flex flex-col gap-2 p-4',
+  },
+});
+
+const { overlay, content, contentHandle, header, title, description, footer } =
+  drawerStyles();
 
 type DrawerProps = React.ComponentProps<typeof DrawerPrimitive.Root>;
 
@@ -65,7 +81,7 @@ export const DrawerOverlay = forwardRef<DrawerOverlayRef, DrawerOverlayProps>(
   ({ className, ...props }, ref) => (
     <DrawerPrimitive.Overlay
       ref={ref}
-      className={cn('fixed inset-0 z-50 bg-black-a6', className)}
+      className={overlay({ className })}
       {...props}
     />
   ),
@@ -95,13 +111,10 @@ export const DrawerContent = forwardRef<DrawerContentRef, DrawerContentProps>(
       <DrawerOverlay />
       <DrawerPrimitive.Content
         ref={ref}
-        className={cn(
-          'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border border-grey-line bg-grey-base',
-          className,
-        )}
+        className={content({ className })}
         {...props}
       >
-        <div className='bg-muted mx-auto mt-4 h-2 w-[100px] rounded-full' />
+        <div className={contentHandle()} />
         {children}
       </DrawerPrimitive.Content>
     </DrawerPortal>
@@ -123,10 +136,7 @@ type DrawerHeaderProps = React.HTMLAttributes<HTMLDivElement>;
  * </DrawerHeader>
  */
 export const DrawerHeader = ({ className, ...props }: DrawerHeaderProps) => (
-  <div
-    className={cn('grid gap-1.5 p-4 text-center', 'sm:text-left', className)}
-    {...props}
-  />
+  <div className={header({ className })} {...props} />
 );
 
 DrawerHeader.displayName = 'DrawerHeader';
@@ -148,10 +158,7 @@ export const DrawerTitle = forwardRef<DrawerTitleRef, DrawerTitleProps>(
   ({ className, ...props }, ref) => (
     <DrawerPrimitive.Title
       ref={ref}
-      className={cn(
-        'text-lg font-semibold leading-none tracking-tight',
-        className,
-      )}
+      className={title({ className })}
       {...props}
     />
   ),
@@ -180,7 +187,7 @@ export const DrawerDescription = forwardRef<
 >(({ className, ...props }, ref) => (
   <DrawerPrimitive.Description
     ref={ref}
-    className={cn('text-sm text-grey-text', className)}
+    className={description({ className })}
     {...props}
   />
 ));
@@ -200,10 +207,7 @@ type DrawerFooterProps = React.HTMLAttributes<HTMLDivElement>;
  * </DrawerFooter>
  */
 export const DrawerFooter = ({ className, ...props }: DrawerFooterProps) => (
-  <div
-    className={cn('mt-auto flex flex-col gap-2 p-4', className)}
-    {...props}
-  />
+  <div className={footer({ className })} {...props} />
 );
 
 DrawerFooter.displayName = 'DrawerFooter';

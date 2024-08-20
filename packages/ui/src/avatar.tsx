@@ -5,43 +5,48 @@ import { forwardRef } from 'react';
 import { Fallback, Image, Root } from '@radix-ui/react-avatar';
 import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
-
 const avatarStyles = tv({
-  base: cn('relative flex shrink-0 overflow-hidden'),
+  slots: {
+    base: 'relative flex shrink-0 overflow-hidden',
+    image: 'aspect-square w-full h-full',
+    fallback:
+      'flex h-full w-full items-center justify-center bg-grey-bg-subtle',
+  },
   variants: {
     shape: {
-      round: 'rounded-full',
-      square: '',
+      round: { base: 'rounded-full' },
+      square: { base: '' },
     },
     size: {
-      small: 'h-8 w-8',
-      medium: 'h-10 w-10',
-      large: 'h-12 w-12',
+      small: { base: 'size-8' },
+      medium: { base: 'size-10' },
+      large: { base: 'size-12' },
     },
-  },
-  defaultVariants: {
-    shape: 'round',
-    size: 'small',
   },
   compoundVariants: [
     {
       shape: 'square',
       size: 'small',
-      className: 'rounded-lg',
+      className: { base: 'rounded-lg' },
     },
     {
       shape: 'square',
       size: 'medium',
-      className: 'rounded-xl',
+      className: { base: 'rounded-xl' },
     },
     {
       shape: 'square',
       size: 'large',
-      className: 'rounded-2xl',
+      className: { base: 'rounded-2xl' },
     },
   ],
+  defaultVariants: {
+    shape: 'round',
+    size: 'small',
+  },
 });
+
+const { base, image, fallback } = avatarStyles();
 
 type AvatarRef = React.ElementRef<typeof Root>;
 type AvatarRadixProps = React.ComponentPropsWithoutRef<typeof Root>;
@@ -65,11 +70,7 @@ type AvatarProps = AvatarVariants & AvatarRadixProps;
  */
 export const Avatar = forwardRef<AvatarRef, AvatarProps>(
   ({ shape, size, className, ...props }, ref) => (
-    <Root
-      ref={ref}
-      className={avatarStyles({ shape, size, class: className })}
-      {...props}
-    />
+    <Root ref={ref} className={base({ className, shape, size })} {...props} />
   ),
 );
 
@@ -88,11 +89,7 @@ type AvatarImageProps = React.ComponentPropsWithoutRef<typeof Image>;
  */
 export const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
   ({ className, ...props }, ref) => (
-    <Image
-      ref={ref}
-      className={cn('aspect-square h-full w-full', className)}
-      {...props}
-    />
+    <Image ref={ref} className={image({ className })} {...props} />
   ),
 );
 
@@ -113,14 +110,7 @@ export const AvatarFallback = forwardRef<
   AvatarFallbackRef,
   AvatarFallbackProps
 >(({ className, ...props }, ref) => (
-  <Fallback
-    ref={ref}
-    className={cn(
-      'flex h-full w-full items-center justify-center bg-grey-bg-subtle',
-      className,
-    )}
-    {...props}
-  />
+  <Fallback ref={ref} className={fallback({ className })} {...props} />
 ));
 
 AvatarFallback.displayName = Fallback.displayName;
