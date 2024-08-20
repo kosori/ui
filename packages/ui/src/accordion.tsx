@@ -9,8 +9,36 @@ import {
   Trigger,
 } from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
+import { clsx } from 'clsx/lite';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
+const accordionStyles = tv({
+  slots: {
+    item: clsx(
+      'w-full rounded-lg border border-grey-border bg-grey-base transition-colors duration-200',
+      'focus-within:outline focus-within:outline-primary-focus-ring',
+      'hover:border-grey-border-hover',
+      'data-[disabled]:cursor-not-allowed data-[disabled]:border-grey-line',
+      'data-[disabled]:hover:border-grey-line',
+    ),
+    trigger: clsx(
+      'group flex h-10 flex-1 items-center justify-between px-4 text-sm font-medium outline-none',
+      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
+    ),
+    triggerIcon: clsx(
+      'size-5 transition-transform duration-200 ease-in-out',
+      'group-data-[state=open]:rotate-180',
+    ),
+    content: clsx(
+      'overflow-hidden text-sm text-grey-text',
+      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
+      'data-[state=closed]:animate-accordion-up',
+      'data-[state=open]:animate-accordion-down',
+    ),
+  },
+});
+
+const { item, trigger, triggerIcon, content } = accordionStyles();
 
 /**
  * Accordion component that allows for collapsible content sections.
@@ -50,18 +78,7 @@ type AccordionItemProps = React.ComponentPropsWithoutRef<typeof Item>;
  */
 export const AccordionItem = forwardRef<AccordionItemRef, AccordionItemProps>(
   ({ className, ...props }, ref) => (
-    <Item
-      ref={ref}
-      className={cn(
-        'w-full rounded-lg border border-grey-border bg-grey-base transition-colors duration-200',
-        'focus-within:outline focus-within:outline-primary-focus-ring',
-        'hover:border-grey-border-hover',
-        'data-[disabled]:cursor-not-allowed data-[disabled]:border-grey-line',
-        'data-[disabled]:hover:border-grey-line',
-        className,
-      )}
-      {...props}
-    />
+    <Item ref={ref} className={item({ className })} {...props} />
   ),
 );
 
@@ -83,22 +100,9 @@ export const AccordionTrigger = forwardRef<
   AccordionTriggerProps
 >(({ className, children, ...props }, ref) => (
   <Header className='flex'>
-    <Trigger
-      ref={ref}
-      className={cn(
-        'group flex h-10 flex-1 items-center justify-between px-4 text-sm font-medium outline-none',
-        'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
-        className,
-      )}
-      {...props}
-    >
+    <Trigger ref={ref} className={trigger({ className })} {...props}>
       {children}
-      <ChevronDownIcon
-        className={cn(
-          'h-5 w-5 transition-transform duration-200 ease-in-out',
-          'group-data-[state=open]:rotate-180',
-        )}
-      />
+      <ChevronDownIcon className={triggerIcon()} />
     </Trigger>
   </Header>
 ));
@@ -122,17 +126,7 @@ export const AccordionContent = forwardRef<
   AccordionContentRef,
   AccordionContentProps
 >(({ className, children, ...props }, ref) => (
-  <Content
-    ref={ref}
-    className={cn(
-      'overflow-hidden text-sm text-grey-text',
-      'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
-      'data-[state=closed]:animate-accordion-up',
-      'data-[state=open]:animate-accordion-down',
-      className,
-    )}
-    {...props}
-  >
+  <Content ref={ref} className={content({ className })} {...props}>
     <div className='px-4 pb-2'>{children}</div>
   </Content>
 ));
