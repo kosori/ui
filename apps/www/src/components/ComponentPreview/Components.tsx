@@ -124,6 +124,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'badge-sizes': {
+    name: 'badge-sizes',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Badge').then((module) => ({
+        default: module.BadgeSizesDemo,
+      })),
+    ),
+  },
   breadcrumb: {
     name: 'breadcrumb',
     type: 'component:example',
