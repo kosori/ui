@@ -12,32 +12,80 @@ import {
   Title,
   Viewport,
 } from '@radix-ui/react-toast';
+import { clsx } from 'clsx/lite';
 import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
-
 const toastStyles = tv({
-  base: cn(
-    'group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-xl border p-4 pr-8 shadow-lg transition-all',
-    'data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full',
-  ),
+  slots: {
+    base: clsx(
+      'group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-xl border p-4 pr-8 shadow-lg transition-all',
+      'data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full',
+    ),
+    action: clsx(
+      'inline-flex h-8 shrink-0 items-center justify-center rounded-lg border border-grey-border bg-grey-base px-3 text-xs font-semibold outline-none transition-colors duration-200',
+      'hover:border-grey-border-hover hover:bg-grey-bg-subtle',
+      'focus-visible:ring-4 focus-visible:ring-grey-focus-ring',
+      'disabled:cursor-not-allowed disabled:border-grey-line disabled:bg-grey-base disabled:text-grey-solid',
+      'group-[.info]:border-info-border group-[.info]:bg-info-base',
+      'group-[.info]:hover:border-info-border-hover group-[.info]:hover:bg-info-bg-subtle',
+      'group-[.info]:focus-visible:ring-info-focus-ring',
+      'group-[.success]:border-success-border group-[.success]:bg-success-base',
+      'group-[.success]:hover:border-success-border-hover group-[.success]:hover:bg-success-bg-subtle',
+      'group-[.success]:focus-visible:ring-success-focus-ring',
+      'group-[.warning]:border-warning-border group-[.warning]:bg-warning-base',
+      'group-[.warning]:hover:border-warning-border-hover group-[.warning]:hover:bg-warning-bg-subtle',
+      'group-[.warning]:focus-visible:ring-warning-focus-ring',
+      'group-[.error]:border-error-border group-[.error]:bg-error-base',
+      'group-[.error]:hover:border-error-border-hover group-[.error]:hover:bg-error-bg-subtle',
+      'group-[.error]:focus-visible:ring-error-focus-ring',
+    ),
+    close: clsx(
+      'absolute right-1 top-1 rounded-md p-1 text-grey-text opacity-0 outline-none transition duration-200',
+      'hover:text-grey-text-contrast',
+      'focus-visible:opacity-100 focus-visible:ring-4 focus-visible:ring-grey-focus-ring',
+      'group-hover:opacity-100',
+      'group-[.info]:text-info-focus-ring',
+      'group-[.info]:hover:text-info-solid',
+      'group-[.info]:focus-visible:ring-info-focusRing',
+      'group-[.success]:text-success-focus-ring',
+      'group-[.success]:hover:text-success-solid',
+      'group-[.success]:focus-visible:ring-success-focus-ring',
+      'group-[.warning]:text-warning-focus-ring',
+      'group-[.warning]:hover:text-warning-solid',
+      'group-[.warning]:focus-visible:ring-warning-focus-ring',
+      'group-[.error]:text-error-focus-ring',
+      'group-[.error]:hover:text-error-solid',
+      'group-[.error]:focus:ring-error-focus-ring',
+    ),
+    description: 'text-sm text-grey-text',
+    title: clsx('text-sm font-semibold', '[&+div]:text-xs'),
+    viewport: clsx(
+      'fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4',
+      'sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col',
+      'md:max-w-md',
+    ),
+    toasterHeader: 'grid w-full gap-1',
+  },
   variants: {
     intent: {
-      default: cn('border-grey-line bg-grey-base'),
-      info: cn('info border-info-line bg-info-base text-info-solid'),
-      success: cn(
-        'success border-success-line bg-success-base text-success-solid',
-      ),
-      warning: cn(
-        'warning border-warning-line bg-warning-base text-warning-solid',
-      ),
-      error: cn('error border-error-line bg-error-base text-error-solid'),
+      default: { base: 'border-grey-line bg-grey-base' },
+      info: { base: 'info border-info-line bg-info-base text-info-solid' },
+      success: {
+        base: 'success border-success-line bg-success-base text-success-solid',
+      },
+      warning: {
+        base: 'warning border-warning-line bg-warning-base text-warning-solid',
+      },
+      error: { base: 'error border-error-line bg-error-base text-error-solid' },
     },
   },
   defaultVariants: {
     intent: 'default',
   },
 });
+
+const { base, action, close, description, title, viewport, toasterHeader } =
+  toastStyles();
 
 type ToastRef = React.ElementRef<typeof Root>;
 type ToastRadixProps = React.ComponentPropsWithoutRef<typeof Root>;
@@ -60,11 +108,7 @@ export type ToastProps = object & ToastRadixProps & ToastVariants;
  */
 export const Toast = forwardRef<ToastRef, ToastProps>(
   ({ intent, className, ...props }, ref) => (
-    <Root
-      ref={ref}
-      className={toastStyles({ intent, class: className })}
-      {...props}
-    />
+    <Root ref={ref} className={base({ className, intent })} {...props} />
   ),
 );
 
@@ -84,29 +128,7 @@ type ToastActionProps = React.ComponentProps<typeof Action>;
  */
 export const ToastAction = forwardRef<ToastActionRef, ToastActionProps>(
   ({ className, ...props }, ref) => (
-    <Action
-      ref={ref}
-      className={cn(
-        'inline-flex h-8 shrink-0 items-center justify-center rounded-lg border border-grey-border bg-grey-base px-3 text-xs font-semibold outline-none transition-colors duration-200',
-        'hover:border-grey-border-hover hover:bg-grey-bg-subtle',
-        'focus-visible:ring-4 focus-visible:ring-grey-focus-ring',
-        'disabled:cursor-not-allowed disabled:border-grey-line disabled:bg-grey-base disabled:text-grey-solid',
-        'group-[.info]:border-info-border group-[.info]:bg-info-base',
-        'group-[.info]:hover:border-info-border-hover group-[.info]:hover:bg-info-bg-subtle',
-        'group-[.info]:focus-visible:ring-info-focus-ring',
-        'group-[.success]:border-success-border group-[.success]:bg-success-base',
-        'group-[.success]:hover:border-success-border-hover group-[.success]:hover:bg-success-bg-subtle',
-        'group-[.success]:focus-visible:ring-success-focus-ring',
-        'group-[.warning]:border-warning-border group-[.warning]:bg-warning-base',
-        'group-[.warning]:hover:border-warning-border-hover group-[.warning]:hover:bg-warning-bg-subtle',
-        'group-[.warning]:focus-visible:ring-warning-focus-ring',
-        'group-[.error]:border-error-border group-[.error]:bg-error-base',
-        'group-[.error]:hover:border-error-border-hover group-[.error]:hover:bg-error-bg-subtle',
-        'group-[.error]:focus-visible:ring-error-focus-ring',
-        className,
-      )}
-      {...props}
-    />
+    <Action ref={ref} className={action({ className })} {...props} />
   ),
 );
 
@@ -125,29 +147,7 @@ type ToastCloseProps = React.ComponentPropsWithoutRef<typeof Close>;
  */
 export const ToastClose = forwardRef<ToastCloseRef, ToastCloseProps>(
   ({ className, ...props }, ref) => (
-    <Close
-      ref={ref}
-      className={cn(
-        'absolute right-1 top-1 rounded-md p-1 text-grey-text opacity-0 outline-none transition duration-200',
-        'hover:text-grey-text-contrast',
-        'focus-visible:opacity-100 focus-visible:ring-4 focus-visible:ring-grey-focus-ring',
-        'group-hover:opacity-100',
-        'group-[.info]:text-info-focus-ring',
-        'group-[.info]:hover:text-info-solid',
-        'group-[.info]:focus-visible:ring-info-focusRing',
-        'group-[.success]:text-success-focus-ring',
-        'group-[.success]:hover:text-success-solid',
-        'group-[.success]:focus-visible:ring-success-focus-ring',
-        'group-[.warning]:text-warning-focus-ring',
-        'group-[.warning]:hover:text-warning-solid',
-        'group-[.warning]:focus-visible:ring-warning-focus-ring',
-        'group-[.error]:text-error-focus-ring',
-        'group-[.error]:hover:text-error-solid',
-        'group-[.error]:focus:ring-error-focus-ring',
-        className,
-      )}
-      {...props}
-    >
+    <Close ref={ref} className={close({ className })} {...props}>
       <Cross2Icon className='h-4 w-4' />
     </Close>
   ),
@@ -170,11 +170,7 @@ export const ToastDescription = forwardRef<
   ToastDescriptionRef,
   ToastDescriptionProps
 >(({ className, ...props }, ref) => (
-  <Description
-    ref={ref}
-    className={cn('text-sm text-grey-text', className)}
-    {...props}
-  />
+  <Description ref={ref} className={description({ className })} {...props} />
 ));
 
 ToastDescription.displayName = Description.displayName;
@@ -202,11 +198,7 @@ type ToastTitleProps = React.ComponentPropsWithoutRef<typeof Title>;
  */
 export const ToastTitle = forwardRef<ToastTitleRef, ToastTitleProps>(
   ({ className, ...props }, ref) => (
-    <Title
-      ref={ref}
-      className={cn('text-sm font-semibold', '[&+div]:text-xs', className)}
-      {...props}
-    />
+    <Title ref={ref} className={title({ className })} {...props} />
   ),
 );
 
@@ -225,16 +217,7 @@ type ToastViewportProps = React.ComponentPropsWithoutRef<typeof Viewport>;
  */
 export const ToastViewport = forwardRef<ToastViewportRef, ToastViewportProps>(
   ({ className, ...props }, ref) => (
-    <Viewport
-      ref={ref}
-      className={cn(
-        'fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4',
-        'sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col',
-        'md:max-w-md',
-        className,
-      )}
-      {...props}
-    />
+    <Viewport ref={ref} className={viewport({ className })} {...props} />
   ),
 );
 
@@ -254,7 +237,7 @@ export const Toaster = () => {
       {toasts.map(function ({ id, title, description, action, ...props }) {
         return (
           <Toast key={id} {...props}>
-            <div className='grid w-full gap-1'>
+            <div className={toasterHeader()}>
               {title && <ToastTitle>{title}</ToastTitle>}
               {description && (
                 <ToastDescription>{description}</ToastDescription>

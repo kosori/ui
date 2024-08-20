@@ -4,28 +4,31 @@ import type { VariantProps } from 'tailwind-variants';
 import { forwardRef } from 'react';
 import { Indicator, Root } from '@radix-ui/react-checkbox';
 import { CheckIcon } from '@radix-ui/react-icons';
+import { clsx } from 'clsx/lite';
 import { tv } from 'tailwind-variants';
 
-import { cn } from '@kosori/ui';
-
 const checkboxStyles = tv({
-  base: cn(
-    'group peer border border-grey-border bg-grey-base outline-none transition-colors duration-200',
-    'hover:border-grey-border-hover',
-    'focus-visible:ring-4 focus-visible:ring-grey-focus-ring',
-    'disabled:cursor-not-allowed disabled:border-0 disabled:bg-grey-line',
-    'data-[state=checked]:border-0 data-[state=checked]:bg-primary-solid',
-    'data-[state=checked]:focus-visible:ring-primary-focus-ring',
-    'data-[state=checked]:disabled:border-0 data-[state=checked]:disabled:bg-grey-line',
-  ),
+  slots: {
+    base: clsx(
+      'group peer border border-grey-border bg-grey-base outline-none transition-colors duration-200 flex',
+      'hover:border-grey-border-hover',
+      'focus-visible:ring-4 focus-visible:ring-grey-focus-ring',
+      'disabled:cursor-not-allowed disabled:border-0 disabled:bg-grey-line',
+      'data-[state=checked]:border-0 data-[state=checked]:bg-primary-solid',
+      'data-[state=checked]:focus-visible:ring-primary-focus-ring',
+      'data-[state=checked]:disabled:border-0 data-[state=checked]:disabled:bg-grey-line',
+    ),
+    indicator: 'flex items-center justify-center',
+    check: 'h-full w-full text-grey-base group-disabled:text-grey-solid',
+  },
   variants: {
     shape: {
-      square: 'rounded-md',
-      round: 'rounded-full',
+      square: { base: 'rounded-md' },
+      round: { base: 'rounded-full' },
     },
     size: {
-      small: 'h-4 w-4 p-[2px]',
-      medium: 'h-[18px] w-[18px] p-[2px]',
+      small: { base: 'size-4 p-0.5' },
+      medium: { base: 'size-[18px] p-0.5' },
     },
   },
   defaultVariants: {
@@ -33,6 +36,8 @@ const checkboxStyles = tv({
     size: 'small',
   },
 });
+
+const { base, indicator, check } = checkboxStyles();
 
 type CheckboxRef = React.ElementRef<typeof Root>;
 type CheckboxRadixProps = React.ComponentPropsWithoutRef<typeof Root>;
@@ -53,13 +58,9 @@ type CheckboxProps = object & CheckboxRadixProps & CheckboxVariants;
  */
 export const Checkbox = forwardRef<CheckboxRef, CheckboxProps>(
   ({ shape, size, className, ...props }, ref) => (
-    <Root
-      ref={ref}
-      className={checkboxStyles({ shape, size, class: className })}
-      {...props}
-    >
-      <Indicator className={cn('flex items-center justify-center')}>
-        <CheckIcon className='h-full w-full text-grey-base group-disabled:text-grey-solid' />
+    <Root ref={ref} className={base({ className, shape, size })} {...props}>
+      <Indicator className={indicator()}>
+        <CheckIcon className={check()} />
       </Indicator>
     </Root>
   ),
