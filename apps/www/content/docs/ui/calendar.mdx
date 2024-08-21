@@ -1,0 +1,104 @@
+---
+title: Calendar
+description: Displays a badge or a component that looks like a badge.
+links:
+  doc: https://react-day-picker.js.org/
+dependencies: ['react-day-picker']
+---
+
+<ComponentPreview name='calendar'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Calendar/Calendar.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## About
+
+The `<Calendar />` component is built on top of [React DayPicker](https://react-day-picker.js.org).
+
+## Installation
+
+<Steps>
+
+  <Step>
+    ### Install the primitive
+    
+    Install the `react-day-picker` and `date-fns` packages.
+
+    ```package-install
+    react-day-picker date-fns
+    ```
+
+  </Step>
+
+  <Step>
+    ### Add the button component
+    
+    The `<Calendar />` component requires the [`<Button />`](/ui/button) component.
+    Make sure you have it installed in your project.
+
+  </Step>
+
+  <Step>
+    ### Copy-paste the component
+    
+    Copy and paste the component code in a `.tsx` file.
+
+    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+    ```json doc-gen:file
+    {
+      "file": "../../packages/ui/src/calendar.tsx",
+      "codeblock": true
+    }
+    ```
+
+    </div>
+
+  </Step>
+
+  <Step>
+    ### Update import paths
+
+    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+  </Step>
+
+</Steps>
+
+## Usage
+
+```ts
+import { Calendar } from '~/components/ui/calendar';
+```
+
+```tsx
+const [date, setDate] = useState<Date | undefined>(new Date())
+
+return (
+  <Calendar
+    mode="single"
+    selected={date}
+    onSelect={setDate}
+    className="rounded-md border"
+  />
+)
+```
+
+See the [React DayPicker](https://react-day-picker.js.org) documentation for more information.
+
+## Examples
+
+### Form
+
+<ComponentPreview name='calendar-form'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Calendar/CalendarForm.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
