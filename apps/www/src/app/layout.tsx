@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from 'next';
 import { clsx } from 'clsx/lite';
-import { RootProvider } from 'fumadocs-ui/provider';
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
 
 import '~/app/globals.css';
+
+import { Providers } from './providers';
 
 export const metadata: Metadata = {
   title: 'kosori/ui',
@@ -41,22 +42,16 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         data-error-color='red'
         data-grey-color='mauve'
         data-info-color='blue'
-        data-primary-color='dark-mauve'
+        data-primary-color='violet'
         data-radius='medium'
         data-success-color='green'
         data-warning-color='yellow'
       >
-        <RootProvider
-          theme={{
-            enableSystem: true,
-            attribute: 'class',
-            defaultTheme: 'system',
-          }}
-        >
+        <Providers>
           <div className='bg-grey-base text-grey-text' vaul-drawer-wrapper=''>
             {props.children}
           </div>
-        </RootProvider>
+        </Providers>
       </body>
     </html>
   );
