@@ -1429,7 +1429,7 @@
     --primary-12: var(--dark-slate-12);
   }
 
-  [dark-accent-color='dark-sage'] {
+  [data-primary-color='dark-sage'] {
     --primary-1: var(--dark-sage-1);
     --primary-2: var(--dark-sage-2);
     --primary-3: var(--dark-sage-3);
@@ -1444,34 +1444,34 @@
     --primary-12: var(--dark-sage-12);
   }
 
-  [dark-accent-color='olive'] {
-    --primary-1: var(--olive-1);
-    --primary-2: var(--olive-2);
-    --primary-3: var(--olive-3);
-    --primary-4: var(--olive-4);
-    --primary-5: var(--olive-5);
-    --primary-6: var(--olive-6);
-    --primary-7: var(--olive-7);
-    --primary-8: var(--olive-8);
-    --primary-9: var(--olive-9);
-    --primary-10: var(--olive-10);
-    --primary-11: var(--olive-11);
-    --primary-12: var(--olive-12);
+  [data-primary-color='dark-olive'] {
+    --primary-1: var(--dark-olive-1);
+    --primary-2: var(--dark-olive-2);
+    --primary-3: var(--dark-olive-3);
+    --primary-4: var(--dark-olive-4);
+    --primary-5: var(--dark-olive-5);
+    --primary-6: var(--dark-olive-6);
+    --primary-7: var(--dark-olive-7);
+    --primary-8: var(--dark-olive-8);
+    --primary-9: var(--dark-olive-9);
+    --primary-10: var(--dark-olive-10);
+    --primary-11: var(--dark-olive-11);
+    --primary-12: var(--dark-olive-12);
   }
 
-  [dark-accent-color='sand'] {
-    --primary-1: var(--sand-1);
-    --primary-2: var(--sand-2);
-    --primary-3: var(--sand-3);
-    --primary-4: var(--sand-4);
-    --primary-5: var(--sand-5);
-    --primary-6: var(--sand-6);
-    --primary-7: var(--sand-7);
-    --primary-8: var(--sand-8);
-    --primary-9: var(--sand-9);
-    --primary-10: var(--sand-10);
-    --primary-11: var(--sand-11);
-    --primary-12: var(--sand-12);
+  [data-primary-color='dark-sand'] {
+    --primary-1: var(--dark-sand-1);
+    --primary-2: var(--dark-sand-2);
+    --primary-3: var(--dark-sand-3);
+    --primary-4: var(--dark-sand-4);
+    --primary-5: var(--dark-sand-5);
+    --primary-6: var(--dark-sand-6);
+    --primary-7: var(--dark-sand-7);
+    --primary-8: var(--dark-sand-8);
+    --primary-9: var(--dark-sand-9);
+    --primary-10: var(--dark-sand-10);
+    --primary-11: var(--dark-sand-11);
+    --primary-12: var(--dark-sand-12);
   }
 
   [data-grey-color='gray'] {
