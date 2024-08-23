@@ -47,7 +47,7 @@ export const DatePickerRangeDemo = ({
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent align='start' className='w-auto p-0'>
+        <PopoverContent align='center' className='w-auto p-0'>
           <Calendar
             defaultMonth={date?.from}
             mode='range'
