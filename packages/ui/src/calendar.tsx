@@ -20,7 +20,7 @@ const calendarStyles = tv({
     months: 'flex relative',
     month_caption: 'flex justify-center h-7 mx-10 relative items-center',
     weekdays: 'flex flex-row',
-    weekday: 'text-muted-foreground w-8 font-normal text-[0.8rem]',
+    weekday: 'text-grey-text select-none w-8 font-normal text-[0.8rem]',
     month: 'gap-y-4 w-full',
     caption: 'flex justify-center pt-1 relative items-center',
     caption_label: 'text-sm font-medium truncate',
