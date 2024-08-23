@@ -196,15 +196,6 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
-  'calendar-form': {
-    name: 'calendar-api',
-    type: 'component:example',
-    component: lazy(() =>
-      import('../demos/Calendar').then((module) => ({
-        default: module.CalendarFormDemo,
-      })),
-    ),
-  },
   card: {
     name: 'card',
     type: 'component:example',
@@ -409,6 +400,42 @@ export const Components: Record<string, Component> = {
     component: lazy(() =>
       import('../demos/DataTable').then((module) => ({
         default: module.DataTableDemo,
+      })),
+    ),
+  },
+  'date-picker': {
+    name: 'date-picker',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/DatePicker').then((module) => ({
+        default: module.DatePickerDemo,
+      })),
+    ),
+  },
+  'date-picker-range': {
+    name: 'date-picker-range',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/DatePicker').then((module) => ({
+        default: module.DatePickerRangeDemo,
+      })),
+    ),
+  },
+  'date-picker-presets': {
+    name: 'date-picker-presets',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/DatePicker').then((module) => ({
+        default: module.DatePickerPresetsDemo,
+      })),
+    ),
+  },
+  'date-picker-form': {
+    name: 'date-picker-form',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/DatePicker').then((module) => ({
+        default: module.DatePickerFormDemo,
       })),
     ),
   },
