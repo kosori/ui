@@ -59,7 +59,7 @@ export const DatePickerFormDemo = () => {
                   <FormControl>
                     <Button
                       className={cn(
-                        'w-[248.8px] pl-3 text-left font-normal',
+                        'w-[242px] pl-3 text-left font-normal',
                         !field.value && 'text-muted-foreground',
                       )}
                       variant={'outline'}
