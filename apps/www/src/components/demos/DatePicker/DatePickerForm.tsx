@@ -22,9 +22,11 @@ import { Popover, PopoverContent, PopoverTrigger } from '@kosori/ui/popover';
 import { toast } from '@kosori/ui/toast';
 
 const FormSchema = z.object({
-  dob: z.date({
-    required_error: 'A date of birth is required.',
-  }),
+  dob: z
+    .date({
+      required_error: 'A date of birth is required.',
+    })
+    .nullable(),
 });
 
 export const DatePickerFormDemo = () => {
@@ -32,7 +34,7 @@ export const DatePickerFormDemo = () => {
     resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  const onSubmit = (data: z.infer<typeof FormSchema>) => {
     toast({
       title: 'You submitted the following values:',
       description: (
@@ -41,7 +43,7 @@ export const DatePickerFormDemo = () => {
         </pre>
       ),
     });
-  }
+  };
 
   return (
     <Form {...form}>
