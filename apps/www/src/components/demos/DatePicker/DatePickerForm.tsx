@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { format } from 'date-fns';
+import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -21,13 +22,14 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@kosori/ui/popover';
 import { toast } from '@kosori/ui/toast';
 
-const FormSchema = z.object({
-  dob: z
-    .date({
-      required_error: 'A date of birth is required.',
-    })
-    .nullable(),
-});
+const FormSchema = z
+  .object({
+    dob: z.date().optional(),
+  })
+  .refine((data) => data.dob !== undefined, {
+    message: 'A date of birth is required.',
+    path: ['dob'],
+  });
 
 export const DatePickerFormDemo = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -38,9 +40,11 @@ export const DatePickerFormDemo = () => {
     toast({
       title: 'You submitted the following values:',
       description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
+        <div className='[&_figure]:mb-0 [&_figure]:mt-1'>
+          <CodeBlock lang='json'>
+            <Pre>{JSON.stringify(data, null, 2)}</Pre>
+          </CodeBlock>
+        </div>
       ),
     });
   };
