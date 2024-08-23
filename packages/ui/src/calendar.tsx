@@ -48,7 +48,11 @@ const calendarStyles = tv({
     day: 'p-0 rounded-lg',
     // day button
     day_button_base: 'bg-transparent font-normal text-grey-text',
-    today: 'bg-primary-bg text-primary-solid font-medium',
+    today: clsx(
+      'bg-primary-bg text-primary-solid font-medium',
+      'hover:bg-primary-bg-hover',
+      'active:bg-primary-bg-active',
+    ),
     outside: 'pointer-events-none text-grey-text opacity-50',
     disabled: '!bg-transparent !text-grey-line',
     hidden: 'invisible',
