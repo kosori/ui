@@ -10,25 +10,25 @@ export const BadgeSizesDemo = () => {
       </div>
 
       <div className='flex flex-col gap-4'>
-        <Badge variant='soft' size='small'>
+        <Badge size='small' variant='soft'>
           Small
         </Badge>
-        <Badge variant='soft' size='medium'>
+        <Badge size='medium' variant='soft'>
           Medium
         </Badge>
-        <Badge variant='soft' size='large'>
+        <Badge size='large' variant='soft'>
           Large
         </Badge>
       </div>
 
       <div className='flex flex-col gap-4'>
-        <Badge variant='outline' size='small'>
+        <Badge size='small' variant='outline'>
           Small
         </Badge>
-        <Badge variant='outline' size='medium'>
+        <Badge size='medium' variant='outline'>
           Medium
         </Badge>
-        <Badge variant='outline' size='large'>
+        <Badge size='large' variant='outline'>
           Large
         </Badge>
       </div>
