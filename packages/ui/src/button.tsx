@@ -38,7 +38,8 @@ export const buttonStyles = tv({
       variant: 'solid',
       intent: 'default',
       class: clsx(
-        'bg-primary-solid text-grey-base',
+        'bg-primary-solid text-primary-base',
+        'dark:text-primary-text-contrast',
         'hover:bg-primary-solid-hover',
         'focus-visible:ring-primary-focus-ring',
         'disabled:bg-primary-border',
