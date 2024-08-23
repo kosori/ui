@@ -1,9 +1,9 @@
 ---
 title: Calendar
-description: Displays a badge or a component that looks like a badge.
+description: A date field component that allows users to enter and edit date.
 links:
-  doc: https://react-day-picker.js.org/
-dependencies: ['react-day-picker']
+  doc: https://daypicker.dev
+dependencies: ['react-day-picker', 'date-fns']
 ---
 
 <ComponentPreview name='calendar'>
@@ -17,7 +17,7 @@ dependencies: ['react-day-picker']
 
 ## About
 
-The `<Calendar />` component is built on top of [React DayPicker](https://react-day-picker.js.org).
+The `<Calendar />` component is built on top of [React DayPicker](https://daypicker.dev).
 
 ## Installation
 
@@ -37,7 +37,7 @@ The `<Calendar />` component is built on top of [React DayPicker](https://react-
   <Step>
     ### Add the button component
     
-    The `<Calendar />` component requires the [`<Button />`](/ui/button) component.
+    The `<Calendar />` component requires the [`<Button />`](/docs/ui/button) component.
     Make sure you have it installed in your project.
 
   </Step>
@@ -80,24 +80,24 @@ const [date, setDate] = useState<Date | undefined>(new Date())
 
 return (
   <Calendar
-    mode="single"
-    selected={date}
-    onSelect={setDate}
-    className="rounded-md border"
+    className='rounded-xl border shadow'
+    mode='single'
+    selected={selected}
+    onSelect={setSelected}
   />
 )
 ```
 
-See the [React DayPicker](https://react-day-picker.js.org) documentation for more information.
+See the [React DayPicker](https://daypicker.dev) documentation for more information.
 
 ## Examples
 
 ### Form
 
-<ComponentPreview name='calendar-form'>
+<ComponentPreview name='date-picker-form'>
 ```json doc-gen:file
 {
-  "file": "./src/components/demos/Calendar/CalendarForm.tsx",
+  "file": "./src/components/demos/DatePicker/DatePickerForm.tsx",
   "codeblock": true
 }
 ```
