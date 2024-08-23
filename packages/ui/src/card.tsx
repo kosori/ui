@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 
 const cardStyles = tv({
   slots: {
-    base: 'rounded-2xl border border-grey-line bg-grey-base text-grey-text-contrast shadow-sm',
+    base: 'rounded-xl border border-grey-line bg-grey-base text-grey-text-contrast shadow-sm',
     header: 'flex flex-col gap-y-1.5 p-6',
     title: 'font-semibold leading-none tracking-tight',
     description: 'text-sm text-grey-text',
