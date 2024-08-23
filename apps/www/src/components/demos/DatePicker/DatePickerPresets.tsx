@@ -8,16 +8,48 @@ import { addDays, format } from 'date-fns';
 import { Button } from '@kosori/ui/button';
 import { Calendar } from '@kosori/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@kosori/ui/popover';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@kosori/ui/select';
+
+const dates = [
+  {
+    label: 'Today',
+    days: 0,
+  },
+  {
+    label: 'Yesterday',
+    days: -1,
+  },
+  {
+    label: 'Tomorrow',
+    days: 1,
+  },
+  {
+    label: 'In 3 days',
+    days: 3,
+  },
+  {
+    label: 'Past week',
+    days: -7,
+  },
+  {
+    label: 'In a week',
+    days: 7,
+  },
+  {
+    label: 'In two weeks',
+    days: 14,
+  },
+  {
+    label: 'In a month',
+    days: 30,
+  },
+];
 
 export const DatePickerPresetsDemo = () => {
   const [date, setDate] = useState<Date>();
+
+  const handleChnageDate = (days: number) => {
+    setDate(addDays(new Date(), days));
+  };
 
   return (
     <Popover>
@@ -35,25 +67,30 @@ export const DatePickerPresetsDemo = () => {
       </PopoverTrigger>
 
       <PopoverContent
-        align='start'
-        className='flex w-auto flex-col space-y-2 rounded-xl p-2'
+        align='center'
+        className='flex w-auto divide-x divide-grey-line rounded-xl p-0'
       >
-        <Select
-          onValueChange={(value) =>
-            setDate(addDays(new Date(), parseInt(value)))
-          }
-        >
-          <SelectTrigger>
-            <SelectValue placeholder='Select' />
-          </SelectTrigger>
-          <SelectContent position='popper'>
-            <SelectItem value='0'>Today</SelectItem>
-            <SelectItem value='1'>Tomorrow</SelectItem>
-            <SelectItem value='3'>In 3 days</SelectItem>
-            <SelectItem value='7'>In a week</SelectItem>
-          </SelectContent>
-        </Select>
-        <div className='rounded-xl border shadow-sm'>
+        <div className='flex w-40 flex-col gap-0.5 p-2'>
+          {dates.map(({ label, days }) => {
+            const isSelected =
+              format(date ?? new Date(), 'PPP') ===
+              format(addDays(new Date(), days), 'PPP');
+
+            return (
+              <Button
+                key={label}
+                className='w-full justify-start'
+                size='small'
+                variant={isSelected && date ? 'soft' : 'ghost'}
+                onClick={() => handleChnageDate(days)}
+              >
+                {label}
+              </Button>
+            );
+          })}
+        </div>
+
+        <div className=''>
           <Calendar mode='single' selected={date} onSelect={setDate} />
         </div>
       </PopoverContent>
