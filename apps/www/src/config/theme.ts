@@ -163,3 +163,10 @@ export const colors = [
   { name: 'Mint', type: ['primary', 'success'], color: 'mint' },
   { name: 'Sky', type: ['primary', 'info'], color: 'sky' },
 ];
+
+export const borderRadius = [
+  { name: 'None', value: 'none' },
+  { name: 'Small', value: 'small' },
+  { name: 'Medium', value: 'medium' },
+  { name: 'Large', value: 'large' },
+];
