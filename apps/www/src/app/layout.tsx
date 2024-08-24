@@ -5,6 +5,7 @@ import { GeistSans } from 'geist/font/sans';
 
 import '~/app/globals.css';
 
+import { ThemeLoader } from '~/components/Layout/ThemeLoader';
 import { ThemeNav } from '~/components/Layout/ThemeNav';
 import { Providers } from './providers';
 
@@ -47,6 +48,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         data-radius='medium'
         data-success-color='green'
         data-warning-color='yellow'
+        kosori-theme-wrapper=''
       >
         <Providers>
           <div className='bg-grey-base text-grey-text' vaul-drawer-wrapper=''>
@@ -54,6 +56,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           </div>
 
           <ThemeNav />
+          <ThemeLoader />
         </Providers>
       </body>
     </html>
