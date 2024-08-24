@@ -1,17 +1,9 @@
 import { useEffect, useState } from 'react';
 
+import { defaultConfig } from '~/config/theme';
+
 export type ConfigKey = keyof typeof defaultConfig;
 type UpdateColor = { key: ConfigKey; value: string };
-
-const defaultConfig = {
-  'error-color': 'red',
-  'grey-color': 'mauve',
-  'info-color': 'blue',
-  'primary-color': 'dark-mauve',
-  'success-color': 'green',
-  'warning-color': 'yellow',
-  radius: 'medium',
-};
 
 export const useThemeConfig = () => {
   const [config, setConfig] = useState(defaultConfig);
