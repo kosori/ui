@@ -14,7 +14,7 @@ export const baseOptions: HomeLayoutProps = {
   githubUrl: 'https://github.com/kosori/ui',
   nav: {
     title: <Logo />,
-    transparentMode: 'always',
+    transparentMode: 'top',
     children: <NavModes />,
   },
   links: [
@@ -42,7 +42,7 @@ export const docsOptions: DocsLayoutProps = {
   tree: docs.pageTree,
   nav: {
     ...baseOptions.nav,
-    transparentMode: 'always',
+    transparentMode: 'top',
     children: undefined,
   },
   sidebar: {
