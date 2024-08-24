@@ -1,3 +1,13 @@
+export const defaultConfig = {
+  'error-color': 'red',
+  'grey-color': 'mauve',
+  'info-color': 'blue',
+  'primary-color': 'dark-mauve',
+  'success-color': 'green',
+  'warning-color': 'yellow',
+  radius: 'medium',
+};
+
 export const colors = [
   {
     name: 'Dark Gray',
