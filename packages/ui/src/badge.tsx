@@ -10,10 +10,7 @@ const badgeStyles = tv({
       default: '',
       info: '',
       success: '',
-      warning: clsx(
-        'bg-warning-solid text-grey-text-contrast',
-        'dark:text-grey-base',
-      ),
+      warning: '',
       error: '',
     },
     size: {
