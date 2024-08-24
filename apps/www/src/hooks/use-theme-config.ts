@@ -18,6 +18,7 @@ export const useThemeConfig = () => {
 
   useEffect(() => {
     const storedColors = localStorage.getItem('themeConfig');
+
     if (storedColors) {
       setConfig(JSON.parse(storedColors) as typeof defaultConfig);
     }
@@ -25,8 +26,7 @@ export const useThemeConfig = () => {
 
   const updateConfig = ({ key, value }: UpdateColor) => {
     const newConfig = { ...config, [key]: value };
-    const themeWrapper = document.querySelector(`div[data-${key}]`);
-    console.log('🚀 ~ theme wrapper:', themeWrapper);
+    const themeWrapper = document.querySelector(`body[data-${key}]`);
 
     setConfig(newConfig);
     if (themeWrapper) themeWrapper.setAttribute(`data-${key}`, value);
