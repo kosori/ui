@@ -1,6 +1,5 @@
 import type { VariantProps } from 'tailwind-variants';
 import { forwardRef } from 'react';
-import { clsx } from 'clsx/lite';
 import { tv } from 'tailwind-variants';
 
 const badgeStyles = tv({
