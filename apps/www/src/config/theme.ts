@@ -175,8 +175,8 @@ export const colors = [
 ];
 
 export const borderRadius = [
-  { name: 'None', value: 'none' },
-  { name: 'Small', value: 'small' },
-  { name: 'Medium', value: 'medium' },
-  { name: 'Large', value: 'large' },
+  { name: 'None', value: 'none', size: '0rem' },
+  { name: 'Small', value: 'small', size: '0.1rem' },
+  { name: 'Medium', value: 'medium', size: '0.125rem' },
+  { name: 'Large', value: 'large', size: '0.15rem' },
 ];
