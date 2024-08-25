@@ -51,7 +51,10 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         kosori-theme-wrapper=''
       >
         <Providers>
-          <div className='bg-grey-base text-grey-text' vaul-drawer-wrapper=''>
+          <div
+            className='min-h-screen bg-grey-base text-grey-text'
+            vaul-drawer-wrapper=''
+          >
             {props.children}
           </div>
 
