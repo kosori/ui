@@ -10,7 +10,7 @@ import { useThemeConfig } from '~/hooks/use-theme-config';
 export const BorderRadiusOption = () => {
   const { updateConfig, config } = useThemeConfig();
   const hasMounted = useHasMounted();
-  const selectedBorderRadius = config['radius'];
+  const selectedBorderRadius = config.radius;
 
   if (!hasMounted) {
     return null;
@@ -31,7 +31,16 @@ export const BorderRadiusOption = () => {
             size='small'
             variant='outline'
           >
-            <span className={`size-3.5 rounded-md`} />
+            <div className='size-3.5 overflow-hidden'>
+              <span
+                className='inline-block size-2 translate-x-[40%] translate-y-[40%] scale-[2] border border-grey-text-contrast'
+                style={{
+                  borderRadius: borderRadius.find(
+                    ({ value }) => value === selectedBorderRadius,
+                  )?.size,
+                }}
+              />
+            </div>
             <span className='truncate capitalize'>{selectedBorderRadius}</span>
           </Button>
         </PopoverTrigger>
@@ -41,7 +50,7 @@ export const BorderRadiusOption = () => {
           className='grid w-full max-w-[350px] grid-cols-3 gap-1'
           side='top'
         >
-          {borderRadius.map(({ name, value }) => (
+          {borderRadius.map(({ name, value, size }) => (
             <Button
               key={name}
               className='w-full justify-start'
@@ -49,6 +58,12 @@ export const BorderRadiusOption = () => {
               variant='outline'
               onClick={() => handleClick({ value })}
             >
+              <div className='size-3.5 overflow-hidden'>
+                <span
+                  className='inline-block size-2 translate-x-[40%] translate-y-[40%] scale-[2] border border-grey-text-contrast'
+                  style={{ borderRadius: size }}
+                />
+              </div>
               <span className='truncate'>{name}</span>
             </Button>
           ))}
