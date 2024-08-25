@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { defaultConfig } from '~/config/theme';
+import type { defaultConfig } from '~/config/theme';
 
 export const ThemeLoader = () => {
   useEffect(() => {
