@@ -4,17 +4,11 @@ import { Button } from '@kosori/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@kosori/ui/popover';
 
 import { borderRadius } from '~/config/theme';
-import { useHasMounted } from '~/hooks/use-has-mounted';
 import { useThemeConfig } from '~/hooks/use-theme-config';
 
 export const BorderRadiusOption = () => {
   const { updateConfig, config } = useThemeConfig();
-  const hasMounted = useHasMounted();
   const selectedBorderRadius = config.radius;
-
-  if (!hasMounted) {
-    return null;
-  }
 
   const handleClick = ({ value }: { value: string }) => {
     updateConfig({ key: 'radius', value });
