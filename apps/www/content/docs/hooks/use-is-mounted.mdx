@@ -1,0 +1,65 @@
+---
+title: useIsMounted
+description: Check if a component is currently mounted.
+---
+
+<ComponentPreview name='use-is-mounted'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/useIsMounted/useIsMounted.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+<Steps>
+    
+  <Step>
+    ### Copy-paste the hook
+    
+    Copy and paste the hook code in a `.ts` file.
+
+    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+
+    ```json doc-gen:file
+    {
+      "file": "./src/hooks/use-is-mounted.ts",
+      "codeblock": true
+    }
+    ```
+
+    </div>
+
+  </Step>
+
+</Steps>
+
+### Usage
+
+```ts
+import { isMounted } from '~/hooks/use-is-mounted';
+```
+
+```tsx
+const { isMounted } = useIsMounted();
+```
+
+## Details
+
+### State management
+
+- Uses `useRef` to mantain a mutable reference (`isMounted.current`) that persist for the full lifetime of the component.
+- The value of `isMounted.current` is update dyrectly in the `useEffect` hook.
+
+### Re-rendering behavior
+
+- The hook does not cause re-renders when the mounted state changes because it uses `useRef`.
+  The value can be accessed without triggering a re-render.
+- This can be beneficial for performance, especially in scenarios where the mounted state is checked frequently.
+
+### Return value
+
+- Returns an object with a memoized callback function that returns the current value of `isMounted.current`.
+  This allows for a consistent reference to the mounted state without causing re-renders.
