@@ -33,7 +33,7 @@ export const ThemeNav = () => {
 
         <PopoverContent className='w-96' sideOffset={14}>
           <h3 className='font-medium'>Customize</h3>
-          <p className='text-sm text-grey-text'>Choose any color you like.</p>
+          <p className='text-sm text-grey-text'>Perzonalize the theme.</p>
 
           <Separator className='my-2' />
 
