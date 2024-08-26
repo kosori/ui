@@ -3,6 +3,8 @@ import { clsx } from 'clsx/lite';
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
 
+import { defaultConfig } from '~/config/theme';
+
 import '~/app/globals.css';
 
 import { ThemeLoader } from '~/components/Layout/ThemeLoader';
@@ -41,13 +43,13 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           GeistSans.variable,
           GeistMono.variable,
         )}
-        data-error-color='red'
-        data-grey-color='mauve'
-        data-info-color='blue'
-        data-primary-color='violet'
-        data-radius='medium'
-        data-success-color='green'
-        data-warning-color='yellow'
+        data-error-color={defaultConfig['error-color']}
+        data-grey-color={defaultConfig['grey-color']}
+        data-info-color={defaultConfig['info-color']}
+        data-primary-color={defaultConfig['primary-color']}
+        data-radius={defaultConfig.radius}
+        data-success-color={defaultConfig['success-color']}
+        data-warning-color={defaultConfig['warning-color']}
         kosori-theme-wrapper=''
       >
         <Providers>
