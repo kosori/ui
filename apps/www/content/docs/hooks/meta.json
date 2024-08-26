@@ -1,11 +1,5 @@
 {
   "title": "hooks",
   "root": true,
-  "pages": [
-    "---Getting Started---",
-    "index",
-    "---Hooks---",
-    "hooks",
-    "..."
-  ]
+  "pages": ["---Getting Started---", "index", "---Hooks---", "hooks", "..."]
 }
