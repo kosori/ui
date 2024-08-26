@@ -72,7 +72,7 @@ const badgeStyles = tv({
     {
       intent: 'warning',
       variant: 'solid',
-      class: 'bg-warning-solid text-warning-text-contrast',
+      class: 'bg-warning-solid text-warning-base',
     },
     {
       intent: 'warning',
