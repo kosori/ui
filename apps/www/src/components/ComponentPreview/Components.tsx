@@ -2,7 +2,7 @@ import { lazy } from 'react';
 
 type Component<T = object> = {
   name: string;
-  type: 'component:example';
+  type: 'component:example' | 'hook:example';
   component: React.LazyExoticComponent<(props: T) => JSX.Element>;
 };
 
@@ -1048,6 +1048,15 @@ export const Components: Record<string, Component> = {
     component: lazy(() =>
       import('../demos/Tooltip').then((module) => ({
         default: module.TooltipDemo,
+      })),
+    ),
+  },
+  'use-is-mounted': {
+    name: 'use-is-mounted',
+    type: 'hook:example',
+    component: lazy(() =>
+      import('../demos/UseIsMounted').then((module) => ({
+        default: module.UseIsMountedDemo,
       })),
     ),
   },
