@@ -5,7 +5,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@kosori/ui/popover';
 
 import type { ConfigKey } from '~/hooks/use-theme-config';
 import { colors } from '~/config/theme';
-import { useHasMounted } from '~/hooks/use-has-mounted';
+import { useIsMounted } from '~/hooks/use-is-mounted';
 import { useThemeConfig } from '~/hooks/use-theme-config';
 
 type Props = {
@@ -17,10 +17,10 @@ type Props = {
 
 export const ColorOption = ({ children, align, type, dataKey }: Props) => {
   const { updateConfig, config } = useThemeConfig();
-  const hasMounted = useHasMounted();
+  const { isMounted } = useIsMounted();
   const selectedColor = config[dataKey];
 
-  if (!hasMounted) {
+  if (!isMounted) {
     return null;
   }
 
