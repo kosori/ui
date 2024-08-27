@@ -1,3 +1,5 @@
+export type DataKey = keyof typeof defaultConfig;
+
 export const defaultConfig = {
   'error-color': 'red',
   'grey-color': 'mauve',
@@ -175,8 +177,8 @@ export const colors = [
 ];
 
 export const borderRadius = [
-  { name: 'None', value: 'none', size: '0rem' },
-  { name: 'Small', value: 'small', size: '0.08rem' },
-  { name: 'Medium', value: 'medium', size: '0.13rem' },
-  { name: 'Large', value: 'large', size: '0.18rem' },
+  { name: 'None', value: 'none', size: '-5rem' },
+  { name: 'Small', value: 'small', size: '0.125rem' },
+  { name: 'Medium', value: 'medium', size: '0.25rem' },
+  { name: 'Large', value: 'large', size: '0.5rem' },
 ];
