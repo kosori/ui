@@ -1,32 +1,21 @@
-import { GitHubLogoIcon, MixerHorizontalIcon } from '@radix-ui/react-icons';
+import { MixerHorizontalIcon } from '@radix-ui/react-icons';
 
 import { Button } from '@kosori/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@kosori/ui/popover';
 import { Separator } from '@kosori/ui/separator';
 
-import { XIcon } from '~/components/icons/x';
 import { BorderRadiusOption } from './BorderRadiusOption';
 import { ColorOption } from './ColorOption';
+import { CopyTheme } from './CopyTheme';
 
 export const ThemeNav = () => {
   return (
     <div className='fixed bottom-6 right-1/2 flex translate-x-1/2 gap-2 rounded-xl border bg-grey-base p-2 shadow-md'>
-      <Button asChild icon variant='ghost'>
-        <a
-          href='https://github.com/kosori/ui'
-          rel='noopener noreferrer'
-          target='_blank'
-        >
-          <GitHubLogoIcon />
-          <span className='sr-only'>GitHub repo</span>
-        </a>
-      </Button>
-
-      <Separator className='h-8' orientation='vertical' />
+      <BorderRadiusOption />
 
       <Popover>
         <PopoverTrigger asChild>
-          <Button icon variant='ghost'>
+          <Button icon className='min-w-9' variant='ghost'>
             <MixerHorizontalIcon />
           </Button>
         </PopoverTrigger>
@@ -61,24 +50,11 @@ export const ThemeNav = () => {
             <ColorOption align='end' dataKey='error-color' type='error'>
               Error
             </ColorOption>
-
-            <BorderRadiusOption />
           </div>
         </PopoverContent>
       </Popover>
 
-      <Separator className='h-8' orientation='vertical' />
-
-      <Button asChild icon variant='ghost'>
-        <a
-          href='https://x.com/trykosori'
-          rel='noopener noreferrer'
-          target='_blank'
-        >
-          <XIcon className='fill-current' />
-          <span className='sr-only'>X repo</span>
-        </a>
-      </Button>
+      <CopyTheme />
     </div>
   );
 };
