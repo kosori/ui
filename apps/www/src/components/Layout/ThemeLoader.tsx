@@ -2,22 +2,20 @@
 
 import { useEffect } from 'react';
 
-import type { defaultConfig } from '~/config/theme';
+import { useThemeConfig } from '~/hooks/use-theme-config';
 
 export const ThemeLoader = () => {
-  useEffect(() => {
-    const rawConfig = localStorage.getItem('themeConfig');
-    if (!rawConfig) return;
+  const { config } = useThemeConfig();
 
-    const config = JSON.parse(rawConfig) as typeof defaultConfig;
+  useEffect(() => {
     const themeWrapper = document.querySelector('body[kosori-theme-wrapper]');
 
-    if (themeWrapper && config) {
+    if (themeWrapper) {
       Object.entries(config).forEach(([key, value]) => {
         themeWrapper.setAttribute(`data-${key}`, value);
       });
     }
-  }, []);
+  }, [config]);
 
   return null;
 };
