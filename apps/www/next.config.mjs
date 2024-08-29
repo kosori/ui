@@ -12,7 +12,7 @@ const withMDX = createMDX({
     lastModifiedTime: 'git',
     remarkPlugins: [
       [remarkDocGen, { generators: [fileGenerator()] }],
-      remarkInstall,
+      [remarkInstall, { persist: { id: 'package-install' } }],
       remarkImage,
     ],
     rehypePlugins: [rehypeCode],
