@@ -20,7 +20,7 @@ description: How to set up Kõsori UI in your Next.js project.
     
     Install the following dependencies:
     ```package-install
-    clsx next-themes tailwind-merge tailwind-variants tailwindcss-animate
+    clsx next-themes tailwind-merge tailwind-variants tailwindcss-animate @radix-ui/colors
     ```
   </Step>
 
@@ -78,6 +78,44 @@ description: How to set up Kõsori UI in your Next.js project.
     ```
 
   </Step>
+  
+  <Step>
+    ### Add tailwind border radius
+    
+    Overwrite the `borderRadius` object in your `theme` object.
+    
+    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
+    ```ts title="tailwind.config.ts"
+    import type { Config } from 'tailwindcss';
+
+    const config: Config = {
+      darkMode: 'class',
+      content: [
+        '...',
+      ],
+      theme: {
+        // ...
+        // [!code highlight:12]
+        borderRadius: {
+          none: '0px',
+          sm: 'calc(var(--radius) - 3px)',
+          DEFAULT: 'var(--radius)',
+          md: 'var(--radius)',
+          lg: 'calc(var(--radius) + 3px)',
+          xl: 'calc(var(--radius) + 6px)',
+          '2xl': 'calc(var(--radius) + 9px)',
+          '3xl': 'calc(var(--radius) + 12px)',
+          full: '9999px',
+        },
+      },
+      plugins: [],
+    };
+
+    export default config;
+    ```
+    </div>
+
+  </Step>
 
   <Step>
     ### Add tailwind colors
@@ -97,97 +135,108 @@ description: How to set up Kõsori UI in your Next.js project.
         // ...
         extend: {
           // ...
-          // [!code highlight:15]
+          // [!code highlight:17]
           colors: {
-            'primary-base': 'hsl(var(--primary-1))',
-            'primary-bg-subtle': 'hsl(var(--primary-2))',
-            'primary-bg': 'hsl(var(--primary-3))',
-            'primary-bg-hover': 'hsl(var(--primary-4))',
-            'primary-bg-active': 'hsl(var(--primary-5))',
-            'primary-line': 'hsl(var(--primary-6))',
-            'primary-border': 'hsl(var(--primary-7))',
-            'primary-border-hover': 'hsl(var(--primary-8))',
-            'primary-focus-ring': 'hsl(var(--primary-8))',
-            'primary-solid': 'hsl(var(--primary-9))',
-            'primary-solid-hover': 'hsl(var(--primary-10))',
-            'primary-text': 'hsl(var(--primary-11))',
-            'primary-text-contrast': 'hsl(var(--primary-12))',
+            primary: {
+              base: 'var(--primary-1)',
+              'bg-subtle': 'var(--primary-2)',
+              bg: 'var(--primary-3)',
+              'bg-hover': 'var(--primary-4)',
+              'bg-active': 'var(--primary-5)',
+              line: 'var(--primary-6)',
+              border: 'var(--primary-7)',
+              'border-hover': 'var(--primary-8)',
+              'focus-ring': 'var(--primary-8)',
+              solid: 'var(--primary-9)',
+              'solid-hover': 'var(--primary-10)',
+              text: 'var(--primary-11)',
+              'text-contrast': 'var(--primary-12)',
+            },
 
-            // [!code highlight:14]
-            'success-base': 'hsl(var(--success-1))',
-            'success-bg-subtle': 'hsl(var(--success-2))',
-            'success-bg': 'hsl(var(--success-3))',
-            'success-bg-hover': 'hsl(var(--success-4))',
-            'success-bg-active': 'hsl(var(--success-5))',
-            'success-line': 'hsl(var(--success-6))',
-            'success-border': 'hsl(var(--success-7))',
-            'success-border-hover': 'hsl(var(--success-8))',
-            'success-focus-ring': 'hsl(var(--success-8))',
-            'success-solid': 'hsl(var(--success-9))',
-            'success-solid-hover': 'hsl(var(--success-10))',
-            'success-text': 'hsl(var(--success-11))',
-            'success-text-contrast': 'hsl(var(--success-12))',
+            // [!code highlight:16]
+            grey: {
+              base: 'var(--grey-1)',
+              'bg-subtle': 'var(--grey-2)',
+              bg: 'var(--grey-3)',
+              'bg-hover': 'var(--grey-4)',
+              'bg-active': 'var(--grey-5)',
+              line: 'var(--grey-6)',
+              border: 'var(--grey-7)',
+              'border-hover': 'var(--grey-8)',
+              'focus-ring': 'var(--grey-8)',
+              solid: 'var(--grey-9)',
+              'solid-hover': 'var(--grey-10)',
+              text: 'var(--grey-11)',
+              'text-contrast': 'var(--grey-12)',
+            },
 
-            // [!code highlight:14]
-            'warning-base': 'hsl(var(--warning-1))',
-            'warning-bg-subtle': 'hsl(var(--warning-2))',
-            'warning-bg': 'hsl(var(--warning-3))',
-            'warning-bg-hover': 'hsl(var(--warning-4))',
-            'warning-bg-active': 'hsl(var(--warning-5))',
-            'warning-line': 'hsl(var(--warning-6))',
-            'warning-border': 'hsl(var(--warning-7))',
-            'warning-border-hover': 'hsl(var(--warning-8))',
-            'warning-focus-ring': 'hsl(var(--warning-8))',
-            'warning-solid': 'hsl(var(--warning-9))',
-            'warning-solid-hover': 'hsl(var(--warning-10))',
-            'warning-text': 'hsl(var(--warning-11))',
-            'warning-text-contrast': 'hsl(var(--warning-12))',
+            // [!code highlight:16]
+            info: {
+              base: 'var(--info-1)',
+              'bg-subtle': 'var(--info-2)',
+              bg: 'var(--info-3)',
+              'bg-hover': 'var(--info-4)',
+              'bg-active': 'var(--info-5)',
+              line: 'var(--info-6)',
+              border: 'var(--info-7)',
+              'border-hover': 'var(--info-8)',
+              'focus-ring': 'var(--info-8)',
+              solid: 'var(--info-9)',
+              'solid-hover': 'var(--info-10)',
+              text: 'var(--info-11)',
+              'text-contrast': 'var(--info-12)',
+            },
 
-            // [!code highlight:14]
-            'error-base': 'hsl(var(--danger-1))',
-            'error-bg-subtle': 'hsl(var(--danger-2))',
-            'error-bg': 'hsl(var(--danger-3))',
-            'error-bg-hover': 'hsl(var(--danger-4))',
-            'error-bg-active': 'hsl(var(--danger-5))',
-            'error-line': 'hsl(var(--danger-6))',
-            'error-border': 'hsl(var(--danger-7))',
-            'error-border-hover': 'hsl(var(--danger-8))',
-            'error-focus-ring': 'hsl(var(--danger-8))',
-            'error-solid': 'hsl(var(--danger-9))',
-            'error-solid-hover': 'hsl(var(--danger-10))',
-            'error-text': 'hsl(var(--danger-11))',
-            'error-text-contrast': 'hsl(var(--danger-12))',
+            // [!code highlight:16]
+            success: {
+              base: 'var(--success-1)',
+              'bg-subtle': 'var(--success-2)',
+              bg: 'var(--success-3)',
+              'bg-hover': 'var(--success-4)',
+              'bg-active': 'var(--success-5)',
+              line: 'var(--success-6)',
+              border: 'var(--success-7)',
+              'border-hover': 'var(--success-8)',
+              'focus-ring': 'var(--success-8)',
+              solid: 'var(--success-9)',
+              'solid-hover': 'var(--success-10)',
+              text: 'var(--success-11)',
+              'text-contrast': 'var(--success-12)',
+            },
 
-            // [!code highlight:14]
-            'info-base': 'hsl(var(--info-1))',
-            'info-bg-subtle': 'hsl(var(--info-2))',
-            'info-bg': 'hsl(var(--info-3))',
-            'info-bg-hover': 'hsl(var(--info-4))',
-            'info-bg-active': 'hsl(var(--info-5))',
-            'info-line': 'hsl(var(--info-6))',
-            'info-border': 'hsl(var(--info-7))',
-            'info-border-hover': 'hsl(var(--info-8))',
-            'info-focus-ring': 'hsl(var(--info-8))',
-            'info-solid': 'hsl(var(--info-9))',
-            'info-solid-hover': 'hsl(var(--info-10))',
-            'info-text': 'hsl(var(--info-11))',
-            'info-text-contrast': 'hsl(var(--info-12))',
+            // [!code highlight:16]
+            warning: {
+              base: 'var(--warning-1)',
+              'bg-subtle': 'var(--warning-2)',
+              bg: 'var(--warning-3)',
+              'bg-hover': 'var(--warning-4)',
+              'bg-active': 'var(--warning-5)',
+              line: 'var(--warning-6)',
+              border: 'var(--warning-7)',
+              'border-hover': 'var(--warning-8)',
+              'focus-ring': 'var(--warning-8)',
+              solid: 'var(--warning-9)',
+              'solid-hover': 'var(--warning-10)',
+              text: 'var(--warning-11)',
+              'text-contrast': 'var(--warning-12)',
+            },
 
-            // [!code highlight:15]
-            'grey-base': 'hsl(var(--grey-1))',
-            'grey-bg-subtle': 'hsl(var(--grey-2))',
-            'grey-bg': 'hsl(var(--grey-3))',
-            'grey-bg-hover': 'hsl(var(--grey-4))',
-            'grey-bg-active': 'hsl(var(--grey-5))',
-            'grey-line': 'hsl(var(--grey-6))',
-            'grey-border': 'hsl(var(--grey-7))',
-            'grey-border-hover': 'hsl(var(--grey-8))',
-            'grey-focus-ring': 'hsl(var(--grey-8))',
-            'grey-solid': 'hsl(var(--grey-9))',
-            'grey-placeholder-text': 'hsl(var(--grey-9))',
-            'grey-solid-hover': 'hsl(var(--grey-10))',
-            'grey-text': 'hsl(var(--grey-11))',
-            'grey-text-contrast': 'hsl(var(--grey-12))',
+            // [!code highlight:17]
+            error: {
+              base: 'var(--error-1)',
+              'bg-subtle': 'var(--error-2)',
+              bg: 'var(--error-3)',
+              'bg-hover': 'var(--error-4)',
+              'bg-active': 'var(--error-5)',
+              line: 'var(--error-6)',
+              border: 'var(--error-7)',
+              'border-hover': 'var(--error-8)',
+              'focus-ring': 'var(--error-8)',
+              solid: 'var(--error-9)',
+              'solid-hover': 'var(--error-10)',
+              text: 'var(--error-11)',
+              'text-contrast': 'var(--error-12)',
+            },
           },
         },
       },
@@ -260,211 +309,201 @@ description: How to set up Kõsori UI in your Next.js project.
   </Step>
 
   <Step>
-    ### Add css colors
+    ### Add css variables
     
-    Add the color variables to your CSS file. You can learn more about using CSS variables for theming in the [colors section](/docs/ui/colors).
+    Add the border radius and color variables to your CSS file. You can learn more about using CSS variables for theming in the [colors section](/docs/ui/colors).
 
     <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
     ```css title="app/globals.css"
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
+      // [!code highlight:13]
+      @import '@radix-ui/colors/violet.css';
+      @import '@radix-ui/colors/violet-dark.css';
+      @import '@radix-ui/colors/mauve.css';
+      @import '@radix-ui/colors/mauve-dark.css';
+      @import '@radix-ui/colors/blue.css';
+      @import '@radix-ui/colors/blue-dark.css';
+      @import '@radix-ui/colors/green.css';
+      @import '@radix-ui/colors/green-dark.css';
+      @import '@radix-ui/colors/yellow.css';
+      @import '@radix-ui/colors/yellow-dark.css';
+      @import '@radix-ui/colors/red.css';
+      @import '@radix-ui/colors/red-dark.css';
 
-    :root {
-      --foreground-rgb: 0, 0, 0;
-      --background-start-rgb: 214, 219, 220;
-      --background-end-rgb: 255, 255, 255;
+      @tailwind base;
+      @tailwind components;
+      @tailwind utilities;
 
-      /* [!code highlight:13] */
-      --grey-1: 300 20% 99%;
-      --grey-2: 270 20% 98%;
-      --grey-3: 270 16.7% 95.3%;
-      --grey-4: 264 13.5% 92.7%;
-      --grey-5: 270 12% 90.2%;
-      --grey-6: 265.7 11.1% 87.6%;
-      --grey-7: 255 10% 84.3%;
-      --grey-8: 249.2 10.4% 75.5%;
-      --grey-9: 249.2 6% 57.5%;
-      --grey-10: 250 4.9% 52.2%;
-      --grey-11: 252 4.8% 40.8%;
-      --grey-12: 257.1 10.1% 13.5%;
-
-      /* [!code highlight:13] */
-      --primary-1: 240 20% 99%;
-      --primary-2: 240 20% 98%;
-      --primary-3: 240 11.1% 94.7%;
-      --primary-4: 240 9.52% 91.8%;
-      --primary-5: 250 10.7% 89%;
-      --primary-6: 257 9.86% 86.1%;
-      --primary-7: 253 9.89% 82.2%;
-      --primary-8: 245 8.66% 75.1%;
-      --primary-9: 250 8.57% 13.7%;
-      --primary-10: 249 6.19% 22.2%;
-      --primary-11: 255 3.88% 40.4%;
-      --primary-12: 250 8.57% 13.7%;
-
-      /* [!code highlight:13] */
-      --info-1: 210 100% 99.2%;
-      --info-2: 210 100% 98%;
-      --info-3: 210 100% 96.5%;
-      --info-4: 210 100% 94.1%;
-      --info-5: 208.8 96% 90.2%;
-      --info-6: 208.6 82.3% 84.5%;
-      --info-7: 208 78% 76.9%;
-      --info-8: 206.1 81.9% 65.3%;
-      --info-9: 205.9 100% 50%;
-      --info-10: 208.1 93.4% 47.5%;
-      --info-11: 210.9 89.7% 42%;
-      --info-12: 216.1 70.9% 22.9%;
-
-      /* [!code highlight:13] */
-      --success-1: 140 60% 99%;
-      --success-2: 138 62.5% 96.9%;
-      --success-3: 138.8 57.1% 94.5%;
-      --success-4: 139.1 47.8% 91%;
-      --success-5: 141.3 43.7% 86.1%;
-      --success-6: 142.3 40.2% 79%;
-      --success-7: 146 38% 69%;
-      --success-8: 151.3 40.2% 54.1%;
-      --success-9: 151 54.7% 41.6%;
-      --success-10: 152.2 57.3% 37.6%;
-      --success-11: 153.4 66.9% 28.4%;
-      --success-12: 155.3 40.5% 16.5%;
-
-      /* [!code highlight:13] */
-      --warning-1: 60 50% 98.4%;
-      --warning-2: 52.3 100% 93.9%;
-      --warning-3: 52.6 100% 88.8%;
-      --warning-4: 53 92.8% 83.7%;
-      --warning-5: 51.5 85.2% 78.8%;
-      --warning-6: 51.3 73% 72.4%;
-      --warning-7: 48.3 59.3% 64.3%;
-      --warning-8: 45.9 55% 52.9%;
-      --warning-9: 53 96.3% 58%;
-      --warning-10: 52 95.1% 52%;
-      --warning-11: 41.8 49.7% 31.2%;
-      --warning-12: 42 39.2% 20%;
-
-      /* [!code highlight:13] */
-      --error-1: 0 100% 99.4%;
-      --error-2: 0 100% 98.4%;
-      --error-3: 0 100% 96.9%;
-      --error-4: 0 100% 94.9%;
-      --error-5: 0 90.2% 92%;
-      --error-6: 0 81% 87.6%;
-      --error-7: 359.1 74.2% 81.8%;
-      --error-8: 359.3 69.5% 74.3%;
-      --error-9: 358.1 75.1% 59%;
-      --error-10: 358.1 67.2% 54.5%;
-      --error-11: 358.1 65% 47.1%;
-      --error-12: 350.6 62.6% 24.1%;
-    }
-
-    .dark {
       :root {
-        --foreground-rgb: 255, 255, 255;
-        --background-start-rgb: 0, 0, 0;
-        --background-end-rgb: 0, 0, 0;
+        --radius: 5rem; /* [!code highlight] */
 
         /* [!code highlight:13] */
-        --grey-1: 300 4.2% 9.4%;
-        --grey-2: 300 7.1% 11%;
-        --grey-3: 288 6% 16.3%;
-        --grey-4: 280 6% 19.6%;
-        --grey-5: 280 5.3% 22.4%;
-        --grey-6: 274.3 5.3% 25.7%;
-        --grey-7: 270 5.2% 30.2%;
-        --grey-8: 258 5% 39.2%;
-        --grey-9: 250.9 4.8% 44.9%;
-        --grey-10: 250.9 4.5% 52.4%;
-        --grey-11: 253.3 6% 70.4%;
-        --grey-12: 240 6.2% 93.7%;
+        --primary-1: var(--violet-1);
+        --primary-2: var(--violet-2);
+        --primary-3: var(--violet-3);
+        --primary-4: var(--violet-4);
+        --primary-5: var(--violet-5);
+        --primary-6: var(--violet-6);
+        --primary-7: var(--violet-7);
+        --primary-8: var(--violet-8);
+        --primary-9: var(--violet-9);
+        --primary-10: var(--violet-10);
+        --primary-11: var(--violet-11);
+        --primary-12: var(--violet-12);
 
         /* [!code highlight:13] */
-        --primary-1: 260 8.11% 7.25%;
-        --primary-2: 260 5.66% 10.4%;
-        --primary-3: 255 5.56% 14.1%;
-        --primary-4: 260 3.45% 17.1%;
-        --primary-5: 264 4.95% 19.8%;
-        --primary-6: 270 5% 23.5%;
-        --primary-7: 260 4.05% 29%;
-        --primary-8: 260 3.03% 38.8%;
-        --primary-9: 270 6.25% 93.7%;
-        --primary-10: 260 4.11% 71.4%;
-        --primary-11: 260 4.11% 71.4%;
-        --primary-12: 270 6.25% 93.7%;
+        --grey-1: var(--mauve-1);
+        --grey-2: var(--mauve-2);
+        --grey-3: var(--mauve-3);
+        --grey-4: var(--mauve-4);
+        --grey-5: var(--mauve-5);
+        --grey-6: var(--mauve-6);
+        --grey-7: var(--mauve-7);
+        --grey-8: var(--mauve-8);
+        --grey-9: var(--mauve-9);
+        --grey-10: var(--mauve-10);
+        --grey-11: var(--mauve-11);
+        --grey-12: var(--mauve-12);
 
         /* [!code highlight:13] */
-        --info-1: 211.8 36.2% 9.2%;
-        --info-2: 216 50% 11.8%;
-        --info-3: 213.9 57.5% 15.7%;
-        --info-4: 214.1 61.7% 18.4%;
-        --info-5: 213.3 66.7% 21.2%;
-        --info-6: 212.3 72.1% 25.3%;
-        --info-7: 211.1 81.8% 32.4%;
-        --info-8: 211.2 85.2% 47.8%;
-        --info-9: 205.9 100% 50%;
-        --info-10: 205.8 100% 61.8%;
-        --info-11: 205.1 100% 71%;
-        --info-12: 204.6 100% 88%;
+        --info-1: var(--blue-1);
+        --info-2: var(--blue-2);
+        --info-3: var(--blue-3);
+        --info-4: var(--blue-4);
+        --info-5: var(--blue-5);
+        --info-6: var(--blue-6);
+        --info-7: var(--blue-7);
+        --info-8: var(--blue-8);
+        --info-9: var(--blue-9);
+        --info-10: var(--blue-10);
+        --info-11: var(--blue-11);
+        --info-12: var(--blue-12);
 
         /* [!code highlight:13] */
-        --success-1: 145 31.6% 7.5%;
-        --success-2: 154.3 31.8% 8.6%;
-        --success-3: 155.5 37.9% 11.4%;
-        --success-4: 155.2 42% 13.5%;
-        --success-5: 152.6 43.2% 15.9%;
-        --success-6: 154.7 47.4% 18.6%;
-        --success-7: 152.4 50.4% 24.5%;
-        --success-8: 151.3 52.2% 36.1%;
-        --success-9: 151 54.7% 41.6%;
-        --success-10: 150.9 55.5% 46.7%;
-        --success-11: 151 65.1% 53.9%;
-        --success-12: 144.4 69.6% 82%;
+        --success-1: var(--green-1);
+        --success-2: var(--green-2);
+        --success-3: var(--green-3);
+        --success-4: var(--green-4);
+        --success-5: var(--green-5);
+        --success-6: var(--green-6);
+        --success-7: var(--green-7);
+        --success-8: var(--green-8);
+        --success-9: var(--green-9);
+        --success-10: var(--green-10);
+        --success-11: var(--green-11);
+        --success-12: var(--green-12);
 
         /* [!code highlight:13] */
-        --warning-1: 45 100% 5.5%;
-        --warning-2: 44 78.9% 7.5%;
-        --warning-3: 44.1 63% 10.6%;
-        --warning-4: 44.2 57.6% 12.9%;
-        --warning-5: 45 56.4% 15.3%;
-        --warning-6: 46.4 57% 18.2%;
-        --warning-7: 46.7 59% 23.9%;
-        --warning-8: 49.9 59.8% 35.1%;
-        --warning-9: 53 96.3% 58%;
-        --warning-10: 53.3 96.4% 67.5%;
-        --warning-11: 55 100% 60%;
-        --warning-12: 52.7 100% 83.9%;
+        --warning-1: var(--yellow-1);
+        --warning-2: var(--yellow-2);
+        --warning-3: var(--yellow-3);
+        --warning-4: var(--yellow-4);
+        --warning-5: var(--yellow-5);
+        --warning-6: var(--yellow-6);
+        --warning-7: var(--yellow-7);
+        --warning-8: var(--yellow-8);
+        --warning-9: var(--yellow-9);
+        --warning-10: var(--yellow-10);
+        --warning-11: var(--yellow-11);
+        --warning-12: var(--yellow-12);
 
         /* [!code highlight:13] */
-        --error-1: 350 24% 9.8%;
-        --error-2: 353.7 30.2% 12.4%;
-        --error-3: 352.9 40.5% 16.5%;
-        --error-4: 352.2 46.9% 19.2%;
-        --error-5: 353.7 50.4% 22.2%;
-        --error-6: 353.7 56.7% 26.3%;
-        --error-7: 354.1 65.7% 33.1%;
-        --error-8: 358 75% 47.1%;
-        --error-9: 358.1 75.1% 59%;
-        --error-10: 358.7 84.3% 67.5%;
-        --error-11: 358 100% 76.1%;
-        --error-12: 349.6 100% 91%;
-      }
-    }
+        --error-1: var(--red-1);
+        --error-2: var(--red-2);
+        --error-3: var(--red-3);
+        --error-4: var(--red-4);
+        --error-5: var(--red-5);
+        --error-6: var(--red-6);
+        --error-7: var(--red-7);
+        --error-8: var(--red-8);
+        --error-9: var(--red-9);
+        --error-10: var(--red-10);
+        --error-11: var(--red-11);
+        --error-12: var(--red-12);
 
-    body {
-      color: rgb(var(--foreground-rgb));
-      background: linear-gradient(
-          to bottom,
-          transparent,
-          rgb(var(--background-end-rgb))
-        )
-        rgb(var(--background-start-rgb));
-    }
+      .dark {
+        /* [!code highlight:13] */
+        --primary-1: var(--violet-dark-1);
+        --primary-2: var(--violet-dark-2);
+        --primary-3: var(--violet-dark-3);
+        --primary-4: var(--violet-dark-4);
+        --primary-5: var(--violet-dark-5);
+        --primary-6: var(--violet-dark-6);
+        --primary-7: var(--violet-dark-7);
+        --primary-8: var(--violet-dark-8);
+        --primary-9: var(--violet-dark-9);
+        --primary-10: var(--violet-dark-10);
+        --primary-11: var(--violet-dark-11);
+        --primary-12: var(--violet-dark-12);
 
-    @layer utilities {
-      .text-balance {
-        text-wrap: balance;
+        /* [!code highlight:13] */
+        --grey-1: var(--mauve-dark-1);
+        --grey-2: var(--mauve-dark-2);
+        --grey-3: var(--mauve-dark-3);
+        --grey-4: var(--mauve-dark-4);
+        --grey-5: var(--mauve-dark-5);
+        --grey-6: var(--mauve-dark-6);
+        --grey-7: var(--mauve-dark-7);
+        --grey-8: var(--mauve-dark-8);
+        --grey-9: var(--mauve-dark-9);
+        --grey-10: var(--mauve-dark-10);
+        --grey-11: var(--mauve-dark-11);
+        --grey-12: var(--mauve-dark-12);
+
+        /* [!code highlight:13] */
+        --info-1: var(--blue-dark-1);
+        --info-2: var(--blue-dark-2);
+        --info-3: var(--blue-dark-3);
+        --info-4: var(--blue-dark-4);
+        --info-5: var(--blue-dark-5);
+        --info-6: var(--blue-dark-6);
+        --info-7: var(--blue-dark-7);
+        --info-8: var(--blue-dark-8);
+        --info-9: var(--blue-dark-9);
+        --info-10: var(--blue-dark-10);
+        --info-11: var(--blue-dark-11);
+        --info-12: var(--blue-dark-12);
+
+        /* [!code highlight:13] */
+        --success-1: var(--green-dark-1);
+        --success-2: var(--green-dark-2);
+        --success-3: var(--green-dark-3);
+        --success-4: var(--green-dark-4);
+        --success-5: var(--green-dark-5);
+        --success-6: var(--green-dark-6);
+        --success-7: var(--green-dark-7);
+        --success-8: var(--green-dark-8);
+        --success-9: var(--green-dark-9);
+        --success-10: var(--green-dark-10);
+        --success-11: var(--green-dark-11);
+        --success-12: var(--green-dark-12);
+
+        /* [!code highlight:13] */
+        --warning-1: var(--yellow-dark-1);
+        --warning-2: var(--yellow-dark-2);
+        --warning-3: var(--yellow-dark-3);
+        --warning-4: var(--yellow-dark-4);
+        --warning-5: var(--yellow-dark-5);
+        --warning-6: var(--yellow-dark-6);
+        --warning-7: var(--yellow-dark-7);
+        --warning-8: var(--yellow-dark-8);
+        --warning-9: var(--yellow-dark-9);
+        --warning-10: var(--yellow-dark-10);
+        --warning-11: var(--yellow-dark-11);
+        --warning-12: var(--yellow-dark-12);
+
+        /* [!code highlight:13] */
+        --error-1: var(--red-dark-1);
+        --error-2: var(--red-dark-2);
+        --error-3: var(--red-dark-3);
+        --error-4: var(--red-dark-4);
+        --error-5: var(--red-dark-5);
+        --error-6: var(--red-dark-6);
+        --error-7: var(--red-dark-7);
+        --error-8: var(--red-dark-8);
+        --error-9: var(--red-dark-9);
+        --error-10: var(--red-dark-10);
+        --error-11: var(--red-dark-11);
+        --error-12: var(--red-dark-12);
       }
     }
     ```
