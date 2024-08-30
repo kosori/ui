@@ -44,9 +44,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'kōsori',
     description: 'Build high quality and accessible apps in a short time.',
-    url: 'https://ui.codingcodax.dev',
-    siteName: 'kosori/ui',
-    images: [{ url: 'https://ui.codingcodax.dev/og.png' }],
+    url: 'https://kosori.codingcodax.dev',
+    siteName: 'kosori',
+    images: [{ url: 'https://kosori.codingcodax.dev/og.png' }],
   },
   twitter: {
     card: 'summary_large_image',
