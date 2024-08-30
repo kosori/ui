@@ -13,10 +13,14 @@ import { TypeScriptIcon } from '~/components/icons/typescript';
 const Home: NextPage = () => {
   return (
     <div>
-      <main className='container flex h-full min-h-[calc(100vh-56px)] flex-col items-center justify-center gap-3 p-24'>
+      <main
+        className={clsx(
+          'container flex h-full min-h-[calc(100vh-56px)] flex-col items-center justify-center gap-3 p-8',
+        )}
+      >
         <h1
           className={clsx(
-            'bg-gradient-to-b from-grey-text-contrast to-grey-text bg-clip-text text-4xl font-medium text-transparent',
+            'bg-gradient-to-b from-grey-text-contrast to-grey-text bg-clip-text text-center text-4xl font-medium text-transparent',
             'md:text-5xl',
             'lg:text-6xl',
           )}
@@ -25,7 +29,7 @@ const Home: NextPage = () => {
         </h1>
         <h2
           className={clsx(
-            'text-lg text-grey-text',
+            'text-center text-lg text-grey-text',
             'sm:text-xl',
             'md:text-2xl',
           )}
@@ -33,12 +37,16 @@ const Home: NextPage = () => {
           Open source react components for modern websites and applications.
         </h2>
 
-        <div className='mt-6 flex gap-4'>
-          <Button asChild>
+        <div className={clsx('mt-6 flex flex-col gap-4', 'sm:flex-row')}>
+          <Button asChild className={clsx('w-full', 'sm:w-auto')}>
             <Link href='/docs/ui'>Get Started</Link>
           </Button>
 
-          <Button asChild variant='outline'>
+          <Button
+            asChild
+            className={clsx('w-full', 'sm:w-auto')}
+            variant='outline'
+          >
             <Link href='/docs/ui/components'>Browse components</Link>
           </Button>
         </div>
