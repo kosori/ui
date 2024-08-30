@@ -29,7 +29,6 @@ description: How to set up Kõsori UI in your Next.js project.
     
     Add the `<ThemeProvider />` component at the root of your app.
 
-    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
     ```tsx title="app/layout.tsx"
     import type { Metadata } from 'next';
     import { Inter } from 'next/font/google';
@@ -59,7 +58,6 @@ description: How to set up Kõsori UI in your Next.js project.
       );
     }
     ```
-    </div>
 
   </Step>
 
@@ -84,7 +82,6 @@ description: How to set up Kõsori UI in your Next.js project.
     
     Overwrite the `borderRadius` object in your `theme` object.
     
-    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
     ```ts title="tailwind.config.ts"
     import type { Config } from 'tailwindcss';
 
@@ -113,7 +110,6 @@ description: How to set up Kõsori UI in your Next.js project.
 
     export default config;
     ```
-    </div>
 
   </Step>
 
@@ -122,7 +118,6 @@ description: How to set up Kõsori UI in your Next.js project.
     
     Extend the `colors` object in your `theme` object.
     
-    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
     ```ts title="tailwind.config.ts"
     import type { Config } from 'tailwindcss';
 
@@ -245,7 +240,6 @@ description: How to set up Kõsori UI in your Next.js project.
 
     export default config;
     ```
-    </div>
 
   </Step>
 
@@ -313,7 +307,6 @@ description: How to set up Kõsori UI in your Next.js project.
     
     Add the border radius and color variables to your CSS file. You can learn more about using CSS variables for theming in the [colors section](/docs/ui/colors).
 
-    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
     ```css title="app/globals.css"
       // [!code highlight:13]
       @import '@radix-ui/colors/violet.css';
@@ -507,7 +500,6 @@ description: How to set up Kõsori UI in your Next.js project.
       }
     }
     ```
-    </div>
 
   </Step>
 

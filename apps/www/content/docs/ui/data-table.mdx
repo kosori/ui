@@ -156,8 +156,6 @@ Let's start by building a basic table.
 
     Next, we'll create a `<DataTable />` component to render our table.
 
-    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
-
     ```tsx title="app/payments/data-table.tsx"
     'use client';
 
@@ -240,8 +238,6 @@ Let's start by building a basic table.
       )
     }
     ```
-
-    </div>
 
     <Callout type='info'>
       If you find yourself using `<DataTable />` in multiple places, this is the component you could make reusable by extracting it to `components/ui/data-table.tsx`.
@@ -335,8 +331,6 @@ Let's add row actions to our table. We'll use a `<Dropdown />` component for thi
   <Step>
     ### Update column definitions
     Update our columns definition to add a new `actions` column. The `actions` cell returns a `<Dropdown />` component.
-    
-    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
 
     ```tsx title="app/payments/columns.ts"
     'use client';
@@ -390,8 +384,6 @@ Let's add row actions to our table. We'll use a `<Dropdown />` component for thi
     ];
     ```
 
-    </div>
-
     You can access the row data using `row.original` in the `cell` function.
     Use this to handle actions for your row eg. use the `id` to make a `DELETE` call to your API.
 
@@ -442,8 +434,6 @@ Next, we'll add pagination to our table.
 
     We can add pagination controls to our table using the `<Button />` component and the `table.previousPage()`, `table.nextPage()` API methods.
 
-    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
-
     ```tsx title="app/payments/data-table.tsx"
     import { Button } from '~/components/ui/button'; // [!code highlight]
 
@@ -490,8 +480,6 @@ Next, we'll add pagination to our table.
     };
     ```
 
-    </div>
-
     See [Reusable Components](#reusable-components) section for a more advanced pagination component.
 
   </Step>
@@ -505,8 +493,6 @@ Let's make the email column sortable.
 <Steps>
   <Step>
     ### Update `<DataTable />`
-
-    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
 
     ```tsx title="app/payments/data-table.tsx"
     'use client';
@@ -550,8 +536,6 @@ Let's make the email column sortable.
       );
     };
     ```
-
-    </div>
 
   </Step>
 
@@ -598,8 +582,6 @@ Let's add a search input to filter emails in our table.
 
   <Step>
     ### Update `<DataTable />`
-
-    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
 
     ```tsx title="app/payments/data-table.tsx"
     'use client'
@@ -664,8 +646,6 @@ Let's add a search input to filter emails in our table.
     };
     ```
 
-    </div>
-
     Filtering is now enabled for the `email` column.
     You can add filters to other columns as well.
     See the [filtering docs](https://tanstack.com/table/v8/docs/guide/filters) for more information on customizing filters.
@@ -682,8 +662,6 @@ Adding column visibility is fairly simple using `@tanstack/react-table` visibili
   
   <Step>
     ### Update `<DataTable />`
-
-    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
 
     ```tsx title="app/payments/data-table.tsx"
     'use client';
@@ -785,8 +763,6 @@ Adding column visibility is fairly simple using `@tanstack/react-table` visibili
     };
     ```
 
-    </div>
-
     This adds a dropdown menu that you can use to toggle column visibility.
 
   </Step>
@@ -801,8 +777,6 @@ Next, we're going to add row selection to our table.
 
   <Step>
     ### Update column definitions
-
-    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
 
     ```tsx title="app/payments/columns.tsx"
     'use client';
@@ -839,14 +813,10 @@ Next, we're going to add row selection to our table.
     ];
     ```
 
-    </div>
-
   </Step>
 
   <Step>
     ### Update `<DataTable />`
-
-    <div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
 
     ```tsx title="app/payments/data-table.tsx"
     export const DataTable<TData, TValue> = ({
@@ -887,8 +857,6 @@ Next, we're going to add row selection to our table.
     }
     ```
 
-    </div>
-
     This adds a checkbox to each row and a checkbox in the header to select all rows.
 
   </Step>
@@ -916,8 +884,6 @@ Here are some components you can use to build your data tables.
 ### Column header
 
 Make any column header sortable and hideable.
-
-<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
 
 ```tsx
 import {
@@ -993,8 +959,6 @@ export const DataTableColumnHeader<TData, TValue> = ({
 }
 ```
 
-</div>
-
 ```tsx
 export const columns = [
   {
@@ -1009,8 +973,6 @@ export const columns = [
 ### Pagination
 
 Add pagination controls to your table including page size and selection count.
-
-<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
 
 ```tsx
 import { Button } from '~/components/ui/button';
@@ -1113,8 +1075,6 @@ export const DataTablePagination<TData> = ({
 }
 ```
 
-</div>
-
 ```tsx
 <DataTablePagination table={table} />
 ```
@@ -1122,8 +1082,6 @@ export const DataTablePagination<TData> = ({
 ### Column toggle
 
 A component to toggle column visibility.
-
-<div className='not-prose [&_figure]:max-h-[320px] [&_figure]:overflow-y-auto'>
 
 ```tsx
 'use client';
@@ -1186,8 +1144,6 @@ export function DataTableViewOptions<TData> = ({
   );
 };
 ```
-
-</div>
 
 ```tsx
 <DataTableViewOptions table={table} />
