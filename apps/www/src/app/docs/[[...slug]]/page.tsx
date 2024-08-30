@@ -25,7 +25,7 @@ export const generateMetadata = ({
   if (page == null) notFound();
 
   return {
-    title: page.data.title,
+    title: `${page.data.title} - kōsori`,
     description: page.data.description,
     links: page.data.links,
     dependencies: page.data.dependencies,
