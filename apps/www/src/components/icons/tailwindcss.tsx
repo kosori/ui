@@ -3,6 +3,7 @@ type Props = { className?: string };
 export const TailwindCSSIcon = ({ className }: Props) => (
   <svg
     className={className}
+    fill='currentColor'
     role='img'
     viewBox='0 0 24 24'
     xmlns='http://www.w3.org/2000/svg'
