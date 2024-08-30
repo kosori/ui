@@ -100,8 +100,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(fumadocs-core@13.4.1(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       fumadocs-ui:
-        specifier: ^13.0.7
-        version: 13.0.7(@types/react-dom@18.3.0)(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.9(ts-node@10.9.2(@types/node@22.2.0)(typescript@5.5.4)))
+        specifier: ^13.4.1
+        version: 13.4.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.9(ts-node@10.9.2(@types/node@22.2.0)(typescript@5.5.4)))
       geist:
         specifier: ^1.3.1
         version: 1.3.1(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -1582,20 +1582,11 @@ packages:
   '@radix-ui/rect@1.1.0':
     resolution: {integrity: sha512-A9+lCBZoaMJlVKcRBz2YByCG+Cp2t6nAnMnNba+XiWxnj6r4JUFqfsgwocMBZU9LPtdxC6wB56ySYpc7LQIoJg==}
 
-  '@shikijs/core@1.12.1':
-    resolution: {integrity: sha512-biCz/mnkMktImI6hMfMX3H9kOeqsInxWEyCHbSlL8C/2TR1FqfmGxTLRNwYCKsyCyxWLbB8rEqXRVZuyxuLFmA==}
-
   '@shikijs/core@1.14.1':
     resolution: {integrity: sha512-KyHIIpKNaT20FtFPFjCQB5WVSTpLR/n+jQXhWHWVUMm9MaOaG9BGOG0MSyt7yA4+Lm+4c9rTc03tt3nYzeYSfw==}
 
-  '@shikijs/rehype@1.12.1':
-    resolution: {integrity: sha512-AZLC80TIiRWFwPbSqdwykeSeMjQwYWlkX8yfI7T4nan0qgWfvv/oP7C767JQ8USudEylbe5KzBdE8Ao2sHsidA==}
-
   '@shikijs/rehype@1.14.1':
     resolution: {integrity: sha512-52L8RZ8eJ4t7jWk5jAl5fh5whAmseL5TJezZuWogC6GH5X0JZhWxPxk2+Dg3tH/Ga3447HdzAzEVGkJmXX3o3A==}
-
-  '@shikijs/transformers@1.12.1':
-    resolution: {integrity: sha512-zOpj/S2thBvnJV4Ty3EE8aRs/VqCbV+lgtEYeBRkPxTW22uLADEIZq0qjt5W2Rfy2KSu29e73nRyzp4PefjUTg==}
 
   '@shikijs/transformers@1.14.1':
     resolution: {integrity: sha512-JJqL8QBVCJh3L61jqqEXgFq1cTycwjcGj7aSmqOEsbxnETM9hRlaB74QuXvY/fVJNjbNt8nvWo0VwAXKvMSLRg==}
@@ -2643,13 +2634,6 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
-  fumadocs-core@13.0.7:
-    resolution: {integrity: sha512-Zved9fEbF6HPbbcnaOaCqqJDaQCnm2lQ3qCR0LlRPH1TgE6sL05lzz1+yFRFMxjwV8pP/Wm7cdJu4FJY0H2hyQ==}
-    peerDependencies:
-      next: '>= 14.1.0'
-      react: '>= 18'
-      react-dom: '>= 18'
-
   fumadocs-core@13.4.1:
     resolution: {integrity: sha512-0Lr1rrBXaA1in4HpzDNARxOwnJbYWsbeyah9vaRQliM7H3jaDHSERt5D9K8qcWRv8X+qQy2WTOlUwBDPjdwRPQ==}
     peerDependencies:
@@ -2671,8 +2655,8 @@ packages:
     peerDependencies:
       typescript: '*'
 
-  fumadocs-ui@13.0.7:
-    resolution: {integrity: sha512-tRgk2P4EVYTJQmWH9OV4qF016+AFYwN7qis4OXArcy/ocR2N3Qnhf3k/gQZavu4Pf4gXJ7ANG2Or0YJYQY2miA==}
+  fumadocs-ui@13.4.1:
+    resolution: {integrity: sha512-n/MbnvwkuR+e7uL8SXZqZFwzzyoG7oEb6EblDxbja5vQKhgBoux45Xo9ldZP7Btwo7/2QzE+As1vATpK8x5QHA==}
     peerDependencies:
       next: '>= 14.1.0'
       react: '>= 18'
@@ -3237,10 +3221,10 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
 
-  lucide-react@0.414.0:
-    resolution: {integrity: sha512-Krr/MHg9AWoJc52qx8hyJ64X9++JNfS1wjaJviLM1EP/68VNB7Tv0VMldLCB1aUe6Ka9QxURPhQm/eB6cqOM3A==}
+  lucide-react@0.428.0:
+    resolution: {integrity: sha512-rGrzslfEcgqwh+TLBC5qJ8wvVIXhLvAIXVFKNHndYyb1utSxxn9rXOC+1CNJLi6yNOooyPqIs6+3YCp6uSiEvg==}
     peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
 
   make-error@1.3.6:
     resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
@@ -4054,9 +4038,6 @@ packages:
   shebang-regex@3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
-
-  shiki@1.12.1:
-    resolution: {integrity: sha512-nwmjbHKnOYYAe1aaQyEBHvQymJgfm86ZSS7fT8OaPRr4sbAcBNz7PbfAikMEFSDQ6se2j2zobkXvVKcBOm0ysg==}
 
   shiki@1.14.1:
     resolution: {integrity: sha512-FujAN40NEejeXdzPt+3sZ3F2dx1U24BY2XTY01+MG8mbxCiA2XukXdcbyMyLAHJ/1AUUnQd1tZlvIjefWWEJeA==}
@@ -5789,22 +5770,9 @@ snapshots:
 
   '@radix-ui/rect@1.1.0': {}
 
-  '@shikijs/core@1.12.1':
-    dependencies:
-      '@types/hast': 3.0.4
-
   '@shikijs/core@1.14.1':
     dependencies:
       '@types/hast': 3.0.4
-
-  '@shikijs/rehype@1.12.1':
-    dependencies:
-      '@shikijs/transformers': 1.12.1
-      '@types/hast': 3.0.4
-      hast-util-to-string: 3.0.0
-      shiki: 1.12.1
-      unified: 11.0.5
-      unist-util-visit: 5.0.0
 
   '@shikijs/rehype@1.14.1':
     dependencies:
@@ -5814,10 +5782,6 @@ snapshots:
       shiki: 1.14.1
       unified: 11.0.5
       unist-util-visit: 5.0.0
-
-  '@shikijs/transformers@1.12.1':
-    dependencies:
-      shiki: 1.12.1
 
   '@shikijs/transformers@1.14.1':
     dependencies:
@@ -7089,30 +7053,6 @@ snapshots:
   fsevents@2.3.3:
     optional: true
 
-  fumadocs-core@13.0.7(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@formatjs/intl-localematcher': 0.5.4
-      '@shikijs/rehype': 1.12.1
-      '@shikijs/transformers': 1.12.1
-      flexsearch: 0.7.21
-      github-slugger: 2.0.0
-      negotiator: 0.6.3
-      next: 14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      npm-to-yarn: 2.2.1
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-remove-scroll: 2.5.10(@types/react@18.3.3)(react@18.3.1)
-      remark: 15.0.1
-      remark-gfm: 4.0.0
-      remark-mdx: 3.0.1
-      scroll-into-view-if-needed: 3.1.0
-      shiki: 1.12.1
-      swr: 2.2.5(react@18.3.1)
-      unist-util-visit: 5.0.0
-    transitivePeerDependencies:
-      - '@types/react'
-      - supports-color
-
   fumadocs-core@13.4.1(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@formatjs/intl-localematcher': 0.5.4
@@ -7173,7 +7113,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  fumadocs-ui@13.0.7(@types/react-dom@18.3.0)(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.9(ts-node@10.9.2(@types/node@22.2.0)(typescript@5.5.4))):
+  fumadocs-ui@13.4.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.9(ts-node@10.9.2(@types/node@22.2.0)(typescript@5.5.4))):
     dependencies:
       '@radix-ui/react-accordion': 1.2.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-collapsible': 1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -7185,8 +7125,8 @@ snapshots:
       '@tailwindcss/typography': 0.5.14(tailwindcss@3.4.9(ts-node@10.9.2(@types/node@22.2.0)(typescript@5.5.4)))
       class-variance-authority: 0.7.0
       cmdk: 1.0.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      fumadocs-core: 13.0.7(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      lucide-react: 0.414.0(react@18.3.1)
+      fumadocs-core: 13.4.1(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      lucide-react: 0.428.0(react@18.3.1)
       next: 14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-themes: 0.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -7801,7 +7741,7 @@ snapshots:
 
   lru-cache@7.18.3: {}
 
-  lucide-react@0.414.0(react@18.3.1):
+  lucide-react@0.428.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 
@@ -8954,11 +8894,6 @@ snapshots:
       shebang-regex: 3.0.0
 
   shebang-regex@3.0.0: {}
-
-  shiki@1.12.1:
-    dependencies:
-      '@shikijs/core': 1.12.1
-      '@types/hast': 3.0.4
 
   shiki@1.14.1:
     dependencies:
