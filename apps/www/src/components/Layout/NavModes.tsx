@@ -5,13 +5,19 @@ import { modes } from '~/config/modes';
 
 export const NavModes = () => {
   return (
-    <div className='rounded-lg border p-1 text-sm text-grey-text max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2'>
+    <div
+      className={clsx(
+        'hidden rounded-lg border p-1 text-sm',
+        'sm:inline-block',
+        'max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2',
+      )}
+    >
       {modes.map((m) => (
         <Link
           key={m.param}
           className={clsx(
-            'px-2 py-1 font-medium text-grey-text transition-colors',
-            'hover:text-grey-text-contrast',
+            'text-fd-muted-foreground px-2 py-1 font-medium transition-colors',
+            'hover:text-fd-accent-foreground',
           )}
           href={`/docs/${m.param}`}
         >
