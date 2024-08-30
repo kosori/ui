@@ -51,7 +51,7 @@ const Home: NextPage = () => {
           </Button>
         </div>
 
-        <div className='mt-12 flex justify-center gap-4'>
+        <div className='mt-12 flex justify-center gap-4 text-grey-text-contrast'>
           <Tooltip>
             <TooltipTrigger asChild>
               <NextJSIcon className='size-6' />
