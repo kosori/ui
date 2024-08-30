@@ -14,8 +14,8 @@ export const Logo = () => {
       />
 
       <span className='flex items-center gap-2 font-medium'>
-        kōsori/ui{' '}
-        <span className='rounded-full bg-grey-text-contrast px-1.5 py-1 text-[10px] leading-none text-grey-base'>
+        kōsori{' '}
+        <span className='rounded-full bg-primary-solid px-1.5 py-1 text-[10px] leading-none text-primary-base'>
           alpha
         </span>
       </span>
