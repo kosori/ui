@@ -15,7 +15,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ...components,
     pre: ({ ref: _ref, ...props }) => (
       <CodeBlock {...props} keepBackground className='bg-grey-base'>
-        <Pre>{props.children}</Pre>
+        <Pre className='max-h-[350px]'>{props.children}</Pre>
       </CodeBlock>
     ),
     ComponentPreview,
