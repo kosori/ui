@@ -93,12 +93,17 @@ const Page = ({ params }: { params: { slug?: string[] } }) => {
 
         {page.data.dependencies && (
           <div className='not-prose mb-12 space-x-2'>
-            <div className='flex items-center gap-4 border-t pt-4'>
+            <div
+              className={clsx(
+                'flex flex-col items-start gap-4 border-t pt-4',
+                'min-[480px]:flex-row min-[480px]:items-center',
+              )}
+            >
               <span className='text-fd-muted-foreground text-xs'>
                 Dependencies
               </span>
 
-              <div className='flex gap-2'>
+              <div className='flex flex-wrap gap-2'>
                 {page.data.dependencies.map((dep) => (
                   <a
                     key={dep}
@@ -107,7 +112,7 @@ const Page = ({ params }: { params: { slug?: string[] } }) => {
                     target='_blank'
                   >
                     <Badge size='small' variant='outline'>
-                      {dep}: {versions[dep]}{' '}
+                      {dep}: v{versions[dep]}{' '}
                       <ExternalLinkIcon className='ml-1.5 size-2.5' />
                     </Badge>
                   </a>
