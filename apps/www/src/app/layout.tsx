@@ -12,13 +12,41 @@ import { ThemeNav } from '~/components/Layout/ThemeNav';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
-  title: 'kosori/ui',
+  title: 'kōsori',
   description: 'Build high quality and accessible apps in a short time.',
+  icons: [
+    { rel: 'icon', url: '/favicons/favicon.ico' },
+    {
+      rel: 'apple-touch-icon',
+      url: '/favicons/apple-touch-icon.png',
+      sizes: '180x180',
+    },
+    {
+      rel: 'icon',
+      url: '/favicons/favicon-32x32.png',
+      sizes: '32x32',
+      type: 'image/png',
+    },
+    {
+      rel: 'icon',
+      url: '/favicons/favicon-16x16.png',
+      sizes: '16x16',
+      type: 'image/png',
+    },
+    { rel: 'manifest', url: '/favicons/site.webmanifest' },
+    {
+      rel: 'mask-icon',
+      url: '/favicons/safari-pinned-tab.svg',
+      color: '#000000',
+    },
+  ],
+  applicationName: 'kōsori',
   openGraph: {
-    title: 'kosori/ui',
+    title: 'kōsori',
     description: 'Build high quality and accessible apps in a short time.',
     url: 'https://ui.codingcodax.dev',
     siteName: 'kosori/ui',
+    images: [{ url: 'https://ui.codingcodax.dev/og.png' }],
   },
   twitter: {
     card: 'summary_large_image',
