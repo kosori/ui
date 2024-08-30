@@ -54,7 +54,7 @@ export const CopyTheme = () => {
           <CodeBlock
             keepBackground
             allowCopy={false}
-            className='max-h-[320px] overflow-auto bg-grey-base'
+            className='bg-grey-base'
             lang='css'
             title='globals.css'
           >
