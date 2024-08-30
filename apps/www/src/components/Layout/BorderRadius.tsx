@@ -33,9 +33,15 @@ export const BorderRadius = () => {
 
       <PopoverContent
         className={clsx(
-          'w-96 translate-x-11',
-          'data-[state=closed]:slide-out-to-right-11',
-          'data-[state=open]:slide-in-from-right-11',
+          'w-[calc(var(--radix-popover-content-available-width)-2rem)] translate-x-4',
+          'data-[state=closed]:slide-out-to-right-4',
+          'data-[state=open]:slide-in-from-right-4',
+          'min-[440px]:w-96 min-[440px]:translate-x-8',
+          'min-[440px]:data-[state=closed]:slide-out-to-right-8',
+          'min-[440px]:data-[state=open]:slide-in-from-right-8',
+          'min-[460px]:translate-x-11',
+          'min-[460px]:data-[state=closed]:slide-out-to-right-11',
+          'min-[460px]:data-[state=open]:slide-in-from-right-11',
         )}
         side='top'
         sideOffset={14}
@@ -45,7 +51,9 @@ export const BorderRadius = () => {
 
         <Separator className='my-2' />
 
-        <div className='grid grid-cols-3 gap-1'>
+        <div
+          className={clsx('grid grid-cols-2 gap-1', 'min-[416px]:grid-cols-3')}
+        >
           {borderRadius.map(({ name, value, size }) => (
             <Button
               key={name}

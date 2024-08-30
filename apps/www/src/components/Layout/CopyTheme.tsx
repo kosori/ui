@@ -30,9 +30,15 @@ export const CopyTheme = () => {
 
       <PopoverContent
         className={clsx(
-          'w-96 -translate-x-11',
-          'data-[state=closed]:slide-out-to-left-11',
-          'data-[state=open]:slide-in-from-left-11',
+          'w-[calc(var(--radix-popover-content-available-width)-2rem)] -translate-x-4',
+          'data-[state=closed]:slide-out-to-left-4',
+          'data-[state=open]:slide-in-from-left-4',
+          'min-[440px]:w-96 min-[440px]:-translate-x-8',
+          'min-[440px]:data-[state=closed]:slide-out-to-left-8',
+          'min-[440px]:data-[state=open]:slide-in-from-left-8',
+          'min-[460px]:-translate-x-11',
+          'min-[460px]:data-[state=closed]:slide-out-to-left-11',
+          'min-[460px]:data-[state=open]:slide-in-from-left-11',
         )}
         side='top'
         sideOffset={14}
@@ -46,8 +52,9 @@ export const CopyTheme = () => {
 
         <div>
           <CodeBlock
+            keepBackground
             allowCopy={false}
-            className='max-h-[320px] overflow-auto'
+            className='max-h-[320px] overflow-auto bg-grey-base'
             lang='css'
             title='globals.css'
           >

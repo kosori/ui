@@ -20,7 +20,13 @@ export const Palette = () => {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className='w-96' sideOffset={14}>
+      <PopoverContent
+        className={clsx(
+          'w-[calc(var(--radix-popover-content-available-width)-2rem)]',
+          'min-[440px]:w-96',
+        )}
+        sideOffset={14}
+      >
         <h3 className='font-medium'>Colors</h3>
         <p className='text-sm text-grey-text'>
           Create the perfect color palette.
