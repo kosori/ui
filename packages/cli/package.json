@@ -23,5 +23,8 @@
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@kosori/prettier-config"
+  "prettier": "@kosori/prettier-config",
+  "dependencies": {
+    "commander": "^12.1.0"
+  }
 }
