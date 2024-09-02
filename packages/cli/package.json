@@ -50,6 +50,7 @@
     "@clack/core": "^0.3.4",
     "@clack/prompts": "^0.7.0",
     "commander": "^12.1.0",
-    "consola": "^3.2.3"
+    "consola": "^3.2.3",
+    "picocolors": "^1.0.1"
   }
 }

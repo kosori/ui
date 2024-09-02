@@ -184,6 +184,9 @@ importers:
       consola:
         specifier: ^3.2.3
         version: 3.2.3
+      picocolors:
+        specifier: ^1.0.1
+        version: 1.0.1
     devDependencies:
       '@kosori/eslint-config':
         specifier: workspace:*
