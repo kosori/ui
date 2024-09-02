@@ -94,8 +94,8 @@ importers:
         specifier: ^13.4.1
         version: 13.4.1(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       fumadocs-docgen:
-        specifier: ^1.1.0
-        version: 1.1.0(typescript@5.5.4)
+        specifier: ^1.2.0
+        version: 1.2.0(typescript@5.5.4)
       fumadocs-mdx:
         specifier: ^9.0.4
         version: 9.0.4(fumadocs-core@13.4.1(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -355,7 +355,7 @@ importers:
         version: 7.35.0(eslint@9.9.0(jiti@1.21.6))
       eslint-plugin-react-hooks:
         specifier: rc
-        version: 5.1.0-rc-e56f4ae3-20240830(eslint@9.9.0(jiti@1.21.6))
+        version: 5.1.0-rc-4f604941-20240830(eslint@9.9.0(jiti@1.21.6))
       eslint-plugin-turbo:
         specifier: ^2.1.1
         version: 2.1.1(eslint@9.9.0(jiti@1.21.6))
@@ -2474,8 +2474,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
 
-  eslint-plugin-react-hooks@5.1.0-rc-e56f4ae3-20240830:
-    resolution: {integrity: sha512-w+VTy81b3KCQYWhe2Ux/kVqhiyqieaWbHfPlSwU8sKLeHOPl2LPlCn1wWRJE7KMb5/bkrOtAyWrwhlasqUsePA==}
+  eslint-plugin-react-hooks@5.1.0-rc-4f604941-20240830:
+    resolution: {integrity: sha512-7IHBSzlQL498kfaPzQWV1t8dR/v3QTbXtG2x2bVjl5YOLpmf+I045NU78HMX7wAOaepWjsOwF591Q/O+nr3CJQ==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
@@ -2660,8 +2660,8 @@ packages:
       react: '>= 18'
       react-dom: '>= 18'
 
-  fumadocs-docgen@1.1.0:
-    resolution: {integrity: sha512-476elxwVBUnZV9LeTomGS0Tt37gNI7IRfLHl0V8sWBzEowgQ63f9sVFWFwQljoVKYTCIPP5ic5k/XVW0LkGMhw==}
+  fumadocs-docgen@1.2.0:
+    resolution: {integrity: sha512-w3V3h33hc4+GGTCaGcihDYwClvpr6eHWjdf59SifRY9i2VnpGnkTZu0A+G08JipnLTFhGFf/8t7UigDVglQm0w==}
 
   fumadocs-mdx@9.0.4:
     resolution: {integrity: sha512-RsOptncs148STMCcJe2QnuWHEF/Xwf02LNt/APPbgMCONhUzgVIyG85nBz2XUZT135Vz+OZvaRKJYVUuYswKEg==}
@@ -2669,8 +2669,8 @@ packages:
       fumadocs-core: ^13.2.1
       next: '>= 14.1.0'
 
-  fumadocs-typescript@2.0.1:
-    resolution: {integrity: sha512-FKgO/g23tcRbXnv47blZ+KLs6HacKB5eO13d+LmQyBZxa3J5L+Ewi3vjjQmkf33Gva1WMojhYELe4m6YXZLErA==}
+  fumadocs-typescript@2.1.0:
+    resolution: {integrity: sha512-fxxC8F+bQQxlVQA03vWaoztJFeKkevW3WgT7ECPCmdOB2UFsRB61cgzlRvwKqtFWJuJYASX55+2wEMxXAjzBjQ==}
     peerDependencies:
       typescript: '*'
 
@@ -3513,10 +3513,6 @@ packages:
   npm-run-path@4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
     engines: {node: '>=8'}
-
-  npm-to-yarn@2.2.1:
-    resolution: {integrity: sha512-O/j/ROyX0KGLG7O6Ieut/seQ0oiTpHF2tXAcFbpdTLQFiaNtkyTXXocM1fwpaa60dg1qpWj0nHlbNhx6qwuENQ==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
   npm-to-yarn@3.0.0:
     resolution: {integrity: sha512-76YnmsbfrYp0tMsWxM0RNX0Vs+x8JxpJGu6B/jDn4lW8+laiTcKmKi9MeMh4UikO4RkJ1oqURoDy9bXJmMXS6A==}
@@ -6868,7 +6864,7 @@ snapshots:
       safe-regex-test: 1.0.3
       string.prototype.includes: 2.0.0
 
-  eslint-plugin-react-hooks@5.1.0-rc-e56f4ae3-20240830(eslint@9.9.0(jiti@1.21.6)):
+  eslint-plugin-react-hooks@5.1.0-rc-4f604941-20240830(eslint@9.9.0(jiti@1.21.6)):
     dependencies:
       eslint: 9.9.0(jiti@1.21.6)
 
@@ -7149,13 +7145,14 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  fumadocs-docgen@1.1.0(typescript@5.5.4):
+  fumadocs-docgen@1.2.0(typescript@5.5.4):
     dependencies:
       estree-util-value-to-estree: 3.1.2
-      fumadocs-typescript: 2.0.1(typescript@5.5.4)
+      fumadocs-typescript: 2.1.0(typescript@5.5.4)
       hast-util-to-estree: 3.1.0
-      npm-to-yarn: 2.2.1
+      npm-to-yarn: 3.0.0
       unist-util-visit: 5.0.0
+      zod: 3.23.8
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -7173,7 +7170,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  fumadocs-typescript@2.0.1(typescript@5.5.4):
+  fumadocs-typescript@2.1.0(typescript@5.5.4):
     dependencies:
       fast-glob: 3.3.2
       hast-util-to-jsx-runtime: 2.3.0
@@ -8353,8 +8350,6 @@ snapshots:
   npm-run-path@4.0.1:
     dependencies:
       path-key: 3.1.1
-
-  npm-to-yarn@2.2.1: {}
 
   npm-to-yarn@3.0.0: {}
 
