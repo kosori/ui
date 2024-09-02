@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf .turbo node_modules",
-    "dev": "tsc",
+    "dev": "pnpx tsx src/index.ts",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "typecheck": "tsc --noEmit"
@@ -27,6 +27,7 @@
   "dependencies": {
     "@clack/core": "^0.3.4",
     "@clack/prompts": "^0.7.0",
-    "commander": "^12.1.0"
+    "commander": "^12.1.0",
+    "consola": "^3.2.3"
   }
 }
