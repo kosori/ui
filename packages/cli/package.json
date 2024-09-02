@@ -1,12 +1,33 @@
 {
   "name": "@kosori/cli",
-  "private": true,
   "version": "0.1.0",
-  "type": "module",
-  "exports": {
-    ".": "./src/index.ts"
+  "description": "CLI for @kosori",
+  "publishConfig": {
+    "access": "public"
   },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "bin": "./dist/index.js",
+  "exports": "./dist/index.js",
   "license": "MIT",
+  "author": {
+    "name": "Alexis Guzman",
+    "url": "https://www.codingcodax.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kosori/ui.git",
+    "directory": "packages/cli"
+  },
+  "keywords": [
+    "components",
+    "ui",
+    "tailwind",
+    "radix-ui",
+    "cli"
+  ],
   "scripts": {
     "build": "tsup",
     "clean": "rm -rf .turbo node_modules",
