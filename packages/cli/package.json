@@ -40,6 +40,7 @@
     "@kosori/eslint-config": "workspace:*",
     "@kosori/prettier-config": "workspace:*",
     "@kosori/tsconfig": "workspace:*",
+    "@types/fs-extra": "^11.0.4",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "tsup": "^8.2.4",
