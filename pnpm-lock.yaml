@@ -190,6 +190,9 @@ importers:
       fast-glob:
         specifier: ^3.3.2
         version: 3.3.2
+      fs-extra:
+        specifier: ^11.2.0
+        version: 11.2.0
       picocolors:
         specifier: ^1.0.1
         version: 1.0.1
