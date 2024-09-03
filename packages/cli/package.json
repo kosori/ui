@@ -53,6 +53,7 @@
     "consola": "^3.2.3",
     "cosmiconfig": "^9.0.0",
     "fast-glob": "^3.3.2",
-    "picocolors": "^1.0.1"
+    "picocolors": "^1.0.1",
+    "tsconfig-paths": "^4.2.0"
   }
 }
