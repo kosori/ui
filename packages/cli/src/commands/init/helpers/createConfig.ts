@@ -1,33 +1,16 @@
-import { existsSync, promises as fs } from 'fs';
-import path from 'path';
+import { promises as fs } from 'fs';
 
-import { GLOBALS_CSS, TAILWIND_CONFIG, UTILS } from '~/utils/templates';
-import { Config } from '../schema';
+import type { RawConfig } from '../schema';
 
-export const createConfig = async ({ config }: { config: Config }) => {
-  for (const [_key, resolvedPath] of Object.entries(config.resolvedPaths)) {
-    let dirname = path.extname(resolvedPath)
-      ? path.dirname(resolvedPath)
-      : resolvedPath;
+type Props = {
+  cwd: string;
+  config: RawConfig;
+};
 
-    if (!existsSync(dirname)) {
-      // await fs.mkdir(dirname, { recursive: true });
-      console.log('creted:', dirname);
-    }
-
-    console.log('🚀 ~ dirname:', dirname);
-  }
-
-  // Wrte tailwind file
+export const createConfig = async ({ cwd, config }: Props) => {
   await fs.writeFile(
-    config.resolvedPaths.tailwindConfig,
-    TAILWIND_CONFIG,
+    `${cwd}/kosori.config.json`,
+    JSON.stringify(config, null, 2),
     'utf8',
   );
-
-  // Write css file
-  await fs.writeFile(config.resolvedPaths.tailwindCss, GLOBALS_CSS, 'utf8');
-
-  // Write cn file
-  await fs.writeFile(`${config.resolvedPaths.utils}/cn.ts`, UTILS, 'utf8');
 };
