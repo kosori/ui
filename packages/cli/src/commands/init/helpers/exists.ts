@@ -1,6 +1,6 @@
 import fg from 'fast-glob';
 
-import { IGNORE } from './config';
+import { IGNORE } from '~/commands/init/config';
 
 export const tailwindExists = async ({ cwd }: { cwd: string }) => {
   const tailwindConfig = await fg.glob('tailwind.config.*', {
