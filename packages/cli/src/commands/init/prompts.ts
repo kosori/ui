@@ -1,24 +1,29 @@
 import * as p from '@clack/prompts';
-import color from 'picocolors';
 
-const highlight = (str: string) => color.bold(color.italic(str));
+import { highlight } from '~/utils/highlight';
 
 export const uiPrompts = {
-  cssFile: () =>
-    p.text({
-      message: `Where is your ${color.bold(color.italic('global.css'))} file?`,
-      initialValue: 'app/global.css',
-    }),
-
   componentsAlias: () =>
     p.text({
       message: `Configure the alias for ${highlight('components')}`,
       initialValue: '~/components',
     }),
 
+  uiAlias: () =>
+    p.text({
+      message: `Configure the alias for ${highlight('ui')} components`,
+      initialValue: '~/components/ui',
+    }),
+
   utilsAlias: () =>
     p.text({
       message: `Configure the alias for ${highlight('utils')}`,
       initialValue: '~/utils',
+    }),
+
+  hooksAlias: () =>
+    p.text({
+      message: `Configure the alias for ${highlight('hooks')}`,
+      initialValue: '~/hooks',
     }),
 };
