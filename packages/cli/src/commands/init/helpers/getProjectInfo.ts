@@ -41,6 +41,8 @@ export const getProjectConfig = async ({
     aliases: {
       components: `${tsConfigAliasPrefix}/components`,
       utils: `${tsConfigAliasPrefix}/utils`,
+      ui: `${tsConfigAliasPrefix}/components/ui`,
+      hooks: `${tsConfigAliasPrefix}/hooks`,
     },
   };
 
