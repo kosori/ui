@@ -4,10 +4,10 @@ import * as p from '@clack/prompts';
 import { Command } from 'commander';
 import color from 'picocolors';
 
+import { handleError } from '~/utils/handleError';
 import { highlight } from '~/utils/highlight';
-import { handleError } from '../../utils/handleError';
-import { existsConfig, tailwindExists } from './helpers';
 import { createConfig } from './helpers/createConfig';
+import { existsConfig, tailwindExists } from './helpers/exists';
 import { getProjectConfig } from './helpers/getProjectInfo';
 import { writeTemplates } from './helpers/writeTemplates';
 import { initOptionsSchema, typeSchema } from './schema';
