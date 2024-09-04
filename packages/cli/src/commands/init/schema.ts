@@ -4,7 +4,6 @@ export const typeSchema = z.literal('ui').or(z.literal('template'));
 
 export const initOptionsSchema = z.object({
   yes: z.boolean(),
-  defaults: z.boolean(),
   cwd: z.string(),
 });
 
@@ -18,7 +17,8 @@ export const rawConfigSchema = z.object({
   aliases: z.object({
     components: z.string(),
     utils: z.string(),
-    ui: z.string().optional(),
+    ui: z.string(),
+    hooks: z.string(),
   }),
 });
 
