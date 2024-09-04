@@ -52,9 +52,7 @@ export const resolveConfigPaths = async ({
       tailwindCss: path.resolve(cwd, config.tailwind.css),
       utils: await resolveImport(config.aliases.utils, tsConfig),
       components: await resolveImport(config.aliases.components, tsConfig),
-      ui: config.aliases.ui
-        ? await resolveImport(config.aliases.ui, tsConfig)
-        : await resolveImport(config.aliases.components, tsConfig),
+      ui: await resolveImport(config.aliases.ui, tsConfig),
     },
   });
 };
