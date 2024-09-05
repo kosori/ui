@@ -12,6 +12,6 @@ export const initOptionsSchema = z.object({
   overwrite: z.boolean(),
   cwd: z.string(),
   all: z.boolean(),
-  path: z.string(),
+  path: z.string().optional(),
   silent: z.boolean(),
 });
