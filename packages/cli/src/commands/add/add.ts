@@ -1,10 +1,17 @@
+import { existsSync } from 'fs';
+import path from 'path';
 import * as p from '@clack/prompts';
 import { Command } from 'commander';
+import color from 'picocolors';
+
+import { fetchJson } from '~/utils/fetchJson';
+import { handleError } from '~/utils/handleError';
+import { initOptionsSchema, itemsSchema, typeSchema } from './schema';
 
 export const add = new Command()
   .name('add')
   .description('add components, hooks, etc.')
-  .argument('[type]', 'the type (components, hooks, etc) to add')
+  .argument('<type>', 'the type (components, hooks, etc) to add')
   .argument('[components/hooks/etc...]', 'the components, hooks, etc to add')
   .option('-y, --yes', 'skip confirmation prompt', false)
   .option('-o, --overwrite', 'overwrite existing files', false)
@@ -17,27 +24,25 @@ export const add = new Command()
   .option('-p, --path <path>', 'the path to add the components, hooks, etc to')
   .option('-s, --silent', 'no output', false)
   .action(async (cliType, cliItems, opts) => {
-    p.intro('🚀 Adding...');
+    try {
+      const type = typeSchema.parse(cliType);
+      const items = itemsSchema.parse(cliItems);
+      const options = initOptionsSchema.parse(opts);
+      const cwd = path.resolve(options.cwd);
+      const skip = options.yes;
 
-    const project = await p.group(
-      {
-        ...(!cliType && {
-          type: () =>
-            p.select({
-              message: 'What you want to add?',
-              options: [
-                { value: 'component', label: 'Component' },
-                { value: 'hook', label: 'Hook' },
-              ],
-              initialValue: 'component',
-            }),
-        }),
-        ...(!cliItems && {
-          items: () => p.text({ message: 'What you want to add?' }),
-        }),
-      },
-      { onCancel: () => process.exit(0) },
-    );
+      if (!existsSync(cwd)) {
+        throw new Error(`Directory ${cwd} does not exist`);
+      }
 
-    p.outro('🎉 Done!');
+      if (type === 'components') {
+        p.intro(color.bgCyan(color.black(' Add component(s) ')));
+
+        p.outro(color.bgCyan(color.black(' Success! ')));
+      }
+
+      p.outro('🎉 Done!');
+    } catch (error) {
+      handleError(error);
+    }
   });
