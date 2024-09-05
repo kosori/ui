@@ -1,9 +1,7 @@
 [
   {
     "name": "accordion",
-    "dependencies": [
-      "@radix-ui/react-accordion"
-    ],
+    "dependencies": ["@radix-ui/react-accordion"],
     "type": "component:ui"
   },
   {
@@ -12,26 +10,18 @@
   },
   {
     "name": "alert-dialog",
-    "dependencies": [
-      "@radix-ui/react-alert-dialog"
-    ],
-    "required": [
-      "button"
-    ],
+    "dependencies": ["@radix-ui/react-alert-dialog"],
+    "required": ["button"],
     "type": "component:ui"
   },
   {
     "name": "aspect-ratio",
-    "dependencies": [
-      "@radix-ui/react-aspect-ratio"
-    ],
+    "dependencies": ["@radix-ui/react-aspect-ratio"],
     "type": "component:ui"
   },
   {
     "name": "avatar",
-    "dependencies": [
-      "@radix-ui/react-avatar"
-    ],
+    "dependencies": ["@radix-ui/react-avatar"],
     "type": "component:ui"
   },
   {
@@ -40,26 +30,18 @@
   },
   {
     "name": "breadcrumb",
-    "dependencies": [
-      "@radix-ui/react-slot"
-    ],
+    "dependencies": ["@radix-ui/react-slot"],
     "type": "component:ui"
   },
   {
     "name": "button",
-    "dependencies": [
-      "@radix-ui/react-slot"
-    ],
+    "dependencies": ["@radix-ui/react-slot"],
     "type": "component:ui"
   },
   {
     "name": "calendar",
-    "dependencies": [
-      "react-day-picker"
-    ],
-    "required": [
-      "button"
-    ],
+    "dependencies": ["react-day-picker"],
+    "required": ["button"],
     "type": "component:ui"
   },
   {
@@ -68,64 +50,44 @@
   },
   {
     "name": "carousel",
-    "dependencies": [
-      "embla-carousel-react"
-    ],
-    "required": [
-      "button"
-    ],
+    "dependencies": ["embla-carousel-react"],
+    "required": ["button"],
     "type": "component:ui"
   },
   {
     "name": "checkbox",
-    "dependencies": [
-      "@radix-ui/react-checkbox"
-    ],
+    "dependencies": ["@radix-ui/react-checkbox"],
     "type": "component:ui"
   },
   {
     "name": "collapsible",
-    "dependencies": [
-      "@radix-ui/react-collapsible"
-    ],
+    "dependencies": ["@radix-ui/react-collapsible"],
     "type": "component:ui"
   },
   {
     "name": "command",
-    "dependencies": [
-      "cmdk"
-    ],
-    "required": [
-      "dialog"
-    ],
+    "dependencies": ["cmdk"],
+    "required": ["dialog"],
     "type": "component:ui"
   },
   {
     "name": "context-menu",
-    "dependencies": [
-      "@radix-ui/react-context-menu"
-    ],
+    "dependencies": ["@radix-ui/react-context-menu"],
     "type": "component:ui"
   },
   {
     "name": "dialog",
-    "dependencies": [
-      "@radix-ui/react-dialog"
-    ],
+    "dependencies": ["@radix-ui/react-dialog"],
     "type": "component:ui"
   },
   {
     "name": "drawer",
-    "dependencies": [
-      "vaul"
-    ],
+    "dependencies": ["vaul"],
     "type": "component:ui"
   },
   {
     "name": "dropdown-menu",
-    "dependencies": [
-      "@radix-ui/react-dropdown-menu"
-    ],
+    "dependencies": ["@radix-ui/react-dropdown-menu"],
     "type": "component:ui"
   },
   {
@@ -136,17 +98,12 @@
       "react-hook-form",
       "@hookform/resolvers"
     ],
-    "required": [
-      "label",
-      "button"
-    ],
+    "required": ["label", "button"],
     "type": "component:ui"
   },
   {
     "name": "hover-card",
-    "dependencies": [
-      "@radix-ui/react-hover-card"
-    ],
+    "dependencies": ["@radix-ui/react-hover-card"],
     "type": "component:ui"
   },
   {
@@ -155,93 +112,67 @@
   },
   {
     "name": "input-otp",
-    "dependencies": [
-      "input-otp"
-    ],
+    "dependencies": ["input-otp"],
     "type": "component:ui"
   },
   {
     "name": "label",
-    "dependencies": [
-      "@radix-ui/react-label"
-    ],
+    "dependencies": ["@radix-ui/react-label"],
     "type": "component:ui"
   },
   {
     "name": "menubar",
-    "dependencies": [
-      "@radix-ui/react-menubar"
-    ],
+    "dependencies": ["@radix-ui/react-menubar"],
     "type": "component:ui"
   },
   {
     "name": "navigation-menu",
-    "dependencies": [
-      "@radix-ui/react-navigation-menu"
-    ],
+    "dependencies": ["@radix-ui/react-navigation-menu"],
     "type": "component:ui"
   },
   {
     "name": "pagination",
-    "required": [
-      "buton"
-    ],
+    "required": ["buton"],
     "type": "component:ui"
   },
   {
     "name": "popover",
-    "dependencies": [
-      "@radix-ui/react-popover"
-    ],
+    "dependencies": ["@radix-ui/react-popover"],
     "type": "component:ui"
   },
   {
     "name": "progress",
-    "dependencies": [
-      "@radix-ui/react-progress"
-    ],
+    "dependencies": ["@radix-ui/react-progress"],
     "type": "component:ui"
   },
   {
     "name": "radio-group",
-    "dependencies": [
-      "@radix-ui/react-radio-group"
-    ],
+    "dependencies": ["@radix-ui/react-radio-group"],
     "type": "component:ui"
   },
   {
     "name": "resizable",
-    "dependencies": [
-      "react-resizable-panels"
-    ],
+    "dependencies": ["react-resizable-panels"],
     "type": "component:ui"
   },
   {
     "name": "scroll-area",
-    "dependencies": [
-      "@radix-ui/react-scroll-area"
-    ],
+    "dependencies": ["@radix-ui/react-scroll-area"],
     "type": "component:ui"
   },
   {
     "name": "select",
-    "dependencies": [
-      "@radix-ui/react-select"
-    ],
+    "dependencies": ["@radix-ui/react-select"],
     "type": "component:ui"
   },
   {
     "name": "separator",
-    "dependencies": [
-      "@radix-ui/react-separator"
-    ],
+    "dependencies": ["@radix-ui/react-separator"],
     "type": "component:ui"
   },
   {
     "name": "sheet",
-    "dependencies": [
-      "@radix-ui/react-dialog"
-    ],
+    "dependencies": ["@radix-ui/react-dialog"],
     "type": "component:ui"
   },
   {
@@ -250,24 +181,17 @@
   },
   {
     "name": "slider",
-    "dependencies": [
-      "@radix-ui/react-slider"
-    ],
+    "dependencies": ["@radix-ui/react-slider"],
     "type": "component:ui"
   },
   {
     "name": "sonner",
-    "dependencies": [
-      "sonner",
-      "next-themes"
-    ],
+    "dependencies": ["sonner", "next-themes"],
     "type": "component:ui"
   },
   {
     "name": "switch",
-    "dependencies": [
-      "@radix-ui/react-switch"
-    ],
+    "dependencies": ["@radix-ui/react-switch"],
     "type": "component:ui"
   },
   {
@@ -276,9 +200,7 @@
   },
   {
     "name": "tabs",
-    "dependencies": [
-      "@radix-ui/react-tabs"
-    ],
+    "dependencies": ["@radix-ui/react-tabs"],
     "type": "component:ui"
   },
   {
@@ -287,33 +209,23 @@
   },
   {
     "name": "toast",
-    "dependencies": [
-      "@radix-ui/react-toast"
-    ],
+    "dependencies": ["@radix-ui/react-toast"],
     "type": "component:ui"
   },
   {
     "name": "toggle",
-    "dependencies": [
-      "@radix-ui/react-toggle"
-    ],
+    "dependencies": ["@radix-ui/react-toggle"],
     "type": "component:ui"
   },
   {
     "name": "toggle-group",
-    "dependencies": [
-      "@radix-ui/react-toggle-group"
-    ],
-    "required": [
-      "toggle"
-    ],
+    "dependencies": ["@radix-ui/react-toggle-group"],
+    "required": ["toggle"],
     "type": "component:ui"
   },
   {
     "name": "tooltip",
-    "dependencies": [
-      "@radix-ui/react-tooltip"
-    ],
+    "dependencies": ["@radix-ui/react-tooltip"],
     "type": "component:ui"
   }
 ]
