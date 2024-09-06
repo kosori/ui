@@ -54,7 +54,7 @@ export const init = new Command()
             });
 
             if (shouldContinue === false) {
-              p.outro(color.bgCyan(color.black(' Aborted! ')));
+              p.outro(color.bgCyan(color.black(' No config written! ')));
               return;
             }
           }
@@ -70,7 +70,7 @@ export const init = new Command()
             });
 
             if (shouldContinue === false) {
-              p.outro(color.bgCyan(color.black(' Aborted! ')));
+              p.outro(color.bgCyan(color.black(' No files written! ')));
               return;
             }
           }
