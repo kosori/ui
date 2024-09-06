@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build:versions": "pnpx tsx ./src/scripts/getDependenciesVersions.ts && prettier --write ./src/config/*.ts --ignore-path ../../.gitignore --log-level silent",
-    "build:json": "pnpx tsx ./src/scripts/writeUiJson.ts && prettier --write ./src/config/*.ts --ignore-path ../../.gitignore --log-level silent",
+    "build:ui": "pnpx tsx ./src/scripts/writeUiJson.ts && prettier --write ./src/config/*.ts --ignore-path ../../.gitignore --log-level silent",
     "build": "pnpm with-env next build",
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "pnpm with-env next dev",

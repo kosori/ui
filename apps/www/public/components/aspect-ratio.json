@@ -1,0 +1,6 @@
+{
+  "name": "aspect-ratio",
+  "type": "component:ui",
+  "dependencies": ["@radix-ui/react-aspect-ratio"],
+  "content": "'use client';\\n\\nimport { Root } from '@radix-ui/react-aspect-ratio';\\n\\n/**\\n * AspectRatio component that maintains a specified aspect ratio for its children.\\n *\\n * @param {React.ComponentPropsWithoutRef<typeof Root>} props - Additional props to pass to the aspect ratio container.\\n *\\n * @example\\n * <AspectRatio ratio={16 / 9}>\\n *     <Image src=\\\"...\\\" alt=\\\"...\\\" />\\n * </AspectRatio>\\n *\\n * @see {@link https://dub.sh/ui-aspect-ratio Aspect Ratio Docs} for further information.\\n */\\nexport const AspectRatio = Root;\\n"
+}
