@@ -91,14 +91,14 @@ importers:
         specifier: ^8.2.1
         version: 8.2.1(embla-carousel@8.2.1)
       fumadocs-core:
-        specifier: ^13.4.6
-        version: 13.4.6(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^13.4.7
+        version: 13.4.7(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       fumadocs-docgen:
         specifier: ^1.2.0
         version: 1.2.0(typescript@5.5.4)
       fumadocs-mdx:
         specifier: ^9.0.4
-        version: 9.0.4(fumadocs-core@13.4.6(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 9.0.4(fumadocs-core@13.4.7(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       fumadocs-ui:
         specifier: ^13.4.6
         version: 13.4.6(@types/react-dom@18.3.0)(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.9(ts-node@10.9.2(@types/node@22.5.4)(typescript@5.5.4)))
@@ -355,7 +355,7 @@ importers:
         version: 7.35.2(eslint@9.9.0(jiti@1.21.6))
       eslint-plugin-react-hooks:
         specifier: rc
-        version: 5.1.0-rc-4c58fce7-20240904(eslint@9.9.0(jiti@1.21.6))
+        version: 5.1.0-rc-a03254bc-20240905(eslint@9.9.0(jiti@1.21.6))
       eslint-plugin-turbo:
         specifier: ^2.1.1
         version: 2.1.1(eslint@9.9.0(jiti@1.21.6))
@@ -2469,8 +2469,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9
 
-  eslint-plugin-react-hooks@5.1.0-rc-4c58fce7-20240904:
-    resolution: {integrity: sha512-PDoulHvydL8q8QhhyQx9y7c0Ot79D/o53+/6GG/9stROV2iBteNl/n8WNxwdcVtaSrFJ2BXd/M1U2fyjhelUzA==}
+  eslint-plugin-react-hooks@5.1.0-rc-a03254bc-20240905:
+    resolution: {integrity: sha512-MAQG2WZjBdVBz2mpyWz2l7piMjBoHrSaPiWAQqyJuwbmRRy5YHdVW/jkLXQcKWoct+U02AojaWh+EGKfsL1fgA==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
@@ -2643,6 +2643,13 @@ packages:
 
   fumadocs-core@13.4.6:
     resolution: {integrity: sha512-U/2HDCJDLnN+6w1C25UmUFjD1TwnHhGimTu2+aQjxMl65W9NciA36GKNreW5RM3LCVntXYhzMLZ25YwmCKdPTw==}
+    peerDependencies:
+      next: '>= 14.1.0'
+      react: '>= 18'
+      react-dom: '>= 18'
+
+  fumadocs-core@13.4.7:
+    resolution: {integrity: sha512-k9+TM1emdBZhm6FITdBlN71aGBT1zd9pvhRL7CjEdigCtV8Aug44h3pIMHDDhP6ZPhcsMHiHxf2Hw9gTpmeYQw==}
     peerDependencies:
       next: '>= 14.1.0'
       react: '>= 18'
@@ -6837,7 +6844,7 @@ snapshots:
       safe-regex-test: 1.0.3
       string.prototype.includes: 2.0.0
 
-  eslint-plugin-react-hooks@5.1.0-rc-4c58fce7-20240904(eslint@9.9.0(jiti@1.21.6)):
+  eslint-plugin-react-hooks@5.1.0-rc-a03254bc-20240905(eslint@9.9.0(jiti@1.21.6)):
     dependencies:
       eslint: 9.9.0(jiti@1.21.6)
 
@@ -7093,6 +7100,31 @@ snapshots:
       - '@types/react'
       - supports-color
 
+  fumadocs-core@13.4.7(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@formatjs/intl-localematcher': 0.5.4
+      '@shikijs/rehype': 1.16.2
+      '@shikijs/transformers': 1.16.2
+      flexsearch: 0.7.21
+      github-slugger: 2.0.0
+      image-size: 1.1.1
+      negotiator: 0.6.3
+      next: 14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      npm-to-yarn: 3.0.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-remove-scroll: 2.5.10(@types/react@18.3.3)(react@18.3.1)
+      remark: 15.0.1
+      remark-gfm: 4.0.0
+      remark-mdx: 3.0.1
+      scroll-into-view-if-needed: 3.1.0
+      shiki: 1.16.2
+      swr: 2.2.5(react@18.3.1)
+      unist-util-visit: 5.0.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - supports-color
+
   fumadocs-docgen@1.2.0(typescript@5.5.4):
     dependencies:
       estree-util-value-to-estree: 3.1.2
@@ -7105,13 +7137,13 @@ snapshots:
       - supports-color
       - typescript
 
-  fumadocs-mdx@9.0.4(fumadocs-core@13.4.6(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  fumadocs-mdx@9.0.4(fumadocs-core@13.4.7(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       '@mdx-js/mdx': 3.0.1
       cross-spawn: 7.0.3
       estree-util-value-to-estree: 3.1.2
       fast-glob: 3.3.2
-      fumadocs-core: 13.4.6(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      fumadocs-core: 13.4.7(@types/react@18.3.3)(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       gray-matter: 4.0.3
       next: 14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       zod: 3.23.8
