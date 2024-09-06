@@ -15,7 +15,7 @@ export const getConfig = async ({ cwd }: { cwd: string }) => {
 
   if (!config) return null;
 
-  return await resolveConfigPaths({ cwd, config });
+  return resolveConfigPaths({ cwd, config });
 };
 
 export const getRawConfig = async ({ cwd }: { cwd: string }) => {
@@ -32,7 +32,7 @@ export const getRawConfig = async ({ cwd }: { cwd: string }) => {
   }
 };
 
-export const resolveConfigPaths = async ({
+export const resolveConfigPaths = ({
   cwd,
   config,
 }: {
@@ -50,9 +50,9 @@ export const resolveConfigPaths = async ({
     resolvedPaths: {
       tailwindConfig: path.resolve(cwd, config.tailwind.config),
       tailwindCss: path.resolve(cwd, config.tailwind.css),
-      utils: await resolveImport(config.aliases.utils, tsConfig),
-      components: await resolveImport(config.aliases.components, tsConfig),
-      ui: await resolveImport(config.aliases.ui, tsConfig),
+      utils: resolveImport(config.aliases.utils, tsConfig),
+      components: resolveImport(config.aliases.components, tsConfig),
+      ui: resolveImport(config.aliases.ui, tsConfig),
     },
   });
 };
