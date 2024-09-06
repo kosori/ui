@@ -10,7 +10,7 @@ const DIR = path.resolve(__dirname, '../../../../packages/ui/src');
 const JSON_PATH = 'components/index.json';
 const OUTPUT_FILE_DIR = path.resolve(__dirname, '../../public/components');
 
-convertFilesToJson({
+await convertFilesToJson({
   dir: DIR,
   jsonPath: JSON_PATH,
   outputFileDir: OUTPUT_FILE_DIR,
