@@ -6,7 +6,7 @@ import { loadConfig } from 'tsconfig-paths';
 
 import type { Config, RawConfig } from '../schema';
 import { IGNORE } from '../config';
-import { getConfig, resolveConfigPaths } from './getConfig';
+import { getConfig, resolveConfigPaths } from './config';
 
 const _PROJECT_TYPES = [
   'next-app',
