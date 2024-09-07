@@ -15,3 +15,12 @@ export const initOptionsSchema = z.object({
   path: z.string().optional(),
   silent: z.boolean(),
 });
+
+export const component = z.object({
+  name: z.string(),
+  dependencies: z.array(z.string()).optional(),
+  required: z.array(z.string()).optional(),
+  type: z.literal('component:ui'),
+});
+
+export const components = z.array(component);
