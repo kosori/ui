@@ -1,9 +1,9 @@
 import * as p from '@clack/prompts';
 
 import { highlight } from '~/utils/highlight';
-import { getComponentsList } from './helpers/components';
+import { getComponentsIndex } from './helpers/components';
 
-const components = await getComponentsList();
+const components = await getComponentsIndex();
 
 export const componentsPrompts = {
   components: () =>
