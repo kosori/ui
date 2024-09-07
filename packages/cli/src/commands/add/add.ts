@@ -4,8 +4,12 @@ import * as p from '@clack/prompts';
 import { Command } from 'commander';
 import color from 'picocolors';
 
-import { fetchJson } from '~/utils/fetchJson';
 import { handleError } from '~/utils/handleError';
+import { highlight } from '~/utils/highlight';
+import { writeFiles } from '~/utils/writeFiles';
+import { getConfig } from '../init/helpers/config';
+import { getComponent } from './helpers/components';
+import { componentsPrompts } from './prompts';
 import { initOptionsSchema, itemsSchema, typeSchema } from './schema';
 
 export const add = new Command()
@@ -30,18 +34,56 @@ export const add = new Command()
       const options = initOptionsSchema.parse(opts);
       const cwd = path.resolve(options.cwd);
       const skip = options.yes;
+      const config = await getConfig({ cwd });
 
       if (!existsSync(cwd)) {
-        throw new Error(`Directory ${cwd} does not exist`);
+        throw new Error(`The path ${cwd} does not exist. Please try again.`);
+      }
+
+      if (!config) {
+        throw new Error(
+          `No config found in ${cwd}. Please run ${highlight('init ui')} first.`,
+        );
       }
 
       if (type === 'components') {
         p.intro(color.bgCyan(color.black(' Add component(s) ')));
 
-        p.outro(color.bgCyan(color.black(' Success! ')));
+        const { components: componentsToInstall } = await p.group(
+          componentsPrompts,
+          {
+            onCancel: () => {
+              p.cancel('Aborted!');
+              process.exit(1);
+            },
+          },
+        );
+
+        if (!skip) {
+          const shouldContinue = await p.confirm({
+            message: `Write components on ${highlight(config.resolvedPaths.ui)}?`,
+          });
+
+          if (shouldContinue === false) {
+            p.outro(color.bgCyan(color.black(' No components written! ')));
+            return;
+          }
+        }
+
+        console.log('🚀 ~ component:', await getComponent({ name: 'button' }));
+
+        const componentsInfo = componentsToInstall.map(async (component) => {
+          const result = await getComponent({ name: component as string });
+
+          return result;
+        });
+
+        // const componentsFormatted = componentsInfo.map((component) => ({ [`${component.name}.tsx`]: component.content }));
+
+        // await writeFiles({ dirPath: config.resolvedPaths.ui, overwrite: false, files: componentsFormatted });
       }
 
-      p.outro('🎉 Done!');
+      p.outro(color.bgCyan(color.black(' Success! ')));
     } catch (error) {
       handleError(error);
     }
