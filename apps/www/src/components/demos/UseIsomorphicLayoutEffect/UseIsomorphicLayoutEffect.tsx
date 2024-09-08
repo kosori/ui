@@ -1,3 +1,5 @@
+'use client';
+
 import { useIsomorphicLayoutEffect } from '~/hooks/use-isomorphic-layout-effect';
 
 export const UseIsomorphicLayoutEffectDemo = () => {
