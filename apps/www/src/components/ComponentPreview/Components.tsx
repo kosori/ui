@@ -1060,4 +1060,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'use-isomorphic-layout-effect': {
+    name: 'use-isomorphic-layout-effect',
+    type: 'hook:example',
+    component: lazy(() =>
+      import('../demos/UseIsomorphicLayoutEffect').then((module) => ({
+        default: module.UseIsomorphicLayoutEffectDemo,
+      })),
+    ),
+  },
 };
