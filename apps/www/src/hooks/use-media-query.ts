@@ -48,6 +48,7 @@ export const useMediaQuery = (
     handleChange();
 
     // Safari < 14 compatibility with addListener/removeListener
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (matchMedia.addListener) {
       matchMedia.addListener(handleChange);
     } else {
@@ -55,6 +56,7 @@ export const useMediaQuery = (
     }
 
     return () => {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (matchMedia.removeListener) {
         matchMedia.removeListener(handleChange);
       } else {
