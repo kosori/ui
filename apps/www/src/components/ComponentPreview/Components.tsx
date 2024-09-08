@@ -1069,4 +1069,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'use-media-query': {
+    name: 'use-media-query',
+    type: 'hook:example',
+    component: lazy(() =>
+      import('../demos/UseMediaQuery').then((module) => ({
+        default: module.UseMediaQueryDemo,
+      })),
+    ),
+  },
 };
