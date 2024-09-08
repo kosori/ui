@@ -1,0 +1,60 @@
+---
+title: useIsomorphicLayoutEffect
+description: Uses `useLayoutEffect` in SSR and `useEffect` in CSR.
+---
+
+<ComponentPreview name='use-isomorphic-layout-effect'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/UseIsomorphicLayoutEffect/UseIsomorphicLayoutEffect.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+<Steps>
+    
+  <Step>
+    ### Copy-paste the hook
+    
+    Copy and paste the hook code in a `.ts` file.
+
+    ```json doc-gen:file
+    {
+      "file": "./src/hooks/use-isomorphic-layout-effect.ts",
+      "codeblock": true
+    }
+    ```
+
+  </Step>
+
+</Steps>
+
+### Usage
+
+```ts
+import { useIsomorphicLayoutEffect } from '~/hooks/use-isomorphic-layout-effect';
+```
+
+```tsx
+useIsomorphicLayoutEffect(() => {
+  console.log(
+    "In the browser, I'm an `useLayoutEffect`, but in SSR, I'm an `useEffect`.",
+  );
+}, []);
+```
+
+## Details
+
+### Isomorphic behavior
+
+- `useIsomorphicLayoutEffect` ensures that `useLayoutEffect` is only used in client-side rendering (CSR) environments where the DOM is available. In server-side rendering (SSR), it safely falls back to `useEffect` to prevent React warnings.
+- This behavior helps avoid issues with server-side rendering since `useLayoutEffect` runs synchronously after all DOM mutations and can’t be used on the server where there’s no DOM.
+
+### Synchronous vs Asynchronous effects
+
+- On the client, the hook behaves like `useLayoutEffect`, meaning it runs synchronously after all DOM changes but before the browser has a chance to paint.
+  This is useful for tasks like measuring layout, handling scroll positions, or making DOM manipulations.
+- On the server, it behaves like `useEffect`, which is asynchronous and won’t block rendering. This allows the server to execute logic safely without worrying about DOM access.
