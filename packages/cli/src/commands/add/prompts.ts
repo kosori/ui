@@ -6,7 +6,7 @@ import { getComponentsIndex } from './helpers/components';
 const components = await getComponentsIndex();
 
 export const componentsPrompts = {
-  components: () =>
+  componentsToInstall: () =>
     p.multiselect({
       message: `Which ${highlight('components')} would you like to add?`,
       options: components.map(({ name, required }) => ({
