@@ -8,7 +8,8 @@ import { handleError } from '~/utils/handleError';
 import { highlight } from '~/utils/highlight';
 import { writeFiles } from '~/utils/writeFiles';
 import { getConfig } from '../init/helpers/config';
-import { getComponent } from './helpers/components';
+import { getComponents } from './helpers/components';
+import { formatContent } from './helpers/transform';
 import { componentsPrompts } from './prompts';
 import { initOptionsSchema, itemsSchema, typeSchema } from './schema';
 
@@ -70,17 +71,28 @@ export const add = new Command()
           }
         }
 
-        console.log('🚀 ~ component:', await getComponent({ name: 'button' }));
-
-        const componentsInfo = componentsToInstall.map(async (component) => {
-          const result = await getComponent({ name: component as string });
-
-          return result;
+        const components = await getComponents({
+          names: componentsToInstall as string[],
         });
 
-        // const componentsFormatted = componentsInfo.map((component) => ({ [`${component.name}.tsx`]: component.content }));
+        const componentsFormatted = await Promise.all(
+          components.map(async (component) => ({
+            ...component,
+            content: await formatContent({
+              name: `${component.name}.tsx`,
+              content: component.content,
+            }),
+          })),
+        );
 
-        // await writeFiles({ dirPath: config.resolvedPaths.ui, overwrite: false, files: componentsFormatted });
+        await writeFiles({
+          dirPath: config.resolvedPaths.ui,
+          overwrite: false,
+          files: componentsFormatted.map((component) => ({
+            name: `${component.name}.tsx`,
+            content: component.content,
+          })),
+        });
       }
 
       p.outro(color.bgCyan(color.black(' Success! ')));
