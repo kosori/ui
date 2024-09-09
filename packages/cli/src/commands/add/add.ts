@@ -34,6 +34,7 @@ export const add = new Command()
       const items = itemsSchema.parse(cliItems);
       const options = initOptionsSchema.parse(opts);
       const cwd = path.resolve(options.cwd);
+      const overwrite = options.overwrite;
       const skip = options.yes;
       const config = await getConfig({ cwd });
 
@@ -50,15 +51,14 @@ export const add = new Command()
       if (type === 'components') {
         p.intro(color.bgCyan(color.black(' Add component(s) ')));
 
-        const { components: componentsToInstall } = await p.group(
-          componentsPrompts,
-          {
-            onCancel: () => {
-              p.cancel('Aborted!');
-              process.exit(1);
-            },
-          },
-        );
+        const { componentsToInstall } = items.length
+          ? { componentsToInstall: items }
+          : await p.group(componentsPrompts, {
+              onCancel: () => {
+                p.cancel('Aborted!');
+                process.exit(1);
+              },
+            });
 
         if (!skip) {
           const shouldContinue = await p.confirm({
@@ -87,7 +87,7 @@ export const add = new Command()
 
         await writeFiles({
           dirPath: config.resolvedPaths.ui,
-          overwrite: false,
+          overwrite,
           files: componentsFormatted.map((component) => ({
             name: `${component.name}.tsx`,
             content: component.content,
