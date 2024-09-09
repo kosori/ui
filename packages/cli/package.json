@@ -48,6 +48,7 @@
   },
   "prettier": "@kosori/prettier-config",
   "dependencies": {
+    "@antfu/ni": "^0.23.0",
     "@clack/core": "^0.3.4",
     "@clack/prompts": "^0.7.0",
     "commander": "^12.1.0",
