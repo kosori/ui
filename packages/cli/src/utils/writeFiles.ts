@@ -8,9 +8,9 @@ export const writeFile = async ({
 }: {
   dirPath: string;
   overwrite: boolean;
-  file: [string, string];
+  file: { name: string; content: string };
 }) => {
-  const [name, content] = file;
+  const { name, content } = file;
   const filePath = path.resolve(dirPath, name);
   const exists = existsSync(filePath);
 
@@ -18,7 +18,7 @@ export const writeFile = async ({
     throw new Error(`File ${filePath} already exists`);
   }
 
-  await fs.writeFile(filePath, content);
+  await fs.writeFile(filePath, content, 'utf8');
 };
 
 export const writeFiles = async ({
@@ -28,9 +28,9 @@ export const writeFiles = async ({
 }: {
   dirPath: string;
   overwrite: boolean;
-  files: Record<string, string>;
+  files: { name: string; content: string }[];
 }) => {
-  for (const [name, content] of Object.entries(files)) {
-    await writeFile({ dirPath, overwrite, file: [name, content] });
+  for (const { name, content } of files) {
+    await writeFile({ dirPath, overwrite, file: { name, content } });
   }
 };
