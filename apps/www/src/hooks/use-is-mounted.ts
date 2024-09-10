@@ -4,6 +4,10 @@ import { useCallback, useEffect, useRef } from 'react';
  * A custom hook that provides a way to check if a component is currently mounted.
  *
  * @returns An object containing a function `isMounted` that returns a boolean
+ *
+ * @example
+ * const { isMounted } = useIsMounted();
+ * isMounted();
  */
 export const useIsMounted = () => {
   const isMounted = useRef(false);

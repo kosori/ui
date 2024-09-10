@@ -1,0 +1,6 @@
+{
+  "name": "label",
+  "type": "component:ui",
+  "dependencies": ["@radix-ui/react-label"],
+  "content": "'use client';\\n\\nimport type { VariantProps } from 'tailwind-variants';\\nimport { forwardRef } from 'react';\\nimport { Root } from '@radix-ui/react-label';\\nimport { clsx } from 'clsx/lite';\\nimport { tv } from 'tailwind-variants';\\n\\nconst labelStyles = tv({\\n  base: clsx(\\n    'text-sm font-medium leading-none',\\n    'peer-disabled:cursor-not-allowed peer-disabled:text-grey-solid',\\n  ),\\n});\\n\\ntype LabelRef = React.ElementRef<typeof Root>;\\ntype LabelRadixProps = React.ComponentPropsWithoutRef<typeof Root>;\\ntype LabelVariants = VariantProps<typeof labelStyles>;\\ntype LabelProps = LabelRadixProps & LabelVariants;\\n\\n/**\\n * Label component that provides a label for form elements.\\n *\\n * @param {LabelProps} props - The props for the Label component.\\n *\\n * @example\\n * <Label htmlFor='email'>Your email address</Label>\\n *\\n * @see {@link https://dub.sh/ui-label Label Docs} for further information.\\n */\\n\\nexport const Label = forwardRef<LabelRef, LabelProps>(\\n  ({ className, ...props }, ref) => (\\n    <Root ref={ref} className={labelStyles({ class: className })} {...props} />\\n  ),\\n);\\n\\nLabel.displayName = Root.displayName;\\n"
+}

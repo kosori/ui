@@ -1,0 +1,5 @@
+{
+  "name": "skeleton",
+  "type": "component:ui",
+  "content": "import { tv } from 'tailwind-variants';\\n\\nconst skeletonStyles = tv({\\n  base: 'animate-pulse rounded-md bg-grey-bg',\\n});\\n\\ntype SkeletonProps = React.HTMLAttributes<HTMLDivElement>;\\n\\n/**\\n * Skeleton component that serves as a placeholder for loading content.\\n *\\n * @param {SkeletonProps} props - The props for the Skeleton component.\\n *\\n * @example\\n * <Skeleton className='h-[20px] w-[100px] rounded-full' />\\n *\\n * @see {@link https://dub.sh/ui-skeleton Skeleton Docs} for further information.\\n */\\n\\nexport const Skeleton = ({ className, ...props }: SkeletonProps) => {\\n  return <div className={skeletonStyles({ className })} {...props} />;\\n};\\n"
+}
