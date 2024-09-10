@@ -4,8 +4,10 @@ import * as p from '@clack/prompts';
 import { Command } from 'commander';
 import color from 'picocolors';
 
+import { installDependencies } from '~/utils/dependencies';
 import { handleError } from '~/utils/handleError';
 import { highlight } from '~/utils/highlight';
+import { getPackageManager } from '~/utils/package';
 import { writeFiles } from '~/utils/writeFiles';
 import { getConfig } from '../init/helpers/config';
 import { getComponents } from './helpers/components';
@@ -60,6 +62,10 @@ export const add = new Command()
               },
             });
 
+        const components = await getComponents({
+          names: componentsToInstall as string[],
+        });
+
         if (!skip) {
           const shouldContinue = await p.confirm({
             message: `Write components on ${highlight(config.resolvedPaths.ui)}?`,
@@ -70,10 +76,6 @@ export const add = new Command()
             return;
           }
         }
-
-        const components = await getComponents({
-          names: componentsToInstall as string[],
-        });
 
         const componentsFormatted = await Promise.all(
           components.map(async (component) => ({
@@ -92,6 +94,31 @@ export const add = new Command()
             name: `${component.name}.tsx`,
             content: component.content,
           })),
+        });
+
+        if (!skip) {
+          const shouldContinue = await p.confirm({
+            message: `Install the dependencies?`,
+          });
+
+          if (shouldContinue === false) {
+            p.outro(color.bgCyan(color.black(' No dependencies installed! ')));
+            return;
+          }
+        }
+
+        const dependencies = Array.from(
+          new Set(
+            components.flatMap((component) => component.dependencies ?? []),
+          ),
+        );
+
+        const packageManager = await getPackageManager({ targetDir: cwd });
+
+        await installDependencies({
+          packageManager,
+          dependencies,
+          targetDir: cwd,
         });
       }
 
