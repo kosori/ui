@@ -27,5 +27,6 @@
     "turbo": "^2.1.1",
     "typescript": "catalog:"
   },
-  "prettier": "@kosori/prettier-config"
+  "prettier": "@kosori/prettier-config",
+  "version": "0.1.0"
 }
