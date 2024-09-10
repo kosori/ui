@@ -53,73 +53,86 @@ export const add = new Command()
       if (type === 'components') {
         p.intro(color.bgCyan(color.black(' Add component(s) ')));
 
-        const { componentsToInstall } = items.length
-          ? { componentsToInstall: items }
-          : await p.group(componentsPrompts, {
-              onCancel: () => {
-                p.cancel('Aborted!');
-                process.exit(1);
-              },
+        try {
+          const spin = p.spinner();
+          const { componentsToInstall } = items.length
+            ? { componentsToInstall: items }
+            : await p.group(componentsPrompts, {
+                onCancel: () => {
+                  p.cancel('Aborted!');
+                  process.exit(1);
+                },
+              });
+
+          const components = await getComponents({
+            names: componentsToInstall as string[],
+          });
+
+          if (!skip) {
+            const shouldContinue = await p.confirm({
+              message: `Write components on ${highlight(config.resolvedPaths.ui)}?`,
             });
 
-        const components = await getComponents({
-          names: componentsToInstall as string[],
-        });
-
-        if (!skip) {
-          const shouldContinue = await p.confirm({
-            message: `Write components on ${highlight(config.resolvedPaths.ui)}?`,
-          });
-
-          if (shouldContinue === false) {
-            p.outro(color.bgCyan(color.black(' No components written! ')));
-            return;
+            if (shouldContinue === false) {
+              p.outro(color.bgCyan(color.black(' No components written! ')));
+              return;
+            }
           }
-        }
 
-        const componentsFormatted = await Promise.all(
-          components.map(async (component) => ({
-            ...component,
-            content: await formatContent({
+          const componentsFormatted = await Promise.all(
+            components.map(async (component) => ({
+              ...component,
+              content: await formatContent({
+                name: `${component.name}.tsx`,
+                content: component.content,
+              }),
+            })),
+          );
+
+          spin.start();
+          spin.message('Writing components...');
+          await writeFiles({
+            dirPath: config.resolvedPaths.ui,
+            overwrite,
+            files: componentsFormatted.map((component) => ({
               name: `${component.name}.tsx`,
               content: component.content,
-            }),
-          })),
-        );
-
-        await writeFiles({
-          dirPath: config.resolvedPaths.ui,
-          overwrite,
-          files: componentsFormatted.map((component) => ({
-            name: `${component.name}.tsx`,
-            content: component.content,
-          })),
-        });
-
-        if (!skip) {
-          const shouldContinue = await p.confirm({
-            message: `Install the dependencies?`,
+            })),
           });
+          spin.stop('Components written!');
 
-          if (shouldContinue === false) {
-            p.outro(color.bgCyan(color.black(' No dependencies installed! ')));
-            return;
+          if (!skip) {
+            const shouldContinue = await p.confirm({
+              message: `Install the dependencies?`,
+            });
+
+            if (shouldContinue === false) {
+              p.outro(
+                color.bgCyan(color.black(' No dependencies installed! ')),
+              );
+              return;
+            }
           }
+
+          const dependencies = Array.from(
+            new Set(
+              components.flatMap((component) => component.dependencies ?? []),
+            ),
+          );
+
+          const packageManager = await getPackageManager({ targetDir: cwd });
+
+          spin.start();
+          spin.message('Installing dependencies...');
+          await installDependencies({
+            packageManager,
+            dependencies,
+            targetDir: cwd,
+          });
+          spin.stop('Dependencies installed!');
+        } catch (error) {
+          console.error(error);
         }
-
-        const dependencies = Array.from(
-          new Set(
-            components.flatMap((component) => component.dependencies ?? []),
-          ),
-        );
-
-        const packageManager = await getPackageManager({ targetDir: cwd });
-
-        await installDependencies({
-          packageManager,
-          dependencies,
-          targetDir: cwd,
-        });
       }
 
       p.outro(color.bgCyan(color.black(' Success! ')));
