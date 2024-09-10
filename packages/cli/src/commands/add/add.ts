@@ -10,7 +10,7 @@ import { highlight } from '~/utils/highlight';
 import { getPackageManager } from '~/utils/package';
 import { writeFiles } from '~/utils/writeFiles';
 import { getConfig } from '../init/helpers/config';
-import { getComponents } from './helpers/components';
+import { getComponents, getComponentsIndex } from './helpers/components';
 import { formatContent } from './helpers/transform';
 import { componentsPrompts } from './prompts';
 import { initOptionsSchema, itemsSchema, typeSchema } from './schema';
@@ -51,18 +51,31 @@ export const add = new Command()
       }
 
       if (type === 'components') {
-        p.intro(color.bgCyan(color.black(' Add component(s) ')));
+        p.intro(
+          color.bgCyan(
+            color.black(` Add ${options.all ? 'all' : ''} component(s) `),
+          ),
+        );
 
         try {
           const spin = p.spinner();
-          const { componentsToInstall } = items.length
-            ? { componentsToInstall: items }
-            : await p.group(componentsPrompts, {
-                onCancel: () => {
-                  p.cancel('Aborted!');
-                  process.exit(1);
-                },
-              });
+          const componentsIndex = await getComponentsIndex();
+
+          const componentsToInstall = options.all
+            ? componentsIndex.map(({ name }) => name)
+            : items.length
+              ? items
+              : (
+                await p.group(
+                  componentsPrompts({ components: componentsIndex }),
+                  {
+                    onCancel: () => {
+                      p.cancel('Aborted!');
+                      process.exit(1);
+                    },
+                  },
+                )
+              ).componentsToInstall;
 
           const components = await getComponents({
             names: componentsToInstall as string[],
@@ -93,7 +106,8 @@ export const add = new Command()
           spin.message('Writing components...');
           await writeFiles({
             dirPath: config.resolvedPaths.ui,
-            overwrite,
+            // NOTE: we overwrite all the files if the user wants to add all the components
+            overwrite: options.all ? true : overwrite,
             files: componentsFormatted.map((component) => ({
               name: `${component.name}.tsx`,
               content: component.content,
