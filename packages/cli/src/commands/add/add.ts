@@ -51,6 +51,7 @@ export const add = new Command()
       }
 
       if (type === 'components') {
+        const componentsIndex = await getComponentsIndex();
         p.intro(
           color.bgCyan(
             color.black(` Add ${options.all ? 'all' : ''} component(s) `),
@@ -59,7 +60,6 @@ export const add = new Command()
 
         try {
           const spin = p.spinner();
-          const componentsIndex = await getComponentsIndex();
 
           const componentsToInstall = options.all
             ? componentsIndex.map(({ name }) => name)
