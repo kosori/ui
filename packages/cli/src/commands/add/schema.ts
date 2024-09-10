@@ -23,6 +23,7 @@ export const indexSingle = z.object({
   type: z.literal('component:ui'),
 });
 
+export type Index = z.infer<typeof index>;
 export const index = z.array(indexSingle);
 
 export const component = indexSingle.extend({ content: z.string() });
