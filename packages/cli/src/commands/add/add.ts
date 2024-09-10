@@ -11,7 +11,7 @@ import { getPackageManager } from '~/utils/package';
 import { writeFiles } from '~/utils/writeFiles';
 import { getConfig } from '../init/helpers/config';
 import { getComponents, getComponentsIndex } from './helpers/components';
-import { formatContent } from './helpers/transform';
+import { transform } from './helpers/transform';
 import { componentsPrompts } from './prompts';
 import { initOptionsSchema, itemsSchema, typeSchema } from './schema';
 
@@ -95,7 +95,8 @@ export const add = new Command()
           const componentsFormatted = await Promise.all(
             components.map(async (component) => ({
               ...component,
-              content: await formatContent({
+              content: await transform({
+                config,
                 name: `${component.name}.tsx`,
                 content: component.content,
               }),
