@@ -1,5 +1,5 @@
 {
-  "name": "create-t3-turbo",
+  "name": "kosori",
   "private": true,
   "engines": {
     "node": ">=20.17.0"
@@ -27,5 +27,6 @@
     "turbo": "^2.1.1",
     "typescript": "catalog:"
   },
-  "prettier": "@kosori/prettier-config"
+  "prettier": "@kosori/prettier-config",
+  "version": "0.1.1"
 }

@@ -23,7 +23,7 @@ export const getJson = async (path: string) => {
   try {
     const res = await fetch(`https://kosori.codingcodax.dev/${path}`);
 
-    return res.json();
+    return res.json() as unknown;
   } catch (error) {
     console.error(error);
     throw new Error('Failed to fetch JSON data');
