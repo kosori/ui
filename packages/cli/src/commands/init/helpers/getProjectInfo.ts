@@ -46,7 +46,7 @@ export const getProjectConfig = async ({
     },
   };
 
-  return await resolveConfigPaths({ cwd, config });
+  return resolveConfigPaths({ cwd, config });
 };
 
 export const getProjectInfo = async () => {
