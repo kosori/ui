@@ -1,4 +1,4 @@
-import { existsSync, promises as fs } from 'fs';
+import { promises as fs } from 'fs';
 import { tmpdir } from 'os';
 import path from 'path';
 import { Project, ScriptKind } from 'ts-morph';
