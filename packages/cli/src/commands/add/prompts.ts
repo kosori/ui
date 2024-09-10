@@ -1,11 +1,9 @@
 import * as p from '@clack/prompts';
 
+import type { Index } from './schema';
 import { highlight } from '~/utils/highlight';
-import { getComponentsIndex } from './helpers/components';
 
-const components = await getComponentsIndex();
-
-export const componentsPrompts = {
+export const componentsPrompts = ({ components }: { components: Index }) => ({
   componentsToInstall: () =>
     p.multiselect({
       message: `Which ${highlight('components')} would you like to add?`,
@@ -16,4 +14,4 @@ export const componentsPrompts = {
       })),
       required: true,
     }),
-};
+});
