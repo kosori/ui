@@ -66,16 +66,16 @@ export const add = new Command()
             : items.length
               ? items
               : (
-                await p.group(
-                  componentsPrompts({ components: componentsIndex }),
-                  {
-                    onCancel: () => {
-                      p.cancel('Aborted!');
-                      process.exit(1);
+                  await p.group(
+                    componentsPrompts({ components: componentsIndex }),
+                    {
+                      onCancel: () => {
+                        p.cancel('Aborted!');
+                        process.exit(1);
+                      },
                     },
-                  },
-                )
-              ).componentsToInstall;
+                  )
+                ).componentsToInstall;
 
           const components = await getComponents({
             names: componentsToInstall as string[],
