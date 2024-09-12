@@ -249,7 +249,7 @@ export const colors = [
   { name: 'Orange', type: ['primary', 'warning'], color: 'orange' },
   { name: 'Amber', type: ['primary', 'warning'], color: 'amber' },
   { name: 'Yellow', type: ['primary', 'warning'], color: 'yellow' },
-  { name: 'Lime', type: ['primary', 'success'], color: 'lime' },
+  { name: 'Lime', type: ['primary'], color: 'lime' },
   { name: 'Mint', type: ['primary', 'success'], color: 'mint' },
   { name: 'Sky', type: ['primary', 'info'], color: 'sky' },
 ];
