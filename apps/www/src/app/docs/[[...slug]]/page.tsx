@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ExternalLinkIcon } from '@radix-ui/react-icons';
 import { clsx } from 'clsx';
@@ -5,14 +6,13 @@ import { DocsBody, DocsPage } from 'fumadocs-ui/page';
 
 import { Badge } from '@kosori/ui/badge';
 
-import { docs } from '~/app/source';
+import { source } from '~/app/source';
+import { MDXComponents } from '~/components/Mdx';
 import { versions } from '~/config/versions';
 import { Contribute } from '../_components/Contribute';
 
 export const generateStaticParams = () => {
-  return docs.getPages().map((page) => ({
-    slug: page.slugs,
-  }));
+  return source.generateParams();
 };
 
 export const generateMetadata = ({
@@ -20,34 +20,31 @@ export const generateMetadata = ({
 }: {
   params: { slug?: string[] };
 }) => {
-  const page = docs.getPage(params.slug);
-
-  if (page == null) notFound();
+  const page = source.getPage(params.slug);
+  if (!page) notFound();
 
   return {
-    title: `${page.data.title} - kōsori`,
+    title: page.data.title,
     description: page.data.description,
-    links: page.data.links,
-    dependencies: page.data.dependencies,
-  };
+  } satisfies Metadata;
 };
 
 const Page = ({ params }: { params: { slug?: string[] } }) => {
-  const page = docs.getPage(params.slug);
+  const page = source.getPage(params.slug);
 
   if (page == null) {
     notFound();
   }
 
   const path = `apps/www/content/docs/${page.file.path}`;
-  const MDX = page.data.exports.default;
+  const MDX = page.data.body;
 
   return (
     <DocsPage
       full={page.data.full}
       tableOfContent={{ footer: <Contribute path={path} /> }}
       tableOfContentPopover={{ footer: <Contribute path={path} /> }}
-      toc={page.data.exports.toc}
+      toc={page.data.toc}
     >
       <DocsBody>
         <h1 className='mb-0'>{page.data.title}</h1>
@@ -121,7 +118,8 @@ const Page = ({ params }: { params: { slug?: string[] } }) => {
             </div>
           </div>
         )}
-        <MDX />
+
+        <MDX components={MDXComponents} />
       </DocsBody>
     </DocsPage>
   );
