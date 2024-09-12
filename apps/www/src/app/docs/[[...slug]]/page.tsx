@@ -48,6 +48,77 @@ const Page = ({ params }: { params: { slug?: string[] } }) => {
     >
       <DocsBody>
         <h1 className='mb-0'>{page.data.title}</h1>
+        <p
+          className={
+            page.data.links || page.data.dependencies ? 'my-2' : 'mb-12 mt-2'
+          }
+        >
+          {page.data.description}
+        </p>
+
+        {page.data.links && (
+          <div
+            className={clsx(
+              'not-prose space-x-2',
+              page.data.dependencies ? 'mb-4' : 'mb-12',
+            )}
+          >
+            {page.data.links.doc && (
+              <a
+                href={page.data.links.doc}
+                rel='noopener noreferrer'
+                target='_blank'
+              >
+                <Badge>
+                  Docs <ExternalLinkIcon className='ml-1.5 size-3' />
+                </Badge>
+              </a>
+            )}
+            {page.data.links.api && (
+              <a
+                href={page.data.links.api}
+                rel='noopener noreferrer'
+                target='_blank'
+              >
+                <Badge>
+                  API Reference <ExternalLinkIcon className='ml-1.5 size-3' />
+                </Badge>
+              </a>
+            )}
+          </div>
+        )}
+
+        {page.data.dependencies && (
+          <div className='not-prose mb-12 space-x-2'>
+            <div
+              className={clsx(
+                'flex flex-col items-start gap-4 border-t pt-4',
+                'min-[480px]:flex-row min-[480px]:items-center',
+              )}
+            >
+              <span className='text-fd-muted-foreground text-xs'>
+                Dependencies
+              </span>
+
+              <div className='flex flex-wrap gap-2'>
+                {page.data.dependencies.map((dep) => (
+                  <a
+                    key={dep}
+                    href={`https://www.npmjs.com/package/${dep}/v/${versions[dep]}`}
+                    rel='noopener noreferrer'
+                    target='_blank'
+                  >
+                    <Badge size='small' variant='outline'>
+                      {dep}: v{versions[dep]}{' '}
+                      <ExternalLinkIcon className='ml-1.5 size-2.5' />
+                    </Badge>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         <MDX components={MDXComponents} />
       </DocsBody>
     </DocsPage>
