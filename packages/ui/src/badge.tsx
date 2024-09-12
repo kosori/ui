@@ -27,17 +27,18 @@ const badgeStyles = tv({
     {
       intent: 'default',
       variant: 'solid',
-      class: 'bg-grey-text-contrast text-grey-base',
+      class: 'bg-primary-solid text-primary-base',
     },
     {
       intent: 'default',
       variant: 'outline',
-      class: 'bg-grey-base border text-grey-text-contrast',
+      class:
+        'bg-primary-base border border-primary-line text-primary-text-contrast',
     },
     {
       intent: 'default',
       variant: 'soft',
-      class: 'bg-grey-bg text-grey-text-contrast',
+      class: 'bg-primary-bg text-primary-text-contrast',
     },
     {
       intent: 'info',
