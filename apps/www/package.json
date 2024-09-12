@@ -13,7 +13,8 @@
     "lint": "eslint",
     "start": "pnpm with-env next start",
     "typecheck": "tsc --noEmit",
-    "with-env": "dotenv -e ../../.env --"
+    "with-env": "dotenv -e ../../.env --",
+    "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
     "@kosori/ui": "workspace:*",
