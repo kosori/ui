@@ -4,7 +4,7 @@ import { CodeSandboxLogoIcon } from '@radix-ui/react-icons';
 import { RootToggle } from 'fumadocs-ui/components/layout/root-toggle';
 import { AppWindowMacIcon, LayoutTemplateIcon } from 'lucide-react';
 
-import { docs } from '~/app/source';
+import { source } from '~/app/source';
 import { Logo } from '~/components/Layout/Logo';
 import { NavModes } from '~/components/Layout/NavModes';
 import { modes } from '~/config/modes';
@@ -40,7 +40,7 @@ export const baseOptions: HomeLayoutProps = {
 // docs layout configuration
 export const docsOptions: DocsLayoutProps = {
   ...baseOptions,
-  tree: docs.pageTree,
+  tree: source.pageTree,
   nav: {
     ...baseOptions.nav,
     enableSearch: true,
