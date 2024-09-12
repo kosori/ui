@@ -37,7 +37,7 @@ export const ComponentPreview = ({ name, children }: Props) => {
         </Tab>
 
         <Tab className='p-0' value='Code'>
-          <div className='[&_figure]:my-0 [&_figure]:rounded-xl [&_figure]:border-0'>
+          <div className='[&_figure]:my-0 [&_figure]:rounded-b-xl [&_figure]:rounded-t-none [&_figure]:border-0'>
             {children}
           </div>
         </Tab>
