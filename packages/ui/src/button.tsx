@@ -19,6 +19,9 @@ export const buttonStyles = tv({
     },
     intent: {
       default: '',
+      info: '',
+      success: '',
+      warning: '',
       error: '',
     },
     size: {
@@ -59,24 +62,157 @@ export const buttonStyles = tv({
       variant: 'outline',
       intent: 'default',
       class: clsx(
-        'border border-grey-border bg-grey-base text-grey-text-contrast',
-        'hover:border-grey-border-hover hover:bg-grey-bg-subtle',
-        'active:bg-grey-bg',
-        'focus-visible:ring-grey-focus-ring',
-        'disabled:border-grey-line disabled:bg-grey-base disabled:text-grey-solid',
+        'border border-primary-border bg-primary-base text-primary-solid',
+        'hover:border-primary-border-hover hover:bg-primary-bg-subtle',
+        'active:bg-primary-bg',
+        'focus-visible:ring-primary-focus-ring',
+        'disabled:border-primary-line disabled:bg-primary-base disabled:text-primary-line',
       ),
     },
     {
       variant: 'ghost',
       intent: 'default',
       class: clsx(
-        'text-grey-text-contrast',
-        'hover:bg-grey-bg-hover',
-        'active:bg-grey-bg-active',
-        'focus-visible:ring-grey-focus-ring',
-        'disabled:bg-transparent disabled:text-grey-solid',
+        'text-primary-text-contrast',
+        'hover:bg-primary-bg-hover',
+        'active:bg-primary-bg-active',
+        'focus-visible:ring-primary-focus-ring',
+        'disabled:bg-transparent disabled:text-primary-solid',
       ),
     },
+
+    {
+      variant: 'solid',
+      intent: 'info',
+      class: clsx(
+        'bg-info-solid text-white',
+        'hover:bg-info-solid-hover',
+        'focus-visible:ring-info-focus-ring',
+        'disabled:bg-info-border',
+      ),
+    },
+    {
+      variant: 'soft',
+      intent: 'info',
+      class: clsx(
+        'bg-info-bg text-info-solid',
+        'hover:bg-info-bg-hover',
+        'active:bg-info-bg-active',
+        'focus-visible:ring-info-focus-ring',
+        'disabled:bg-info-bg-subtle disabled:text-info-line',
+      ),
+    },
+    {
+      variant: 'outline',
+      intent: 'info',
+      class: clsx(
+        'border border-info-border bg-info-base text-info-solid',
+        'hover:border-info-border-hover hover:bg-info-bg-subtle',
+        'active:bg-info-bg',
+        'focus-visible:ring-info-focus-ring',
+        'disabled:border-info-line disabled:bg-info-base disabled:text-info-line',
+      ),
+    },
+    {
+      variant: 'ghost',
+      intent: 'info',
+      class: clsx(
+        'text-info-solid',
+        'hover:bg-info-bg',
+        'active:bg-info-bg-hover',
+        'focus-visible:ring-info-focus-ring',
+        'disabled:bg-transparent disabled:text-info-line',
+      ),
+    },
+
+    {
+      variant: 'solid',
+      intent: 'success',
+      class: clsx(
+        'bg-success-solid text-white',
+        'hover:bg-success-solid-hover',
+        'focus-visible:ring-success-focus-ring',
+        'disabled:bg-success-border',
+      ),
+    },
+    {
+      variant: 'soft',
+      intent: 'success',
+      class: clsx(
+        'bg-success-bg text-success-solid',
+        'hover:bg-success-bg-hover',
+        'active:bg-success-bg-active',
+        'focus-visible:ring-success-focus-ring',
+        'disabled:bg-success-bg-subtle disabled:text-success-line',
+      ),
+    },
+    {
+      variant: 'outline',
+      intent: 'success',
+      class: clsx(
+        'border border-success-border bg-success-base text-success-solid',
+        'hover:border-success-border-hover hover:bg-success-bg-subtle',
+        'active:bg-success-bg',
+        'focus-visible:ring-success-focus-ring',
+        'disabled:border-success-line disabled:bg-success-base disabled:text-success-line',
+      ),
+    },
+    {
+      variant: 'ghost',
+      intent: 'success',
+      class: clsx(
+        'text-success-solid',
+        'hover:bg-success-bg',
+        'active:bg-success-bg-hover',
+        'focus-visible:ring-success-focus-ring',
+        'disabled:bg-transparent disabled:text-success-line',
+      ),
+    },
+
+    {
+      variant: 'solid',
+      intent: 'warning',
+      class: clsx(
+        'bg-warning-solid text-white',
+        'hover:bg-success-warning-hover',
+        'focus-visible:ring-warning-focus-ring',
+        'disabled:bg-warning-border',
+      ),
+    },
+    {
+      variant: 'soft',
+      intent: 'warning',
+      class: clsx(
+        'bg-warning-bg text-warning-solid',
+        'hover:bg-warning-bg-hover',
+        'active:bg-warning-bg-active',
+        'focus-visible:ring-warning-focus-ring',
+        'disabled:bg-warning-bg-subtle disabled:text-warning-line',
+      ),
+    },
+    {
+      variant: 'outline',
+      intent: 'warning',
+      class: clsx(
+        'border border-warning-border bg-warning-base text-warning-solid',
+        'hover:border-warning-border-hover hover:bg-warning-bg-subtle',
+        'active:bg-warning-bg',
+        'focus-visible:ring-warning-focus-ring',
+        'disabled:border-warning-line disabled:bg-warning-base disabled:text-warning-line',
+      ),
+    },
+    {
+      variant: 'ghost',
+      intent: 'warning',
+      class: clsx(
+        'text-warning-solid',
+        'hover:bg-warning-bg',
+        'active:bg-warning-bg-hover',
+        'focus-visible:ring-warning-focus-ring',
+        'disabled:bg-transparent disabled:text-warning-line',
+      ),
+    },
+
     {
       variant: 'solid',
       intent: 'error',

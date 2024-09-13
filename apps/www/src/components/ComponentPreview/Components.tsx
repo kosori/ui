@@ -178,15 +178,6 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
-  'button-variants': {
-    name: 'button-variants',
-    type: 'component:example',
-    component: lazy(() =>
-      import('../demos/Button').then((module) => ({
-        default: module.ButtonVariantsDemo,
-      })),
-    ),
-  },
   calendar: {
     name: 'calendar',
     type: 'component:example',
