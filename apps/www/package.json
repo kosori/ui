@@ -24,7 +24,7 @@
     "@trpc/client": "catalog:",
     "@trpc/react-query": "catalog:",
     "@trpc/server": "catalog:",
-    "embla-carousel-autoplay": "^8.2.1",
+    "embla-carousel-autoplay": "^8.3.0",
     "fumadocs-core": "^13.4.10",
     "fumadocs-docgen": "^1.2.0",
     "fumadocs-mdx": "^10.0.2",
