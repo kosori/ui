@@ -60,7 +60,7 @@ export const init = new Command()
           }
 
           spin.start();
-          spin.message('Creating config...');
+          spin.message('Creating config');
           await createConfig({ cwd, config });
           spin.stop('Config created!');
 
@@ -76,7 +76,7 @@ export const init = new Command()
           }
 
           spin.start();
-          spin.message('Writing templates...');
+          spin.message('Writing templates');
           await writeTemplates({ projectConfig });
           spin.stop('Files written!');
         } catch (error) {

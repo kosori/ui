@@ -104,7 +104,7 @@ export const add = new Command()
           );
 
           spin.start();
-          spin.message('Writing components...');
+          spin.message('Writing components');
           await writeFiles({
             dirPath: config.resolvedPaths.ui,
             // NOTE: we overwrite all the files if the user wants to add all the components
@@ -138,7 +138,7 @@ export const add = new Command()
           const packageManager = await getPackageManager({ targetDir: cwd });
 
           spin.start();
-          spin.message('Installing dependencies...');
+          spin.message('Installing dependencies');
           await installDependencies({
             packageManager,
             dependencies,
