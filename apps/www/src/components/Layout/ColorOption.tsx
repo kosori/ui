@@ -55,7 +55,7 @@ export const ColorOption = ({ children, align, type, dataKey }: Props) => {
                 className={clsx(
                   'w-full justify-start',
                   selectedColor === color.color &&
-                    'bg-grey-bg hover:bg-grey-bg',
+                  'bg-primary-bg hover:bg-primary-bg',
                 )}
                 size='small'
                 variant='outline'

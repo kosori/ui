@@ -59,7 +59,7 @@ export const BorderRadius = () => {
               key={name}
               className={clsx(
                 'w-full justify-start rounded-none',
-                config.radius === value && 'bg-grey-bg hover:bg-grey-bg',
+                config.radius === value && 'bg-primary-bg hover:bg-primary-bg',
               )}
               size='small'
               style={{ borderRadius: size }}
