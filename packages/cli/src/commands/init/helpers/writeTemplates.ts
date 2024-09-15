@@ -37,7 +37,7 @@ export const writeTemplates = async ({
 
   // Write cn file
   await fs.writeFile(
-    `${projectConfig.resolvedPaths.utils}cn.ts`,
+    `${projectConfig.resolvedPaths.utils}/cn.ts`,
     UTILS,
     'utf8',
   );
