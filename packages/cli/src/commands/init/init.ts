@@ -4,8 +4,11 @@ import * as p from '@clack/prompts';
 import { Command } from 'commander';
 import color from 'picocolors';
 
+import { installDependencies } from '~/utils/dependencies';
 import { handleError } from '~/utils/handleError';
 import { highlight } from '~/utils/highlight';
+import { getPackageManager } from '~/utils/package';
+import { INITIAL_DEPENDENCIES } from './config';
 import { createConfig } from './helpers/createConfig';
 import { existsConfig, tailwindExists } from './helpers/exists';
 import { getProjectConfig } from './helpers/getProjectInfo';
@@ -79,6 +82,29 @@ export const init = new Command()
           spin.message('Writing templates');
           await writeTemplates({ projectConfig });
           spin.stop('Files written!');
+
+          if (!skip) {
+            const shouldContinue = await p.confirm({
+              message: `Install the dependencies?`,
+            });
+
+            if (shouldContinue === false) {
+              p.outro(
+                color.bgCyan(color.black(' No dependencies installed! ')),
+              );
+              return;
+            }
+
+            const packageManager = await getPackageManager({ targetDir: cwd });
+            spin.start();
+            spin.message('Installing dependencies');
+            await installDependencies({
+              packageManager,
+              dependencies: INITIAL_DEPENDENCIES,
+              targetDir: cwd,
+            });
+            spin.stop('Dependencies installed!');
+          }
         } catch (error) {
           console.error(error);
         }
