@@ -148,6 +148,10 @@ export const GLOBALS_CSS = `@import "@radix-ui/colors/red.css";
 @import "@radix-ui/colors/grass-dark.css";
 @import "@radix-ui/colors/yellow.css";
 @import "@radix-ui/colors/yellow-dark.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
  
 :root {
   --radius: 0.25rem;
