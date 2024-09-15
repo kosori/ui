@@ -4,6 +4,8 @@
   "version": "0.1.1",
   "scripts": {
     "build": "turbo run build",
+    "build:ui": "turbo run build:ui",
+    "build:versions": "turbo run build:versions",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
     "dev": "turbo watch dev",
