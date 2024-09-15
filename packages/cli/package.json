@@ -2,31 +2,18 @@
   "name": "@kosori/cli",
   "version": "0.1.2",
   "description": "CLI for @kosori",
-  "publishConfig": {
-    "access": "public"
-  },
-  "type": "module",
-  "files": [
-    "dist"
-  ],
-  "bin": "./dist/index.js",
-  "exports": "./dist/index.js",
   "license": "MIT",
-  "author": {
-    "name": "Alexis Guzman",
-    "url": "https://www.codingcodax.dev"
-  },
+  "author": "Alexis Guzman (https://www.codingcodax.dev)",
   "repository": {
     "type": "git",
     "url": "https://github.com/kosori/ui.git",
     "directory": "packages/cli"
   },
-  "keywords": [
-    "components",
-    "ui",
-    "tailwind",
-    "radix-ui",
-    "cli"
+  "type": "module",
+  "exports": "./dist/index.js",
+  "bin": "./dist/index.js",
+  "files": [
+    "dist"
   ],
   "scripts": {
     "build": "tsup",
@@ -34,22 +21,11 @@
     "dev": "pnpx tsx src/index.ts",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit",
     "pub:beta": "pnpm build && pnpm publish --no-git-checks --access public --tag beta",
     "pub:next": "pnpm build && pnpm publish --no-git-checks --access public --tag next",
-    "pub:release": "pnpm build && pnpm publish --access public"
+    "pub:release": "pnpm build && pnpm publish --access public",
+    "typecheck": "tsc --noEmit"
   },
-  "devDependencies": {
-    "@kosori/eslint-config": "workspace:*",
-    "@kosori/prettier-config": "workspace:*",
-    "@kosori/tsconfig": "workspace:*",
-    "@types/fs-extra": "^11.0.4",
-    "eslint": "catalog:",
-    "prettier": "catalog:",
-    "tsup": "^8.2.4",
-    "typescript": "catalog:"
-  },
-  "prettier": "@kosori/prettier-config",
   "dependencies": {
     "@antfu/ni": "^0.23.0",
     "@clack/core": "^0.3.4",
@@ -63,5 +39,26 @@
     "picocolors": "^1.1.0",
     "ts-morph": "^23.0.0",
     "tsconfig-paths": "^4.2.0"
-  }
+  },
+  "devDependencies": {
+    "@kosori/eslint-config": "workspace:*",
+    "@kosori/prettier-config": "workspace:*",
+    "@kosori/tsconfig": "workspace:*",
+    "@types/fs-extra": "^11.0.4",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "tsup": "^8.2.4",
+    "typescript": "catalog:"
+  },
+  "keywords": [
+    "cli",
+    "components",
+    "radix-ui",
+    "tailwind",
+    "ui"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "prettier": "@kosori/prettier-config"
 }

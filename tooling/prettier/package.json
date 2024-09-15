@@ -1,6 +1,6 @@
 {
-  "name": "@kosori/prettier-config",
   "private": true,
+  "name": "@kosori/prettier-config",
   "version": "0.1.0",
   "type": "module",
   "exports": {

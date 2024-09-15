@@ -1,6 +1,6 @@
 {
-  "name": "@kosori/eslint-config",
   "private": true,
+  "name": "@kosori/eslint-config",
   "version": "0.3.0",
   "type": "module",
   "exports": {

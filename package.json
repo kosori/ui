@@ -1,10 +1,7 @@
 {
-  "name": "kosori",
   "private": true,
-  "engines": {
-    "node": ">=20.17.0"
-  },
-  "packageManager": "pnpm@9.10.0",
+  "name": "kosori",
+  "version": "0.1.1",
   "scripts": {
     "build": "turbo run build",
     "clean": "git clean -xdf node_modules",
@@ -13,10 +10,10 @@
     "dev:www": "turbo watch dev -F @kosori/www...",
     "format": "turbo run format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",
     "format:fix": "turbo run format --continue -- --write --cache --cache-location node_modules/.cache/.prettiercache",
+    "postinstall": "pnpm lint:ws",
     "lint": "turbo run lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest",
-    "postinstall": "pnpm lint:ws",
     "typecheck": "turbo run typecheck",
     "ui-add": "turbo run ui-add"
   },
@@ -27,6 +24,9 @@
     "turbo": "^2.1.2",
     "typescript": "catalog:"
   },
-  "prettier": "@kosori/prettier-config",
-  "version": "0.1.1"
+  "engines": {
+    "node": ">=20.17.0"
+  },
+  "packageManager": "pnpm@9.10.0",
+  "prettier": "@kosori/prettier-config"
 }

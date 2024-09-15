@@ -1,6 +1,6 @@
 {
-  "name": "@kosori/tsconfig",
   "private": true,
+  "name": "@kosori/tsconfig",
   "version": "0.1.0",
   "files": [
     "*.json"
