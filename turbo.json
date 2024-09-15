@@ -30,6 +30,14 @@
     },
     "//#clean": {
       "cache": false
+    },
+    "build:ui": {
+      "cache": false,
+      "interactive": false
+    },
+    "build:versions": {
+      "cache": false,
+      "interactive": false
     }
   },
   "globalEnv": [
