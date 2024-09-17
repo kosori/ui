@@ -174,7 +174,7 @@ export const buttonStyles = tv({
       intent: 'warning',
       class: clsx(
         'bg-warning-solid text-white',
-        'hover:bg-success-warning-hover',
+        'hover:bg-warning-solid-hover',
         'focus-visible:ring-warning-focus-ring',
         'disabled:bg-warning-border',
       ),
