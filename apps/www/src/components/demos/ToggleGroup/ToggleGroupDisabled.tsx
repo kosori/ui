@@ -9,14 +9,18 @@ import { ToggleGroup, ToggleGroupItem } from '@kosori/ui/toggle-group';
 export const ToggleGroupDisabledDemo = () => {
   return (
     <ToggleGroup disabled type='multiple'>
-      <ToggleGroupItem aria-label='Toggle bold' value='bold'>
-        <FontBoldIcon className='h-4 w-4' />
+      <ToggleGroupItem icon aria-label='Toggle bold' value='bold'>
+        <FontBoldIcon />
       </ToggleGroupItem>
-      <ToggleGroupItem aria-label='Toggle italic' value='italic'>
-        <FontItalicIcon className='h-4 w-4' />
+      <ToggleGroupItem icon aria-label='Toggle italic' value='italic'>
+        <FontItalicIcon />
       </ToggleGroupItem>
-      <ToggleGroupItem aria-label='Toggle strikethrough' value='strikethrough'>
-        <UnderlineIcon className='h-4 w-4' />
+      <ToggleGroupItem
+        icon
+        aria-label='Toggle strikethrough'
+        value='strikethrough'
+      >
+        <UnderlineIcon />
       </ToggleGroupItem>
     </ToggleGroup>
   );

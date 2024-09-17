@@ -10,47 +10,50 @@ export const ToggleGroupSizesDemo = () => {
   return (
     <div className='flex flex-col items-center gap-4'>
       <ToggleGroup size='small' type='multiple'>
-        <ToggleGroupItem aria-label='Toggle bold' value='bold'>
-          <FontBoldIcon className='h-4 w-4' />
+        <ToggleGroupItem icon aria-label='Toggle bold' value='bold'>
+          <FontBoldIcon />
         </ToggleGroupItem>
-        <ToggleGroupItem aria-label='Toggle italic' value='italic'>
-          <FontItalicIcon className='h-4 w-4' />
+        <ToggleGroupItem icon aria-label='Toggle italic' value='italic'>
+          <FontItalicIcon />
         </ToggleGroupItem>
         <ToggleGroupItem
+          icon
           aria-label='Toggle strikethrough'
           value='strikethrough'
         >
-          <UnderlineIcon className='h-4 w-4' />
+          <UnderlineIcon />
         </ToggleGroupItem>
       </ToggleGroup>
 
       <ToggleGroup type='multiple'>
-        <ToggleGroupItem aria-label='Toggle bold' value='bold'>
-          <FontBoldIcon className='h-4 w-4' />
+        <ToggleGroupItem icon aria-label='Toggle bold' value='bold'>
+          <FontBoldIcon />
         </ToggleGroupItem>
-        <ToggleGroupItem aria-label='Toggle italic' value='italic'>
-          <FontItalicIcon className='h-4 w-4' />
+        <ToggleGroupItem icon aria-label='Toggle italic' value='italic'>
+          <FontItalicIcon />
         </ToggleGroupItem>
         <ToggleGroupItem
+          icon
           aria-label='Toggle strikethrough'
           value='strikethrough'
         >
-          <UnderlineIcon className='h-4 w-4' />
+          <UnderlineIcon />
         </ToggleGroupItem>
       </ToggleGroup>
 
       <ToggleGroup size='large' type='multiple'>
-        <ToggleGroupItem aria-label='Toggle bold' value='bold'>
-          <FontBoldIcon className='h-4 w-4' />
+        <ToggleGroupItem icon aria-label='Toggle bold' value='bold'>
+          <FontBoldIcon />
         </ToggleGroupItem>
-        <ToggleGroupItem aria-label='Toggle italic' value='italic'>
-          <FontItalicIcon className='h-4 w-4' />
+        <ToggleGroupItem icon aria-label='Toggle italic' value='italic'>
+          <FontItalicIcon />
         </ToggleGroupItem>
         <ToggleGroupItem
+          icon
           aria-label='Toggle strikethrough'
           value='strikethrough'
         >
-          <UnderlineIcon className='h-4 w-4' />
+          <UnderlineIcon />
         </ToggleGroupItem>
       </ToggleGroup>
     </div>

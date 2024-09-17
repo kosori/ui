@@ -4,8 +4,8 @@ import { Toggle } from '@kosori/ui/toggle';
 
 export const ToggleDemo = () => {
   return (
-    <Toggle aria-label='Toggle italic'>
-      <FontBoldIcon className='h-4 w-4' />
+    <Toggle icon aria-label='Toggle italic'>
+      <FontBoldIcon />
     </Toggle>
   );
 };
