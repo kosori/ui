@@ -151,6 +151,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'button-disabled': {
+    name: 'button-disabled',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Button').then((module) => ({
+        default: module.ButtonDisabledDemo,
+      })),
+    ),
+  },
   'button-icon': {
     name: 'button-icon',
     type: 'component:example',
