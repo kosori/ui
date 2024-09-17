@@ -61,24 +61,41 @@ export const add = new Command()
         try {
           const spin = p.spinner();
 
-          const componentsToInstall = options.all
-            ? componentsIndex.map(({ name }) => name)
-            : items.length
-              ? items
-              : (
-                  await p.group(
-                    componentsPrompts({ components: componentsIndex }),
-                    {
-                      onCancel: () => {
-                        p.cancel('Aborted!');
-                        process.exit(1);
+          const initialComponents = (
+            options.all
+              ? componentsIndex.map(({ name }) => name)
+              : items.length
+                ? items
+                : (
+                    await p.group(
+                      componentsPrompts({ components: componentsIndex }),
+                      {
+                        onCancel: () => {
+                          p.cancel('Aborted!');
+                          process.exit(1);
+                        },
                       },
-                    },
-                  )
-                ).componentsToInstall;
+                    )
+                  ).componentsToInstall
+          ) as string[];
+
+          const requiredComponents = Array.from(
+            new Set(
+              initialComponents.flatMap((component) => {
+                const found = componentsIndex.find(
+                  (item) => item.name === component,
+                );
+                return found?.required ?? [];
+              }),
+            ),
+          );
+
+          const componentsToInstall = Array.from(
+            new Set([...initialComponents, ...requiredComponents]),
+          );
 
           const components = await getComponents({
-            names: componentsToInstall as string[],
+            names: componentsToInstall,
           });
 
           if (!skip) {
