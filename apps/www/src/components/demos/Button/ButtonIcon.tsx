@@ -1,18 +1,20 @@
-import { HomeIcon } from 'lucide-react';
+import { PauseIcon, SkipBackIcon, SkipForwardIcon } from 'lucide-react';
 
 import { Button } from '@kosori/ui/button';
 
 export const ButtonIconDemo = () => {
   return (
-    <div className='flex gap-2'>
-      <Button icon size='small'>
-        <HomeIcon />
+    <div className='flex gap-4'>
+      <Button>
+        <SkipBackIcon />
+        Click me
       </Button>
       <Button icon>
-        <HomeIcon />
+        <PauseIcon />
       </Button>
-      <Button icon size='large'>
-        <HomeIcon />
+      <Button>
+        Click me
+        <SkipForwardIcon />
       </Button>
     </div>
   );
