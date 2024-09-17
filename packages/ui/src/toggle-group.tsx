@@ -61,6 +61,7 @@ export const ToggleGroupContext = createContext<
 >({
   size: 'medium',
   variant: 'ghost',
+  icon: false,
 });
 
 type ToggleGroupItemRef = React.ElementRef<typeof Item>;
@@ -78,7 +79,7 @@ type ToggleGroupItemProps = React.ComponentPropsWithRef<typeof Item> &
 export const ToggleGroupItem = forwardRef<
   ToggleGroupItemRef,
   ToggleGroupItemProps
->(({ className, children, variant, size, ...props }, ref) => {
+>(({ className, children, variant, size, icon, ...props }, ref) => {
   const context = useContext(ToggleGroupContext);
 
   return (
@@ -87,6 +88,7 @@ export const ToggleGroupItem = forwardRef<
       className={toggleStyles({
         variant: context.variant ?? variant,
         size: context.size ?? size,
+        icon: context.icon ?? icon,
         class: className,
       })}
       {...props}
