@@ -6,7 +6,7 @@ import { tv } from 'tailwind-variants';
 
 export const toggleStyles = tv({
   base: clsx(
-    'inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium outline-none transition-colors duration-200',
+    'inline-flex items-center justify-center font-medium outline-none transition-colors duration-200',
     'focus-visible:ring-4',
     'disabled:cursor-not-allowed',
   ),
@@ -30,11 +30,31 @@ export const toggleStyles = tv({
       ),
     },
     size: {
-      small: 'h-8 px-2',
-      medium: 'h-9 px-3',
-      large: 'h-10 px-3',
+      small: clsx('h-8 gap-x-1.5 rounded-lg px-2 text-xs', '[&_svg]:size-3.5'),
+      medium: clsx('h-9 gap-x-2 rounded-lg px-3 text-sm', '[&_svg]:size-4'),
+      large: clsx('h-10 gap-x-2.5 rounded-xl px-3 text-md', '[_&svg]:size-5'),
+    },
+    icon: {
+      true: '',
     },
   },
+  compoundVariants: [
+    {
+      size: 'small',
+      icon: true,
+      class: 'w-8 px-0',
+    },
+    {
+      size: 'medium',
+      icon: true,
+      class: 'w-9 px-0',
+    },
+    {
+      size: 'large',
+      icon: true,
+      class: 'w-10 px-0',
+    },
+  ],
   defaultVariants: {
     variant: 'ghost',
     size: 'medium',
@@ -52,6 +72,7 @@ type ToggleProps = object & ToggleRadixProps & ToggleVariants;
  * @param {ToggleProps} props - The props for the Toggle component.
  * @param {'ghost' | 'outline'} [variant='ghost'] - The variant style of the toggle (e.g. 'ghost', 'outline').
  * @param {'small' | 'medium' | 'large'} [size='medium'] - The size of the toggle (e.g. 'small', 'medium', 'large').
+ * @param {boolean} [icon=false] - If true, adjusts the button size for icon-only usage.
  *
  * @example
  * <Toggle>Toggle</Toggle>
@@ -59,10 +80,10 @@ type ToggleProps = object & ToggleRadixProps & ToggleVariants;
  * @see {@link https://dub.sh/ui-toggle Toggle Docs} for further information.
  */
 export const Toggle = forwardRef<ToggleRef, ToggleProps>(
-  ({ className, variant, size, ...props }, ref) => (
+  ({ className, variant, size, icon, ...props }, ref) => (
     <Root
       ref={ref}
-      className={toggleStyles({ className, size, variant })}
+      className={toggleStyles({ className, size, variant, icon })}
       {...props}
     />
   ),
