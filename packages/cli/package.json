@@ -33,7 +33,7 @@
     "commander": "^12.1.0",
     "consola": "^3.2.3",
     "cosmiconfig": "^9.0.0",
-    "execa": "^9.3.1",
+    "execa": "^9.4.0",
     "fast-glob": "^3.3.2",
     "fs-extra": "^11.2.0",
     "picocolors": "^1.1.0",
