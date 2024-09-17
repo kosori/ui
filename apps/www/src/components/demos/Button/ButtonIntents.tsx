@@ -2,62 +2,74 @@ import { Button } from '@kosori/ui/button';
 
 export const ButtonIntentsDemo = () => {
   return (
-    <div className='flex gap-4'>
-      <div className='flex flex-col gap-4'>
-        <Button>Default</Button>
-        <Button intent='info'>Info</Button>
-        <Button intent='success'>Success</Button>
-        <Button intent='warning'>Warning</Button>
-        <Button intent='error'>Error</Button>
-      </div>
+    <div className='grid grid-cols-5 gap-4'>
+      <div />
+      <p className='text-sm text-grey-text'>Solid</p>
+      <p className='text-sm text-grey-text'>Soft</p>
+      <p className='text-sm text-grey-text'>Outline</p>
+      <p className='text-sm text-grey-text'>Ghost</p>
 
-      <div className='flex flex-col gap-4'>
-        <Button variant='soft'>Default</Button>
-        <Button intent='info' variant='soft'>
-          Info
-        </Button>
-        <Button intent='success' variant='soft'>
-          Success
-        </Button>
-        <Button intent='warning' variant='soft'>
-          Warning
-        </Button>
-        <Button intent='error' variant='soft'>
-          Error
-        </Button>
-      </div>
+      <p className='text-sm text-grey-text'>Default</p>
+      <Button variant='solid'>Click me</Button>
+      <Button variant='soft'>Click me</Button>
+      <Button variant='outline'>Click me</Button>
+      <Button variant='ghost'>Click me</Button>
 
-      <div className='flex flex-col gap-4'>
-        <Button variant='outline'>Default</Button>
-        <Button intent='info' variant='outline'>
-          Info
-        </Button>
-        <Button intent='success' variant='outline'>
-          Success
-        </Button>
-        <Button intent='warning' variant='outline'>
-          Warning
-        </Button>
-        <Button intent='error' variant='outline'>
-          Error
-        </Button>
-      </div>
+      <p className='text-sm text-grey-text'>Info</p>
+      <Button intent='info' variant='solid'>
+        Click me
+      </Button>
+      <Button intent='info' variant='soft'>
+        Click me
+      </Button>
+      <Button intent='info' variant='outline'>
+        Click me
+      </Button>
+      <Button intent='info' variant='ghost'>
+        Click me
+      </Button>
 
-      <div className='flex flex-col gap-4'>
-        <Button variant='ghost'>Default</Button>
-        <Button intent='info' variant='ghost'>
-          Info
-        </Button>
-        <Button intent='success' variant='ghost'>
-          Success
-        </Button>
-        <Button intent='warning' variant='ghost'>
-          Warning
-        </Button>
-        <Button intent='error' variant='ghost'>
-          Error
-        </Button>
-      </div>
+      <p className='text-sm text-grey-text'>Success</p>
+      <Button intent='success' variant='solid'>
+        Click me
+      </Button>
+      <Button intent='success' variant='soft'>
+        Click me
+      </Button>
+      <Button intent='success' variant='outline'>
+        Click me
+      </Button>
+      <Button intent='success' variant='ghost'>
+        Click me
+      </Button>
+
+      <p className='text-sm text-grey-text'>Warning</p>
+      <Button intent='warning' variant='solid'>
+        Click me
+      </Button>
+      <Button intent='warning' variant='soft'>
+        Click me
+      </Button>
+      <Button intent='warning' variant='outline'>
+        Click me
+      </Button>
+      <Button intent='warning' variant='ghost'>
+        Click me
+      </Button>
+
+      <p className='text-sm text-grey-text'>Error</p>
+      <Button intent='error' variant='solid'>
+        Click me
+      </Button>
+      <Button intent='error' variant='soft'>
+        Click me
+      </Button>
+      <Button intent='error' variant='outline'>
+        Click me
+      </Button>
+      <Button intent='error' variant='ghost'>
+        Click me
+      </Button>
     </div>
   );
 };
