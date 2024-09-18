@@ -33,7 +33,7 @@ export const versions: Record<string, string> = {
   'embla-carousel-react': '8.3.0',
   'input-otp': '1.2.4',
   'next-themes': '0.3.0',
-  'react-day-picker': '9.0.9',
+  'react-day-picker': '9.1.0',
   'react-hook-form': '7.53.0',
   'react-resizable-panels': '2.1.3',
   recharts: '2.12.7',
@@ -41,5 +41,5 @@ export const versions: Record<string, string> = {
   'tailwind-merge': '2.5.2',
   'tailwind-variants': '0.2.1',
   'tailwindcss-animate': '1.0.7',
-  vaul: '0.9.3',
+  vaul: '0.9.4',
 };
