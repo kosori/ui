@@ -2,7 +2,7 @@ import { lazy } from 'react';
 
 type Component<T = object> = {
   name: string;
-  type: 'component:example' | 'hook:example';
+  type: 'component:example' | 'hook:example' | 'component:mini';
   component: React.LazyExoticComponent<(props: T) => JSX.Element>;
 };
 
@@ -130,6 +130,15 @@ export const Components: Record<string, Component> = {
     component: lazy(() =>
       import('../demos/Badge').then((module) => ({
         default: module.BadgeSizesDemo,
+      })),
+    ),
+  },
+  'blend-shift-up': {
+    name: 'blend-shift-up',
+    type: 'component:mini',
+    component: lazy(() =>
+      import('../demos/BlendShift').then((module) => ({
+        default: module.BlendShiftUp,
       })),
     ),
   },
