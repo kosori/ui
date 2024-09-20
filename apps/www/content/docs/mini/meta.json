@@ -1,5 +1,11 @@
 {
   "title": "minis",
   "root": true,
-  "pages": ["---Getting Started---", "index", "---Components---", "components", "..."]
+  "pages": [
+    "---Getting Started---",
+    "index",
+    "---Components---",
+    "components",
+    "..."
+  ]
 }
