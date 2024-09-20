@@ -133,12 +133,12 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
-  'blend-shift-up': {
-    name: 'blend-shift-up',
+  'blend-shift': {
+    name: 'blend-shift',
     type: 'component:mini',
     component: lazy(() =>
       import('../demos/BlendShift').then((module) => ({
-        default: module.BlendShiftUp,
+        default: module.BlendShiftDemo,
       })),
     ),
   },
@@ -508,6 +508,15 @@ export const Components: Record<string, Component> = {
     component: lazy(() =>
       import('../demos/DropdownMenu').then((module) => ({
         default: module.DropdownMenuRadioGroupDemo,
+      })),
+    ),
+  },
+  flick: {
+    name: 'flick',
+    type: 'component:mini',
+    component: lazy(() =>
+      import('../demos/Flick').then((module) => ({
+        default: module.FlickDemo,
       })),
     ),
   },
