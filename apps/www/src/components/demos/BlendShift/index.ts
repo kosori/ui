@@ -1,1 +1,1 @@
-export * from './BlendShiftUp';
+export * from './BlendShift';
