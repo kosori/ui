@@ -1,6 +1,6 @@
 import { clsx } from 'clsx/lite';
 
-export const BlendShiftUp = () => {
+export const BlendShiftDemo = () => {
   return (
     <div className='flex flex-col items-center justify-center gap-10 text-center'>
       <a
