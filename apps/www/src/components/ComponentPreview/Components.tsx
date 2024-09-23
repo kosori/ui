@@ -511,6 +511,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'fill-shrink': {
+    name: 'fill-shrink',
+    type: 'component:mini',
+    component: lazy(() =>
+      import('../demos/FillShrink').then((module) => ({
+        default: module.FillShrinkDemo,
+      })),
+    ),
+  },
   flick: {
     name: 'flick',
     type: 'component:mini',
