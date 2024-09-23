@@ -511,6 +511,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'fill-shift': {
+    name: 'fill-shift',
+    type: 'component:mini',
+    component: lazy(() =>
+      import('../demos/FillShift').then((module) => ({
+        default: module.FillShiftDemo,
+      })),
+    ),
+  },
   'fill-shrink': {
     name: 'fill-shrink',
     type: 'component:mini',
