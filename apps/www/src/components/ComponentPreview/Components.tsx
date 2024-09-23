@@ -646,6 +646,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  keycap: {
+    name: 'keycap',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Keycap').then((module) => ({
+        default: module.KeycapDemo,
+      })),
+    ),
+  },
   menubar: {
     name: 'menubar',
     type: 'component:example',
