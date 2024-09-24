@@ -1,0 +1,78 @@
+---
+title: Swing
+description: Playful link that swings from side to side on hover
+---
+
+<ComponentPreview name='swing'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Swing/Swing.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+<Steps>
+    
+  <Step>
+    ### Add the keyframe
+    
+    Add the keyframe to the `keyframes` object in your `tailwind.config.js` file.
+
+    ```ts title="tailwind.config.ts"
+    import type { Config } from 'tailwindcss';
+
+    const config: Config = {
+      // ...
+      theme: {
+        // ...
+        extend: {
+          // ...
+          keyframes: {
+            // [!code highlight:8]
+            swing: {
+              '15%': { transform: 'translateX(5px)' },
+              '30%': { transform: 'translateX(-5px)' },
+              '50%': { transform: 'translateX(3px)' },
+              '80%': { transform: 'translateX(2px)' },
+              '100%': { transform: 'translateX(0)' },
+            },
+          },
+        },
+      },
+    };
+
+    export default config;
+    ```
+
+  </Step>
+    
+  <Step>
+    ### Add the animation
+    
+    Add the animation to the `animation` object in your `tailwind.config.js` file.
+
+    ```ts title="tailwind.config.ts"
+    import type { Config } from 'tailwindcss';
+
+    const config: Config = {
+      // ...
+      theme: {
+        // ...
+        extend: {
+          // ...
+          animation: {
+            swing: 'swing 1s ease 1', // [!code highlight]
+          },
+        },
+      },
+    };
+
+    export default config;
+    ```
+
+  </Step>
+
+</Steps>
