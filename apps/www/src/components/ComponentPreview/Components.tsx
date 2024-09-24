@@ -817,6 +817,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  shine: {
+    name: 'shine',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Shine').then((module) => ({
+        default: module.ShineDemo,
+      })),
+    ),
+  },
   skeleton: {
     name: 'skeleton',
     type: 'component:example',
