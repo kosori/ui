@@ -862,6 +862,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  swing: {
+    name: 'swing',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Swing').then((module) => ({
+        default: module.SwingDemo,
+      })),
+    ),
+  },
   switch: {
     name: 'switch',
     type: 'component:example',
