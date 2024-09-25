@@ -466,6 +466,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'doble-spinner': {
+    name: 'doble-spinner',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/DobleSpinner').then((module) => ({
+        default: module.DobleSpinnerDemo,
+      })),
+    ),
+  },
   drawer: {
     name: 'drawer',
     type: 'component:example',
