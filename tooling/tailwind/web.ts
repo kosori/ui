@@ -39,6 +39,11 @@ export default {
           '0%,70%,100%': { opacity: '1' },
           '20%,50%': { opacity: '0' },
         },
+        flash: {
+          '0%': { opacity: '0.2' },
+          '20%': { opacity: '1' },
+          '100%': { opacity: '0.2' },
+        },
         grow: {
           '0%': { transform: 'scaleY(0.3)' },
           '50%': { transform: 'scaleY(1)' },
@@ -56,6 +61,7 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'caret-blink': 'caret-blink 1.25s ease-out infinite',
+        flash: 'flash 1.4s infinite linear',
         swing: 'swing 1s ease 1',
       },
     },
