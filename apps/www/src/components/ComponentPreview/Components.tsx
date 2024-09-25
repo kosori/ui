@@ -475,6 +475,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'dots-pulse': {
+    name: 'dots-pulse',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/DotsPulse').then((module) => ({
+        default: module.DotsPulseDemo,
+      })),
+    ),
+  },
   drawer: {
     name: 'drawer',
     type: 'component:example',
