@@ -1,7 +1,7 @@
 {
-  "private": true,
   "name": "@kosori/ui",
   "version": "0.1.0",
+  "private": true,
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -22,6 +22,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "ui-add": "pnpm dlx shadcn-ui add && prettier src --write --list-different"
   },
+  "prettier": "@kosori/prettier-config",
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-accordion": "^1.2.0",
@@ -67,10 +68,6 @@
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.6"
   },
-  "peerDependencies": {
-    "react": "catalog:react18",
-    "zod": "catalog:"
-  },
   "devDependencies": {
     "@kosori/eslint-config": "workspace:*",
     "@kosori/prettier-config": "workspace:*",
@@ -84,5 +81,8 @@
     "typescript": "catalog:",
     "zod": "catalog:"
   },
-  "prettier": "@kosori/prettier-config"
+  "peerDependencies": {
+    "react": "catalog:react18",
+    "zod": "catalog:"
+  }
 }
