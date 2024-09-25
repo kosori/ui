@@ -1,0 +1,50 @@
+---
+title: Waveform
+description: Simple circle with a continous rotation.
+---
+
+<ComponentPreview name='waveform'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Waveform/Waveform.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+<Steps>
+    
+  <Step>
+    ### Add the keyframe
+    
+    Add the keyframe to the `keyframes` object in your `tailwind.config.js` file.
+
+    ```ts title="tailwind.config.ts"
+    import type { Config } from 'tailwindcss';
+
+    const config: Config = {
+      // ...
+      theme: {
+        // ...
+        extend: {
+          // ...
+          keyframes: {
+            // [!code highlight:6]
+            grow: {
+              '0%': { transform: 'scaleY(0.3)' },
+              '50%': { transform: 'scaleY(1)' },
+              '100%': { transform: 'scaleY(0.3)' },
+            },
+          },
+        },
+      },
+    };
+
+    export default config;
+    ```
+
+  </Step>
+
+</Steps>
