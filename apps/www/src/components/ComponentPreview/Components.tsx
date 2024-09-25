@@ -1132,6 +1132,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  waveform: {
+    name: 'waveform',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Waveform').then((module) => ({
+        default: module.WaveformDemo,
+      })),
+    ),
+  },
   'use-is-mounted': {
     name: 'use-is-mounted',
     type: 'hook:example',
