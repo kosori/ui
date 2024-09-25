@@ -39,6 +39,11 @@ export default {
           '0%,70%,100%': { opacity: '1' },
           '20%,50%': { opacity: '0' },
         },
+        grow: {
+          '0%': { transform: 'scaleY(0.3)' },
+          '50%': { transform: 'scaleY(1)' },
+          '100%': { transform: 'scaleY(0.3)' },
+        },
         swing: {
           '15%': { transform: 'translateX(5px)' },
           '30%': { transform: 'translateX(-5px)' },
