@@ -862,6 +862,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  spinner: {
+    name: 'spinner',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Spinner').then((module) => ({
+        default: module.SpinnerDemo,
+      })),
+    ),
+  },
   swing: {
     name: 'swing',
     type: 'component:example',
