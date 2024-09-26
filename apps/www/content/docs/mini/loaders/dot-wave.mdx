@@ -1,0 +1,76 @@
+---
+title: Dot Wave
+description: Trio of dots that pulse in a staggered pattern.
+---
+
+<ComponentPreview name='dot-wave'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/DotWave/DotWave.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+<Steps>
+    
+  <Step>
+    ### Add the keyframe
+    
+    Add the keyframe to the `keyframes` object in your `tailwind.config.js` file.
+
+    ```ts title="tailwind.config.ts"
+    import type { Config } from 'tailwindcss';
+
+    const config: Config = {
+      // ...
+      theme: {
+        // ...
+        extend: {
+          // ...
+          keyframes: {
+            // [!code highlight:6]
+            jump: {
+              '0%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-1rem)' },
+              '100%': { transform: 'translateY(0)' },
+            },
+          },
+        },
+      },
+    };
+
+    export default config;
+    ```
+
+  </Step>
+    
+  <Step>
+    ### Add the animation
+    
+    Add the animation to the `animation` object in your `tailwind.config.js` file.
+
+    ```ts title="tailwind.config.ts"
+    import type { Config } from 'tailwindcss';
+
+    const config: Config = {
+      // ...
+      theme: {
+        // ...
+        extend: {
+          // ...
+          animation: {
+            jump: 'jump 1s ease-in-out infinite',
+          },
+        },
+      },
+    };
+
+    export default config;
+    ```
+
+  </Step>
+
+</Steps>
