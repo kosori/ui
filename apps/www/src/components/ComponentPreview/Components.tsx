@@ -484,6 +484,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'dots-scale': {
+    name: 'dots-scale',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/DotsScale').then((module) => ({
+        default: module.DotsScaleDemo,
+      })),
+    ),
+  },
   drawer: {
     name: 'drawer',
     type: 'component:example',
