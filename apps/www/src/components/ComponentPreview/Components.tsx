@@ -475,6 +475,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'dot-wave': {
+    name: 'dot-wave',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/DotWave').then((module) => ({
+        default: module.DotWaveDemo,
+      })),
+    ),
+  },
   'dots-pulse': {
     name: 'dots-pulse',
     type: 'component:example',
