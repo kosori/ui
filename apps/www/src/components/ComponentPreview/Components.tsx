@@ -1159,6 +1159,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  wobble: {
+    name: 'wobble',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Wobble').then((module) => ({
+        default: module.WobbleDemo,
+      })),
+    ),
+  },
   'use-is-mounted': {
     name: 'use-is-mounted',
     type: 'hook:example',
