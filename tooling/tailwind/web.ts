@@ -44,6 +44,11 @@ export default {
           '20%': { opacity: '1' },
           '100%': { opacity: '0.2' },
         },
+        jump: {
+          '0%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-1rem)' },
+          '100%': { transform: 'translateY(0)' },
+        },
         grow: {
           '0%': { transform: 'scaleY(0.3)' },
           '50%': { transform: 'scaleY(1)' },
@@ -72,6 +77,7 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'caret-blink': 'caret-blink 1.25s ease-out infinite',
         flash: 'flash 1.4s infinite linear',
+        jump: 'jump 1s ease-in-out infinite',
         pulse2: 'pulse2 1.3s ease-in-out infinite',
         swing: 'swing 1s ease 1',
         wobble: 'wobble 1s ease-in-out infinite',
