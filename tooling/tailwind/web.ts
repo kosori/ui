@@ -61,6 +61,11 @@ export default {
           '80%': { transform: 'translateX(2px)' },
           '100%': { transform: 'translateX(0)' },
         },
+        wobble: {
+          '0%': { transform: 'translateX(0rem)' },
+          '50%': { transform: 'translateX(3rem)' },
+          '100%': { transform: 'translateX(0rem)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -69,6 +74,7 @@ export default {
         flash: 'flash 1.4s infinite linear',
         pulse2: 'pulse2 1.3s ease-in-out infinite',
         swing: 'swing 1s ease 1',
+        wobble: 'wobble 1s ease-in-out infinite',
       },
     },
   },
