@@ -1,0 +1,76 @@
+---
+title: Wobble
+description: Trio of dots that pulse in a staggered pattern.
+---
+
+<ComponentPreview name='wobble'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Wobble/Wobble.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+<Steps>
+    
+  <Step>
+    ### Add the keyframe
+    
+    Add the keyframe to the `keyframes` object in your `tailwind.config.js` file.
+
+    ```ts title="tailwind.config.ts"
+    import type { Config } from 'tailwindcss';
+
+    const config: Config = {
+      // ...
+      theme: {
+        // ...
+        extend: {
+          // ...
+          keyframes: {
+            // [!code highlight:6]
+            wobble: {
+              '0%': { transform: 'translateX(0rem)' },
+              '50%': { transform: 'translateX(3rem)' },
+              '100%': { transform: 'translateX(0rem)' },
+            },
+          },
+        },
+      },
+    };
+
+    export default config;
+    ```
+
+  </Step>
+    
+  <Step>
+    ### Add the animation
+    
+    Add the animation to the `animation` object in your `tailwind.config.js` file.
+
+    ```ts title="tailwind.config.ts"
+    import type { Config } from 'tailwindcss';
+
+    const config: Config = {
+      // ...
+      theme: {
+        // ...
+        extend: {
+          // ...
+          animation: {
+            wobble: 'wobble 1s ease-in-out infinite', // [!code highlight]
+          },
+        },
+      },
+    };
+
+    export default config;
+    ```
+
+  </Step>
+
+</Steps>
