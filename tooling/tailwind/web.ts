@@ -49,6 +49,11 @@ export default {
           '50%': { transform: 'scaleY(1)' },
           '100%': { transform: 'scaleY(0.3)' },
         },
+        pulse2: {
+          '0%': { transform: 'scale(0)' },
+          '50%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(0)' },
+        },
         swing: {
           '15%': { transform: 'translateX(5px)' },
           '30%': { transform: 'translateX(-5px)' },
@@ -62,6 +67,7 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'caret-blink': 'caret-blink 1.25s ease-out infinite',
         flash: 'flash 1.4s infinite linear',
+        pulse2: 'pulse2 1.3s ease-in-out infinite',
         swing: 'swing 1s ease 1',
       },
     },
