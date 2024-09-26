@@ -67,9 +67,9 @@ export default {
           '100%': { transform: 'translateX(0)' },
         },
         wobble: {
-          '0%': { transform: 'translateX(0rem)' },
+          '0%': { transform: 'translateX(0)' },
           '50%': { transform: 'translateX(3rem)' },
-          '100%': { transform: 'translateX(0rem)' },
+          '100%': { transform: 'translateX(0)' },
         },
       },
       animation: {
