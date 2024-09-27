@@ -1,0 +1,70 @@
+---
+title: useCopyToClipboard
+description: Copy text to the clipboard
+---
+
+<ComponentPreview name='use-copy-to-clipboard'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/UseCopyToClipboard/UseCopyToClipboard.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+<Steps>
+    
+  <Step>
+    ### Copy-paste the hook
+    
+    Copy and paste the hook code in a `.ts` file.
+
+    ```json doc-gen:file
+    {
+      "file": "./src/hooks/use-copy-to-clipboard.ts",
+      "codeblock": true
+    }
+    ```
+
+  </Step>
+
+</Steps>
+
+### Usage
+
+```ts
+import { useCopyToClipboard } from '~/hooks/use-copy-to-clipboard';
+```
+
+```tsx
+const { isCopied, copyToClipboard } = useCopyToClipboard();
+
+copyToClipboard('Text to copy');
+isCopied ? <span>Copied!</span> : <span>Copy to clipboard</span>;
+```
+
+## Details
+
+### Clipboard Copying Mechanism
+
+- The hook provides a seamless way to copy text to the clipboard using the modern `navigator.clipboard` API when available. This ensures a secure and reliable copying experience.
+- If the `navigator.clipboard` API is not supported (e.g., in older browsers), the hook falls back to an old-school method using a temporary `<textarea>` element and the `document.execCommand('copy')` method.
+
+### State Management
+
+- **`isCopied`**: A boolean state that indicates whether the text has been successfully copied to the clipboard. This can be used to provide user feedback (e.g., showing a "Copied!" message).
+- **`error`**: An optional state that captures any errors that occur during the copy operation. This allows for better error handling and user notifications.
+
+### Timeout for Resetting State
+
+- The hook includes a `timeoutDuration` parameter (defaulting to 1000 milliseconds) that determines how long the `isCopied` state remains `true` before resetting to `false`. This feature helps in providing temporary feedback to users after a copy action.
+- The timeout can be customized by passing a different value when using the hook, allowing for flexibility based on user interface requirements.
+
+### Return Value
+
+- The hook returns an object containing:
+- **`isCopied`**: A boolean indicating whether the text has been copied successfully.
+- **`copyToClipboard`**: A function that takes a string as an argument and attempts to copy it to the clipboard. It returns a promise that resolves to a boolean indicating the success of the operation.
+- **`error`**: An optional error object that can be used to handle any errors that occur during the copy operation.
