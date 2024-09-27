@@ -1,0 +1,70 @@
+---
+title: useToggle
+description: Manage a boolean toggle state
+---
+
+<ComponentPreview name='use-toggle'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/UseToggle/UseToggle.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+<Steps>
+    
+  <Step>
+    ### Copy-paste the hook
+    
+    Copy and paste the hook code in a `.ts` file.
+
+    ```json doc-gen:file
+    {
+      "file": "./src/hooks/use-toggle.ts",
+      "codeblock": true
+    }
+    ```
+
+  </Step>
+
+</Steps>
+
+### Usage
+
+```ts
+import { useToggle } from '~/hooks/use-toggle';
+```
+
+```tsx
+const { on, toggle, setToggle } = useToggle();
+
+on ? <span>On</span> : <span>Off</span>;
+toggle();
+setToggle(true);
+```
+
+## Details
+
+### Toggle Functionality
+
+- The hook provides a simple and efficient way to manage a boolean toggle state, allowing you to easily switch between two states (on/off).
+- It initializes the toggle state based on an optional `defaultValue`, which defaults to `false` if not provided.
+
+### State Management
+
+- **`on`**: A boolean state that indicates the current status of the toggle. It is `true` when the toggle is in the "on" position and `false` when it is "off".
+- **`setToggle`**: A function that allows you to directly set the toggle state to a specific boolean value, providing flexibility in managing the toggle state programmatically.
+
+### Toggle Action
+
+- **`toggle`**: A function that toggles the state of `on` between `true` and `false`. This function can be called in response to user actions (e.g., button clicks) to change the toggle state seamlessly.
+
+### Return Value
+
+- The hook returns an object containing:
+- **`on`**: A boolean indicating the current state of the toggle (`true` for "on", `false` for "off").
+- **`toggle`**: A function to toggle the state between "on" and "off".
+- **`setToggle`**: A function to directly set the toggle state to a specific boolean value.
