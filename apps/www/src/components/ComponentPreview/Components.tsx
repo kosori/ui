@@ -1213,4 +1213,13 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'use-toggle': {
+    name: 'use-toggle',
+    type: 'hook:example',
+    component: lazy(() =>
+      import('../demos/UseToggle').then((module) => ({
+        default: module.UseToggleDemo,
+      })),
+    ),
+  },
 };
