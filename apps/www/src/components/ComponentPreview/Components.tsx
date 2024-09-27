@@ -1177,6 +1177,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'use-copy-to-clipboard': {
+    name: 'use-copy-to-clipboard',
+    type: 'hook:example',
+    component: lazy(() =>
+      import('../demos/UseCopyToClipboard').then((module) => ({
+        default: module.UseCopyToClipboardDemo,
+      })),
+    ),
+  },
   'use-is-mounted': {
     name: 'use-is-mounted',
     type: 'hook:example',
