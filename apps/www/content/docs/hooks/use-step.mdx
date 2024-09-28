@@ -1,0 +1,79 @@
+---
+title: useStep
+description: Copy text to the clipboard
+---
+
+<ComponentPreview name='use-step'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/UseStep/UseStep.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+<Steps>
+    
+  <Step>
+    ### Copy-paste the hook
+    
+    Copy and paste the hook code in a `.ts` file.
+
+    ```json doc-gen:file
+    {
+      "file": "./src/hooks/use-step.ts",
+      "codeblock": true
+    }
+    ```
+
+  </Step>
+
+</Steps>
+
+### Usage
+
+```ts
+import { useStep } from '~/hooks/use-step';
+```
+
+```tsx
+const { currentStep, setStep } = useStep(4);
+
+<p>{currentStep}</p>;
+```
+
+## Details
+
+### Step Navigation
+
+- The `useStep` hook provides a straightforward way to manage multi-step navigation in applications, such as wizards or forms. It allows users to move between steps easily while enforcing boundaries based on the maximum step defined.
+- The hook ensures that users cannot navigate beyond the defined steps, preventing errors and enhancing user experience.
+
+### State Management
+
+- **`currentStep`**: A state variable that holds the current step number, initialized to `1`. This allows components to easily access the current step and render appropriate content based on it.
+- **`canGoToNextStep`**: A boolean that indicates whether the user can proceed to the next step. This is useful for enabling or disabling navigation buttons.
+- **`canGoToPrevStep`**: A boolean that indicates whether the user can go back to the previous step, providing similar functionality for backward navigation.
+
+### Step Control Functions
+
+- **`goToNextStep`**: A function that increments the `currentStep` by `1` if the next step is available. This function can be called directly from UI elements like buttons.
+- **`goToPrevStep`**: A function that decrements the `currentStep` by `1` if the previous step exists, allowing users to navigate backward through the steps.
+- **`setStep`**: A versatile function that allows setting the current step either directly with a number or by providing a function that computes the new step based on the previous one. This flexibility mimics the API of `useState`.
+
+### Reset Functionality
+
+- **`reset`**: A function that resets the `currentStep` back to `1`. This is particularly useful for scenarios where the user might want to restart the process or when the form is submitted successfully.
+
+### Return Value
+
+- The hook returns an object containing:
+- **`currentStep`**: The current step number, which can be used to render step-specific content.
+- **`goToNextStep`**: A function to navigate to the next step.
+- **`goToPrevStep`**: A function to navigate to the previous step.
+- **`canGoToNextStep`**: A boolean indicating if the next step is available.
+- **`canGoToPrevStep`**: A boolean indicating if the previous step is available.
+- **`setStep`**: A function to set the current step directly or via a function.
+- **`reset`**: A function to reset the step to the initial state.
