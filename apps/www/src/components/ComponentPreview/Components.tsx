@@ -1213,6 +1213,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'use-step': {
+    name: 'use-step',
+    type: 'hook:example',
+    component: lazy(() =>
+      import('../demos/UseStep').then((module) => ({
+        default: module.UseStepDemo,
+      })),
+    ),
+  },
   'use-toggle': {
     name: 'use-toggle',
     type: 'hook:example',
