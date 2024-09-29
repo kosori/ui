@@ -907,6 +907,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  squiggle: {
+    name: 'squiggle',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/Squiggle').then((module) => ({
+        default: module.SquiggleDemo,
+      })),
+    ),
+  },
   swing: {
     name: 'swing',
     type: 'component:example',
