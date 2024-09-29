@@ -1177,6 +1177,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  wavy: {
+    name: 'wavy',
+    type: 'component:mini',
+    component: lazy(() =>
+      import('../demos/Wavy').then((module) => ({
+        default: module.WavyDemo,
+      })),
+    ),
+  },
   wobble: {
     name: 'wobble',
     type: 'component:example',
