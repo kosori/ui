@@ -1,0 +1,40 @@
+---
+title: Wavy
+description: Flick effect on hover
+---
+
+<ComponentPreview name='wavy'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/Wavy/Wavy.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+<Steps>
+    
+  <Step>
+    ### Download the svg
+    
+    Download the [`wavy.svg`](/wavy.svg) file.
+
+  </Step>
+  
+  <Step>
+    ### Change stroke color
+    
+    Change the stroke color of the `path` to your desired hover color.
+
+    ```diff
+    <pattern id="wavePattern" width="80" height="80" x="0" y="0" patternUnits="userSpaceOnUse">
+    --  <path ... stroke="#B1AFB8" ... />
+    ++  <path ... stroke="#6E56CF" ... />
+    </pattern>
+    ```
+
+  </Step>
+
+</Steps>
