@@ -970,6 +970,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'text-gradient': {
+    name: 'text-gradient',
+    type: 'component:mini',
+    component: lazy(() =>
+      import('../demos/TextGradient').then((module) => ({
+        default: module.TextGradientDemo,
+      })),
+    ),
+  },
   textarea: {
     name: 'textarea',
     type: 'component:example',
