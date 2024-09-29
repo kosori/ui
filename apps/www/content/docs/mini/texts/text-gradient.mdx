@@ -1,6 +1,6 @@
 ---
 title: Text Gradient
-description: Multi-colored loader with speed variation.
+description: Text with gradient background.
 ---
 
 <ComponentPreview name='text-gradient'>
@@ -11,3 +11,67 @@ description: Multi-colored loader with speed variation.
 }
 ```
 </ComponentPreview>
+
+## Customize
+
+### Change gradient direction
+
+You can change the gradient direction by changing the `bg-gradient-to-b` class.
+
+```tsx
+// [!code word:bg-gradient-to-b]
+<p className='bg-gradient-to-b ...'>
+// ...
+```
+
+#### Top to bottom
+
+```tsx
+// [!code word:bg-gradient-to-b]
+<p className='bg-gradient-to-b ...'>
+// ...
+```
+
+#### Bottom to top
+
+```tsx
+// [!code word:bg-gradient-to-t]
+<p className='bg-gradient-to-t ...'>
+// ...
+```
+
+#### Left to right
+
+```tsx
+// [!code word:bg-gradient-to-l]
+<p className='bg-gradient-to-l ...'>
+// ...
+```
+
+#### Right to left
+
+```tsx
+// [!code word:bg-gradient-to-r]
+<p className='bg-gradient-to-r ...'>
+// ...
+```
+
+### Change gradient colors
+
+You can change the gradient colors by changing the `from-grey-text-contrast` and `to-grey-solid` classes.
+
+#### From color
+
+```tsx
+// [!code word:from-white]
+<p className='... from-white ...'>
+// ...
+```
+
+#### To color
+
+```tsx
+// [!code word:to-neutral-700]
+<p className='... to-neutral-700 ...'>
+// ...
+```
