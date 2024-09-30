@@ -27,8 +27,8 @@ export const UseStepDemo = () => {
 
       <div className='flex gap-1'>
         <Button
-          disabled={!canGoToPrevStep}
           icon
+          disabled={!canGoToPrevStep}
           variant='ghost'
           onClick={() => setStep(1)}
         >
@@ -36,8 +36,8 @@ export const UseStepDemo = () => {
         </Button>
 
         <Button
-          disabled={!canGoToPrevStep}
           icon
+          disabled={!canGoToPrevStep}
           variant='ghost'
           onClick={goToPrevStep}
         >
@@ -77,19 +77,19 @@ export const UseStepDemo = () => {
         </Button>
 
         <Button
-          disabled={!canGoToNextStep}
-          onClick={goToNextStep}
           icon
+          disabled={!canGoToNextStep}
           variant='ghost'
+          onClick={goToNextStep}
         >
           <ChevronRightIcon />
         </Button>
 
         <Button
-          disabled={!canGoToNextStep}
-          onClick={() => setStep(4)}
           icon
+          disabled={!canGoToNextStep}
           variant='ghost'
+          onClick={() => setStep(4)}
         >
           <DoubleArrowRightIcon />
         </Button>
