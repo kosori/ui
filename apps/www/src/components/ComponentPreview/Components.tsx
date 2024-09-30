@@ -79,6 +79,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'aspect-ratio-square': {
+    name: 'aspect-ratio-square',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/AspectRatio').then((module) => ({
+        default: module.AspectRatioSquareDemo,
+      })),
+    ),
+  },
   avatar: {
     name: 'avatar',
     type: 'component:example',
