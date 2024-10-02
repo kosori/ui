@@ -1,0 +1,67 @@
+---
+title: useTimeout
+description: Execute a callback function after a specified delay
+---
+
+<ComponentPreview name='use-timeout'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/UseTimeout/UseTimeout.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+<Steps>
+    
+  <Step>
+    ### Copy-paste the hook
+    
+    Copy and paste the hook code in a `.ts` file.
+
+    ```json doc-gen:file
+    {
+      "file": "./src/hooks/use-timeout.ts",
+      "codeblock": true
+    }
+    ```
+
+  </Step>
+
+</Steps>
+
+### Usage
+
+```ts
+import { useTimeout } from '~/hooks/use-timeout';
+```
+
+```tsx
+const [count, setCount] = useState(0);
+
+useTimeout(() => {
+  setCount(count + 1); // logic to be executed
+}, 1000); // delay in milliseconds
+```
+
+## Details
+
+### Timeout Management
+
+- The `useTimeout` hook provides a flexible way to execute a callback function after a specified delay. This is particularly useful in scenarios where you want to perform actions after a certain period, such as debouncing user input or triggering animations.
+
+### Callback Handling
+
+- **`callback`**: The function that will be executed after the specified delay. The hook ensures that the latest version of this function is called, preventing issues with stale closures that can occur in React.
+- **`savedCallback`**: A `ref` that holds the current callback function. This allows the hook to always reference the latest callback without needing to recreate the timeout.
+
+### Delay Management
+
+- **`delay`**: The time in milliseconds to wait before executing the callback. If the delay is `null`, the hook does not set a timeout, allowing for more control over when the callback should be executed.
+- The hook handles changes to the `delay` value, automatically clearing and resetting the timeout as necessary.
+
+### Cleanup Mechanism
+
+- The hook includes a cleanup function that clears the timeout when the component unmounts or when the `delay` changes. This prevents memory leaks and ensures that the callback is not executed if the component is no longer mounted.
