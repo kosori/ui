@@ -1267,6 +1267,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'use-timeout': {
+    name: 'use-timeout',
+    type: 'hook:example',
+    component: lazy(() =>
+      import('../demos/UseTimeout').then((module) => ({
+        default: module.UseTimeoutDemo,
+      })),
+    ),
+  },
   'use-toggle': {
     name: 'use-toggle',
     type: 'hook:example',
