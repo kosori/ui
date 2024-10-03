@@ -1,7 +1,11 @@
+import { clsx } from 'clsx/lite';
 import { tv } from 'tailwind-variants';
 
 const skeletonStyles = tv({
-  base: 'animate-pulse rounded-md bg-grey-bg',
+  base: clsx(
+    'transition-background pointer-events-none relative overflow-hidden rounded-md bg-grey-bg duration-300',
+    'before:absolute before:inset-0 before:-translate-x-full before:animate-shimmer before:border-t before:border-grey-bg-active before:bg-gradient-to-r before:from-transparent before:via-grey-bg-active/80 before:to-transparent',
+  ),
 });
 
 type SkeletonProps = React.HTMLAttributes<HTMLDivElement>;
