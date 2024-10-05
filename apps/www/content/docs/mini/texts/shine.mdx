@@ -1,0 +1,31 @@
+---
+title: Shine
+description: Simulates a shine effect.
+---
+
+<ComponentPreview name='text-shine'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/TextShine/TextShine.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Customize
+
+### Change text color
+
+You can change the text color by changing the `bg-[linear-gradient(...)]` classes.
+
+```tsx
+<p
+  className={clsx(
+    // [!code word:bg-[linear-gradient(110deg, #211F26 ,45%,#FDFCFD,55%, #211F26 )]
+    '... bg-[linear-gradient(110deg, #211F26 ,45%,#FDFCFD,55%, #211F26 )] ...',
+    // [!code word:bg-[linear-gradient(110deg,#FDFCFD,45%,#211F26,55%,#FDFCFD)]
+    'dark:bg-[linear-gradient(110deg,#FDFCFD,45%,#211F26,55%,#FDFCFD)]',
+  )}
+>
+// ...
+```
