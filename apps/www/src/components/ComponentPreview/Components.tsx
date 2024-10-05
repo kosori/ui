@@ -988,6 +988,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'text-shine': {
+    name: 'text-shine',
+    type: 'component:mini',
+    component: lazy(() =>
+      import('../demos/TextShine').then((module) => ({
+        default: module.TextShineDemo,
+      })),
+    ),
+  },
   'text-gradient': {
     name: 'text-gradient',
     type: 'component:mini',
