@@ -22,7 +22,7 @@ const accordionStyles = tv({
       'data-[disabled]:hover:border-grey-line',
     ),
     trigger: clsx(
-      'group flex h-10 flex-1 items-center justify-between px-4 text-sm font-medium outline-none',
+      'group flex min-h-[2.5rem] flex-1 items-center justify-between px-4 py-2 text-start text-sm font-medium text-grey-text-contrast outline-none',
       'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
     ),
     triggerIcon: clsx(
