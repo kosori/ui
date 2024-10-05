@@ -57,7 +57,7 @@ const Faqs: NextPage = () => {
               <NavigationMenu className='hidden sm:inline-flex'>
                 <NavigationMenuList className='gap-4'>
                   <NavigationMenuItem>
-                    <Link href='#' legacyBehavior passHref>
+                    <Link legacyBehavior passHref href='#'>
                       <NavigationMenuLink
                         className={clsx(
                           'cursor-pointer text-sm',
@@ -70,7 +70,7 @@ const Faqs: NextPage = () => {
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
-                    <Link href='#' legacyBehavior passHref>
+                    <Link legacyBehavior passHref href='#'>
                       <NavigationMenuLink
                         className={clsx(
                           'cursor-pointer text-sm',
@@ -83,7 +83,7 @@ const Faqs: NextPage = () => {
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
-                    <Link href='#' legacyBehavior passHref>
+                    <Link legacyBehavior passHref href='#'>
                       <NavigationMenuLink
                         className={clsx(
                           'cursor-pointer text-sm',
@@ -96,7 +96,7 @@ const Faqs: NextPage = () => {
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
-                    <Link href='#' legacyBehavior passHref>
+                    <Link legacyBehavior passHref href='#'>
                       <NavigationMenuLink
                         className={clsx(
                           'cursor-pointer text-sm',
@@ -251,8 +251,8 @@ const Faqs: NextPage = () => {
           <p>
             Can't find an answer? Please{' '}
             <Link
-              href='#'
               className={clsx('text-primary-solid', 'hover:underline')}
+              href='#'
             >
               chat with us
             </Link>
@@ -382,32 +382,32 @@ const Faqs: NextPage = () => {
 
           <ul className='space-y-1 text-grey-text-contrast'>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Overview
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Features
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Solutions
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Tutorials
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Pricing
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Releases
               </Link>
             </li>
@@ -419,32 +419,32 @@ const Faqs: NextPage = () => {
 
           <ul className='space-y-1 text-grey-text-contrast'>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 About us
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Careers
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Press
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 News
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Media kit
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Contact
               </Link>
             </li>
@@ -456,32 +456,32 @@ const Faqs: NextPage = () => {
 
           <ul className='space-y-1 text-grey-text-contrast'>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Blog
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Newsletter
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Events
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Help center
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Tutorials
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Support
               </Link>
             </li>
@@ -493,32 +493,32 @@ const Faqs: NextPage = () => {
 
           <ul className='space-y-1 text-grey-text-contrast'>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Twitter
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 LinkedIn
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Facebook
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 GitHub
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Polywork
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Dribbble
               </Link>
             </li>
@@ -530,32 +530,32 @@ const Faqs: NextPage = () => {
 
           <ul className='space-y-1 text-grey-text-contrast'>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Terms
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Privacy
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Cookies
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Licenses
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Settings
               </Link>
             </li>
             <li>
-              <Link href='#' className='text-sm hover:underline'>
+              <Link className='text-sm hover:underline' href='#'>
                 Contact
               </Link>
             </li>
