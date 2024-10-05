@@ -59,6 +59,10 @@ export default {
           '50%': { transform: 'scale(1)' },
           '100%': { transform: 'scale(0)' },
         },
+        shine: {
+          from: { backgroundPosition: '0 0' },
+          to: { backgroundPosition: '-200% 0' },
+        },
         shimmer: {
           '100%': {
             transform: 'translateX(100%)',
@@ -84,6 +88,7 @@ export default {
         flash: 'flash 1.4s infinite linear',
         jump: 'jump 1s ease-in-out infinite',
         pulse2: 'pulse2 1.3s ease-in-out infinite',
+        shine: 'shine 2s linear infinite',
         shimmer: 'shimmer 2s infinite',
         swing: 'swing 1s ease 1',
         wobble: 'wobble 1s ease-in-out infinite',
