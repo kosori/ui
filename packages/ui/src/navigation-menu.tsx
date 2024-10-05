@@ -20,7 +20,7 @@ const navigationMenuStyles = tv({
     base: 'relative z-10 flex flex-1 items-center justify-center',
     list: 'group flex flex-1 list-none items-center justify-center space-x-1',
     trigger: clsx(
-      'group inline-flex h-10 w-max items-center justify-center rounded-lg bg-grey-base px-4 py-2 text-sm font-medium transition-colors duration-200',
+      'group inline-flex h-9 w-max items-center justify-center rounded-lg bg-grey-base px-4 py-2 text-sm font-medium transition-colors duration-200',
       'hover:bg-primary-bg-hover',
       'active:bg-primary-bg-bctive',
       'focus:bg-primary-bg-hover focus:outline-none',
