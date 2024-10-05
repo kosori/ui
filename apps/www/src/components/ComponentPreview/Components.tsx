@@ -79,6 +79,24 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'aspect-ratio-square': {
+    name: 'aspect-ratio-square',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/AspectRatio').then((module) => ({
+        default: module.AspectRatioSquareDemo,
+      })),
+    ),
+  },
+  'aspect-ratio-portrait': {
+    name: 'aspect-ratio-portrait',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/AspectRatio').then((module) => ({
+        default: module.AspectRatioPortraitDemo,
+      })),
+    ),
+  },
   avatar: {
     name: 'avatar',
     type: 'component:example',
@@ -1246,6 +1264,15 @@ export const Components: Record<string, Component> = {
     component: lazy(() =>
       import('../demos/UseStep').then((module) => ({
         default: module.UseStepDemo,
+      })),
+    ),
+  },
+  'use-timeout': {
+    name: 'use-timeout',
+    type: 'hook:example',
+    component: lazy(() =>
+      import('../demos/UseTimeout').then((module) => ({
+        default: module.UseTimeoutDemo,
       })),
     ),
   },
