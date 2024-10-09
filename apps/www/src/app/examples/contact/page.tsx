@@ -2,6 +2,8 @@
 
 import type { NextPage } from 'next';
 import Link from 'next/link';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SiDribbble, SiLinkedin, SiX } from '@icons-pack/react-simple-icons';
 import { clsx } from 'clsx/lite';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -22,20 +24,24 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from '@kosori/ui/navigation-menu';
+import { Separator } from '@kosori/ui/separator';
 import { Textarea } from '@kosori/ui/textarea';
 
 import { Logo } from '~/components/Layout/Logo';
 
 const FormSchema = z.object({
-  firstName: z.string().min(1, { message: 'First name is required' }),
-  lastName: z.string().min(1, { message: 'Last name is required' }),
-  email: z.string().email({ message: 'Email is invalid' }),
-  phone: z.string().min(1, { message: 'Phone number is required' }),
-  message: z.string().min(1, { message: 'Message is required' }),
+  firstName: z.string().min(1, { message: 'Please enter your first name' }),
+  lastName: z.string().min(1, { message: 'Please enter your last name' }),
+  email: z.string().email({ message: 'Please enter a valid email' }),
+  phone: z.string().min(1, { message: 'Please enter your phone number' }),
+  message: z
+    .string()
+    .min(1, { message: 'Please tell us what we can help you with' }),
 });
 
 const Contact: NextPage = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -51,7 +57,13 @@ const Contact: NextPage = () => {
 
   return (
     <div className={clsx('p-2', 'sm:p-4', 'md:p-6')}>
-      <header className='max-w-container mx-auto flex size-full flex-row items-center justify-between gap-6 gap-8 px-6 pt-4'>
+      <header
+        className={clsx(
+          'max-w-container mx-auto flex size-full flex-row items-center justify-between gap-8 px-4',
+          'sm:px-4 sm:pt-4',
+          'md:px-6',
+        )}
+      >
         <Link
           className={clsx(
             'inline-flex items-center gap-2 font-semibold text-grey-base',
@@ -127,8 +139,21 @@ const Contact: NextPage = () => {
         </div>
       </header>
 
-      <main className='mx-auto my-20 grid max-w-screen-lg grid-cols-2 gap-12 px-6'>
-        <section className='space-y-8 rounded-lg bg-gradient-to-b from-grey-text-contrast to-grey-text p-8 text-grey-base'>
+      <main
+        className={clsx(
+          'mx-auto my-6 grid max-w-screen-lg grid-cols-1 gap-0 px-0',
+          'sm:my-14 sm:px-4',
+          'md:grid-cols-2 md:px-6',
+          'lg:my-20 lg:gap-12',
+        )}
+      >
+        <section
+          className={clsx(
+            'space-y-8 rounded-lg bg-gradient-to-b from-grey-text-contrast to-grey-text-contrast/80 p-4 text-grey-base',
+            'sm:p-6',
+            'md:p-8',
+          )}
+        >
           <div>
             <h1
               className={clsx(
@@ -139,7 +164,7 @@ const Contact: NextPage = () => {
             >
               Get in touch
             </h1>
-            <p className='text-lg'>
+            <p className='sm:text-lg'>
               Email, call or complete the form to learn how we can help you.
             </p>
           </div>
@@ -160,13 +185,23 @@ const Contact: NextPage = () => {
             </a>
           </div>
 
-          <div>
+          <div className='space-y-2'>
             <h4 className='text-lg font-medium'>Social media</h4>
-            <a>Twitter</a>
+            <div className='flex gap-4'>
+              <a href='#'>
+                <SiX className='size-4' />
+              </a>
+              <a href='#'>
+                <SiLinkedin className='size-4' />
+              </a>
+              <a href='#'>
+                <SiDribbble className='size-4' />
+              </a>
+            </div>
           </div>
         </section>
 
-        <section className='p-8'>
+        <section className={clsx('px-4 py-8', 'md:px-6', 'lg:px-8')}>
           <Form {...form}>
             <form
               className='grid w-full gap-4'
@@ -254,9 +289,11 @@ const Contact: NextPage = () => {
         </section>
       </main>
 
+      <Separator className='my-12' />
+
       <footer
         className={clsx(
-          'max-w-container dark mx-auto mt-14 grid grid-cols-2 gap-6 rounded-lg border bg-grey-bg-subtle p-6',
+          'max-w-container mx-auto grid grid-cols-2 gap-6 p-4',
           'sm:grid-cols-3',
           'md:grid-cols-5',
         )}
@@ -266,24 +303,33 @@ const Contact: NextPage = () => {
             Kõsori
           </h3>
 
-          <div className='flex flex-col gap-1'>
+          <div className='flex gap-4'>
             <a
-              className={clsx('text-sm font-medium', 'hover:underline')}
+              className={clsx(
+                'text-grey-text',
+                'hover:text-grey-text-contrast',
+              )}
               href='#'
             >
-              X
+              <SiX className='size-4' />
             </a>
             <a
-              className={clsx('text-sm font-medium', 'hover:underline')}
+              className={clsx(
+                'text-grey-text',
+                'hover:text-grey-text-contrast',
+              )}
               href='#'
             >
-              Instagram
+              <SiLinkedin className='size-4' />
             </a>
             <a
-              className={clsx('text-sm font-medium', 'hover:underline')}
+              className={clsx(
+                'text-grey-text',
+                'hover:text-grey-text-contrast',
+              )}
               href='#'
             >
-              Dribble
+              <SiDribbble className='size-4' />
             </a>
           </div>
         </div>
