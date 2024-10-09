@@ -35,6 +35,11 @@ const config = {
       },
     ],
   },
+
+  /** Experimental */
+  experimental: {
+    optimizePackageImports: ['@icons-pack/react-simple-icons'],
+  },
 };
 
 export default withMDX(config);
