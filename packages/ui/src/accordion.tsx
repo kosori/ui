@@ -57,7 +57,6 @@ const { item, trigger, triggerIcon, content } = accordionStyles();
  *
  * @see {@link https://dub.sh/ui-accordion Accordion Docs} for further information.
  */
-
 export const Accordion = Root;
 
 type AccordionItemRef = React.ElementRef<typeof Item>;
