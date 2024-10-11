@@ -39,6 +39,18 @@ export default {
           '0%,70%,100%': { opacity: '1' },
           '20%,50%': { opacity: '0' },
         },
+        'collapsible-down': {
+          from: { height: '0' },
+          to: {
+            height: 'var(--radix-collapsible-content-height)',
+          },
+        },
+        'collapsible-up': {
+          from: {
+            height: 'var(--radix-collapsible-content-height)',
+          },
+          to: { height: '0' },
+        },
         flash: {
           '0%': { opacity: '0.2' },
           '20%': { opacity: '1' },
@@ -85,6 +97,8 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'caret-blink': 'caret-blink 1.25s ease-out infinite',
+        'collapsible-down': 'collapsible-down 0.15s ease-out',
+        'collapsible-up': 'collapsible-up 0.15s ease-out',
         flash: 'flash 1.4s infinite linear',
         jump: 'jump 1s ease-in-out infinite',
         pulse2: 'pulse2 1.3s ease-in-out infinite',
