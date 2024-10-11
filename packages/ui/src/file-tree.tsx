@@ -157,6 +157,9 @@ FolderFiles.displayName = 'FolderFiles';
 
 type FileRef = HTMLDivElement;
 type FileProps = React.ComponentPropsWithoutRef<'div'> & {
+  /**
+   * Optional icon to display next to the file name.
+   */
   icon?: React.ReactNode;
 };
 
