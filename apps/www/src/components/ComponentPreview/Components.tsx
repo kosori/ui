@@ -547,6 +547,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'file-tree': {
+    name: 'file-tree',
+    type: 'component:example',
+    component: lazy(() =>
+      import('../demos/FileTree').then((module) => ({
+        default: module.FileTreeDemo,
+      })),
+    ),
+  },
   'dropdown-menu-checkboxes': {
     name: 'dropdown-menu-checkboxes',
     type: 'component:example',
