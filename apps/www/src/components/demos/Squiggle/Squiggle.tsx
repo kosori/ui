@@ -4,7 +4,7 @@ export const SquiggleDemo = () => {
   return (
     <a
       className={clsx(
-        'text-grey-text-contrast underline underline-offset-[3px]',
+        'text-grey-text-contrast underline decoration-2 underline-offset-4',
         "hover:bg-[url('/squiggle.svg')] hover:no-underline",
       )}
       href='#'
