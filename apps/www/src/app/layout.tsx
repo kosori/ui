@@ -8,7 +8,6 @@ import { defaultConfig } from '~/config/theme';
 import '~/app/globals.css';
 
 import { ThemeLoader } from '~/components/Layout/ThemeLoader';
-import { ThemeNav } from '~/components/Layout/ThemeNav';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
@@ -88,7 +87,6 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             {props.children}
           </div>
 
-          <ThemeNav />
           <ThemeLoader />
         </Providers>
       </body>
