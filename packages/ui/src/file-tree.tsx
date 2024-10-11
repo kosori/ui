@@ -16,8 +16,11 @@ const fileTreeStyles = tv({
     fileTree: 'rounded-lg border bg-grey-bg-subtle p-2',
     folder: 'w-full',
     folderName: clsx(
-      'group w-full inline-flex items-center gap-2 rounded-lg px-2 h-8',
+      'group w-full inline-flex items-center gap-2 rounded-lg px-2 h-8 outline-none',
       'hover:bg-grey-bg-hover',
+      'focus-visible:ring-4 focus-visible:ring-grey-focus-ring',
+      'disabled:cursor-not-allowed disabled:text-grey-text',
+      'disabled:hover:bg-grey-bg',
     ),
     folderFiles: clsx(
       'overflow-hidden',
@@ -27,6 +30,8 @@ const fileTreeStyles = tv({
     file: clsx(
       'w-full inline-flex h-8 select-none items-center gap-2 rounded-lg px-2 text-sm',
       'hover:bg-grey-bg-hover',
+      'group-data-[disabled]:cursor-not-allowed group-data-[disabled]:text-grey-text',
+      'group-data-[disabled]:hover:bg-grey-bg',
     ),
   },
 });
@@ -113,10 +118,16 @@ export const FolderName = forwardRef<FolderNameRef, FolderNameProps>(
       {...props}
     >
       <FolderIcon
-        className={clsx('size-4', 'group-data-[state=open]:hidden')}
+        className={clsx(
+          'inline-block size-4',
+          'group-data-[state=open]:hidden',
+        )}
       />
       <FolderOpenIcon
-        className={clsx('size-4', 'group-data-[state=closed]:hidden')}
+        className={clsx(
+          'inline-block size-4',
+          'group-data-[state=closed]:hidden',
+        )}
       />
       {children}
     </CollapsibleTrigger>
