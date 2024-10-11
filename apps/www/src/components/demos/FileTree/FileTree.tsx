@@ -28,7 +28,7 @@ export const FileTreeDemo = () => {
         </FolderFiles>
       </Folder>
 
-      <Folder>
+      <Folder defaultOpen>
         <FolderName>public</FolderName>
 
         <FolderFiles>
