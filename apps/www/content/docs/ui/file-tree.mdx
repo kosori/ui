@@ -1,0 +1,123 @@
+---
+title: File Tree
+description: Renders a hierarchical structure of files and folders.
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/collapsible
+  api: https://www.radix-ui.com/docs/primitives/components/collapsible#api-reference
+dependencies: ['@radix-ui/react-collapsible']
+---
+
+<ComponentPreview name='file-tree'>
+```json doc-gen:file
+{
+  "file": "./src/components/demos/FileTree/FileTree.tsx",
+  "codeblock": true
+}
+```
+</ComponentPreview>
+
+## Installation
+
+<Steps>
+  <Step>
+    ### Install the primitive
+
+    Install the `@radix-ui/react-collapsible` package.
+
+    ```package-install
+    @radix-ui/react-collapsible
+    ```
+
+  </Step>
+
+  <Step>
+    ### Copy-paste the component
+
+    Copy and paste the component code in a `.tsx` file.
+
+    ```json doc-gen:file
+    {
+      "file": "../../packages/ui/src/file-tree.tsx",
+      "codeblock": true
+    }
+    ```
+
+  </Step>
+
+  <Step>
+    ### Update import paths
+
+    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+  </Step>
+
+  <Step>
+    ### Add keyframes animation
+    
+    Add the `collapsible-down` and `collapsible-up` keyframes animation to your Tailwind CSS config.
+
+    ```ts title="tailwind.config.ts"
+    import type { Config } from 'tailwindcss';
+
+    const config: Config = {
+      // ...,
+      keyframes: {
+        // [!code highlight:9]
+        'collapsible-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-collapsible-content-height)' },
+        },
+        'collapsible-up': {
+          from: { height: 'var(--radix-collapsible-content-height)' },
+          to: { height: '0' },
+        },
+      },
+      animation: {
+        // [!code highlight:3]
+        'collapsible-down': 'collapsible-down 0.15s ease-out',
+        'collapsible-up': 'collapsible-up 0.15s ease-out',
+      }
+    };
+    ```
+
+  </Step>
+
+</Steps>
+
+## Usage
+
+```ts
+import {
+  File,
+  FileTree,
+  Folder,
+  FolderFiles,
+  FolderName,
+} from '~/components/ui/file-tree';
+```
+
+```tsx
+<FileTree>
+  <Folder>
+    <FolderName>app</FolderName>
+    <FolderFiles>
+      <File>layout.tsx</File>
+      <File>page.tsx</File>
+    </FolderFiles>
+  </Folder>
+</FileTree>
+```
+
+## Reference
+
+### File
+
+<TypeTable
+  type={{
+    icon: {
+      default: `<FileIcon />`,
+      description: 'Optional icon to display next to the file name.',
+      type: 'ReactNode',
+    },
+  }}
+/>
