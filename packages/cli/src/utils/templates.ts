@@ -4,8 +4,7 @@ import { twMerge } from "tailwind-merge";
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));`;
 
-export const TAILWIND_CONFIG = `
-import type { Config } from "tailwindcss";
+export const TAILWIND_CONFIG = `import type { Config } from "tailwindcss";
 import animate from "tailwindcss-animate";
 
 const config: Config = {
@@ -126,11 +125,21 @@ const config: Config = {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
         },
+        "collapsible-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-collapsible-content-height)" },
+        },
+        "collapsible-up": {
+          from: { height: "var(--radix-collapsible-content-height)" },
+          to: { height: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
+        "collapsible-down": "collapsible-down 0.15s ease-out",
+        "collapsible-up": "collapsible-up 0.15s ease-out",
       },
     },
   },
@@ -233,6 +242,7 @@ export const GLOBALS_CSS = `@import "@radix-ui/colors/red.css";
   --error-10: var(--red-10);
   --error-11: var(--red-11);
   --error-12: var(--red-12);
+
    .dark {
     --primary-1: 260 8.11% 7.25%;
     --primary-2: 260 5.66% 10.4%;
@@ -311,5 +321,11 @@ export const GLOBALS_CSS = `@import "@radix-ui/colors/red.css";
     --error-10: var(--red-dark-10);
     --error-11: var(--red-dark-11);
     --error-12: var(--red-dark-12);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-grey-line;
   }
 }`;
