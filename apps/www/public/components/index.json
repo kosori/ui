@@ -91,6 +91,11 @@
     "type": "component:ui"
   },
   {
+    "name": "file-tree",
+    "required": ["collapsible"],
+    "type": "component:ui"
+  },
+  {
     "name": "form",
     "dependencies": [
       "@radix-ui/react-label",
