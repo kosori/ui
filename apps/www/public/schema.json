@@ -2,10 +2,6 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
-    "style": {
-      "type": "string",
-      "enum": ["default", "new-york"]
-    },
     "tailwind": {
       "type": "object",
       "properties": {
@@ -14,46 +10,26 @@
         },
         "css": {
           "type": "string"
-        },
-        "baseColor": {
-          "type": "string"
-        },
-        "cssVariables": {
-          "type": "boolean"
-        },
-        "prefix": {
-          "type": "string"
         }
       },
-      "required": ["config", "css", "baseColor", "cssVariables"]
-    },
-    "rsc": {
-      "type": "boolean"
-    },
-    "tsx": {
-      "type": "boolean"
+      "required": ["config", "css"]
     },
     "aliases": {
       "type": "object",
-      "properties": {
-        "utils": {
-          "type": "string"
-        },
-        "components": {
-          "type": "string"
-        },
-        "ui": {
-          "type": "string"
-        },
-        "lib": {
-          "type": "string"
-        },
-        "hooks": {
-          "type": "string"
-        }
+      "components": {
+        "type": "string"
       },
-      "required": ["utils", "components"]
+      "utils": {
+        "type": "string"
+      },
+      "ui": {
+        "type": "string"
+      },
+      "hooks": {
+        "type": "string"
+      },
+      "required": ["components", "utils", "ui", "hooks"]
     }
   },
-  "required": ["style", "tailwind", "rsc", "aliases"]
+  "required": ["tailwind", "aliases"]
 }
