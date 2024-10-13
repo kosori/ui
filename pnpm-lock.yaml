@@ -366,8 +366,8 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.13(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.6.2)))
       vaul:
-        specifier: ^1.0.0
-        version: 1.0.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^1.1.0
+        version: 1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@kosori/eslint-config':
         specifier: workspace:*
@@ -422,7 +422,7 @@ importers:
         version: 7.37.1(eslint@9.10.0(jiti@2.3.3))
       eslint-plugin-react-hooks:
         specifier: rc
-        version: 5.1.0-rc-70fb1363-20241010(eslint@9.10.0(jiti@2.3.3))
+        version: 5.1.0-rc-cd22717c-20241013(eslint@9.10.0(jiti@2.3.3))
       eslint-plugin-turbo:
         specifier: ^2.1.3
         version: 2.1.3(eslint@9.10.0(jiti@2.3.3))
@@ -2982,8 +2982,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9
 
-  eslint-plugin-react-hooks@5.1.0-rc-70fb1363-20241010:
-    resolution: {integrity: sha512-ACpE3p5orWvc0bh5qsH65ujmM1xrPTSTmB73EGR9fn5QTqNmoHNEA5kC9f4Z9FP9rm0E9tvrFgRw2/UfoqdxIQ==}
+  eslint-plugin-react-hooks@5.1.0-rc-cd22717c-20241013:
+    resolution: {integrity: sha512-p4gcOd9uRugj0w+23DAcb1quxz0RLLQrebiQ2wQ3+LbRlSic5SwixqdZmMsuQLkKdWYYftVIH6gsBoUBHNdsZg==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
@@ -5172,8 +5172,8 @@ packages:
     resolution: {integrity: sha512-OljLrQ9SQdOUqTaQxqL5dEfZWrXExyyWsozYlAWFawPVNuD83igl7uJD2RTkNMbniIYgt8l81eCJGIdQF7avLQ==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
-  vaul@1.0.0:
-    resolution: {integrity: sha512-TegfMkwy86RSvSiIVREG6OqgRL7agqRsKYyWYacyVUAdpcIi34QoCOED476Mbf8J5d06e1hygSdvJhehlxEBhQ==}
+  vaul@1.1.0:
+    resolution: {integrity: sha512-YhO/bikcauk48hzhMhvIvT+U87cuCbNbKk9fF4Ou5UkI9t2KkBMernmdP37pCzF15hrv55fcny1YhexK8h6GVQ==}
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0
       react-dom: ^16.8 || ^17.0 || ^18.0
@@ -7907,7 +7907,7 @@ snapshots:
       safe-regex-test: 1.0.3
       string.prototype.includes: 2.0.0
 
-  eslint-plugin-react-hooks@5.1.0-rc-70fb1363-20241010(eslint@9.10.0(jiti@2.3.3)):
+  eslint-plugin-react-hooks@5.1.0-rc-cd22717c-20241013(eslint@9.10.0(jiti@2.3.3)):
     dependencies:
       eslint: 9.10.0(jiti@2.3.3)
 
@@ -10637,7 +10637,7 @@ snapshots:
 
   validate-npm-package-name@5.0.1: {}
 
-  vaul@1.0.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  vaul@1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@radix-ui/react-dialog': 1.1.2(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
