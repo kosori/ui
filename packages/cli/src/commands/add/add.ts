@@ -16,7 +16,7 @@ import { transform } from './helpers/transform';
 import { componentsPrompts } from './prompts';
 import { initOptionsSchema, itemsSchema, typeSchema } from './schema';
 
-const prettify = buildPrettifier({ parser: 'typescript' });
+const prettify = buildPrettifier();
 
 export const add = new Command()
   .name('add')
