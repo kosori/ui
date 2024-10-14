@@ -4,6 +4,7 @@ import * as p from '@clack/prompts';
 import { Command } from 'commander';
 import color from 'picocolors';
 
+import { buildPrettifier } from '~/utils/buildPrettifier';
 import { installDependencies } from '~/utils/dependencies';
 import { handleError } from '~/utils/handleError';
 import { highlight } from '~/utils/highlight';
@@ -14,6 +15,8 @@ import { getComponents, getComponentsIndex } from './helpers/components';
 import { transform } from './helpers/transform';
 import { componentsPrompts } from './prompts';
 import { initOptionsSchema, itemsSchema, typeSchema } from './schema';
+
+const prettify = buildPrettifier({ parser: 'typescript' });
 
 export const add = new Command()
   .name('add')
@@ -128,7 +131,7 @@ export const add = new Command()
             overwrite: options.all ? true : overwrite,
             files: componentsFormatted.map((component) => ({
               name: `${component.name}.tsx`,
-              content: component.content,
+              content: prettify(component.content),
             })),
           });
           spin.stop('Components written!');
