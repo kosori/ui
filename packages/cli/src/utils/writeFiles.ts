@@ -1,6 +1,10 @@
 import { existsSync, promises as fs } from 'fs';
 import path from 'path';
 
+import { buildPrettifier } from './buildPrettifier';
+
+const prettify = buildPrettifier();
+
 export const writeFile = async ({
   dirPath,
   overwrite,
@@ -18,7 +22,7 @@ export const writeFile = async ({
     throw new Error(`File ${filePath} already exists`);
   }
 
-  await fs.writeFile(filePath, content, 'utf8');
+  await fs.writeFile(filePath, prettify(content), 'utf8');
 };
 
 export const writeFiles = async ({
