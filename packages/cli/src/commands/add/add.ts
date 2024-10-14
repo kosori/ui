@@ -131,7 +131,7 @@ export const add = new Command()
             overwrite: options.all ? true : overwrite,
             files: componentsFormatted.map((component) => ({
               name: `${component.name}.tsx`,
-              content: prettify(component.content),
+              content: prettify(component.content, 'typescript'),
             })),
           });
           spin.stop('Components written!');
