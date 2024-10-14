@@ -38,6 +38,7 @@
     "@antfu/ni": "^0.23.0",
     "@clack/core": "^0.3.4",
     "@clack/prompts": "^0.7.0",
+    "@prettier/sync": "^0.5.2",
     "commander": "^12.1.0",
     "consola": "^3.2.3",
     "cosmiconfig": "^9.0.0",
