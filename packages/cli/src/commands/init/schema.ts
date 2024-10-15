@@ -20,6 +20,7 @@ export const rawConfigSchema = z.object({
     ui: z.string(),
     hooks: z.string(),
   }),
+  project: z.enum(['next-app', 'next-app-src', 'next-pages', 'next-pages-src']),
 });
 
 export type Config = z.infer<typeof configSchema>;
@@ -30,5 +31,6 @@ export const configSchema = rawConfigSchema.extend({
     utils: z.string(),
     components: z.string(),
     ui: z.string(),
+    layout: z.string(),
   }),
 });
