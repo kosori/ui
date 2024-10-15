@@ -45,6 +45,21 @@ export const resolveConfigPaths = ({
     throw new Error(`Failed to load tsconfig.json. ${tsConfig.message}`.trim());
   }
 
+  const layoutFile =
+    config.project === 'next-app' || config.project === 'next-app-src'
+      ? 'layout.tsx'
+      : '_app.tsx';
+  let layoutPath = '';
+
+  if (config.project === 'next-app' && layoutFile === 'layout.tsx')
+    layoutPath = path.resolve(cwd, 'app/layout.tsx');
+  if (config.project === 'next-app-src' && layoutFile === 'layout.tsx')
+    layoutPath = path.resolve(cwd, 'src/app/layout.tsx');
+  if (config.project === 'next-pages' && layoutFile === '_app.tsx')
+    layoutPath = path.resolve(cwd, 'pages/_app.tsx');
+  if (config.project === 'next-pages-src' && layoutFile === '_app.tsx')
+    layoutPath = path.resolve(cwd, 'src/pages/_app.tsx');
+
   return configSchema.parse({
     ...config,
     resolvedPaths: {
@@ -53,6 +68,7 @@ export const resolveConfigPaths = ({
       utils: resolveImport(config.aliases.utils, tsConfig),
       components: resolveImport(config.aliases.components, tsConfig),
       ui: resolveImport(config.aliases.ui, tsConfig),
+      layout: path.resolve(cwd, layoutPath),
     },
   });
 };
