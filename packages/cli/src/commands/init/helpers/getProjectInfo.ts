@@ -34,6 +34,7 @@ export const getProjectConfig = async ({
 
   const config: RawConfig = {
     $schema: 'https://kosori.codingcodax.dev/schema.json',
+    project: projectType,
     tailwind: {
       config: 'tailwind.config.ts',
       css: tailwindCssFile,
