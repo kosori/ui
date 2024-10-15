@@ -2,7 +2,7 @@ import { existsSync, promises as fs } from 'fs';
 import path from 'path';
 
 import type { Config } from '../schema';
-import { GLOBALS_CSS, TAILWIND_CONFIG, UTILS } from '~/utils/templates';
+import { GLOBALS_CSS, LAYOUT, TAILWIND_CONFIG, UTILS } from '~/utils/templates';
 
 export const writeTemplates = async ({
   projectConfig,
@@ -21,14 +21,14 @@ export const writeTemplates = async ({
     }
   }
 
-  // Wrte tailwind file
+  // Overwrite tailwind file
   await fs.writeFile(
     projectConfig.resolvedPaths.tailwindConfig,
     TAILWIND_CONFIG,
     'utf8',
   );
 
-  // Write css file
+  // Overwrite css file
   await fs.writeFile(
     projectConfig.resolvedPaths.tailwindCss,
     GLOBALS_CSS,
@@ -41,4 +41,7 @@ export const writeTemplates = async ({
     UTILS,
     'utf8',
   );
+
+  // Overwrite layout file
+  await fs.writeFile(projectConfig.resolvedPaths.layout, LAYOUT, 'utf8');
 };
