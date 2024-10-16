@@ -45,7 +45,7 @@
     "execa": "^9.4.0",
     "fast-glob": "^3.3.2",
     "fs-extra": "^11.2.0",
-    "picocolors": "^1.1.0",
+    "picocolors": "^1.1.1",
     "ts-morph": "^24.0.0",
     "tsconfig-paths": "^4.2.0"
   },
