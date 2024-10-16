@@ -69,7 +69,8 @@ export const init = new Command()
 
           if (!skip) {
             const shouldContinue = await p.confirm({
-              message: `Write ${highlight('globals.css')}, ${highlight('tailwind.config.ts')} and ${highlight('cn.ts')} files?`,
+              // TODO: render `layout.tsx` or `_app.tsx` based on the project type
+              message: `Write ${highlight('globals.css')}, ${highlight('tailwind.config.ts')}, ${highlight('layout.tsx')} and ${highlight('cn.ts')} files?`,
             });
 
             if (shouldContinue === false) {
