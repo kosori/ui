@@ -92,6 +92,7 @@
   },
   {
     "name": "file-tree",
+    "dependencies": ["lucide-react"],
     "required": ["collapsible"],
     "type": "component:ui"
   },
