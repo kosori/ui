@@ -1,5 +1,6 @@
 'use client';
 
+import type { PropsWithChildren } from 'react';
 import { clsx } from 'clsx/lite';
 
 import { Button } from '@kosori/ui/button';
@@ -12,11 +13,15 @@ import { useThemeConfig } from '~/hooks/use-theme-config';
 type Props = {
   type: string;
   dataKey: ConfigKey;
-  children: React.ReactNode;
   align: 'start' | 'center' | 'end';
 };
 
-export const ColorOption = ({ children, align, type, dataKey }: Props) => {
+export const ColorOption = ({
+  children,
+  align,
+  type,
+  dataKey,
+}: PropsWithChildren<Props>) => {
   const { updateConfig, config } = useThemeConfig();
   const selectedColor = config[dataKey];
 
@@ -55,7 +60,7 @@ export const ColorOption = ({ children, align, type, dataKey }: Props) => {
                 className={clsx(
                   'w-full justify-start',
                   selectedColor === color.color &&
-                    'bg-primary-bg hover:bg-primary-bg',
+                  'bg-primary-bg hover:bg-primary-bg',
                 )}
                 size='small'
                 variant='outline'
