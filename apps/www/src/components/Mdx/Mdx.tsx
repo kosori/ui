@@ -1,5 +1,6 @@
 import type { MDXComponents as TypeMDXComponents } from 'mdx/types';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Card, Cards } from 'fumadocs-ui/components/card';
 import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
 import { File, Files, Folder } from 'fumadocs-ui/components/files';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
@@ -19,6 +20,8 @@ export const MDXComponents: TypeMDXComponents = {
   ComponentPreview,
   Accordion,
   Accordions,
+  Card,
+  Cards,
   File,
   Folder,
   Files,
