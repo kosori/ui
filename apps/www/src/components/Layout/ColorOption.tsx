@@ -60,7 +60,7 @@ export const ColorOption = ({
                 className={clsx(
                   'w-full justify-start',
                   selectedColor === color.color &&
-                  'bg-primary-bg hover:bg-primary-bg',
+                    'bg-primary-bg hover:bg-primary-bg',
                 )}
                 size='small'
                 variant='outline'
