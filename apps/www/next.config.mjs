@@ -1,9 +1,9 @@
 import { fileURLToPath } from 'url';
 import { createMDX } from 'fumadocs-mdx/next';
-import createJiti from 'jiti';
+import { createJiti } from 'jiti';
 
 // Import env files to validate at build time. Use jiti so we can load .ts files in here.
-createJiti(fileURLToPath(import.meta.url))('./src/env');
+await createJiti(fileURLToPath(import.meta.url)).import('./src/env');
 
 const withMDX = createMDX({});
 
