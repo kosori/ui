@@ -14,30 +14,61 @@ description: Pagination with page navigation, next and previous links.
 
 ## Installation
 
-<Steps>
+<InstallTabs items={['CLI', 'Manual']}>
 
-  <Step>
-    ### Copy-paste the component
-    
-    Copy and paste the component code in a `.tsx` file.
+  <Tab value='CLI'>
+  
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli add components pagination
+      ```
 
-    ```json doc-gen:file
-    {
-      "file": "../../packages/ui/src/pagination.tsx",
-      "codeblock": true
-    }
-    ```
+      ```bash tab="pnpm"
+      pnpx @kosori/cli add components pagination
+      ```
 
-  </Step>
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli add components pagination
+      ```
 
-  <Step>
-    ### Update import paths
+      ```bash tab="bun"
+      bun x @kosori/cli add components pagination
+      ```
 
-    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+    </KosoriCLITabs>
 
-  </Step>
+  </Tab>
 
-</Steps>
+  <Tab value='Manual'>
+
+    <Steps>
+
+      <Step>
+        ### Copy-paste the component
+
+        Copy and paste the component code in a `.tsx` file.
+
+        ```json doc-gen:file
+        {
+          "file": "../../packages/ui/src/pagination.tsx",
+          "codeblock": true
+        }
+        ```
+
+      </Step>
+
+      <Step>
+        ### Update import paths
+
+        Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+      </Step>
+
+    </Steps>
+
+  </Tab>
+
+</InstallTabs>
 
 ## Usage
 

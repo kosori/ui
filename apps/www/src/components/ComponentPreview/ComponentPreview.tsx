@@ -1,11 +1,15 @@
+import type { PropsWithChildren } from 'react';
 import { useMemo } from 'react';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 import { Components } from './Components';
 
-type Props = { name: string; children: React.ReactNode };
+type Props = { name: string };
 
-export const ComponentPreview = ({ name, children }: Props) => {
+export const ComponentPreview = ({
+  name,
+  children,
+}: PropsWithChildren<Props>) => {
   const PreviewComponent = useMemo(() => {
     const Component = Components[name]?.component;
 

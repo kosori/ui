@@ -18,71 +18,103 @@ dependencies: ['@radix-ui/react-collapsible']
 
 ## Installation
 
-<Steps>
-  <Step>
-    ### Install the primitive
+<InstallTabs items={['CLI', 'Manual']}>
 
-    Install the `@radix-ui/react-collapsible` and the `lucide-react` packages.
+  <Tab value='CLI'>
+  
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli add components file-tree
+      ```
 
-    ```package-install
-    @radix-ui/react-collapsible lucide-react
-    ```
+      ```bash tab="pnpm"
+      pnpx @kosori/cli add components file-tree
+      ```
 
-  </Step>
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli add components file-tree
+      ```
 
-  <Step>
-    ### Copy-paste the component
+      ```bash tab="bun"
+      bun x @kosori/cli add components file-tree
+      ```
 
-    Copy and paste the component code in a `.tsx` file.
+    </KosoriCLITabs>
 
-    ```json doc-gen:file
-    {
-      "file": "../../packages/ui/src/file-tree.tsx",
-      "codeblock": true
-    }
-    ```
+  </Tab>
 
-  </Step>
+  <Tab value='Manual'>
 
-  <Step>
-    ### Update import paths
+    <Steps>
 
-    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+      <Step>
+        ### Install the primitive
 
-  </Step>
+        Install the `@radix-ui/react-collapsible` and the `lucide-react` packages.
 
-  <Step>
-    ### Add keyframes animation
-    
-    Add the `collapsible-down` and `collapsible-up` keyframes animation to your Tailwind CSS config.
+        ```package-install
+        @radix-ui/react-collapsible lucide-react
+        ```
 
-    ```ts title="tailwind.config.ts"
-    import type { Config } from 'tailwindcss';
+      </Step>
 
-    const config: Config = {
-      // ...,
-      keyframes: {
-        // [!code highlight:9]
-        'collapsible-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-collapsible-content-height)' },
-        },
-        'collapsible-up': {
-          from: { height: 'var(--radix-collapsible-content-height)' },
-          to: { height: '0' },
-        },
-      },
-      animation: {
-        // [!code highlight:3]
-        'collapsible-down': 'collapsible-down 0.15s ease-out',
-        'collapsible-up': 'collapsible-up 0.15s ease-out',
-      }
-    };
-    ```
+      <Step>
+        ### Copy-paste the component
 
-  </Step>
+        Copy and paste the component code in a `.tsx` file.
 
-</Steps>
+        ```json doc-gen:file
+        {
+          "file": "../../packages/ui/src/file-tree.tsx",
+          "codeblock": true
+        }
+        ```
+
+      </Step>
+
+      <Step>
+        ### Update import paths
+
+        Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+      </Step>
+
+      <Step>
+        ### Add keyframes animation
+
+        Add the `collapsible-down` and `collapsible-up` keyframes animation to your Tailwind CSS config.
+
+        ```ts title="tailwind.config.ts"
+        import type { Config } from 'tailwindcss';
+
+        const config: Config = {
+          // ...,
+          keyframes: {
+            // [!code highlight:9]
+            'collapsible-down': {
+              from: { height: '0' },
+              to: { height: 'var(--radix-collapsible-content-height)' },
+            },
+            'collapsible-up': {
+              from: { height: 'var(--radix-collapsible-content-height)' },
+              to: { height: '0' },
+            },
+          },
+          animation: {
+            // [!code highlight:3]
+            'collapsible-down': 'collapsible-down 0.15s ease-out',
+            'collapsible-up': 'collapsible-up 0.15s ease-out',
+          }
+        };
+        ```
+
+      </Step>
+
+    </Steps>
+
+  </Tab>
+
+</InstallTabs>
 
 ## Usage
 

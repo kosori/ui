@@ -18,64 +18,125 @@ dependencies: ['@radix-ui/react-toast']
 
 ## Installation
 
-<Steps>
+<InstallTabs items={['CLI', 'Manual']}>
 
-  <Step>
-    ### Install the primitive
-    
-    Install the `@radix-ui/react-toast` package.
+  <Tab value='CLI'>
+  
+    <Steps>
 
-    ```package-install
-    @radix-ui/react-toast
-    ```
+      <Step>
 
-  </Step>
-    
-  <Step>
-    ### Copy-paste the component
-    
-    Copy and paste the component code in a `.tsx` file.
+        <KosoriCLITabs>
+          ```bash tab="npm"
+          npx @kosori/cli add components toast
+          ```
 
-    ```json doc-gen:file
-    {
-      "file": "../../packages/ui/src/toast.tsx",
-      "codeblock": true
-    }
-    ```
+          ```bash tab="pnpm"
+          pnpx @kosori/cli add components toast
+          ```
 
-  </Step>
+          ```bash tab="yarn"
+          yarn dlx @kosori/cli add components toast
+          ```
 
-  <Step>
-    ### Update import paths
+          ```bash tab="bun"
+          bun x @kosori/cli add components toast
+          ```
 
-    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+        </KosoriCLITabs>
+      </Step>
 
-  </Step>
+      <Step>
+        ### Add Toaster component
 
-  <Step>
-    ### Add Toaster component
+        Add the `<Toaster />` component to the root of your app.
 
-    Add the `<Toaster />` component to the root of your app.
+        ```tsx title="app/layout.tsx"
+        import { Toaster } from '~/components/ui/toast'; // [!code highlight]
 
-    ```tsx title="app/layout.tsx"
-    import { Toaster } from '~/components/ui/toast'; // [!code highlight]
+        export default const RootLayout = ({ children }) => {
+          return (
+            <html lang='en'>
+              <head />
+              <body>
+                <main>{children}</main>
+                <Toaster /> // [!code highlight]
+              </body>
+            </html>
+          );
+        }
+        ```
 
-    export default const RootLayout = ({ children }) => {
-      return (
-        <html lang='en'>
-          <head />
-          <body>
-            <main>{children}</main>
-            <Toaster /> // [!code highlight]
-          </body>
-        </html>
-      );
-    }
-    ```
+      </Step>
 
-  </Step>
+    </Steps>
 
-</Steps>
+  </Tab>
+
+  <Tab value='Manual'>
+
+    <Steps>
+
+      <Step>
+        ### Install the primitive
+
+        Install the `@radix-ui/react-toast` package.
+
+        ```package-install
+        @radix-ui/react-toast
+        ```
+
+      </Step>
+
+      <Step>
+        ### Copy-paste the component
+
+        Copy and paste the component code in a `.tsx` file.
+
+        ```json doc-gen:file
+        {
+          "file": "../../packages/ui/src/toast.tsx",
+          "codeblock": true
+        }
+        ```
+
+      </Step>
+
+      <Step>
+        ### Update import paths
+
+        Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+      </Step>
+
+      <Step>
+        ### Add Toaster component
+
+        Add the `<Toaster />` component to the root of your app.
+
+        ```tsx title="app/layout.tsx"
+        import { Toaster } from '~/components/ui/toast'; // [!code highlight]
+
+        export default const RootLayout = ({ children }) => {
+          return (
+            <html lang='en'>
+              <head />
+              <body>
+                <main>{children}</main>
+                <Toaster /> // [!code highlight]
+              </body>
+            </html>
+          );
+        }
+        ```
+
+      </Step>
+
+    </Steps>
+
+  </Tab>
+
+</InstallTabs>
 
 ## Usage
 

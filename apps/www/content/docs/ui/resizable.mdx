@@ -18,41 +18,72 @@ dependencies: ['react-resizable-panels']
 
 ## Installation
 
-<Steps>
+<InstallTabs items={['CLI', 'Manual']}>
 
-  <Step>
-    ### Install the primitive
-    
-    Install the `react-resizable-panels` package.
+  <Tab value='CLI'>
+  
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli add components resizable
+      ```
 
-    ```package-install
-    react-resizable-panels
-    ```
+      ```bash tab="pnpm"
+      pnpx @kosori/cli add components resizable
+      ```
 
-  </Step>
-    
-  <Step>
-    ### Copy-paste the component
-    
-    Copy and paste the component code in a `.tsx` file.
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli add components resizable
+      ```
 
-    ```json doc-gen:file
-    {
-      "file": "../../packages/ui/src/resizable.tsx",
-      "codeblock": true
-    }
-    ```
+      ```bash tab="bun"
+      bun x @kosori/cli add components resizable
+      ```
 
-  </Step>
+    </KosoriCLITabs>
 
-  <Step>
-    ### Update import paths
+  </Tab>
 
-    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+  <Tab value='Manual'>
 
-  </Step>
+    <Steps>
 
-</Steps>
+      <Step>
+        ### Install the primitive
+
+        Install the `react-resizable-panels` package.
+
+        ```package-install
+        react-resizable-panels
+        ```
+
+      </Step>
+
+      <Step>
+        ### Copy-paste the component
+
+        Copy and paste the component code in a `.tsx` file.
+
+        ```json doc-gen:file
+        {
+          "file": "../../packages/ui/src/resizable.tsx",
+          "codeblock": true
+        }
+        ```
+
+      </Step>
+
+      <Step>
+        ### Update import paths
+
+        Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+      </Step>
+
+    </Steps>
+
+  </Tab>
+
+</InstallTabs>
 
 ## Usage
 

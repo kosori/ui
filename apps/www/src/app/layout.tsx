@@ -7,6 +7,8 @@ import { defaultConfig } from '~/config/theme';
 
 import '~/app/globals.css';
 
+import type { PropsWithChildren } from 'react';
+
 import { ThemeLoader } from '~/components/Layout/ThemeLoader';
 import { Providers } from './providers';
 
@@ -61,7 +63,7 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html suppressHydrationWarning lang='en'>
       <body
@@ -84,7 +86,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             className='min-h-screen bg-grey-base text-grey-text'
             vaul-drawer-wrapper=''
           >
-            {props.children}
+            {children}
           </div>
 
           <ThemeLoader />
@@ -92,4 +94,6 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
