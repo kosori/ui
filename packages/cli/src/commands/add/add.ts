@@ -107,7 +107,7 @@ export const add = new Command()
             });
 
             if (shouldContinue === false) {
-              p.outro(color.bgCyan(color.black(' No components written! ')));
+              p.outro(color.bgCyan(color.black(' No component(s) written! ')));
               return;
             }
           }
@@ -134,7 +134,15 @@ export const add = new Command()
               content: prettify(component.content, 'typescript'),
             })),
           });
-          spin.stop('Components written!');
+          spin.stop('Component(s) written!');
+
+          const dependencies = Array.from(
+            new Set(
+              components.flatMap((component) => component.dependencies ?? []),
+            ),
+          );
+
+          if (!dependencies.length) return;
 
           if (!skip) {
             const shouldContinue = await p.confirm({
@@ -148,12 +156,6 @@ export const add = new Command()
               return;
             }
           }
-
-          const dependencies = Array.from(
-            new Set(
-              components.flatMap((component) => component.dependencies ?? []),
-            ),
-          );
 
           const packageManager = await getPackageManager({ targetDir: cwd });
 
