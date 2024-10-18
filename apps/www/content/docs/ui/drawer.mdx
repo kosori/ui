@@ -17,41 +17,72 @@ dependencies: ['vaul']
 
 ## Installation
 
-<Steps>
+<InstallTabs items={['CLI', 'Manual']}>
 
-  <Step>
-    ### Install the primitive
-    
-    Install the `vaul` package.
+  <Tab value='CLI'>
+  
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli add components drawer
+      ```
 
-    ```package-install
-    vaul
-    ```
+      ```bash tab="pnpm"
+      pnpx @kosori/cli add components drawer
+      ```
 
-  </Step>
-    
-  <Step>
-    ### Copy-paste the component
-    
-    Copy and paste the component code in a `.tsx` file.
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli add components drawer
+      ```
 
-    ```json doc-gen:file
-    {
-      "file": "../../packages/ui/src/drawer.tsx",
-      "codeblock": true
-    }
-    ```
+      ```bash tab="bun"
+      bun x @kosori/cli add components drawer
+      ```
 
-  </Step>
+    </KosoriCLITabs>
 
-  <Step>
-    ### Update import paths
+  </Tab>
 
-    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+  <Tab value='Manual'>
 
-  </Step>
+    <Steps>
 
-</Steps>
+      <Step>
+        ### Install the primitive
+
+        Install the `vaul` package.
+
+        ```package-install
+        vaul
+        ```
+
+      </Step>
+
+      <Step>
+        ### Copy-paste the component
+
+        Copy and paste the component code in a `.tsx` file.
+
+        ```json doc-gen:file
+        {
+          "file": "../../packages/ui/src/drawer.tsx",
+          "codeblock": true
+        }
+        ```
+
+      </Step>
+
+      <Step>
+        ### Update import paths
+
+        Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+      </Step>
+
+    </Steps>
+
+  </Tab>
+
+</InstallTabs>
 
 ## Usage
 

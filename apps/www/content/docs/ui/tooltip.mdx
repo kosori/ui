@@ -16,43 +16,72 @@ dependencies: ['@radix-ui/react-tooltip']
 ```
 </ComponentPreview>
 
-## Installation
+<InstallTabs items={['CLI', 'Manual']}>
 
-<Steps>
+  <Tab value='CLI'>
+  
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli add components tooltip
+      ```
 
-  <Step>
-    ### Install the primitive
-    
-    Install the `@radix-ui/react-tooltip` package.
+      ```bash tab="pnpm"
+      pnpx @kosori/cli add components tooltip
+      ```
 
-    ```package-install
-    @radix-ui/react-tooltip
-    ```
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli add components tooltip
+      ```
 
-  </Step>
-    
-  <Step>
-    ### Copy-paste the component
-    
-    Copy and paste the component code in a `.tsx` file.
+      ```bash tab="bun"
+      bun x @kosori/cli add components tooltip
+      ```
 
-    ```json doc-gen:file
-    {
-      "file": "../../packages/ui/src/tooltip.tsx",
-      "codeblock": true
-    }
-    ```
+    </KosoriCLITabs>
 
-  </Step>
+  </Tab>
 
-  <Step>
-    ### Update import paths
+  <Tab value='Manual'>
 
-    Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+    <Steps>
 
-  </Step>
+      <Step>
+        ### Install the primitive
 
-</Steps>
+        Install the `@radix-ui/react-tooltip` package.
+
+        ```package-install
+        @radix-ui/react-tooltip
+        ```
+
+      </Step>
+
+      <Step>
+        ### Copy-paste the component
+
+        Copy and paste the component code in a `.tsx` file.
+
+        ```json doc-gen:file
+        {
+          "file": "../../packages/ui/src/tooltip.tsx",
+          "codeblock": true
+        }
+        ```
+
+      </Step>
+
+      <Step>
+        ### Update import paths
+
+        Update the `@kosori/ui` import paths to fit your project structure, for example, using `~/components/ui`.
+
+      </Step>
+
+    </Steps>
+
+  </Tab>
+
+</InstallTabs>
 
 ## Usage
 
