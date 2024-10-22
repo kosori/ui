@@ -23,5 +23,8 @@
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@kosori/prettier-config"
+  "prettier": "@kosori/prettier-config",
+  "dependencies": {
+    "react": "^18.3.1"
+  }
 }
