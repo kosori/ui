@@ -15,11 +15,12 @@ export const generateStaticParams = () => {
   return source.generateParams();
 };
 
-export const generateMetadata = ({
-  params,
-}: {
-  params: { slug?: string[] };
-}) => {
+export const generateMetadata = async (
+  props: {
+    params: Promise<{ slug?: string[] }>;
+  }
+) => {
+  const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
@@ -29,7 +30,8 @@ export const generateMetadata = ({
   } satisfies Metadata;
 };
 
-const Page = ({ params }: { params: { slug?: string[] } }) => {
+const Page = async (props: { params: Promise<{ slug?: string[] }> }) => {
+  const params = await props.params;
   const page = source.getPage(params.slug);
 
   if (page == null) {
