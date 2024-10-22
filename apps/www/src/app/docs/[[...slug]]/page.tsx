@@ -15,11 +15,9 @@ export const generateStaticParams = () => {
   return source.generateParams();
 };
 
-export const generateMetadata = async (
-  props: {
-    params: Promise<{ slug?: string[] }>;
-  }
-) => {
+export const generateMetadata = async (props: {
+  params: Promise<{ slug?: string[] }>;
+}) => {
   const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) notFound();
