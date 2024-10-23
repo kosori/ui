@@ -10,17 +10,16 @@
     },
     "./*": {
       "types": "./dist/src/*.d.ts",
-      "default": "./src/*.tsx"
+      "default": "./src/*.ts"
     }
   },
   "license": "MIT",
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf .turbo node_modules",
-    "dev": "tsc",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "devDependencies": {
     "@kosori/eslint-config": "workspace:*",
