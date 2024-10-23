@@ -7,9 +7,8 @@ import {
   DoubleArrowRightIcon,
 } from '@radix-ui/react-icons';
 
+import { useStep } from '@kosori/hooks/use-step';
 import { Button } from '@kosori/ui/button';
-
-import { useStep } from '~/hooks/use-step';
 
 export const UseStepDemo = () => {
   const {

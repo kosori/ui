@@ -1,9 +1,8 @@
 'use client';
 
+import { useToggle } from '@kosori/hooks/use-toggle';
 import { Button } from '@kosori/ui/button';
 import { Switch } from '@kosori/ui/switch';
-
-import { useToggle } from '~/hooks/use-toggle';
 
 export const UseToggleDemo = () => {
   const { on, toggle, setToggle } = useToggle();

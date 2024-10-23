@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { clsx } from 'clsx/lite';
 
+import { useMediaQuery } from '@kosori/hooks/use-media-query';
 import { Button } from '@kosori/ui/button';
 import {
   Dialog,
@@ -24,8 +25,6 @@ import {
 } from '@kosori/ui/drawer';
 import { Input } from '@kosori/ui/input';
 import { Label } from '@kosori/ui/label';
-
-import { useMediaQuery } from '~/hooks/use-media-query';
 
 export const DrawerDialogDemo = () => {
   const [open, setOpen] = useState(false);

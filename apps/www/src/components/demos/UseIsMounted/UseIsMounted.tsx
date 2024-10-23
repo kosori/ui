@@ -3,9 +3,8 @@
 import { useEffect, useState } from 'react';
 import { clsx } from 'clsx/lite';
 
+import { useIsMounted } from '@kosori/hooks/use-is-mounted';
 import { Button } from '@kosori/ui/button';
-
-import { useIsMounted } from '~/hooks/use-is-mounted';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
