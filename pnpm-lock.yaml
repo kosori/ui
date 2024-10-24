@@ -354,8 +354,8 @@ importers:
         specifier: ^7.53.1
         version: 7.53.1(react@18.3.1)
       react-resizable-panels:
-        specifier: ^2.1.4
-        version: 2.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^2.1.5
+        version: 2.1.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       recharts:
         specifier: ^2.13.0
         version: 2.13.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -428,7 +428,7 @@ importers:
         version: 7.37.2(eslint@9.10.0(jiti@2.3.3))
       eslint-plugin-react-hooks:
         specifier: rc
-        version: 5.1.0-rc-45804af1-20241021(eslint@9.10.0(jiti@2.3.3))
+        version: 5.1.0-rc-1631855f-20241023(eslint@9.10.0(jiti@2.3.3))
       eslint-plugin-turbo:
         specifier: ^2.2.3
         version: 2.2.3(eslint@9.10.0(jiti@2.3.3))
@@ -3129,8 +3129,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9
 
-  eslint-plugin-react-hooks@5.1.0-rc-45804af1-20241021:
-    resolution: {integrity: sha512-q8MQ4OQ0TYmKT6eS2ZObxmA+OvUrd27MN72zU5b3ib7Q+1I78C9aUzy1GelM8ttgkEkwSxE+qDBgV+K84tjt+Q==}
+  eslint-plugin-react-hooks@5.1.0-rc-1631855f-20241023:
+    resolution: {integrity: sha512-ohDko9xwausG054sm2kvM0ZssnaZ0jRBL3tduCR9Bo3rott+zD8O9p6PC5B+LN/6f2RwKRNCdN2WcrkNul/ljg==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
@@ -4632,11 +4632,11 @@ packages:
       '@types/react':
         optional: true
 
-  react-resizable-panels@2.1.4:
-    resolution: {integrity: sha512-kzue8lsoSBdyyd2IfXLQMMhNujOxRoGVus+63K95fQqleGxTfvgYLTzbwYMOODeAHqnkjb3WV/Ks7f5+gDYZuQ==}
+  react-resizable-panels@2.1.5:
+    resolution: {integrity: sha512-JMSe18rYupmx+dzYcdfWYZ93ZdxqQmLum3xWDVSUMI0UVwl9bB9gUaFmPbxYoO4G+m5sqgdXQCYQxnOysytfnw==}
     peerDependencies:
-      react: ^16.14.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0
+      react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+      react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
 
   react-smooth@4.0.1:
     resolution: {integrity: sha512-OE4hm7XqR0jNOq3Qmk9mFLyd6p2+j6bvbPJ7qlB7+oo0eNcL2l7WQzG6MBnT3EXY6xzkLMUBec3AfewJdA0J8w==}
@@ -8158,7 +8158,7 @@ snapshots:
       safe-regex-test: 1.0.3
       string.prototype.includes: 2.0.1
 
-  eslint-plugin-react-hooks@5.1.0-rc-45804af1-20241021(eslint@9.10.0(jiti@2.3.3)):
+  eslint-plugin-react-hooks@5.1.0-rc-1631855f-20241023(eslint@9.10.0(jiti@2.3.3)):
     dependencies:
       eslint: 9.10.0(jiti@2.3.3)
 
@@ -10077,7 +10077,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.5
 
-  react-resizable-panels@2.1.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-resizable-panels@2.1.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
