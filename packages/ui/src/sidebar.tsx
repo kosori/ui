@@ -12,10 +12,9 @@ import {
 } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
-import { clsx } from 'clsx/lite';
 import { PanelLeft } from 'lucide-react';
-import { tv } from 'tailwind-variants';
 
+import { useMediaQuery } from '@kosori/hooks/use-media-query';
 import { cn } from '@kosori/ui';
 import { Button } from '@kosori/ui/button';
 import { Input } from '@kosori/ui/input';
@@ -29,25 +28,12 @@ import {
   TooltipTrigger,
 } from '@kosori/ui/tooltip';
 
-import { useMediaQuery } from '../../../apps/www/src/hooks/use-media-query';
-
 const SIDEBAR_COOKIE_NAME = 'sidebar:state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_WIDTH = '16rem';
 const SIDEBAR_WIDTH_MOBILE = '18rem';
 const SIDEBAR_WIDTH_ICON = '3rem';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'b';
-
-const sidebarStyles = tv({
-  slots: {
-    provider: clsx(
-      'group/sidebar-wrapper text-sidebar-foreground flex min-h-svh w-full',
-      'has-[[data-variant=inset]]:bg-sidebar',
-    ),
-  },
-});
-
-const { provider } = sidebarStyles();
 
 type SidebarContext = {
   state: 'expanded' | 'collapsed';
@@ -163,7 +149,10 @@ const SidebarProvider = forwardRef<HTMLDivElement, SidebarProvoderProps>(
         <TooltipProvider delayDuration={0}>
           <div
             ref={ref}
-            className={provider()}
+            className={cn(
+              'group/sidebar-wrapper text-sidebar-foreground has-[[data-variant=inset]]:bg-sidebar flex min-h-svh w-full',
+              className,
+            )}
             style={
               {
                 '--sidebar-width': SIDEBAR_WIDTH,
