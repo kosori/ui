@@ -173,14 +173,18 @@ const sidebarStyles = tv({
       },
     },
     side: {
-      right: clsx(
-        'right-0',
-        'group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]',
-      ),
-      left: clsx(
-        'left-0',
-        'group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]',
-      ),
+      right: {
+        rootWrapper: clsx(
+          'right-0',
+          'group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]',
+        ),
+      },
+      left: {
+        rootWrapper: clsx(
+          'left-0',
+          'group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]',
+        ),
+      },
     },
     showOnHover: {
       true: {
