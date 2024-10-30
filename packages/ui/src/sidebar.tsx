@@ -43,7 +43,7 @@ const sidebarStyles = tv({
     ),
     root: 'bg-grey-base text-grey-text',
     rootNoCollapsible:
-      'bg-grey-base text-grey-text flex h-full w-[--sidebar-width] flex-col',
+      'bg-grey-bg-subtle text-grey-text flex h-full w-[--sidebar-width] flex-col',
     rootIsMobile: clsx(
       'bg-grey-base text-grey-text w-[--sidebar-width] p-0',
       '[&>button]:hidden',
@@ -58,7 +58,7 @@ const sidebarStyles = tv({
       'md:flex',
     ),
     rootChild: clsx(
-      'bg-grey-base flex h-full w-full flex-col',
+      'bg-grey-bg-subtle flex h-full w-full flex-col',
       'group-data-[variant=floating]:border-grey-line group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow',
     ),
     trigger: 'size-7',
@@ -66,7 +66,7 @@ const sidebarStyles = tv({
       'absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear',
       'sm:flex',
       'after:absolute after:inset-y-0 after:left-1/2 after:w-[2px]',
-      'hover:after:bg-grey-base-border',
+      'hover:after:bg-grey-line',
       'group-data-[side=left]:-right-4',
       'group-data-[side=right]:left-0',
       'group-data-[collapsible=offcanvas]:translate-x-0',
@@ -79,7 +79,7 @@ const sidebarStyles = tv({
       '[[data-side=right][data-collapsible=offcanvas]_&]:-left-2',
     ),
     inset: clsx(
-      'bg-background relative flex min-h-svh flex-1 flex-col',
+      'bg-grey-base relative flex min-h-svh flex-1 flex-col',
       'peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))]',
       'md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow',
       'md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2',
@@ -90,7 +90,7 @@ const sidebarStyles = tv({
     ),
     header: 'flex flex-col gap-2 p-2',
     footer: 'flex flex-col gap-2 p-2',
-    separator: 'bg-grey-base-border mx-2 w-auto',
+    separator: 'bg-grey-line mx-2 w-auto',
     content: clsx(
       'flex min-h-0 flex-1 flex-col gap-2 overflow-auto',
       'group-data-[collapsible=icon]:overflow-hidden',
@@ -129,9 +129,9 @@ const sidebarStyles = tv({
     menuBadge: clsx(
       'text-grey-text pointer-events-none absolute right-1 flex h-5 min-w-5 select-none items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums',
       'peer-hover/menu-button:text-grey-text-contrast peer-data-[active=true]/menu-button:text-grey-text-contrast',
-      'peer-data-[size=sm]/menu-button:top-1',
-      'peer-data-[size=default]/menu-button:top-1.5',
-      'peer-data-[size=lg]/menu-button:top-2.5',
+      'peer-data-[size=small]/menu-button:top-1',
+      'peer-data-[size=medium]/menu-button:top-1.5',
+      'peer-data-[size=large]/menu-button:top-2.5',
       'group-data-[collapsible=icon]:hidden',
     ),
     skeleton: 'flex h-8 items-center gap-2 rounded-md px-2',
@@ -321,14 +321,15 @@ const SidebarProvider = forwardRef<HTMLDivElement, SidebarProvoderProps>(
     const open = openProp ?? _open;
     const setOpen = useCallback(
       (value: boolean | ((value: boolean) => boolean)) => {
+        const openState = typeof value === 'function' ? value(open) : value;
         if (setOpenProp) {
-          return setOpenProp(typeof value === 'function' ? value(open) : value);
+          setOpenProp(openState);
+        } else {
+          _setOpen(openState);
         }
 
-        _setOpen(value);
-
         // This sets the cookie to keep the sidebar state.
-        document.cookie = `${SIDEBAR_COOKIE_NAME}=${open}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
       },
       [setOpenProp, open],
     );
@@ -428,7 +429,7 @@ const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(
 
     if (collapsible === 'none') {
       return (
-        <div ref={ref} className={rootNoCollapsible()} {...props}>
+        <div ref={ref} className={rootNoCollapsible({ className })} {...props}>
           {children}
         </div>
       );
