@@ -41,11 +41,10 @@ const sidebarStyles = tv({
       'group/sidebar-wrapper text-grey-text flex min-h-svh w-full',
       'has-[[data-variant=inset]]:bg-grey-base',
     ),
-    root: 'bg-grey-base text-grey-text',
     rootNoCollapsible:
       'bg-grey-bg-subtle text-grey-text flex h-full w-[--sidebar-width] flex-col',
     rootIsMobile: clsx(
-      'bg-grey-base text-grey-text w-[--sidebar-width] p-0',
+      'bg-grey-bg-subtle text-grey-text w-[--sidebar-width] p-0',
       '[&>button]:hidden',
     ),
     rootGap: clsx(
@@ -97,12 +96,14 @@ const sidebarStyles = tv({
     ),
     group: 'relative flex w-full min-w-0 flex-col p-2',
     groupLabel: clsx(
-      'text-grey-text ring-grey-focus-ring flex h-8 select-none shrink-0 items-center rounded-md px-2 text-xs font-medium outline-none transition-[margin,opa] duration-200 ease-linear focus-visible:ring-4 [&>svg]:size-4 [&>svg]:shrink-0',
+      'text-grey-text ring-grey-focus-ring flex h-8 select-none shrink-0 items-center rounded-md px-2 text-xs font-medium outline-none transition-[margin,opa] duration-200 ease-linear',
+      'focus-visible:ring-4',
       'group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0',
+      '[&>svg]:size-4 [&>svg]:shrink-0',
     ),
     groupAction: clsx(
-      'text-grey-text ring-grey-focus-ring absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 outline-none transition-transform',
-      'hover:bg-grey-base-accent hover:text-grey-text-contrast',
+      'text-primary-text ring-primary-focus-ring absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 outline-none transition-transform',
+      'hover:bg-primary-base-accent hover:text-primary-text-contrast',
       'focus-visible:ring-4',
       '[&>svg]:size-4 [&>svg]:shrink-0',
       // Increases the hit area of the button on mobile.
@@ -128,7 +129,8 @@ const sidebarStyles = tv({
     ),
     menuBadge: clsx(
       'text-grey-text pointer-events-none absolute right-1 flex h-5 min-w-5 select-none items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums',
-      'peer-hover/menu-button:text-grey-text-contrast peer-data-[active=true]/menu-button:text-grey-text-contrast',
+      'peer-hover/menu-button:text-grey-text-contrast',
+      'peer-data-[active=true]/menu-button:text-grey-text-contrast',
       'peer-data-[size=small]/menu-button:top-1',
       'peer-data-[size=medium]/menu-button:top-1.5',
       'peer-data-[size=large]/menu-button:top-2.5',
@@ -144,9 +146,7 @@ const sidebarStyles = tv({
       'hover:bg-grey-bg-hover hover:text-grey-text-contrast',
       'active:bg-grey-bg-active active:text-grey-text-contrast',
       'focus-visible:ring-4',
-      'disabled:pointer-events-none disabled:opacity-50',
-      'aria-disabled:pointer-events-none aria-disabled:opacity-50',
-      'data-[active=true]:bg-grey-base-accent data-[active=true]:text-grey-text-contrast',
+      'data-[active=true]:bg-primary-bg-active data-[active=true]:text-primary-solid data-[active=true]:ring-primary-focus-ring',
       'group-data-[collapsible=icon]:hidden',
       '[&>svg]:text-grey-text-contrast [&>svg]:size-4 [&>svg]:shrink-0',
       '[&>span:last-child]:truncate',
@@ -168,8 +168,11 @@ const sidebarStyles = tv({
       },
       sidebar: {
         rootGap: 'group-data-[collapsible=icon]:w-[--sidebar-width-icon]',
-        rootWrapper:
-          'group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l',
+        rootWrapper: clsx(
+          'group-data-[side=left]:border-r',
+          'group-data-[side=right]:border-l',
+          'group-data-[collapsible=icon]:w-[--sidebar-width-icon]',
+        ),
       },
     },
     side: {
@@ -189,8 +192,10 @@ const sidebarStyles = tv({
     showOnHover: {
       true: {
         menuAction: clsx(
-          'peer-data-[active=true]/menu-button:text-grey-text-contrast group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100',
+          'group-focus-within/menu-item:opacity-100',
+          'group-hover/menu-item:opacity-100',
           'data-[state=open]:opacity-100 md:opacity-0',
+          'peer-data-[active=true]/menu-button:text-primary-text-contrast',
         ),
       },
       false: {},
@@ -237,13 +242,9 @@ const {
 const sidebarMenuButtonStyles = tv({
   base: clsx(
     'peer/menu-button ring-grey-focus-ring flex w-full items-center gap-2 overflow-hidden p-2 text-left text-sm outline-none transition-[width,height,padding]',
-    'hover:bg-grey-bg-hover hover:text-grey-text-contrast',
-    'active:bg-grey-bg-active active:text-grey-text-contrast',
     'focus-visible:ring-4',
-    'aria-disabled:pointer-events-none aria-disabled:opacity-50',
-    'disabled:pointer-events-none disabled:opacity-50',
-    'data-[active=true]:bg-grey-bg-active data-[active=true]:text-grey-text-contrast data-[active=true]:font-medium',
-    'data-[state=open]:hover:bg-grey-bg-active data-[state=open]:hover:text-grey-text-contrast',
+    'disabled:cursor-not-allowed',
+    'aria-disabled:cursor-not-allowed',
     'group-has-[[data-sidebar=menu-action]]/menu-item:pr-8',
     'group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2',
     '[&>svg]:size-4 [&>svg]:shrink-0',
@@ -251,10 +252,17 @@ const sidebarMenuButtonStyles = tv({
   ),
   variants: {
     variant: {
-      default: 'hover:bg-grey-bg-hover hover:text-grey-text-contrast',
+      default: clsx(
+        'hover:bg-grey-bg-hover hover:text-grey-text-contrast',
+        'active:bg-grey-bg-active active:text-grey-text-contrast',
+        'disabled:bg-transparent disabled:text-grey-solid',
+        'aria-disabled:bg-transparent aria-disabled:text-grey-solid',
+        'data-[active=true]:bg-primary-bg-active data-[active=true]:text-primary-solid data-[active=true]:font-medium data-[active=true]:ring-primary-focus-ring',
+        'data-[state=open]:hover:bg-grey-bg-hover data-[state=open]:hover:text-grey-text-contrast',
+      ),
       outline: clsx(
-        'bg-grey-base shadow-[0_0_0_1px_hsl(var(--grey-7))]',
-        'hover:bg-grey-bg-hover hover:text-grey-text-contrast hover:shadow-[0_0_0_1px_hsl(var(--grey-7))]',
+        'bg-primary-base shadow-[0_0_0_1px_hsl(var(--primary-7))]',
+        'hover:bg-primary-bg-hover hover:text-primary-text-contrast hover:shadow-[0_0_0_1px_hsl(var(--primary-7))]',
       ),
     },
     size: {
