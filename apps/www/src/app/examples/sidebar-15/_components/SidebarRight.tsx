@@ -19,9 +19,9 @@ import { NavUser } from './NavUser';
 // This is sample data.
 const data = {
   user: {
-    name: 'shadcn',
+    name: 'codingcodax',
     email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
+    avatar: '/avatars/codingcodax.jpeg',
   },
   calendars: [
     {

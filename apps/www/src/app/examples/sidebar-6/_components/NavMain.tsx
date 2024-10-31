@@ -40,7 +40,7 @@ export const NavMain = ({ items }: Props) => {
           <DropdownMenu key={item.title}>
             <SidebarMenuItem>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton className='data-[state=open]:bg-grey-bg-active data-[state=open]:text-grey-text-contrast'>
+                <SidebarMenuButton className='data-[state=open]:bg-grey-bg-active'>
                   {item.title} <MoreHorizontal className='ml-auto' />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>

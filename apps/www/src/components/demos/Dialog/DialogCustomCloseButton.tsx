@@ -34,7 +34,7 @@ export const DialogCustomCloseButtonDemo = () => {
             </Label>
             <Input
               readOnly
-              defaultValue='https://ui.shadcn.com/docs/installation'
+              defaultValue='https://kosori.codingcodax.dev/docs/ui/installation'
               id='link'
             />
           </div>

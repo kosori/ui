@@ -30,9 +30,9 @@ import { NavUser } from './NavUser';
 
 const data = {
   user: {
-    name: 'shadcn',
+    name: 'codingcodax',
     email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
+    avatar: '/avatars/codingcodax.jpeg',
   },
   navMain: [
     {

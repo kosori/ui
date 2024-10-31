@@ -79,11 +79,11 @@ const ProfileForm = ({ className }: React.ComponentProps<'form'>) => {
     <form className={clsx('grid items-start gap-4', className)}>
       <div className='grid gap-2'>
         <Label htmlFor='email'>Email</Label>
-        <Input defaultValue='shadcn@example.com' id='email' type='email' />
+        <Input defaultValue='codingcodax@example.com' id='email' type='email' />
       </div>
       <div className='grid gap-2'>
         <Label htmlFor='username'>Username</Label>
-        <Input defaultValue='@shadcn' id='username' />
+        <Input defaultValue='@codingcodax' id='username' />
       </div>
       <Button className='w-full' type='submit'>
         Save changes

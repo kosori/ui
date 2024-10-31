@@ -181,7 +181,7 @@ export const AppSidebar = ({ ...props }: Props) => {
           <SidebarMenu className='gap-2'>
             {data.navMain.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild disabled>
                   <a className='font-medium' href={item.url}>
                     {item.title}
                   </a>
