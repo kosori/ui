@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { ChevronRight } from 'lucide-react';
 
 import {
@@ -185,11 +186,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarGroup>
               <SidebarGroupLabel
                 asChild
-                className='group/label text-sm text-grey-text-contrast hover:bg-grey-bg-hover'
+                className={clsx(
+                  'group/label text-sm text-grey-text-contrast',
+                  'hover:bg-grey-bg-hover',
+                  'active:bg-grey-bg-active',
+                )}
               >
                 <CollapsibleTrigger>
                   {item.title}{' '}
-                  <ChevronRight className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90' />
+                  <ChevronRight
+                    className={clsx(
+                      'ml-auto transition-transform',
+                      'group-data-[state=open]/collapsible:rotate-90',
+                    )}
+                  />
                 </CollapsibleTrigger>
               </SidebarGroupLabel>
               <CollapsibleContent>
