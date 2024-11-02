@@ -339,8 +339,8 @@ importers:
         specifier: ^8.3.1
         version: 8.3.1(react@18.3.1)
       input-otp:
-        specifier: ^1.2.5
-        version: 1.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^1.4.0
+        version: 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lucide-react:
         specifier: ^0.454.0
         version: 0.454.0(react@18.3.1)
@@ -428,7 +428,7 @@ importers:
         version: 7.37.2(eslint@9.10.0(jiti@2.4.0))
       eslint-plugin-react-hooks:
         specifier: rc
-        version: 5.1.0-rc-b7e21579-20241031(eslint@9.10.0(jiti@2.4.0))
+        version: 5.1.0-rc-7c8e5e7a-20241101(eslint@9.10.0(jiti@2.4.0))
       eslint-plugin-turbo:
         specifier: ^2.2.3
         version: 2.2.3(eslint@9.10.0(jiti@2.4.0))
@@ -2764,8 +2764,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9
 
-  eslint-plugin-react-hooks@5.1.0-rc-b7e21579-20241031:
-    resolution: {integrity: sha512-g3BZCv/vxCojz/zuyn9RKvpTbgYrChzrFe/dybWiPmBOwzp9zUw/zfNMl/PaX/Ce/hpylAp2ha+oPos7XL7abQ==}
+  eslint-plugin-react-hooks@5.1.0-rc-7c8e5e7a-20241101:
+    resolution: {integrity: sha512-90qwhATd1dlXHJ7uNmAIelLkfG3XnxR4vdbgG9WUbd81DT0Na+mXg9VVDYG+3/OQSdkAQlac24/hVQevRHMOpw==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
@@ -3213,8 +3213,8 @@ packages:
   inline-style-parser@0.2.3:
     resolution: {integrity: sha512-qlD8YNDqyTKTyuITrDOffsl6Tdhv+UC4hcdAVuQsK4IMQ99nSgd1MIA/Q+jQYoh9r3hVUXhYh7urSRmXPkW04g==}
 
-  input-otp@1.2.5:
-    resolution: {integrity: sha512-XoRSZyr5NaK++/Ml/0bsTycKiSq9M5u6fWgG5Cqjldj6+ontrKnPRqn+6Bo4fzUwoMXRenUdacVfR7Y68gldKw==}
+  input-otp@1.4.0:
+    resolution: {integrity: sha512-whngTwnXhSQijjxNGUaU/O94LNugnuliZoWktQd5nVYESNlb01guoo+1T/1zppJ8fbo2J2/GVe20x3M6qpgdFg==}
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0 || ^19.0
       react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0
@@ -7502,7 +7502,7 @@ snapshots:
       safe-regex-test: 1.0.3
       string.prototype.includes: 2.0.1
 
-  eslint-plugin-react-hooks@5.1.0-rc-b7e21579-20241031(eslint@9.10.0(jiti@2.4.0)):
+  eslint-plugin-react-hooks@5.1.0-rc-7c8e5e7a-20241101(eslint@9.10.0(jiti@2.4.0)):
     dependencies:
       eslint: 9.10.0(jiti@2.4.0)
 
@@ -8135,7 +8135,7 @@ snapshots:
 
   inline-style-parser@0.2.3: {}
 
-  input-otp@1.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  input-otp@1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
