@@ -97,8 +97,8 @@ importers:
         specifier: ^14.2.1
         version: 14.2.1(@types/react@18.3.5)(algoliasearch@4.24.0)(next@15.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       fumadocs-docgen:
-        specifier: ^1.3.1
-        version: 1.3.1(typescript@5.6.2)
+        specifier: ^1.3.2
+        version: 1.3.2(typescript@5.6.2)
       fumadocs-mdx:
         specifier: ^11.1.1
         version: 11.1.1(acorn@8.12.1)(fumadocs-core@14.2.1(@types/react@18.3.5)(algoliasearch@4.24.0)(next@15.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -2996,8 +2996,8 @@ packages:
       react-dom:
         optional: true
 
-  fumadocs-docgen@1.3.1:
-    resolution: {integrity: sha512-CH823PWWLity+x+vGxp7wVThUy8AIc1ndFaaorJkWb0+HruwPNm9Yh9q8dgY2gk5RZirJs3tveuDfRUc2TTkww==}
+  fumadocs-docgen@1.3.2:
+    resolution: {integrity: sha512-+tVlkHIdpp893bRqr+xtCae2eirssg/hxUjc4/BEbV6RSxZ+Rx6CQUPWuYPw0C+/rEsvedLPQi+Py72zOm+uBA==}
 
   fumadocs-mdx@11.1.1:
     resolution: {integrity: sha512-78Nu/PHfBaRnPWTDTGVVZrG+A7rfK3NU7DX1aCEnZHEfwuY0NmuIOtDIYcoidZxjc88DnoewV+cJoBNn7I/D8Q==}
@@ -3006,8 +3006,8 @@ packages:
       fumadocs-core: ^14.0.0
       next: 14.x.x || 15.x.x
 
-  fumadocs-typescript@3.0.1:
-    resolution: {integrity: sha512-W81nFwMIa+C9nw9EUyWEfzfeb5/WLxIW/dpXJGiCbKkyUpp1fv3YI5D+NleYCZFSGDbMxDFicxRKoosAqNdIDw==}
+  fumadocs-typescript@3.0.2:
+    resolution: {integrity: sha512-SqYJy+NxjjuQQeom7wLpODYiWtIKWfndguHL3XKXaMUvhlsjmsWWTaXJWKaqIfOStiYJQlGWrXxFA2Rrpbx63Q==}
     peerDependencies:
       typescript: '*'
 
@@ -7834,10 +7834,10 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  fumadocs-docgen@1.3.1(typescript@5.6.2):
+  fumadocs-docgen@1.3.2(typescript@5.6.2):
     dependencies:
       estree-util-value-to-estree: 3.1.2
-      fumadocs-typescript: 3.0.1(typescript@5.6.2)
+      fumadocs-typescript: 3.0.2(typescript@5.6.2)
       hast-util-to-estree: 3.1.0
       npm-to-yarn: 3.0.0
       ts-morph: 24.0.0
@@ -7864,7 +7864,7 @@ snapshots:
       - acorn
       - supports-color
 
-  fumadocs-typescript@3.0.1(typescript@5.6.2):
+  fumadocs-typescript@3.0.2(typescript@5.6.2):
     dependencies:
       '@types/node': 22.8.1
       fast-glob: 3.3.2
