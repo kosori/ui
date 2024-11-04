@@ -1,7 +1,17 @@
+import {
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuSkeleton,
+} from '@kosori/ui/sidebar';
+
 export const NavProjectsSkeleton = () => {
   return (
-    <div>
-      <p>nav projects skeleton</p>
-    </div>
+    <SidebarMenu>
+      {Array.from({ length: 5 }).map((_, index) => (
+        <SidebarMenuItem key={index}>
+          <SidebarMenuSkeleton showIcon />
+        </SidebarMenuItem>
+      ))}
+    </SidebarMenu>
   );
 };
