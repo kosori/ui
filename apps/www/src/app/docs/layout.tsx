@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import { DocsLayout } from 'fumadocs-ui/layout';
+import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 
 import { ThemeNav } from '~/components/Layout/ThemeNav';
 import { docsOptions } from '~/config/layout';

@@ -67,13 +67,12 @@ export const NavigationMenuDemo = () => {
               )}
             >
               <li className='row-span-3'>
-                <NavigationMenuLink asChild>
-                  <a
+                <Link legacyBehavior passHref href='/'>
+                  <NavigationMenuLink
                     className={clsx(
                       'flex h-full w-full select-none flex-col justify-end rounded-lg bg-gradient-to-b from-grey-line/50 to-grey-bg-subtle p-6 no-underline outline-none',
                       'focus:shadow-md',
                     )}
-                    href='/'
                   >
                     <div className='h-6 w-6 rounded-md bg-grey-text-contrast' />
                     <div className='mb-2 mt-4 text-lg font-medium'>
@@ -83,8 +82,8 @@ export const NavigationMenuDemo = () => {
                       Beautifully designed components built with Radix UI and
                       Tailwind CSS.
                     </p>
-                  </a>
-                </NavigationMenuLink>
+                  </NavigationMenuLink>
+                </Link>
               </li>
               <ListItem href='/docs' title='Introduction'>
                 Re-usable components built using Radix UI and Tailwind CSS.
@@ -133,14 +132,13 @@ export const NavigationMenuDemo = () => {
 };
 
 const ListItem = forwardRef<
-  React.ElementRef<'a'>,
-  React.ComponentPropsWithoutRef<'a'>
+  React.ElementRef<typeof Link>,
+  React.ComponentPropsWithoutRef<typeof Link>
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
+      <Link ref={ref} legacyBehavior passHref {...props}>
+        <NavigationMenuLink
           className={clsx(
             'block select-none space-y-1 rounded-lg p-3 leading-none no-underline outline-none transition-colors',
             'hover:bg-primary-bg-hover',
@@ -148,14 +146,13 @@ const ListItem = forwardRef<
             'active:bg-primary-bg-active',
             className,
           )}
-          {...props}
         >
           <div className='text-sm font-medium leading-none'>{title}</div>
           <p className='line-clamp-2 text-sm leading-snug text-grey-text'>
             {children}
           </p>
-        </a>
-      </NavigationMenuLink>
+        </NavigationMenuLink>
+      </Link>
     </li>
   );
 });

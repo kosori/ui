@@ -1,5 +1,5 @@
-import type { HomeLayoutProps } from 'fumadocs-ui/home-layout';
-import type { DocsLayoutProps } from 'fumadocs-ui/layout';
+import type { DocsLayoutProps } from 'fumadocs-ui/layouts/docs';
+import type { HomeLayoutProps } from 'fumadocs-ui/layouts/home';
 import { CodeSandboxLogoIcon } from '@radix-ui/react-icons';
 import { RootToggle } from 'fumadocs-ui/components/layout/root-toggle';
 import { AppWindowMacIcon, LayoutTemplateIcon } from 'lucide-react';
