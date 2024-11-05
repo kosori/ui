@@ -3,9 +3,8 @@
 import { useEffect, useState } from 'react';
 import { clsx } from 'clsx/lite';
 
+import { useTimeout } from '@kosori/hooks/use-timeout';
 import { Progress } from '@kosori/ui/progress';
-
-import { useTimeout } from '~/hooks/use-timeout';
 
 export const UseTimeoutDemo = () => {
   const [progress, setProgress] = useState(0);

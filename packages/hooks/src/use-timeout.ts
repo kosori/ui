@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { useIsomorphicLayoutEffect } from '~/hooks/use-isomorphic-layout-effect';
+import { useIsomorphicLayoutEffect } from '@kosori/hooks/use-isomorphic-layout-effect';
 
 /**
  * A custom hook that sets a timeout to execute a callback function after a specified delay.

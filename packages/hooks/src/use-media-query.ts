@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useIsomorphicLayoutEffect } from '~/hooks/use-isomorphic-layout-effect';
+import { useIsomorphicLayoutEffect } from '@kosori/hooks/use-isomorphic-layout-effect';
 
 type Props = {
   defaultValue?: boolean;

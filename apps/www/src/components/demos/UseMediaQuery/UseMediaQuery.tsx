@@ -1,6 +1,6 @@
 'use client';
 
-import { useMediaQuery } from '~/hooks/use-media-query';
+import { useMediaQuery } from '@kosori/hooks/use-media-query';
 
 export const UseMediaQueryDemo = () => {
   const isDesktop = useMediaQuery('(min-width: 768px)');

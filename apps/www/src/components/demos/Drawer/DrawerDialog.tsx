@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { clsx } from 'clsx/lite';
 
+import { useMediaQuery } from '@kosori/hooks/use-media-query';
 import { Button } from '@kosori/ui/button';
 import {
   Dialog,
@@ -24,8 +25,6 @@ import {
 } from '@kosori/ui/drawer';
 import { Input } from '@kosori/ui/input';
 import { Label } from '@kosori/ui/label';
-
-import { useMediaQuery } from '~/hooks/use-media-query';
 
 export const DrawerDialogDemo = () => {
   const [open, setOpen] = useState(false);
@@ -80,11 +79,11 @@ const ProfileForm = ({ className }: React.ComponentProps<'form'>) => {
     <form className={clsx('grid items-start gap-4', className)}>
       <div className='grid gap-2'>
         <Label htmlFor='email'>Email</Label>
-        <Input defaultValue='shadcn@example.com' id='email' type='email' />
+        <Input defaultValue='codingcodax@example.com' id='email' type='email' />
       </div>
       <div className='grid gap-2'>
         <Label htmlFor='username'>Username</Label>
-        <Input defaultValue='@shadcn' id='username' />
+        <Input defaultValue='@codingcodax' id='username' />
       </div>
       <Button className='w-full' type='submit'>
         Save changes

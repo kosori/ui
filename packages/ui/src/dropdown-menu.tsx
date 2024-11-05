@@ -38,10 +38,11 @@ const dropdownMenuStyles = tv({
       'data-[side=left]:slide-in-from-right-2',
     ),
     item: clsx(
-      'group relative flex h-8 cursor-pointer select-none items-center rounded-md px-2 text-sm outline-none transition-colors',
+      'group relative flex h-8 cursor-pointer select-none items-center gap-2 rounded-md px-2 text-sm outline-none transition-colors',
       'focus:bg-primary-bg-hover',
       'active:bg-primary-bg-active',
       'data-[disabled]:cursor-not-allowed data-[disabled]:text-grey-solid',
+      '[&>svg]:size-4 [&>svg]:shrink-0',
     ),
     label:
       'flex h-8 select-none items-center px-2 text-xs font-medium text-grey-text',

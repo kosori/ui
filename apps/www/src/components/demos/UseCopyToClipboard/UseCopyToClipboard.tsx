@@ -2,10 +2,9 @@
 
 import { CheckIcon, CopyIcon } from '@radix-ui/react-icons';
 
+import { useCopyToClipboard } from '@kosori/hooks/use-copy-to-clipboard';
 import { Button } from '@kosori/ui/button';
 import { Label } from '@kosori/ui/label';
-
-import { useCopyToClipboard } from '~/hooks/use-copy-to-clipboard';
 
 export const UseCopyToClipboardDemo = () => {
   const { isCopied, copyToClipboard } = useCopyToClipboard();
