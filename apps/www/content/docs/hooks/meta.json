@@ -1,5 +1,7 @@
 {
-  "title": "hooks",
+  "title": "Hooks",
+  "description": "React custom hooks",
+  "icon": "Microchip",
   "root": true,
   "pages": ["---Getting Started---", "index", "---Hooks---", "hooks", "..."]
 }

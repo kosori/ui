@@ -1,5 +1,7 @@
 {
-  "title": "minis",
+  "title": "Mini",
+  "description": "Mini components",
+  "icon": "Shapes",
   "root": true,
   "pages": [
     "---Getting Started---",

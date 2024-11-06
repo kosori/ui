@@ -1,5 +1,7 @@
 {
-  "title": "ui",
+  "title": "UI",
+  "description": "Core components",
+  "icon": "Box",
   "root": true,
   "pages": [
     "---Getting Started---",
