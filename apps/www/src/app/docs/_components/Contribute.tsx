@@ -1,18 +1,9 @@
-import {
-  BugIcon,
-  LightbulbIcon,
-  MessageCircleIcon,
-  SquarePenIcon,
-} from 'lucide-react';
+import { BugIcon, LightbulbIcon, MessageCircleIcon } from 'lucide-react';
 
-type Props = {
-  path: string;
-};
-
-export const Contribute = ({ path }: Props) => {
+export const Contribute = () => {
   return (
     <div className='text-fd-muted-foreground mt-4 text-sm'>
-      <span className='text-fd-primary'>Contribute</span>
+      <span className='text-muted-fd-primary'>Contribute</span>
       <div className='mt-2 space-y-1'>
         <a
           className='hover:text-fd-primary flex items-center gap-x-2 transition-colors'
@@ -42,16 +33,6 @@ export const Contribute = ({ path }: Props) => {
         >
           <MessageCircleIcon className='size-3.5' />
           Start a discussion
-        </a>
-
-        <a
-          className='hover:text-fd-primary flex items-center gap-x-2 transition-colors'
-          href={`https://github.com/kosori/ui/blob/main/${path}`}
-          rel='noreferrer'
-          target='_blank'
-        >
-          <SquarePenIcon className='size-3.5' />
-          Edit on GitHub
         </a>
       </div>
     </div>
