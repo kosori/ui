@@ -32,19 +32,23 @@ const Page = async (props: { params: Promise<{ slug?: string[] }> }) => {
   const params = await props.params;
   const page = source.getPage(params.slug);
 
-  if (page == null) {
-    notFound();
-  }
+  if (!page) notFound();
 
   const path = `apps/www/content/docs/${page.file.path}`;
-  const MDX = page.data.body;
+  const { body: MDX, lastModified, toc } = page.data;
 
   return (
     <DocsPage
+      editOnGithub={{ repo: 'ui', owner: 'kosori', sha: 'dev', path }}
       full={page.data.full}
-      tableOfContent={{ footer: <Contribute path={path} /> }}
-      tableOfContentPopover={{ footer: <Contribute path={path} /> }}
-      toc={page.data.toc}
+      lastUpdate={lastModified}
+      tableOfContent={{
+        style: 'clerk',
+        single: false,
+        footer: <Contribute />,
+      }}
+      tableOfContentPopover={{ footer: <Contribute /> }}
+      toc={toc}
     >
       <DocsBody>
         <h1 className='mb-0'>{page.data.title}</h1>
