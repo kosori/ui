@@ -373,8 +373,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lucide-react:
-        specifier: ^0.454.0
-        version: 0.454.0(react@18.3.1)
+        specifier: ^0.455.0
+        version: 0.455.0(react@18.3.1)
       next-themes:
         specifier: ^0.4.3
         version: 0.4.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -459,7 +459,7 @@ importers:
         version: 7.37.2(eslint@9.10.0(jiti@2.4.0))
       eslint-plugin-react-hooks:
         specifier: rc
-        version: 5.1.0-rc-66855b96-20241106(eslint@9.10.0(jiti@2.4.0))
+        version: 5.1.0-rc-5c56b873-20241107(eslint@9.10.0(jiti@2.4.0))
       eslint-plugin-turbo:
         specifier: ^2.2.3
         version: 2.2.3(eslint@9.10.0(jiti@2.4.0))
@@ -2715,8 +2715,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9
 
-  eslint-plugin-react-hooks@5.1.0-rc-66855b96-20241106:
-    resolution: {integrity: sha512-Ujwx0O8fhjfp1LZ0/lLlzTn/BW32ZhshDrswz6B1bhwrGb/4u9J0m6KPxrQY7jidPf2WILEETeAPKFKN2V0YzA==}
+  eslint-plugin-react-hooks@5.1.0-rc-5c56b873-20241107:
+    resolution: {integrity: sha512-lnmAUpbMdH1tvor/oju3CZ4oB/nG/+iSkv3tOA6OenLyODxQujH1p1X6vW9XdI9M8bCAI0JDVGdjTmjCp3hxEA==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
@@ -3532,8 +3532,8 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
 
-  lucide-react@0.454.0:
-    resolution: {integrity: sha512-hw7zMDwykCLnEzgncEEjHeA6+45aeEzRYuKHuyRSOPkhko+J3ySGjGIzu+mmMfDFG1vazHepMaYFYHbTFAZAAQ==}
+  lucide-react@0.455.0:
+    resolution: {integrity: sha512-XQoi58X4COfjy6s1P4TVsXMhU2r1KsfUTRFyds/yJvdzBNOfu0F9RRIas626T8UaNZzEv4llF7ivh4uLkYp3rw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
 
@@ -7265,7 +7265,7 @@ snapshots:
       safe-regex-test: 1.0.3
       string.prototype.includes: 2.0.1
 
-  eslint-plugin-react-hooks@5.1.0-rc-66855b96-20241106(eslint@9.10.0(jiti@2.4.0)):
+  eslint-plugin-react-hooks@5.1.0-rc-5c56b873-20241107(eslint@9.10.0(jiti@2.4.0)):
     dependencies:
       eslint: 9.10.0(jiti@2.4.0)
 
@@ -8249,7 +8249,7 @@ snapshots:
 
   lru-cache@7.18.3: {}
 
-  lucide-react@0.454.0(react@18.3.1):
+  lucide-react@0.455.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 
