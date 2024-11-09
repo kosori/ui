@@ -27,6 +27,7 @@
   "devDependencies": {
     "@kosori/prettier-config": "workspace:*",
     "@kosori/tsconfig": "workspace:*",
+    "@types/eslint__js": "^8.42.3",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
