@@ -47,7 +47,7 @@
     "@kosori/tailwind-config": "workspace:*",
     "@kosori/tsconfig": "workspace:*",
     "@types/mdx": "^2.0.13",
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.9.1",
     "@types/react": "catalog:react18",
     "@types/react-dom": "catalog:react18",
     "dotenv-cli": "^7.4.3",
