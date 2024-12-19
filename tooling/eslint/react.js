@@ -12,6 +12,9 @@ export default [
     rules: {
       ...reactPlugin.configs['jsx-runtime'].rules,
       ...hooksPlugin.configs.recommended.rules,
+      'react/prop-types': 'off',
+      'react/jsx-key': 'off',
+      'react/react-in-jsx-scope': 'off',
       'react/jsx-sort-props': [
         'warn',
         {
