@@ -1,5 +1,6 @@
 import reactPlugin from 'eslint-plugin-react';
 import hooksPlugin from 'eslint-plugin-react-hooks';
+import tailwindPlugin from 'eslint-plugin-tailwindcss';
 
 /** @type {Awaited<import('typescript-eslint').Config>} */
 export default [
@@ -8,10 +9,12 @@ export default [
     plugins: {
       react: reactPlugin,
       'react-hooks': hooksPlugin,
+      tailwindcss: tailwindPlugin,
     },
     rules: {
       ...reactPlugin.configs['jsx-runtime'].rules,
       ...hooksPlugin.configs.recommended.rules,
+      ...tailwindPlugin.configs.recommended.rules,
       'react/prop-types': 'off',
       'react/jsx-key': 'off',
       'react/react-in-jsx-scope': 'off',
@@ -24,6 +27,8 @@ export default [
           reservedFirst: true,
         },
       ],
+      'tailwindcss/classnames-order': 'off',
+      'tailwindcss/no-custom-classname': 'off',
     },
     languageOptions: {
       globals: {
