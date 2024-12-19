@@ -54,7 +54,7 @@
     "eslint": "catalog:",
     "jiti": "^1.21.7",
     "prettier": "catalog:",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "catalog:",
     "typescript": "catalog:"
   }
 }
