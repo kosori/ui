@@ -1,8 +1,20 @@
 import type { Root } from '@radix-ui/react-label';
-import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import type { ZodType, ZodTypeDef } from 'zod';
+import type {
+  ControllerProps,
+  FieldPath,
+  FieldValues,
+  UseFormProps,
+} from 'react-hook-form';
 import { createContext, forwardRef, useContext, useId } from 'react';
 import { Slot } from '@radix-ui/react-slot';
-import { Controller, FormProvider, useFormContext } from 'react-hook-form';
+import {
+  Controller,
+  FormProvider,
+  useFormContext,
+  useForm as __useForm,
+} from 'react-hook-form';
 import { tv } from 'tailwind-variants';
 
 import { Label } from '@kosori/ui/label';
@@ -278,3 +290,20 @@ export const FormMessage = forwardRef<FormMessageRef, FormMessageProps>(
 );
 
 FormMessage.displayName = 'FormMessage';
+
+export const useForm = <
+  TOut extends FieldValues,
+  TDef extends ZodTypeDef,
+  TIn extends FieldValues,
+>(
+  props: Omit<UseFormProps<TIn>, 'resolver'> & {
+    schema: ZodType<TOut, TDef, TIn>;
+  },
+) => {
+  const form = __useForm<TIn, unknown, TOut>({
+    ...props,
+    resolver: zodResolver(props.schema, undefined),
+  });
+
+  return form;
+};
