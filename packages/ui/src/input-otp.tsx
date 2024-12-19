@@ -1,8 +1,7 @@
-import type { SlotProps } from 'input-otp';
-import { forwardRef } from 'react';
+import { forwardRef, useContext } from 'react';
 import { DashIcon } from '@radix-ui/react-icons';
 import { clsx } from 'clsx/lite';
-import { OTPInput } from 'input-otp';
+import { OTPInput, OTPInputContext } from 'input-otp';
 import { tv } from 'tailwind-variants';
 
 const inputOTPStyles = tv({
@@ -64,8 +63,12 @@ type InputOTPProps = React.ComponentPropsWithoutRef<typeof OTPInput>;
  * @see {@link https://dub.sh/ui-input-otp InputOTP Docs} for further information.
  */
 export const InputOTP = forwardRef<InputOTPRef, InputOTPProps>(
-  ({ className, ...props }, ref) => (
-    <OTPInput ref={ref} containerClassName={base({ className })} {...props} />
+  ({ containerClassName, ...props }, ref) => (
+    <OTPInput
+      ref={ref}
+      containerClassName={base({ class: containerClassName })}
+      {...props}
+    />
   ),
 );
 
@@ -95,7 +98,9 @@ export const InputOTPGroup = forwardRef<InputOTPGroupRef, InputOTPGroupProps>(
 InputOTPGroup.displayName = 'InputOTPGroup';
 
 type InputOTPSlotRef = React.ElementRef<'div'>;
-type InputOTPSlotProps = SlotProps & React.ComponentPropsWithoutRef<'div'>;
+type InputOTPSlotProps = React.ComponentPropsWithoutRef<'div'> & {
+  index: number;
+};
 
 /**
  * InputOTPSlot component that represents a single slot in the OTP input.
@@ -108,7 +113,11 @@ type InputOTPSlotProps = SlotProps & React.ComponentPropsWithoutRef<'div'>;
  * ```
  */
 export const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
-  ({ char, hasFakeCaret, isActive, className, ...props }, ref) => {
+  ({ index, className, ...props }, ref) => {
+    const inputOTPContext = useContext(OTPInputContext);
+    if (!inputOTPContext.slots[index]) return null;
+    const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index];
+
     return (
       <div
         ref={ref}
