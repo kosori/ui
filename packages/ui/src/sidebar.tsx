@@ -38,13 +38,13 @@ const SIDEBAR_KEYBOARD_SHORTCUT = 'b';
 const sidebarStyles = tv({
   slots: {
     provider: clsx(
-      'group/sidebar-wrapper text-grey-text flex min-h-svh w-full',
+      'group/sidebar-wrapper flex min-h-svh w-full text-grey-text',
       'has-[[data-variant=inset]]:bg-grey-base',
     ),
     rootNoCollapsible:
-      'bg-grey-bg-subtle text-grey-text flex h-full w-[--sidebar-width] flex-col',
+      'flex h-full w-[--sidebar-width] flex-col bg-grey-bg-subtle text-grey-text',
     rootIsMobile: clsx(
-      'bg-grey-bg-subtle text-grey-text w-[--sidebar-width] p-0',
+      'w-[--sidebar-width] bg-grey-bg-subtle p-0 text-grey-text',
       '[&>button]:hidden',
     ),
     rootGap: clsx(
@@ -57,8 +57,8 @@ const sidebarStyles = tv({
       'md:flex',
     ),
     rootChild: clsx(
-      'bg-grey-bg-subtle flex size-full flex-col',
-      'group-data-[variant=floating]:border-grey-line group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow',
+      'flex size-full flex-col bg-grey-bg-subtle',
+      'group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-grey-line group-data-[variant=floating]:shadow',
     ),
     trigger: 'size-7',
     rail: clsx(
@@ -78,31 +78,31 @@ const sidebarStyles = tv({
       '[[data-side=right][data-collapsible=offcanvas]_&]:-left-2',
     ),
     inset: clsx(
-      'bg-grey-base relative flex min-h-svh flex-1 flex-col',
+      'relative flex min-h-svh flex-1 flex-col bg-grey-base',
       'peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))]',
       'md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow',
       'md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2',
     ),
     input: clsx(
-      'bg-grey-base h-8 w-full shadow-none ring-grey-focus-ring',
+      'h-8 w-full bg-grey-base shadow-none ring-grey-focus-ring',
       'focus-visible:ring-4',
     ),
     header: 'flex flex-col gap-2 p-2',
     footer: 'flex flex-col gap-2 p-2',
-    separator: 'bg-grey-line mx-2 w-auto',
+    separator: 'mx-2 w-auto bg-grey-line',
     content: clsx(
       'flex min-h-0 flex-1 flex-col gap-2 overflow-auto',
       'group-data-[collapsible=icon]:overflow-hidden',
     ),
     group: 'relative flex w-full min-w-0 flex-col p-2',
     groupLabel: clsx(
-      'text-grey-text ring-grey-focus-ring flex h-8 select-none shrink-0 items-center rounded-md px-2 text-xs font-medium outline-none transition-[margin,opa] duration-200 ease-linear',
+      'flex h-8 shrink-0 select-none items-center rounded-md px-2 text-xs font-medium text-grey-text outline-none ring-grey-focus-ring transition-[margin,opa] duration-200 ease-linear',
       'focus-visible:ring-4',
       'group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0',
       '[&>svg]:size-4 [&>svg]:shrink-0',
     ),
     groupAction: clsx(
-      'text-grey-text ring-grey-focus-ring absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 outline-none transition-transform',
+      'absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-grey-text outline-none ring-grey-focus-ring transition-transform',
       'hover:bg-grey-base-accent hover:text-grey-text-contrast',
       'focus-visible:ring-4',
       '[&>svg]:size-4 [&>svg]:shrink-0',
@@ -114,7 +114,7 @@ const sidebarStyles = tv({
     menu: 'flex w-full min-w-0 flex-col gap-1',
     item: 'group/menu-item relative',
     menuAction: clsx(
-      'text-grey-text ring-grey-focus-ring absolute right-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 outline-none transition-transform',
+      'absolute right-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-grey-text outline-none ring-grey-focus-ring transition-transform',
       'hover:bg-grey-bg-hover hover:text-grey-text-contrast',
       'active:bg-grey-bg-active active:text-grey-text-contrast',
       'peer-hover/menu-button:text-grey-text-contrast',
@@ -128,7 +128,7 @@ const sidebarStyles = tv({
       'group-data-[collapsible=icon]:hidden',
     ),
     menuBadge: clsx(
-      'text-grey-text pointer-events-none absolute right-1 flex h-5 min-w-5 select-none items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums',
+      'pointer-events-none absolute right-1 flex h-5 min-w-5 select-none items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums text-grey-text',
       'peer-hover/menu-button:text-grey-text-contrast',
       'peer-data-[active=true]/menu-button:text-grey-text-contrast',
       'peer-data-[size=small]/menu-button:top-1',
@@ -138,17 +138,17 @@ const sidebarStyles = tv({
     ),
     skeleton: 'flex h-8 items-center gap-2 rounded-md px-2',
     menuSub: clsx(
-      'border-grey-line mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l px-2.5 py-0.5',
+      'mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-grey-line px-2.5 py-0.5',
       'group-data-[collapsible=icon]:hidden',
     ),
     menuSubButton: clsx(
-      'text-grey-text ring-grey-focus-ring flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 outline-none',
+      'flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-grey-text outline-none ring-grey-focus-ring',
       'hover:bg-grey-bg-hover hover:text-grey-text-contrast',
       'active:bg-grey-bg-active active:text-grey-text-contrast',
       'focus-visible:ring-4',
       'data-[active=true]:bg-primary-bg-active data-[active=true]:text-primary-solid data-[active=true]:ring-primary-focus-ring',
       'group-data-[collapsible=icon]:hidden',
-      '[&>svg]:text-grey-text-contrast [&>svg]:size-4 [&>svg]:shrink-0',
+      '[&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-grey-text-contrast',
       '[&>span:last-child]:truncate',
     ),
   },
@@ -241,7 +241,7 @@ const {
 
 const sidebarMenuButtonStyles = tv({
   base: clsx(
-    'peer/menu-button ring-grey-focus-ring flex w-full items-center gap-2 overflow-hidden p-2 text-left text-sm outline-none transition-[width,height,padding]',
+    'peer/menu-button flex w-full items-center gap-2 overflow-hidden p-2 text-left text-sm outline-none ring-grey-focus-ring transition-[width,height,padding]',
     'focus-visible:ring-4',
     'disabled:cursor-not-allowed',
     'aria-disabled:cursor-not-allowed',
@@ -257,7 +257,7 @@ const sidebarMenuButtonStyles = tv({
         'active:bg-grey-bg-active active:text-grey-text-contrast',
         'disabled:bg-transparent disabled:text-grey-solid',
         'aria-disabled:bg-transparent aria-disabled:text-grey-solid',
-        'data-[active=true]:bg-primary-bg-active data-[active=true]:text-primary-solid data-[active=true]:font-medium data-[active=true]:ring-primary-focus-ring',
+        'data-[active=true]:bg-primary-bg-active data-[active=true]:font-medium data-[active=true]:text-primary-solid data-[active=true]:ring-primary-focus-ring',
         'data-[state=open]:hover:bg-grey-bg-hover data-[state=open]:hover:text-grey-text-contrast',
       ),
       outline: clsx(
@@ -266,10 +266,10 @@ const sidebarMenuButtonStyles = tv({
       ),
     },
     size: {
-      small: 'h-7 text-xs rounded-lg',
-      medium: 'h-8 text-sm rounded-lg',
+      small: 'h-7 rounded-lg text-xs',
+      medium: 'h-8 rounded-lg text-sm',
       large: clsx(
-        'h-12 text-sm rounded-xl',
+        'h-12 rounded-xl text-sm',
         'group-data-[collapsible=icon]:!p-0',
       ),
     },

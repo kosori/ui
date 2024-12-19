@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 import { tv } from 'tailwind-variants';
 
 const badgeStyles = tv({
-  base: 'inline-flex size-fit select-none items-center font-semibold rounded-lg',
+  base: 'inline-flex size-fit select-none items-center rounded-lg font-semibold',
   variants: {
     intent: {
       default: '',
@@ -33,7 +33,7 @@ const badgeStyles = tv({
       intent: 'default',
       variant: 'outline',
       class:
-        'bg-primary-base border border-primary-line text-primary-text-contrast',
+        'border border-primary-line bg-primary-base text-primary-text-contrast',
     },
     {
       intent: 'default',
@@ -48,7 +48,7 @@ const badgeStyles = tv({
     {
       intent: 'info',
       variant: 'outline',
-      class: 'bg-info-base border border-info-line text-info-solid',
+      class: 'border border-info-line bg-info-base text-info-solid',
     },
     {
       intent: 'info',
@@ -63,7 +63,7 @@ const badgeStyles = tv({
     {
       intent: 'success',
       variant: 'outline',
-      class: 'bg-success-base border border-success-line text-success-solid',
+      class: 'border border-success-line bg-success-base text-success-solid',
     },
     {
       intent: 'success',
@@ -78,7 +78,7 @@ const badgeStyles = tv({
     {
       intent: 'warning',
       variant: 'outline',
-      class: 'bg-warning-base border border-warning-line text-warning-text',
+      class: 'border border-warning-line bg-warning-base text-warning-text',
     },
     {
       intent: 'warning',
@@ -93,7 +93,7 @@ const badgeStyles = tv({
     {
       intent: 'error',
       variant: 'outline',
-      class: 'bg-error-base border border-error-line text-error-solid',
+      class: 'border border-error-line bg-error-base text-error-solid',
     },
     {
       intent: 'error',

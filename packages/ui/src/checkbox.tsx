@@ -10,7 +10,7 @@ import { tv } from 'tailwind-variants';
 const checkboxStyles = tv({
   slots: {
     base: clsx(
-      'group peer border border-grey-border bg-grey-base outline-none transition-colors duration-200 flex',
+      'group peer flex border border-grey-border bg-grey-base outline-none transition-colors duration-200',
       'hover:border-grey-border-hover',
       'focus-visible:ring-4 focus-visible:ring-grey-focus-ring',
       'disabled:cursor-not-allowed disabled:border-0 disabled:bg-grey-line',

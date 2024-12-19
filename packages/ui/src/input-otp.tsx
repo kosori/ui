@@ -21,7 +21,7 @@ const inputOTPStyles = tv({
   variants: {
     active: {
       true: {
-        slot: 'z-10 ring-3 ring-grey-focus-ring',
+        slot: 'ring-3 z-10 ring-grey-focus-ring',
       },
     },
   },

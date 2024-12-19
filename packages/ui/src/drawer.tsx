@@ -10,7 +10,7 @@ const drawerStyles = tv({
     overlay: 'fixed inset-0 z-50 bg-black-a6',
     content:
       'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border border-grey-line bg-grey-base',
-    contentHandle: 'bg-grey-bg-hover mx-auto mt-4 h-2 w-[100px] rounded-full',
+    contentHandle: 'mx-auto mt-4 h-2 w-[100px] rounded-full bg-grey-bg-hover',
     header: clsx('grid gap-1.5 p-4 text-center', 'sm:text-left'),
     title: 'text-lg font-semibold leading-none tracking-tight',
     description: 'text-sm text-grey-text',

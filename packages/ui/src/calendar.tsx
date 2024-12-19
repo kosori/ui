@@ -17,13 +17,13 @@ const calendarStyles = tv({
   slots: {
     base: 'p-2',
     // classes
-    months: 'flex relative',
-    month_caption: 'flex justify-center h-7 mx-10 relative items-center',
+    months: 'relative flex',
+    month_caption: 'relative mx-10 flex h-7 items-center justify-center',
     weekdays: 'flex flex-row',
-    weekday: 'text-grey-text select-none w-8 font-normal text-[0.8rem]',
-    month: 'gap-y-4 w-full',
-    caption: 'flex justify-center pt-1 relative items-center',
-    caption_label: 'text-sm font-medium truncate',
+    weekday: 'w-8 select-none text-[0.8rem] font-normal text-grey-text',
+    month: 'w-full gap-y-4',
+    caption: 'relative flex items-center justify-center pt-1',
+    caption_label: 'truncate text-sm font-medium',
     button_next: buttonStyles({
       variant: 'outline',
       icon: true,
@@ -44,12 +44,12 @@ const calendarStyles = tv({
     }),
     nav: 'flex items-start',
     month_grid: 'mt-4',
-    week: 'flex w-full mt-2',
-    day: 'p-0 rounded-lg',
+    week: 'mt-2 flex w-full',
+    day: 'rounded-lg p-0',
     // day button
     day_button_base: 'bg-transparent font-normal text-grey-text',
     today: clsx(
-      'bg-primary-bg text-primary-solid font-medium',
+      'bg-primary-bg font-medium text-primary-solid',
       'hover:bg-primary-bg-hover',
       'active:bg-primary-bg-active',
     ),
@@ -203,9 +203,6 @@ const Chevron = ({ orientation, disabled, className }: ChevronProps) => {
           : ChevronDownIcon;
 
   return (
-    <Component
-      aria-disabled={disabled}
-      className={clsx('size-4', className)}
-    />
+    <Component aria-disabled={disabled} className={clsx('size-4', className)} />
   );
 };

@@ -32,7 +32,7 @@ export const toggleStyles = tv({
     size: {
       small: clsx('h-8 gap-x-1.5 rounded-lg px-2 text-xs', '[&_svg]:size-3.5'),
       medium: clsx('h-9 gap-x-2 rounded-lg px-3 text-sm', '[&_svg]:size-4'),
-      large: clsx('h-10 gap-x-2.5 rounded-xl px-3 text-md', '[_&svg]:size-5'),
+      large: clsx('text-md h-10 gap-x-2.5 rounded-xl px-3', '[_&svg]:size-5'),
     },
     icon: {
       true: '',
