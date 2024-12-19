@@ -193,11 +193,11 @@ const CSSVariables = ({ type, color, mode }: VariablesProps) => {
   const steps = colors.find((c) => c.color === color)?.steps?.[mode];
 
   return new Array(12).fill(0).map((_, i) => (
-    <>
+    <Fragment key={i}>
       <br />
-      <span key={i} className='line'>
+      <span className='line'>
         {`${mode === 'dark' ? '  ' : ''}  --${type}-${i + 1}: ${steps ? steps[i] : `var(--${color}${mode === 'dark' ? '-dark' : ''}-${i + 1})`};`}
       </span>
-    </>
+    </Fragment>
   ));
 };
