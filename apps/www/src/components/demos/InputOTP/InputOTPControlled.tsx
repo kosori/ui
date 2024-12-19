@@ -11,18 +11,18 @@ export const InputOTPControlledDemo = () => {
     <div className='space-y-2'>
       <InputOTP
         maxLength={6}
-        render={({ slots }) => (
-          <>
-            <InputOTPGroup>
-              {slots.map((slot, index) => (
-                <InputOTPSlot key={index} {...slot} />
-              ))}
-            </InputOTPGroup>
-          </>
-        )}
         value={value}
-        onChange={setValue}
-      />
+        onChange={(value) => setValue(value)}
+      >
+        <InputOTPGroup>
+          <InputOTPSlot index={0} />
+          <InputOTPSlot index={1} />
+          <InputOTPSlot index={2} />
+          <InputOTPSlot index={3} />
+          <InputOTPSlot index={4} />
+          <InputOTPSlot index={5} />
+        </InputOTPGroup>
+      </InputOTP>
       <div className='text-center text-sm text-grey-text'>
         {value === '' ? (
           <>Enter your one-time password.</>

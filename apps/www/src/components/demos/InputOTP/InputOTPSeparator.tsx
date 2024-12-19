@@ -9,29 +9,21 @@ import {
 
 export const InputOTPSeparatorDemo = () => {
   return (
-    <InputOTP
-      maxLength={6}
-      render={({ slots }) => (
-        <>
-          <InputOTPGroup>
-            {slots.slice(0, 2).map((slot, index) => (
-              <InputOTPSlot key={index} {...slot} />
-            ))}
-          </InputOTPGroup>
-          <InputOTPSeparator />
-          <InputOTPGroup>
-            {slots.slice(2, 4).map((slot, index) => (
-              <InputOTPSlot key={index + 2} {...slot} />
-            ))}
-          </InputOTPGroup>
-          <InputOTPSeparator />
-          <InputOTPGroup>
-            {slots.slice(4).map((slot, index) => (
-              <InputOTPSlot key={index + 4} {...slot} />
-            ))}
-          </InputOTPGroup>
-        </>
-      )}
-    />
+    <InputOTP maxLength={6}>
+      <InputOTPGroup>
+        <InputOTPSlot index={0} />
+        <InputOTPSlot index={1} />
+      </InputOTPGroup>
+      <InputOTPSeparator />
+      <InputOTPGroup>
+        <InputOTPSlot index={2} />
+        <InputOTPSlot index={3} />
+      </InputOTPGroup>
+      <InputOTPSeparator />
+      <InputOTPGroup>
+        <InputOTPSlot index={4} />
+        <InputOTPSlot index={5} />
+      </InputOTPGroup>
+    </InputOTP>
   );
 };
