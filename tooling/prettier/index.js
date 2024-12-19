@@ -15,7 +15,7 @@ const config = {
   tailwindConfig: fileURLToPath(
     new URL('../../tooling/tailwind/web.ts', import.meta.url),
   ),
-  tailwindFunctions: ['cn', 'cva'],
+  tailwindFunctions: ['cn', 'clsx', 'tv'],
   importOrder: [
     '<TYPES>',
     '^(react/(.*)$)|^(react$)',
