@@ -80,7 +80,7 @@ export const add = new Command()
                       },
                     )
                   ).componentsToInstall
-          ) as string[];
+          );
 
           const requiredComponents = Array.from(
             new Set(
