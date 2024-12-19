@@ -64,23 +64,21 @@ export const add = new Command()
         try {
           const spin = p.spinner();
 
-          const initialComponents = (
-            options.all
-              ? componentsIndex.map(({ name }) => name)
-              : items.length
-                ? items
-                : (
-                    await p.group(
-                      componentsPrompts({ components: componentsIndex }),
-                      {
-                        onCancel: () => {
-                          p.cancel('Aborted!');
-                          process.exit(1);
-                        },
+          const initialComponents = options.all
+            ? componentsIndex.map(({ name }) => name)
+            : items.length
+              ? items
+              : (
+                  await p.group(
+                    componentsPrompts({ components: componentsIndex }),
+                    {
+                      onCancel: () => {
+                        p.cancel('Aborted!');
+                        process.exit(1);
                       },
-                    )
-                  ).componentsToInstall
-          );
+                    },
+                  )
+                ).componentsToInstall;
 
           const requiredComponents = Array.from(
             new Set(
