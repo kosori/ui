@@ -1,19 +1,19 @@
 import type { Root } from '@radix-ui/react-label';
-import { zodResolver } from '@hookform/resolvers/zod';
-import type { ZodType, ZodTypeDef } from 'zod';
 import type {
   ControllerProps,
   FieldPath,
   FieldValues,
   UseFormProps,
 } from 'react-hook-form';
+import type { ZodType, ZodTypeDef } from 'zod';
 import { createContext, forwardRef, useContext, useId } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Slot } from '@radix-ui/react-slot';
 import {
+  useForm as __useForm,
   Controller,
   FormProvider,
   useFormContext,
-  useForm as __useForm,
 } from 'react-hook-form';
 import { tv } from 'tailwind-variants';
 
