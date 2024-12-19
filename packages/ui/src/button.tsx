@@ -6,7 +6,7 @@ import { tv } from 'tailwind-variants';
 
 export const buttonStyles = tv({
   base: clsx(
-    'flex h-fit w-fit items-center justify-center font-semibold outline-none transition-colors duration-200',
+    'flex size-fit items-center justify-center font-semibold outline-none transition-colors duration-200',
     'focus-visible:ring-4',
     'disabled:cursor-not-allowed',
   ),

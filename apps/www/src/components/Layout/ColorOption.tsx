@@ -67,7 +67,7 @@ export const ColorOption = ({
                 onClick={() => handleClick({ value: color.color })}
               >
                 <span
-                  className={`flex size-3.5 min-w-[0.875rem] items-center justify-center rounded-md bg-${color.color}-9`}
+                  className={`flex size-3.5 min-w-3.5 items-center justify-center rounded-md bg-${color.color}-9`}
                 >
                   {selectedColor === color.color && (
                     <span className='size-2 rounded-full bg-grey-base' />

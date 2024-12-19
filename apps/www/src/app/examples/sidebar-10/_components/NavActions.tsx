@@ -106,14 +106,14 @@ export const NavActions = () => {
       <div className='hidden font-medium text-grey-text md:inline-block'>
         Edit Oct 08
       </div>
-      <Button icon className='h-7 w-7' variant='ghost'>
+      <Button icon className='size-7' variant='ghost'>
         <Star />
       </Button>
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
           <Button
             icon
-            className='h-7 w-7 data-[state=open]:bg-grey-bg-active'
+            className='size-7 data-[state=open]:bg-grey-bg-active'
             variant='ghost'
           >
             <MoreHorizontal />

@@ -9,7 +9,7 @@ const inputOTPStyles = tv({
     base: 'flex items-center gap-2',
     group: 'flex items-center',
     slot: clsx(
-      'relative flex h-9 w-9 items-center justify-center border-y border-r border-grey-border text-sm shadow-sm transition-all',
+      'relative flex size-9 items-center justify-center border-y border-r border-grey-border text-sm shadow-sm transition-all',
       'first:rounded-l-lg first:border-l',
       'last:rounded-r-lg',
     ),

@@ -54,7 +54,7 @@ export const ComboboxDemo = () => {
           {value
             ? frameworks.find((framework) => framework.value === value)?.label
             : 'Select framework...'}
-          <CaretSortIcon className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+          <CaretSortIcon className='ml-2 size-4 shrink-0 opacity-50' />
         </Button>
       </PopoverTrigger>
       <PopoverContent className='w-[200px] p-0'>

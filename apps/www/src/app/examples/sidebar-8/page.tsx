@@ -49,7 +49,7 @@ const Sidebar8 = () => {
             <div className='aspect-video rounded-xl bg-grey-bg-subtle' />
             <div className='aspect-video rounded-xl bg-grey-bg-subtle' />
           </div>
-          <div className='min-h-[100vh] flex-1 rounded-xl bg-grey-bg-subtle md:min-h-min' />
+          <div className='min-h-screen flex-1 rounded-xl bg-grey-bg-subtle md:min-h-min' />
         </div>
       </SidebarInset>
     </SidebarProvider>

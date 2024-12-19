@@ -13,7 +13,7 @@ const inputStyles = tv({
     'aria-[invalid=true]:border-error-border',
     'aria-[invalid=true]:hover:border-error-border-hover',
     'aria-[invalid=true]:focus:ring-error-focus-ring',
-    'file:cursor-pointer file:border-0 file:bg-transparent file:pt-[0.25rem] file:font-medium file:text-grey-text-contrast',
+    'file:cursor-pointer file:border-0 file:bg-transparent file:pt-1 file:font-medium file:text-grey-text-contrast',
     'file:disabled:cursor-not-allowed file:disabled:text-grey-solid',
   ),
 });

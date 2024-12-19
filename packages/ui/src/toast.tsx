@@ -154,7 +154,7 @@ type ToastCloseProps = React.ComponentPropsWithoutRef<typeof Close>;
 export const ToastClose = forwardRef<ToastCloseRef, ToastCloseProps>(
   ({ className, ...props }, ref) => (
     <Close ref={ref} className={close({ className })} {...props}>
-      <Cross2Icon className='h-4 w-4' />
+      <Cross2Icon className='size-4' />
     </Close>
   ),
 );

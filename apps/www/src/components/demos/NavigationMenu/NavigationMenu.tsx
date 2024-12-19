@@ -70,11 +70,11 @@ export const NavigationMenuDemo = () => {
                 <Link legacyBehavior passHref href='/'>
                   <NavigationMenuLink
                     className={clsx(
-                      'flex h-full w-full select-none flex-col justify-end rounded-lg bg-gradient-to-b from-grey-line/50 to-grey-bg-subtle p-6 no-underline outline-none',
+                      'flex size-full select-none flex-col justify-end rounded-lg bg-gradient-to-b from-grey-line/50 to-grey-bg-subtle p-6 no-underline outline-none',
                       'focus:shadow-md',
                     )}
                   >
-                    <div className='h-6 w-6 rounded-md bg-grey-text-contrast' />
+                    <div className='size-6 rounded-md bg-grey-text-contrast' />
                     <div className='mb-2 mt-4 text-lg font-medium'>
                       kosori/ui
                     </div>

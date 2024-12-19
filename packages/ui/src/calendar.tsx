@@ -205,7 +205,7 @@ const Chevron = ({ orientation, disabled, className }: ChevronProps) => {
   return (
     <Component
       aria-disabled={disabled}
-      className={clsx('h-4 w-4', className)}
+      className={clsx('size-4', className)}
     />
   );
 };

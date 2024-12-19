@@ -19,7 +19,7 @@ const checkboxStyles = tv({
       'data-[state=checked]:disabled:border-0 data-[state=checked]:disabled:bg-grey-line',
     ),
     indicator: 'flex items-center justify-center',
-    check: 'h-full w-full text-grey-base group-disabled:text-grey-solid',
+    check: 'size-full text-grey-base group-disabled:text-grey-solid',
   },
   variants: {
     shape: {

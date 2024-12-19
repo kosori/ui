@@ -80,12 +80,12 @@ export const DrawerDemo = () => {
             <div className='flex items-center justify-center space-x-2'>
               <Button
                 icon
-                className='h-8 w-8 shrink-0 rounded-full'
+                className='size-8 shrink-0 rounded-full'
                 disabled={goal <= 200}
                 variant='outline'
                 onClick={() => onClick(-10)}
               >
-                <MinusIcon className='h-4 w-4' />
+                <MinusIcon className='size-4' />
                 <span className='sr-only'>Decrease</span>
               </Button>
               <div className='flex-1 text-center'>
@@ -98,12 +98,12 @@ export const DrawerDemo = () => {
               </div>
               <Button
                 icon
-                className='h-8 w-8 shrink-0 rounded-full'
+                className='size-8 shrink-0 rounded-full'
                 disabled={goal >= 400}
                 variant='outline'
                 onClick={() => onClick(10)}
               >
-                <PlusIcon className='h-4 w-4' />
+                <PlusIcon className='size-4' />
                 <span className='sr-only'>Increase</span>
               </Button>
             </div>

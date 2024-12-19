@@ -7,7 +7,7 @@ import { tv } from 'tailwind-variants';
 const progressStyles = tv({
   slots: {
     base: 'relative h-2 w-full overflow-hidden rounded-full bg-grey-bg',
-    indicator: 'h-full w-full flex-1 bg-grey-text-contrast transition-all',
+    indicator: 'size-full flex-1 bg-grey-text-contrast transition-all',
   },
 });
 

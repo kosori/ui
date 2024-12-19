@@ -39,7 +39,7 @@ const selectStyles = tv({
     ),
     triggerIcon: 'size-4 fill-grey-text',
     content: clsx(
-      'relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-lg border border-grey-line bg-grey-base shadow-md',
+      'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-lg border border-grey-line bg-grey-base shadow-md',
       'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
       'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
       'data-[side=bottom]:slide-in-from-top-2',

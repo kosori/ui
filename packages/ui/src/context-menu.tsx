@@ -29,7 +29,7 @@ import { tv } from 'tailwind-variants';
 const contextMenuStyles = tv({
   slots: {
     content: clsx(
-      'z-50 min-w-[8rem] overflow-hidden rounded-lg border bg-grey-base p-1 shadow-md',
+      'z-50 min-w-32 overflow-hidden rounded-lg border bg-grey-base p-1 shadow-md',
       'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
       'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
       'data-[side=top]:slide-in-from-bottom-2',
@@ -75,7 +75,7 @@ const contextMenuStyles = tv({
       'group-data-[disabled]:text-grey-solid',
     ),
     subContent: clsx(
-      'z-50 min-w-[8rem] overflow-hidden rounded-lg border border-grey-line bg-grey-base p-1 shadow-md',
+      'z-50 min-w-32 overflow-hidden rounded-lg border border-grey-line bg-grey-base p-1 shadow-md',
       'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
       'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
       'data-[side=top]:slide-in-from-bottom-2',

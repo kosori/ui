@@ -43,7 +43,7 @@ const Sidebar10 = () => {
         </header>
         <div className='flex flex-1 flex-col gap-4 px-4 py-10'>
           <div className='mx-auto h-24 w-full max-w-3xl rounded-xl bg-grey-bg-subtle' />
-          <div className='mx-auto h-full w-full max-w-3xl rounded-xl bg-grey-bg-subtle' />
+          <div className='mx-auto size-full max-w-3xl rounded-xl bg-grey-bg-subtle' />
         </div>
       </SidebarInset>
     </SidebarProvider>

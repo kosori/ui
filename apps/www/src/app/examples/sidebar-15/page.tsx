@@ -40,7 +40,7 @@ const Sidebar15 = () => {
         </header>
         <div className='flex flex-1 flex-col gap-4 p-4'>
           <div className='mx-auto h-24 w-full max-w-3xl rounded-xl bg-grey-bg-subtle' />
-          <div className='mx-auto h-[100vh] w-full max-w-3xl rounded-xl bg-grey-bg-subtle' />
+          <div className='mx-auto h-screen w-full max-w-3xl rounded-xl bg-grey-bg-subtle' />
         </div>
       </SidebarInset>
       <SidebarRight />

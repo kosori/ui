@@ -8,9 +8,9 @@ import { tv } from 'tailwind-variants';
 const avatarStyles = tv({
   slots: {
     base: 'relative flex shrink-0 overflow-hidden',
-    image: 'aspect-square w-full h-full',
+    image: 'aspect-square size-full',
     fallback:
-      'flex h-full w-full items-center justify-center bg-grey-bg-subtle',
+      'flex size-full items-center justify-center bg-grey-bg-subtle',
   },
   variants: {
     shape: {

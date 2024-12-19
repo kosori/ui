@@ -12,5 +12,5 @@ export const ProgressDemo = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  return <Progress className='w-[60%]' value={progress} />;
+  return <Progress className='w-3/5' value={progress} />;
 };

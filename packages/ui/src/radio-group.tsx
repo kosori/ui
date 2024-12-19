@@ -9,7 +9,7 @@ const radioGroupStyles = tv({
   slots: {
     base: 'grid gap-2',
     item: clsx(
-      'group peer h-4 w-4 rounded-full border border-grey-border bg-grey-base outline-none transition-colors',
+      'group peer size-4 rounded-full border border-grey-border bg-grey-base outline-none transition-colors',
       'hover:border-grey-border-hover',
       'focus-visible:ring-4 focus-visible:ring-primary-focus-ring',
       'data-[state=checked]:border-primary-solid data-[state=checked]:bg-primary-solid',

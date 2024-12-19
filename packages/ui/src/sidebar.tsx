@@ -57,7 +57,7 @@ const sidebarStyles = tv({
       'md:flex',
     ),
     rootChild: clsx(
-      'bg-grey-bg-subtle flex h-full w-full flex-col',
+      'bg-grey-bg-subtle flex size-full flex-col',
       'group-data-[variant=floating]:border-grey-line group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow',
     ),
     trigger: 'size-7',
@@ -457,7 +457,7 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(
               } as React.CSSProperties
             }
           >
-            <div className='flex h-full w-full flex-col'>{children}</div>
+            <div className='flex size-full flex-col'>{children}</div>
           </SheetContent>
         </Sheet>
       );

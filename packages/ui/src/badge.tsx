@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 import { tv } from 'tailwind-variants';
 
 const badgeStyles = tv({
-  base: 'inline-flex h-fit w-fit select-none items-center font-semibold rounded-lg',
+  base: 'inline-flex size-fit select-none items-center font-semibold rounded-lg',
   variants: {
     intent: {
       default: '',

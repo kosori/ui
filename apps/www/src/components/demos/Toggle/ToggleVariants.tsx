@@ -6,12 +6,12 @@ export const ToggleVariantsDemo = () => {
   return (
     <div className='flex gap-2'>
       <Toggle aria-label='Toggle ghost'>
-        <GhostIcon className='h-4 w-4' />
+        <GhostIcon className='size-4' />
         Gost
       </Toggle>
 
       <Toggle aria-label='Toggle outline' variant='outline'>
-        <BoxSelectIcon className='h-4 w-4' />
+        <BoxSelectIcon className='size-4' />
         Outline
       </Toggle>
     </div>

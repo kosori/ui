@@ -26,7 +26,7 @@ export const HoverCardDemo = () => {
               The React Framework – created and maintained by @vercel.
             </p>
             <div className='flex items-center pt-2'>
-              <CalendarIcon className='mr-2 h-4 w-4 text-grey-text' />{' '}
+              <CalendarIcon className='mr-2 size-4 text-grey-text' />{' '}
               <span className='text-xs text-grey-text'>
                 Joined December 2021
               </span>

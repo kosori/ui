@@ -17,20 +17,20 @@ import { Dialog, DialogContent } from '@kosori/ui/dialog';
 
 const commandStyles = tv({
   slots: {
-    base: 'flex h-full w-full flex-col overflow-hidden rounded-xl bg-grey-base',
+    base: 'flex size-full flex-col overflow-hidden rounded-xl bg-grey-base',
     dialogContent: 'overflow-hidden p-0 shadow-lg',
     dialogCommand: clsx(
       '[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:text-grey-text',
       '[&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0',
       '[&_[cmdk-group]]:px-1',
-      '[&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5',
+      '[&_[cmdk-input-wrapper]_svg]:size-5',
       '[&_[cmdk-input]]:h-11',
       '[&_[cmdk-item]]:h-auto [&_[cmdk-item]]:px-3 [&_[cmdk-item]]:py-2',
-      '[&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5',
+      '[&_[cmdk-item]_svg]:size-5',
     ),
     inputWrapper:
       'flex items-center border-b border-grey-line px-3 outline-none',
-    inputIcon: 'mr-2 h-4 w-4 shrink-0 text-grey-text',
+    inputIcon: 'mr-2 size-4 shrink-0 text-grey-text',
     input: clsx(
       'flex h-10 w-full rounded-lg bg-grey-base py-3 text-sm',
       'placeholder:text-grey-placeholder-text',

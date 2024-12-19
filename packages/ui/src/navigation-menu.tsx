@@ -29,7 +29,7 @@ const navigationMenuStyles = tv({
       'disabled:hover:bg-grey-base',
     ),
     triggerIcon: clsx(
-      'relative top-px ml-1 h-3 w-3 transition-transform duration-200',
+      'relative top-px ml-1 size-3 transition-transform duration-200',
       'group-data-[state=open]:rotate-180',
     ),
     content: clsx(
@@ -48,7 +48,7 @@ const navigationMenuStyles = tv({
       'data-[state=hidden]:animate-out data-[state=hidden]:fade-out',
     ),
     indicatorIcon:
-      'relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-grey-line shadow-md',
+      'relative top-[60%] size-2 rotate-45 rounded-tl-sm bg-grey-line shadow-md',
     viewportWrapper: 'absolute left-0 top-full flex justify-center',
     viewport: clsx(
       'origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-2xl border border-grey-line bg-grey-base shadow-md',

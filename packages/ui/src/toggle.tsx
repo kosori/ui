@@ -23,7 +23,7 @@ export const toggleStyles = tv({
       outline: clsx(
         'border border-grey-border',
         'hover:border-grey-border-hover hover:bg-grey-bg-hover',
-        'hover:border-grey-border-hover active:bg-grey-bg-active',
+        'active:bg-grey-bg-active',
         'data-[state=on]:border-grey-border-hover data-[state=on]:bg-grey-bg-active',
         'focus-visible:ring-grey-focus-ring',
         'disabled:border-grey-line disabled:bg-grey-bg disabled:text-grey-solid',

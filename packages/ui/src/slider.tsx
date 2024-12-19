@@ -17,7 +17,7 @@ const sliderStyles = tv({
       'group-data-[disabled]:cursor-not-allowed',
     ),
     thumb: clsx(
-      'block h-4 w-4 cursor-pointer rounded-full border-2 border-grey-text-contrast bg-grey-bg shadow outline-none transition-colors',
+      'block size-4 cursor-pointer rounded-full border-2 border-grey-text-contrast bg-grey-bg shadow outline-none transition-colors',
       'hover:bg-grey-bg-hover',
       'active:bg-grey-bg-active',
       'focus-visible:ring-4 focus-visible:ring-grey-focus-ring',

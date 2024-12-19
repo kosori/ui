@@ -6,7 +6,7 @@ import { tv } from 'tailwind-variants';
 const resizableStyles = tv({
   slots: {
     base: clsx(
-      'flex h-full w-full',
+      'flex size-full',
       'data-[panel-group-direction=vertical]:flex-col',
     ),
     handle: clsx(

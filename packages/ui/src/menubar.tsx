@@ -34,7 +34,7 @@ const menubarStyles = tv({
       'data-[state=open]:bg-primary-bg-hover',
     ),
     content: clsx(
-      'z-50 min-w-[12rem] overflow-hidden rounded-lg border border-grey-line bg-grey-base p-1 shadow-md',
+      'z-50 min-w-48 overflow-hidden rounded-lg border border-grey-line bg-grey-base p-1 shadow-md',
       'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
       'data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
       'data-[side=bottom]:slide-in-from-top-2',
@@ -78,7 +78,7 @@ const menubarStyles = tv({
       'group-data-[disabled]:text-grey-solid',
     ),
     subContent: clsx(
-      'z-50 min-w-[8rem] overflow-hidden rounded-lg border border-grey-line bg-grey-base p-1 shadow-md',
+      'z-50 min-w-32 overflow-hidden rounded-lg border border-grey-line bg-grey-base p-1 shadow-md',
       'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
       'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
       'data-[side=bottom]:slide-in-from-top-2',

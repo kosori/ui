@@ -25,7 +25,7 @@ const tableStyles = tv({
     cell: clsx(
       'p-2 align-middle',
       '[&:has([role=checkbox])]:pr-0',
-      '[&>[role=checkbox]]:translate-y-[0px]',
+      '[&>[role=checkbox]]:translate-y-0',
     ),
     caption: 'mt-4 text-sm text-grey-text',
   },
