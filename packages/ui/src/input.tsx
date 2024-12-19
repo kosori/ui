@@ -28,11 +28,12 @@ type InputProps = HTMLInputProps & InputVariants;
  * @param {InputProps} props - The props for the Input component.
  *
  * @example
+ * ```tsx
  * <Input />
+ * ```
  *
  * @see {@link https://dub.sh/ui-input Input Docs} for further information.
  */
-
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => (
     <input

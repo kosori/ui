@@ -24,6 +24,7 @@ const { content } = tooltipStyles();
  * @param {React.ComponentPropsWithoutRef<typeof Provider>} props - The props for the TooltipProvider component.
  *
  * @example
+ * ```tsx
  * <TooltipProvider>
  *   <Tooltip>
  *     <TooltipTrigger>Hover</TooltipTrigger>
@@ -32,6 +33,7 @@ const { content } = tooltipStyles();
  *     </TooltipContent>
  *   </Tooltip>
  * </TooltipProvider>
+ * ```
  */
 export const TooltipProvider = Provider;
 
@@ -41,10 +43,12 @@ export const TooltipProvider = Provider;
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the Tooltip component.
  *
  * @example
+ * ```tsx
  * <Tooltip>
  *   <TooltipTrigger>Hover</TooltipTrigger>
  *   <TooltipContent>Tooltip text</TooltipContent>
  * </Tooltip>
+ * ```
  */
 export const Tooltip = Root;
 
@@ -54,7 +58,9 @@ export const Tooltip = Root;
  * @param {React.ComponentPropsWithoutRef<typeof Trigger>} props - The props for the TooltipTrigger component.
  *
  * @example
+ * ```tsx
  * <TooltipTrigger>Hover me</TooltipTrigger>
+ * ```
  */
 export const TooltipTrigger = Trigger;
 
@@ -67,9 +73,11 @@ type Props = React.ComponentPropsWithoutRef<typeof Content>;
  * @param {Props} props - The props for the TooltipContent component.
  *
  * @example
+ * ```tsx
  * <TooltipContent>
  *   <p>Tooltip description</p>
  * </TooltipContent>
+ * ```
  */
 export const TooltipContent = forwardRef<Ref, Props>(
   ({ className, sideOffset = 4, ...props }, ref) => (

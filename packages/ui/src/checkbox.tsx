@@ -52,7 +52,9 @@ type CheckboxProps = object & CheckboxRadixProps & CheckboxVariants;
  * @param {'small' | 'medium'} [size='small'] - The size of the checkbox.
  *
  * @example
+ * ```tsx
  * <Checkbox />
+ * ```
  *
  * @see {@link https://dub.sh/ui-checkbox Checkbox Docs} for further information.
  */

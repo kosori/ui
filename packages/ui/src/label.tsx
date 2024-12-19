@@ -24,11 +24,12 @@ type LabelProps = LabelRadixProps & LabelVariants;
  * @param {LabelProps} props - The props for the Label component.
  *
  * @example
+ * ```tsx
  * <Label htmlFor='email'>Your email address</Label>
+ * ```
  *
  * @see {@link https://dub.sh/ui-label Label Docs} for further information.
  */
-
 export const Label = forwardRef<LabelRef, LabelProps>(
   ({ className, ...props }, ref) => (
     <Root ref={ref} className={labelStyles({ class: className })} {...props} />

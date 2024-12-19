@@ -6,12 +6,14 @@ import { Content, Root, Trigger } from '@radix-ui/react-collapsible';
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the Collapsible component.
  *
  * @example
+ * ```tsx
  * <Collapsible>
  *   <CollapsibleTrigger>Can I use this in my project?</CollapsibleTrigger>
  *   <CollapsibleContent>
  *     Yes. Free to use for personal and commercial projects. No attribution required.
  *   </CollapsibleContent>
  * </Collapsible>
+ * ```
  *
  * @see {@link https://dub.sh/ui-collapsible Collapsible Docs} for further information.
  */
@@ -23,9 +25,11 @@ export const Collapsible = Root;
  * @param {React.ComponentPropsWithoutRef<typeof Content>} props - The props for the CollapsibleContent component.
  *
  * @example
+ * ```tsx
  * <CollapsibleContent>
  *   Your content goes here.
  * </CollapsibleContent>
+ * ```
  */
 export const CollapsibleContent = Content;
 
@@ -35,6 +39,8 @@ export const CollapsibleContent = Content;
  * @param {React.ComponentPropsWithoutRef<typeof Trigger>} props - The props for the CollapsibleTrigger component.
  *
  * @example
+ * ```tsx
  * <CollapsibleTrigger>Toggle Content</CollapsibleTrigger>
+ * ```
  */
 export const CollapsibleTrigger = Trigger;

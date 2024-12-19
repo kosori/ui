@@ -47,6 +47,7 @@ type FileTreeProps = React.ComponentPropsWithoutRef<'div'>;
  * @param {FileTreeProps} props - Additional props to pass to the file tree container.
  *
  * @example
+ * ```tsx
  * <FileTree>
  *   <Folder>
  *     <FolderName>Documents</FolderName>
@@ -63,6 +64,7 @@ type FileTreeProps = React.ComponentPropsWithoutRef<'div'>;
  *     </FolderFiles>
  *   </Folder>
  * </FileTree>
+ * ```
  */
 export const FileTree = forwardRef<FileTreeRef, FileTreeProps>(
   ({ className, ...props }, ref) => (
@@ -81,6 +83,7 @@ type FolderProps = React.ComponentPropsWithoutRef<typeof Collapsible>;
  * @param {FolderProps} props - Additional props to pass to the folder component.
  *
  * @example
+ * ```tsx
  * <Folder>
  *   <FolderName>My Folder</FolderName>
  *   <FolderFiles>
@@ -88,6 +91,7 @@ type FolderProps = React.ComponentPropsWithoutRef<typeof Collapsible>;
  *     <File>File2.txt</File>
  *   </FolderFiles>
  * </Folder>
+ * ```
  */
 export const Folder = forwardRef<FolderRef, FolderProps>(
   ({ className, ...props }, ref) => (
@@ -108,7 +112,9 @@ type FolderNameProps = React.ComponentPropsWithoutRef<
  * @param {FolderNameProps} props - Additional props to pass to the folder name.
  *
  * @example
+ * ```tsx
  * <FolderName>My Folder</FolderName>
+ * ```
  */
 export const FolderName = forwardRef<FolderNameRef, FolderNameProps>(
   ({ className, children, ...props }, ref) => (
@@ -147,10 +153,12 @@ type FolderFilesProps = React.ComponentPropsWithoutRef<
  * @param {FolderFilesProps} props - Additional props to pass to the folder files container.
  *
  * @example
+ * ```tsx
  * <FolderFiles>
  *   <File>File1.txt</File>
  *   <File>File2.txt</File>
  * </FolderFiles>
+ * ```
  */
 export const FolderFiles = forwardRef<FolderFilesRef, FolderFilesProps>(
   ({ className, children, ...props }, ref) => (
@@ -181,7 +189,9 @@ type FileProps = React.ComponentPropsWithoutRef<'div'> & {
  * @param {React.ReactNode} [icon=<FileIcon />] - Optional icon to display next to the file name.
  *
  * @example
+ * ```tsx
  * <File>MyFile.txt</File>
+ * ```
  */
 export const File = forwardRef<FileRef, FileProps>(
   (

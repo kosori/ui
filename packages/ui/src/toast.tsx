@@ -99,10 +99,12 @@ export type ToastProps = object & ToastRadixProps & ToastVariants;
  * @param {string} [intent='default'] - The visual style of the toast (e.g., 'default', 'info', 'success', 'warning', 'error').
  *
  * @example
+ * ```ts
  * toast({
  *   title: 'Scheduled: Catch up',
  *   description: 'Friday, February 10, 2023 at 5:57 PM',
  * });
+ * ```
  *
  * @see {@link https://dub.sh/ui-toast Toast Docs} for further information.
  */
@@ -124,7 +126,9 @@ type ToastActionProps = React.ComponentProps<typeof Action>;
  * @param {ToastActionProps} props - The props for the ToastAction component.
  *
  * @example
+ * ```tsx
  * <ToastAction onClick={handleClick}>Undo</ToastAction>
+ * ```
  */
 export const ToastAction = forwardRef<ToastActionRef, ToastActionProps>(
   ({ className, ...props }, ref) => (
@@ -143,7 +147,9 @@ type ToastCloseProps = React.ComponentPropsWithoutRef<typeof Close>;
  * @param {ToastCloseProps} props - The props for the ToastClose component.
  *
  * @example
+ * ```tsx
  * <ToastClose />
+ * ```
  */
 export const ToastClose = forwardRef<ToastCloseRef, ToastCloseProps>(
   ({ className, ...props }, ref) => (
@@ -164,7 +170,9 @@ type ToastDescriptionProps = React.ComponentPropsWithoutRef<typeof Description>;
  * @param {ToastDescriptionProps} props - The props for the ToastDescription component.
  *
  * @example
+ * ```tsx
  * <ToastDescription>Details about the toast notification.</ToastDescription>
+ * ```
  */
 export const ToastDescription = forwardRef<
   ToastDescriptionRef,
@@ -181,7 +189,9 @@ ToastDescription.displayName = Description.displayName;
  * @param {React.ComponentProps<typeof Provider>} props - The props for the ToastProvider component.
  *
  * @example
+ * ```tsx
  * <ToastProvider>{Toasts will be rendered here}</ToastProvider>
+ * ```
  */
 export const ToastProvider = Provider;
 
@@ -194,7 +204,9 @@ type ToastTitleProps = React.ComponentPropsWithoutRef<typeof Title>;
  * @param {ToastTitleProps} props - The props for the ToastTitle component.
  *
  * @example
+ * ```tsx
  * <ToastTitle>Notification Title</ToastTitle>
+ * ```
  */
 export const ToastTitle = forwardRef<ToastTitleRef, ToastTitleProps>(
   ({ className, ...props }, ref) => (
@@ -213,7 +225,9 @@ type ToastViewportProps = React.ComponentPropsWithoutRef<typeof Viewport>;
  * @param {ToastViewportProps} props - The props for the ToastViewport component.
  *
  * @example
+ * ```tsx
  * <ToastViewport />
+ * ```
  */
 export const ToastViewport = forwardRef<ToastViewportRef, ToastViewportProps>(
   ({ className, ...props }, ref) => (
@@ -227,7 +241,9 @@ ToastViewport.displayName = Viewport.displayName;
  * Toaster component that renders toast notifications.
  *
  * @example
+ * ```tsx
  * <Toaster />
+ * ```
  */
 export const Toaster = () => {
   const { toasts } = useToast();
@@ -393,11 +409,13 @@ type Toast = Omit<ToasterToast, 'id'>;
  * @param {Toast} props - The properties for the toast notification, including title and description.
  *
  * @example
+ * ```ts
  * const { toast } = useToast();
  * toast({
  *   title: 'Scheduled: Catch up',
  *   description: 'Friday, February 10, 2023 at 5:57 PM',
  * });
+ * ```
  */
 export const toast = ({ ...props }: Toast) => {
   const id = genId();
@@ -432,11 +450,13 @@ export const toast = ({ ...props }: Toast) => {
  * useToast hook that provides access to the current toast state and methods to manage toasts.
  *
  * @example
+ * ```ts
  * const { toast } = useToast();
  * toast({
  *   title: 'New message!',
  *   description: 'You have received a new message.',
  * });
+ * ```
  */
 export const useToast = () => {
   const [state, setState] = useState<State>(memoryState);

@@ -37,7 +37,9 @@ type SliderProps = React.ComponentPropsWithoutRef<typeof Root>;
  * @param {SliderProps} props - The props for the Slider component.
  *
  * @example
+ * ```tsx
  * <Slider defaultValue={[33]} max={100} step={1} />
+ * ```
  *
  * @see {@link https://dub.sh/ui-slider Slider Docs} for further information.
  */

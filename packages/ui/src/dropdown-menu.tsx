@@ -123,6 +123,7 @@ const {
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the DropdownMenu component.
  *
  * @example
+ * ```tsx
  * <DropdownMenu>
  *   <DropdownMenuTrigger>Open</DropdownMenuTrigger>
  *   <DropdownMenuContent>
@@ -134,6 +135,7 @@ const {
  *     <DropdownMenuItem>Subscription</DropdownMenuItem>
  *   </DropdownMenuContent>
  * </DropdownMenu>
+ * ```
  *
  * @see {@link https://dub.sh/ui-dropdown-menu Dropdown Menu Docs} for further information.
  */
@@ -152,9 +154,11 @@ type DropdownMenuContentProps = React.ComponentPropsWithoutRef<typeof Content>;
  * @param {DropdownMenuContentProps} props - The props for the DropdownMenuContent component.
  *
  * @example
+ * ```tsx
  * <DropdownMenuContent>
  *   <DropdownMenuItem>Profile</DropdownMenuItem>
  * </DropdownMenuContent>
+ * ```
  */
 export const DropdownMenuContent = forwardRef<
   DropdownMenuContentRef,
@@ -182,7 +186,9 @@ type DropdownMenuItemProps = React.ComponentPropsWithoutRef<typeof Item> & {
  * @param {boolean} [inset] - Whether the item is inset.
  *
  * @example
+ * ```tsx
  * <DropdownMenuItem>Profile</DropdownMenuItem>
+ * ```
  */
 export const DropdownMenuItem = forwardRef<
   DropdownMenuItemRef,
@@ -207,7 +213,9 @@ type DropdownMenuLabelProps = React.ComponentPropsWithoutRef<typeof Label> & {
  * @param {boolean} [inset] - Whether the label is inset.
  *
  * @example
+ * ```tsx
  * <DropdownMenuLabel>Settings</DropdownMenuLabel>
+ * ```
  */
 export const DropdownMenuLabel = forwardRef<
   DropdownMenuLabelRef,
@@ -229,7 +237,9 @@ type DropdownMenuCheckboxItemProps = React.ComponentPropsWithoutRef<
  * @param {DropdownMenuCheckboxItemProps} props - The props for the DropdownMenuCheckboxItem component.
  *
  * @example
+ * ```tsx
  * <DropdownMenuCheckboxItem checked={true}>Enable Notifications</DropdownMenuCheckboxItem>
+ * ```
  */
 export const DropdownMenuCheckboxItem = forwardRef<
   DropdownMenuCheckboxItemRef,
@@ -265,7 +275,9 @@ type DropdownMenuRadioItemProps = React.ComponentPropsWithoutRef<
  * @param {DropdownMenuRadioItemProps} props - The props for the DropdownMenuRadioItem component.
  *
  * @example
+ * ```tsx
  * <DropdownMenuRadioItem>Option 1</DropdownMenuRadioItem>
+ * ```
  */
 export const DropdownMenuRadioItem = forwardRef<
   DropdownMenuRadioItemRef,
@@ -294,7 +306,9 @@ type DropdownMenuSeparatorProps = React.ComponentPropsWithoutRef<
  * @param {DropdownMenuSeparatorProps} props - The props for the DropdownMenuSeparator component.
  *
  * @example
+ * ```tsx
  * <DropdownMenuSeparator />
+ * ```
  */
 export const DropdownMenuSeparator = forwardRef<
   DropdownMenuSeparatorRef,
@@ -321,7 +335,9 @@ type DropdownMenuSubTriggerProps = React.ComponentPropsWithoutRef<
  * @param {boolean} [inset] - Whether the trigger is inset.
  *
  * @example
+ * ```tsx
  * <DropdownMenuSubTrigger>More Options</DropdownMenuSubTrigger>
+ * ```
  */
 export const DropdownMenuSubTrigger = forwardRef<
   DropdownMenuSubTriggerRef,
@@ -346,7 +362,9 @@ type DropdownMenuSubContentProps = React.ComponentPropsWithoutRef<
  * @param {DropdownMenuSubContentProps} props - The props for the DropdownMenuSubContent component.
  *
  * @example
+ * ```tsx
  * <DropdownMenuSubContent>...</DropdownMenuSubContent>
+ * ```
  */
 export const DropdownMenuSubContent = forwardRef<
   DropdownMenuSubContentRef,
@@ -365,7 +383,9 @@ type DropdownMenuShortcutProps = React.HTMLAttributes<HTMLSpanElement>;
  * @param {DropdownMenuShortcutProps} props - The props for the DropdownMenuShortcut component.
  *
  * @example
+ * ```tsx
  * <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+ * ```
  */
 export const DropdownMenuShortcut = ({
   className,

@@ -75,7 +75,9 @@ type ToggleProps = object & ToggleRadixProps & ToggleVariants;
  * @param {boolean} [icon=false] - If true, adjusts the button size for icon-only usage.
  *
  * @example
+ * ```tsx
  * <Toggle>Toggle</Toggle>
+ * ```
  *
  * @see {@link https://dub.sh/ui-toggle Toggle Docs} for further information.
  */

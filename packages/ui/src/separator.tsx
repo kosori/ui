@@ -25,7 +25,9 @@ type SeparatorProps = React.ComponentPropsWithoutRef<typeof Root>;
  * @param {boolean} [decorative=true] - Indicates whether the separator is decorative.
  *
  * @example
+ * ```tsx
  * <Separator />
+ * ```
  *
  * @see {@link https://dub.sh/ui-separator Separator Docs} for further information.
  */

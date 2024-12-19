@@ -121,7 +121,9 @@ type BadgeProps = HTMLDivProps & BadgeVariants;
  * @param {'solid' | 'outline' | 'soft'} [variant='solid'] - The visual style of the badge (e.g., 'solid', 'outline', 'soft').
  *
  * @example
+ * ```tsx
  * <Badge intent='info'>Badge</Badge>
+ * ```
  *
  * @see {@link https://dub.sh/ui-badge Badge Docs} for further information.
  */

@@ -27,10 +27,12 @@ const { content } = popoverStyles();
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the Popover component.
  *
  * @example
+ * ```tsx
  * <Popover>
  *   <PopoverTrigger>Open</PopoverTrigger>
  *   <PopoverContent>Place content for the popover here.</PopoverContent>
  * </Popover>
+ * ```
  *
  * @see {@link https://dub.sh/ui-popover Popover Docs} for further information.
  */
@@ -42,7 +44,9 @@ export const Popover = Root;
  * @param {React.ComponentPropsWithoutRef<typeof Trigger>} props - The props for the PopoverTrigger component.
  *
  * @example
+ * ```tsx
  * <PopoverTrigger>Open</PopoverTrigger>
+ * ```
  */
 export const PopoverTrigger = Trigger;
 
@@ -55,7 +59,9 @@ type PopoverContentProps = React.ComponentPropsWithoutRef<typeof Content>;
  * @param {PopoverContentProps} props - The props for the PopoverContent component.
  *
  * @example
+ * ```tsx
  * <PopoverContent>Place content for the popover here.</PopoverContent>
+ * ```
  */
 export const PopoverContent = forwardRef<
   PopoverContentRef,

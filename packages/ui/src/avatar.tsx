@@ -61,10 +61,12 @@ type AvatarProps = AvatarVariants & AvatarRadixProps;
  * @param {'small' | 'medium' | 'large'} [size='small'] - The size of the avatar (e.g., 'small', 'medium', 'large').
  *
  * @example
+ * ```tsx
  * <Avatar>
  *   <AvatarImage src='https://github.com/codingcodax.png' />
  *   <AvatarFallback>CC</AvatarFallback>
  * </Avatar>
+ * ```
  *
  * @see {@link https://dub.sh/ui-avatar Avatar Docs} for further information.
  */
@@ -85,7 +87,9 @@ type AvatarImageProps = React.ComponentPropsWithoutRef<typeof Image>;
  * @param {AvatarImageProps} props - Additional props to pass to the AvatarImage component.
  *
  * @example
+ * ```tsx
  * <AvatarImage src='https://github.com/codingcodax.png' />
+ * ```
  */
 export const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
   ({ className, ...props }, ref) => (
@@ -104,7 +108,9 @@ type AvatarFallbackProps = React.ComponentPropsWithoutRef<typeof Fallback>;
  * @param {AvatarFallbackProps} props - Additional props to pass to the AvatarFallback component.
  *
  * @example
+ * ```tsx
  * <AvatarFallback>CC</AvatarFallback>
+ * ```
  */
 export const AvatarFallback = forwardRef<
   AvatarFallbackRef,

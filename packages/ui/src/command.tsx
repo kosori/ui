@@ -79,6 +79,7 @@ const {
  * @param {CommandProps} props - The props for the Command component.
  *
  * @example
+ * ```tsx
  * <Command>
  *   <CommandInput placeholder='Type a command or search...' />
  *   <CommandList>
@@ -96,6 +97,7 @@ const {
  *     </CommandGroup>
  *   </CommandList>
  * </Command>
+ * ```
  *
  * @see {@link https://dub.sh/ui-command Command Docs} for further information.
  */
@@ -114,9 +116,11 @@ Command.displayName = CMDK.displayName;
  * @param {DialogProps} props - The props for the CommandDialog component.
  *
  * @example
+ * ```tsx
  * <CommandDialog>
  *   <Command>...</Command>
  * </CommandDialog>
+ * ```
  */
 export const CommandDialog = ({ children, ...props }: DialogProps) => {
   return (
@@ -137,7 +141,9 @@ type CommandInputProps = React.ComponentPropsWithoutRef<typeof CMDKInput>;
  * @param {CommandInputProps} props - The props for the CommandInput component.
  *
  * @example
+ * ```tsx
  * <CommandInput placeholder='Type a command or search...' />
+ * ```
  */
 export const CommandInput = forwardRef<CommandInputRef, CommandInputProps>(
   ({ className, ...props }, ref) => (
@@ -159,9 +165,11 @@ type CommandListProps = React.ComponentPropsWithoutRef<typeof CMDKList>;
  * @param {CommandListProps} props - The props for the CommandList component.
  *
  * @example
+ * ```tsx
  * <CommandList>
  *   <CommandItem>...</CommandItem>
  * </CommandList>
+ * ```
  */
 export const CommandList = forwardRef<CommandListRef, CommandListProps>(
   ({ className, ...props }, ref) => (
@@ -180,7 +188,9 @@ type CommandEmptyProps = React.ComponentPropsWithoutRef<typeof CMDKEmpty>;
  * @param {CommandEmptyProps} props - The props for the CommandEmpty component.
  *
  * @example
+ * ```tsx
  * <CommandEmpty>No results found.</CommandEmpty>
+ * ```
  */
 export const CommandEmpty = forwardRef<CommandEmptyRef, CommandEmptyProps>(
   ({ className, ...props }, ref) => (
@@ -199,9 +209,11 @@ type CommandGroupProps = React.ComponentPropsWithoutRef<typeof CMDKGroup>;
  * @param {CommandGroupProps} props - The props for the CommandGroup component.
  *
  * @example
+ * ```tsx
  * <CommandGroup heading='Suggestions'>
  *   <CommandItem>...</CommandItem>
  * </CommandGroup>
+ * ```
  */
 export const CommandGroup = forwardRef<CommandGroupRef, CommandGroupProps>(
   ({ className, ...props }, ref) => (
@@ -220,7 +232,9 @@ type CommandItemProps = React.ComponentPropsWithoutRef<typeof CMDKItem>;
  * @param {CommandItemProps} props - The props for the CommandItem component.
  *
  * @example
+ * ```tsx
  * <CommandItem>...</CommandItem>
+ * ```
  */
 export const CommandItem = forwardRef<CommandItemRef, CommandItemProps>(
   ({ className, ...props }, ref) => (
@@ -238,7 +252,9 @@ type CommandShortcutProps = React.HTMLAttributes<HTMLSpanElement>;
  * @param {CommandShortcutProps} props - The props for the CommandShortcut component.
  *
  * @example
+ * ```tsx
  * <CommandShortcut>⌘K</CommandShortcut>
+ * ```
  */
 export const CommandShortcut = ({
   className,
@@ -258,7 +274,9 @@ type CommandSeparatorProps = React.ComponentPropsWithoutRef<
  * @param {CommandSeparatorProps} props - The props for the CommandSeparator component.
  *
  * @example
+ * ```tsx
  * <CommandSeparator />
+ * ```
  */
 export const CommandSeparator = forwardRef<
   CommandSeparatorRef,

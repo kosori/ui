@@ -49,6 +49,7 @@ type AlertProps = DivProps & AlertVariants;
  * @param {'default' | 'info' | 'success' | 'warning' | 'error'} [intent='default'] - The visual style of the alert (e.g., 'info', 'success', 'warning', 'error').
  *
  * @example
+ * ```tsx
  * // Basic usage
  * <Alert>
  *   <AlertTitle>Heads up!</AlertTitle>
@@ -56,15 +57,18 @@ type AlertProps = DivProps & AlertVariants;
  *     You can add components and dependencies to your app using the cli.
  *   </AlertDescription>
  * </Alert>
+ * ```
  *
  * @example
+ * ```tsx
  * // Alert with a specific intent
- * <Alert intent="success">
+ * <Alert intent='success'>
  *   <AlertTitle>Success!</AlertTitle>
  *   <AlertDescription>
  *     Your changes have been saved successfully.
  *   </AlertDescription>
  * </Alert>
+ * ```
  *
  * @see {@link https://dub.sh/ui-alert Alert Docs} for further information.
  */
@@ -90,7 +94,9 @@ type AlertTitleProps = React.HTMLAttributes<HTMLHeadingElement>;
  * @param {AlertTitleProps} props - Additional props to pass to the title element.
  *
  * @example
+ * ```tsx
  * <AlertTitle>Heads up!</AlertTitle>
+ * ```
  */
 export const AlertTitle = forwardRef<AlertTitleRef, AlertTitleProps>(
   ({ className, ...props }, ref) => (
@@ -109,9 +115,11 @@ type AlertDescriptionProps = React.HTMLAttributes<HTMLParagraphElement>;
  * @param {AlertDescriptionProps} props - Additional props to pass to the description element.
  *
  * @example
+ * ```tsx
  * <AlertDescription>
  *   You can add components and dependencies to your app using the cli.
  * </AlertDescription>
+ * ```
  */
 export const AlertDescription = forwardRef<
   AlertDescriptionRef,

@@ -40,6 +40,7 @@ type InputOTPProps = React.ComponentPropsWithoutRef<typeof OTPInput>;
  * @param {InputOTPProps} props - The props for the InputOTP component.
  *
  * @example
+ * ```tsx
  * <InputOTP
  *   maxLength={6}
  *   render={({ slots }) => (
@@ -58,6 +59,7 @@ type InputOTPProps = React.ComponentPropsWithoutRef<typeof OTPInput>;
  *     </>
  *   )}
  * />
+ * ```
  *
  * @see {@link https://dub.sh/ui-input-otp InputOTP Docs} for further information.
  */
@@ -78,9 +80,11 @@ type InputOTPGroupProps = React.ComponentPropsWithoutRef<'div'>;
  * @param {InputOTPGroupProps} props - The props for the InputOTPGroup component.
  *
  * @example
+ * ```tsx
  * <InputOTPGroup>
  *   {Your input slots here}
  * </InputOTPGroup>
+ * ```
  */
 export const InputOTPGroup = forwardRef<InputOTPGroupRef, InputOTPGroupProps>(
   ({ className, ...props }, ref) => (
@@ -99,7 +103,9 @@ type InputOTPSlotProps = SlotProps & React.ComponentPropsWithoutRef<'div'>;
  * @param {InputOTPSlotProps} props - The props for the InputOTPSlot component.
  *
  * @example
+ * ```tsx
  * <InputOTPSlot />
+ * ```
  */
 export const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
   ({ char, hasFakeCaret, isActive, className, ...props }, ref) => {
@@ -131,7 +137,9 @@ type InputOTPSeparatorProps = React.ComponentPropsWithoutRef<'div'>;
  * @param {InputOTPSeparatorProps} props - The props for the InputOTPSeparator component.
  *
  * @example
+ * ```tsx
  * <InputOTPSeparator />
+ * ```
  */
 export const InputOTPSeparator = forwardRef<
   InputOTPSeparatorRef,

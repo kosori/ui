@@ -98,6 +98,7 @@ const {
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the Select component.
  *
  * @example
+ * ```tsx
  * <Select>
  *   <SelectTrigger className='w-[180px]'>
  *     <SelectValue placeholder='Theme' />
@@ -108,6 +109,7 @@ const {
  *     <SelectItem value='system'>System</SelectItem>
  *   </SelectContent>
  * </Select>
+ * ```
  *
  * @see {@link https://dub.sh/ui-select Select Docs} for further information.
  */
@@ -122,7 +124,9 @@ type SelectTriggerProps = React.ComponentPropsWithoutRef<typeof Trigger>;
  * @param {SelectTriggerProps} props - The props for the SelectTrigger component.
  *
  * @example
+ * ```tsx
  * <SelectTrigger className='w-[180px]'>Select an option</SelectTrigger>
+ * ```
  */
 export const SelectTrigger = forwardRef<SelectTriggerRef, SelectTriggerProps>(
   ({ className, children, ...props }, ref) => (
@@ -144,7 +148,9 @@ SelectTrigger.displayName = Trigger.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof Value>} props - The props for the SelectValue component.
  *
  * @example
+ * ```tsx
  * <SelectValue placeholder='Select an option' />
+ * ```
  */
 export const SelectValue = Value;
 
@@ -157,10 +163,12 @@ type SelectContentProps = React.ComponentPropsWithoutRef<typeof Content>;
  * @param {SelectContentProps} props - The props for the SelectContent component.
  *
  * @example
+ * ```tsx
  * <SelectContent>
  *   <SelectItem value='light'>Light</SelectItem>
  *   <SelectItem value='dark'>Dark</SelectItem>
  * </SelectContent>
+ * ```
  */
 export const SelectContent = forwardRef<SelectContentRef, SelectContentProps>(
   ({ className, children, position, ...props }, ref) => (
@@ -190,7 +198,9 @@ type SelectItemProps = React.ComponentPropsWithoutRef<typeof Item>;
  * @param {SelectItemProps} props - The props for the SelectItem component.
  *
  * @example
+ * ```tsx
  * <SelectItem value='light'>Light</SelectItem>
+ * ```
  */
 export const SelectItem = forwardRef<SelectItemRef, SelectItemProps>(
   ({ className, children, ...props }, ref) => (
@@ -219,7 +229,9 @@ type SelectScrollUpButtonProps = React.ComponentPropsWithoutRef<
  * @param {SelectScrollUpButtonProps} props - The props for the SelectScrollUpButton component.
  *
  * @example
+ * ```tsx
  * <SelectScrollUpButton />
+ * ```
  */
 export const SelectScrollUpButton = forwardRef<
   SelectScrollUpButtonRef,
@@ -247,7 +259,9 @@ type SelectScrollDownButtonProps = React.ComponentPropsWithoutRef<
  * @param {SelectScrollDownButtonProps} props - The props for the SelectScrollDownButton component.
  *
  * @example
+ * ```tsx
  * <SelectScrollDownButton />
+ * ```
  */
 export const SelectScrollDownButton = forwardRef<
   SelectScrollDownButtonRef,
@@ -270,9 +284,11 @@ SelectScrollDownButton.displayName = ScrollDownButton.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof Group>} props - The props for the SelectGroup component.
  *
  * @example
+ * ```tsx
  * <SelectGroup>
  *   <SelectItem value='light'>Light</SelectItem>
  * </SelectGroup>
+ * ```
  */
 export const SelectGroup = Group;
 
@@ -285,7 +301,9 @@ type SelectLabelProps = React.ComponentPropsWithoutRef<typeof Label>;
  * @param {SelectLabelProps} props - The props for the SelectLabel component.
  *
  * @example
+ * ```tsx
  * <SelectLabel>Choose a theme</SelectLabel>
+ * ```
  */
 export const SelectLabel = forwardRef<SelectLabelRef, SelectLabelProps>(
   ({ className, ...props }, ref) => (
@@ -304,7 +322,9 @@ type SelectSeparatorProps = React.ComponentPropsWithoutRef<typeof Separator>;
  * @param {SelectSeparatorProps} props - The props for the SelectSeparator component.
  *
  * @example
+ * ```tsx
  * <SelectSeparator />
+ * ```
  */
 export const SelectSeparator = forwardRef<
   SelectSeparatorRef,

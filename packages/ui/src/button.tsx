@@ -298,18 +298,24 @@ export type ButtonProps = {
  * @param {boolean} [icon=false] - If true, adjusts the button size for icon-only usage.
  *
  * @example
+ * ```tsx
  * // Basic usage
  * <Button>Click Me</Button>
+ * ```
  *
  * @example
+ * ```tsx
  * // Using variants and intents
- * <Button variant="outline" intent="error">Delete</Button>
+ * <Button variant='outline' intent='error'>Delete</Button>
+ * ```
  *
  * @example
+ * ```tsx
  * // Icon button
  * <Button icon>
  *   <Icon />
  * </Button>
+ * ```
  *
  * @see {@link https://dub.sh/ui-button Button Docs} for further information.
  */

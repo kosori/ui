@@ -43,6 +43,7 @@ type TableProps = React.HTMLAttributes<HTMLTableElement>;
  * @param {TableProps} props - The props for the Table component.
  *
  * @example
+ * ```tsx
  * <Table>
  *   <TableCaption>A list of your recent invoices.</TableCaption>
  *   <TableHeader>
@@ -62,6 +63,7 @@ type TableProps = React.HTMLAttributes<HTMLTableElement>;
  *     </TableRow>
  *   </TableBody>
  * </Table>
+ * ```
  *
  * @see {@link https://dub.sh/ui-table Table Docs} for further information.
  */
@@ -81,11 +83,13 @@ Table.displayName = 'Table';
  * @param {React.HTMLAttributes<HTMLTableSectionElement>} props - The props for the TableHeader component.
  *
  * @example
+ * ```tsx
  * <TableHeader>
  *   <TableRow>
  *     <TableHead>Header</TableHead>
  *   </TableRow>
  * </TableHeader>
+ * ```
  */
 export const TableHeader = forwardRef<
   HTMLTableSectionElement,
@@ -105,11 +109,13 @@ type TableBodyProps = React.HTMLAttributes<HTMLTableSectionElement>;
  * @param {TableBodyProps} props - The props for the TableBody component.
  *
  * @example
+ * ```tsx
  * <TableBody>
  *   <TableRow>
  *     <TableCell>Data</TableCell>
  *   </TableRow>
  * </TableBody>
+ * ```
  */
 export const TableBody = forwardRef<TableBodyRef, TableBodyProps>(
   ({ className, ...props }, ref) => (
@@ -128,11 +134,13 @@ type TableFooterProps = React.HTMLAttributes<HTMLTableSectionElement>;
  * @param {TableFooterProps} props - The props for the TableFooter component.
  *
  * @example
+ * ```tsx
  * <TableFooter>
  *   <TableRow>
  *     <TableCell>Footer Data</TableCell>
  *   </TableRow>
  * </TableFooter>
+ * ```
  */
 export const TableFooter = forwardRef<TableFooterRef, TableFooterProps>(
   ({ className, ...props }, ref) => (
@@ -151,7 +159,9 @@ type TableHeadProps = React.HTMLAttributes<HTMLTableCellElement>;
  * @param {TableHeadProps} props - The props for the TableHead component.
  *
  * @example
+ * ```tsx
  * <TableHead>Header</TableHead>
+ * ```
  */
 export const TableHead = forwardRef<TableHeadRef, TableHeadProps>(
   ({ className, ...props }, ref) => (
@@ -170,9 +180,11 @@ type TableRowProps = React.HTMLAttributes<HTMLTableRowElement>;
  * @param {TableRowProps} props - The props for the TableRow component.
  *
  * @example
+ * ```tsx
  * <TableRow>
  *   <TableCell>Row Data</TableCell>
  * </TableRow>
+ * ```
  */
 export const TableRow = forwardRef<TableRowRef, TableRowProps>(
   ({ className, ...props }, ref) => (
@@ -191,7 +203,9 @@ type TableCellProps = React.TdHTMLAttributes<HTMLTableCellElement>;
  * @param {TableCellProps} props - The props for the TableCell component.
  *
  * @example
+ * ```tsx
  * <TableCell>Cell Data</TableCell>
+ * ```
  */
 export const TableCell = forwardRef<TableCellRef, TableCellProps>(
   ({ className, ...props }, ref) => (
@@ -210,7 +224,9 @@ type TableCaptionProps = React.HTMLAttributes<HTMLTableCaptionElement>;
  * @param {TableCaptionProps} props - The props for the TableCaption component.
  *
  * @example
+ * ```tsx
  * <TableCaption>Table Caption</TableCaption>
+ * ```
  */
 export const TableCaption = forwardRef<TableCaptionRef, TableCaptionProps>(
   ({ className, ...props }, ref) => (

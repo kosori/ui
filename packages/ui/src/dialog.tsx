@@ -61,6 +61,7 @@ const {
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the Dialog component.
  *
  * @example
+ * ```tsx
  * <Dialog>
  *   <DialogTrigger>Open</DialogTrigger>
  *   <DialogContent>
@@ -73,6 +74,7 @@ const {
  *     </DialogHeader>
  *   </DialogContent>
  * </Dialog>
+ * ```
  *
  * @see {@link https://dub.sh/ui-dialog Dialog Docs} for further information.
  */
@@ -84,7 +86,9 @@ export const Dialog = Root;
  * @param {React.ComponentPropsWithoutRef<typeof Trigger>} props - The props for the DialogTrigger component.
  *
  * @example
+ * ```tsx
  * <DialogTrigger>Open</DialogTrigger>
+ * ```
  */
 export const DialogTrigger = Trigger;
 
@@ -104,7 +108,9 @@ type DialogOverlayProps = React.ComponentPropsWithoutRef<typeof Overlay>;
  * @param {DialogOverlayProps} props - The props for the DialogOverlay component.
  *
  * @example
+ * ```tsx
  * <DialogOverlay />
+ * ```
  */
 export const DialogOverlay = forwardRef<DialogOverlayRef, DialogOverlayProps>(
   ({ className, ...props }, ref) => (
@@ -123,12 +129,14 @@ type DialogContentProps = React.ComponentPropsWithoutRef<typeof Content>;
  * @param {DialogContentProps} props - The props for the DialogContent component.
  *
  * @example
+ * ```tsx
  * <DialogContent>
  *   <DialogHeader>
  *     <DialogTitle>Dialog Title</DialogTitle>
  *     <DialogDescription>Dialog Description</DialogDescription>
  *   </DialogHeader>
  * </DialogContent>
+ * ```
  */
 export const DialogContent = forwardRef<DialogContentRef, DialogContentProps>(
   ({ className, children, ...props }, ref) => (
@@ -153,7 +161,9 @@ DialogContent.displayName = Content.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof Close>} props - The props for the DialogClose component.
  *
  * @example
+ * ```tsx
  * <DialogClose />
+ * ```
  */
 export const DialogClose = Close;
 
@@ -165,10 +175,12 @@ type DialogHeaderProps = React.HTMLAttributes<HTMLDivElement>;
  * @param {DialogHeaderProps} props - The props for the DialogHeader component.
  *
  * @example
+ * ```tsx
  * <DialogHeader>
  *   <DialogTitle>Dialog Title</DialogTitle>
  *   <DialogDescription>Dialog Description</DialogDescription>
  * </DialogHeader>
+ * ```
  */
 export const DialogHeader = ({ className, ...props }: DialogHeaderProps) => (
   <div className={header({ className })} {...props} />
@@ -185,7 +197,9 @@ type DialogTitleProps = React.ComponentPropsWithoutRef<typeof Title>;
  * @param {DialogTitleProps} props - The props for the DialogTitle component.
  *
  * @example
+ * ```tsx
  * <DialogTitle>Dialog Title</DialogTitle>
+ * ```
  */
 export const DialogTitle = forwardRef<DialogTitleRef, DialogTitleProps>(
   ({ className, ...props }, ref) => (
@@ -206,7 +220,9 @@ type DialogDescriptionProps = React.ComponentPropsWithoutRef<
  * @param {DialogDescriptionProps} props - The props for the DialogDescription component.
  *
  * @example
+ * ```tsx
  * <DialogDescription>Dialog Description</DialogDescription>
+ * ```
  */
 export const DialogDescription = forwardRef<
   DialogDescriptionRef,
@@ -225,9 +241,11 @@ type DialogFooterProps = React.HTMLAttributes<HTMLDivElement>;
  * @param {DialogFooterProps} props - The props for the DialogFooter component.
  *
  * @example
+ * ```tsx
  * <DialogFooter>
  *   <Button>Close</Button>
  * </DialogFooter>
+ * ```
  */
 export const DialogFooter = ({ className, ...props }: DialogFooterProps) => (
   <div className={footer({ className })} {...props} />

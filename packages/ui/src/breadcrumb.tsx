@@ -31,6 +31,7 @@ type BreadcrumbProps = React.ComponentPropsWithoutRef<'nav'>;
  * @param {BreadcrumbProps} props - The props for the Breadcrumb component.
  *
  * @example
+ * ```tsx
  * <Breadcrumb>
  *   <BreadcrumbList>
  *     <BreadcrumbItem>
@@ -47,6 +48,7 @@ type BreadcrumbProps = React.ComponentPropsWithoutRef<'nav'>;
  *     </BreadcrumbItem>
  *   </BreadcrumbList>
  * </Breadcrumb>
+ * ```
  *
  * @see {@link https://dub.sh/ui-breadcrumb Breadcrumb Docs} for further information.
  */
@@ -63,6 +65,13 @@ type BreadcrumbListProps = React.ComponentPropsWithoutRef<'ol'>;
  * BreadcrumbList component that wraps the list of breadcrumb items.
  *
  * @param {BreadcrumbListProps} props - Additional props to pass to the BreadcrumbList component.
+ * ```tsx
+ * <BreadcrumbList>
+ *   <BreadcrumbItem>
+ *     <BreadcrumbLink href='/'>Home</BreadcrumbLink>
+ *   </BreadcrumbItem>
+ * </BreadcrumbList>
+ * ```
  */
 export const BreadcrumbList = forwardRef<
   BreadcrumbListRef,
@@ -80,6 +89,13 @@ type BreadcrumbItemProps = React.ComponentPropsWithoutRef<'li'>;
  * BreadcrumbItem component that represents a single item in the breadcrumb trail.
  *
  * @param {BreadcrumbItemProps} props - Additional props to pass to the BreadcrumbItem component.
+ *
+ * @example
+ * ```tsx
+ * <BreadcrumbItem>
+ *   <BreadcrumbLink href='/'>Home</BreadcrumbLink>
+ * </BreadcrumbItem>
+ * ```
  */
 export const BreadcrumbItem = forwardRef<
   BreadcrumbItemRef,
@@ -101,7 +117,9 @@ type BreadcrumbLinkProps = React.ComponentPropsWithoutRef<'a'> & {
  * @param {BreadcrumbLinkProps} props - Additional props to pass to the BreadcrumbLink component.
  *
  * @example
+ * ```tsx
  * <BreadcrumbLink href='/'>Home</BreadcrumbLink>
+ * ```
  */
 export const BreadcrumbLink = forwardRef<
   BreadcrumbLinkRef,
@@ -122,7 +140,9 @@ type BreadcrumbSeparatorProps = React.ComponentPropsWithoutRef<'li'>;
  * @param {BreadcrumbSeparatorProps} props - Additional props to pass to the BreadcrumbSeparator component.
  *
  * @example
+ * ```tsx
  * <BreadcrumbSeparator />
+ * ```
  */
 export const BreadcrumbSeparator = ({
   children,
@@ -150,7 +170,9 @@ type BreadcrumbPageProps = React.ComponentPropsWithoutRef<'span'>;
  * @param {BreadcrumbPageProps} props - Additional props to pass to the BreadcrumbPage component.
  *
  * @example
+ * ```tsx
  * <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+ * ```
  */
 export const BreadcrumbPage = forwardRef<
   BreadcrumbPageRef,
@@ -176,7 +198,9 @@ type BreadcrumbEllipsisProps = React.ComponentProps<'span'>;
  * @param {BreadcrumbEllipsisProps} props - Additional props to pass to the BreadcrumbEllipsis component.
  *
  * @example
+ * ```tsx
  * <BreadcrumbEllipsis />
+ * ```
  */
 export const BreadcrumbEllipsis = ({
   className,

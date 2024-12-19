@@ -16,11 +16,12 @@ type SkeletonProps = React.HTMLAttributes<HTMLDivElement>;
  * @param {SkeletonProps} props - The props for the Skeleton component.
  *
  * @example
+ * ```tsx
  * <Skeleton className='h-[20px] w-[100px] rounded-full' />
+ * ```
  *
  * @see {@link https://dub.sh/ui-skeleton Skeleton Docs} for further information.
  */
-
 export const Skeleton = ({ className, ...props }: SkeletonProps) => {
   return <div className={skeletonStyles({ className })} {...props} />;
 };

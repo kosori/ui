@@ -122,6 +122,7 @@ const {
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the ContextMenu component.
  *
  * @example
+ * ```tsx
  * <ContextMenu>
  *   <ContextMenuTrigger>Right click</ContextMenuTrigger>
  *   <ContextMenuContent>
@@ -131,6 +132,7 @@ const {
  *     <ContextMenuItem>Subscription</ContextMenuItem>
  *   </ContextMenuContent>
  * </ContextMenu>
+ * ```
  *
  * @see {@link https://dub.sh/ui-context-menu Context Menu Docs} for further information.
  */
@@ -142,7 +144,9 @@ export const ContextMenu = Root;
  * @param {React.ComponentPropsWithoutRef<typeof Trigger>} props - The props for the ContextMenuTrigger component.
  *
  * @example
+ * ```tsx
  * <ContextMenuTrigger>Right click</ContextMenuTrigger>
+ * ```
  */
 export const ContextMenuTrigger = Trigger;
 
@@ -162,9 +166,11 @@ type ContextMenuContentProps = React.ComponentPropsWithoutRef<typeof Content>;
  * @param {ContextMenuContentProps} props - The props for the ContextMenuContent component.
  *
  * @example
+ * ```tsx
  * <ContextMenuContent>
  *   <ContextMenuItem>Profile</ContextMenuItem>
  * </ContextMenuContent>
+ * ```
  */
 export const ContextMenuContent = forwardRef<
   ContextMenuContentRef,
@@ -189,7 +195,9 @@ type ContextMenuItemProps = React.ComponentPropsWithoutRef<typeof Item> & {
  * @param {boolean} [props.inset] - Whether the item is inset.
  *
  * @example
+ * ```tsx
  * <ContextMenuItem>Profile</ContextMenuItem>
+ * ```
  */
 export const ContextMenuItem = forwardRef<
   ContextMenuItemRef,
@@ -206,7 +214,9 @@ ContextMenuItem.displayName = Item.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof Group>} props - The props for the ContextMenuGroup component.
  *
  * @example
+ * ```tsx
  * <ContextMenuGroup>...</ContextMenuGroup>
+ * ```
  */
 export const ContextMenuGroup = Group;
 
@@ -222,7 +232,9 @@ type ContextMenuLabelProps = React.ComponentPropsWithoutRef<typeof Label> & {
  * @param {boolean} [props.inset] - Whether the label is inset.
  *
  * @example
+ * ```tsx
  * <ContextMenuLabel>Settings</ContextMenuLabel>
+ * ```
  */
 export const ContextMenuLabel = forwardRef<
   ContextMenuLabelRef,
@@ -244,7 +256,9 @@ type ContextMenuCheckboxItemProps = React.ComponentPropsWithoutRef<
  * @param {ContextMenuCheckboxItemProps} props - The props for the ContextMenuCheckboxItem component.
  *
  * @example
+ * ```tsx
  * <ContextMenuCheckboxItem checked={true}>Enable Notifications</ContextMenuCheckboxItem>
+ * ```
  */
 export const ContextMenuCheckboxItem = forwardRef<
   ContextMenuCheckboxItemRef,
@@ -273,7 +287,9 @@ ContextMenuCheckboxItem.displayName = CheckboxItem.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof RadioGroup>} props - The props for the ContextMenuRadioGroup component.
  *
  * @example
+ * ```tsx
  * <ContextMenuRadioGroup>...</ContextMenuRadioGroup>
+ * ```
  */
 export const ContextMenuRadioGroup = RadioGroup;
 
@@ -288,7 +304,9 @@ type ContextMenuRadioItemProps = React.ComponentPropsWithoutRef<
  * @param {ContextMenuRadioItemProps} props - The props for the ContextMenuRadioItem component.
  *
  * @example
+ * ```tsx
  * <ContextMenuRadioItem>Option 1</ContextMenuRadioItem>
+ * ```
  */
 export const ContextMenuRadioItem = forwardRef<
   ContextMenuRadioItemRef,
@@ -317,7 +335,9 @@ type ContextMenuSeparatorProps = React.ComponentPropsWithoutRef<
  * @param {ContextMenuSeparatorProps} props - The props for the ContextMenuSeparator component.
  *
  * @example
+ * ```tsx
  * <ContextMenuSeparator />
+ * ```
  */
 export const ContextMenuSeparator = forwardRef<
   ContextMenuSeparatorRef,
@@ -334,7 +354,9 @@ ContextMenuSeparator.displayName = Separator.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof Sub>} props - The props for the ContextMenuSub component.
  *
  * @example
+ * ```tsx
  * <ContextMenuSub>...</ContextMenuSub>
+ * ```
  */
 export const ContextMenuSub = Sub;
 
@@ -352,7 +374,9 @@ type ContextMenuSubTriggerProps = React.ComponentPropsWithoutRef<
  * @param {boolean} [props.inset] - Whether the trigger is inset.
  *
  * @example
+ * ```tsx
  * <ContextMenuSubTrigger>More Options</ContextMenuSubTrigger>
+ * ```
  */
 export const ContextMenuSubTrigger = forwardRef<
   ContextMenuSubTriggerRef,
@@ -377,7 +401,9 @@ type ContextMenuSubContentProps = React.ComponentPropsWithoutRef<
  * @param {ContextMenuSubContentProps} props - The props for the ContextMenuSubContent component.
  *
  * @example
+ * ```tsx
  * <ContextMenuSubContent>...</ContextMenuSubContent>
+ * ```
  */
 export const ContextMenuSubContent = forwardRef<
   ContextMenuSubContentRef,
@@ -396,7 +422,9 @@ type ContextMenuShortcutProps = React.HTMLAttributes<HTMLSpanElement>;
  * @param {ContextMenuShortcutProps} props - The props for the ContextMenuShortcut component.
  *
  * @example
+ * ```tsx
  * <ContextMenuShortcut>⌘K</ContextMenuShortcut>
+ * ```
  */
 export const ContextMenuShortcut = ({
   className,

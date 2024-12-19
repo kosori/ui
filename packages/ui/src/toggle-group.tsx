@@ -28,11 +28,13 @@ type ToggleGroupProps = React.ComponentPropsWithoutRef<typeof Root> &
  * @param {'small' | 'medium' | 'large'} [size='medium'] - The size of the toggle group (e.g. 'small', 'medium', 'large').
  *
  * @example
+ * ```tsx
  * <ToggleGroup type='single'>
  *   <ToggleGroupItem value='a'>A</ToggleGroupItem>
  *   <ToggleGroupItem value='b'>B</ToggleGroupItem>
  *   <ToggleGroupItem value='c'>C</ToggleGroupItem>
  * </ToggleGroup>
+ * ```
  *
  * @see {@link https://dub.sh/ui-toggle-group ToggleGroup Docs} for further information.
  */
@@ -54,7 +56,9 @@ ToggleGroup.displayName = Root.displayName;
  * @param {VariantProps<typeof toggleStyles>} props - The props for the ToggleGroupContext.
  *
  * @example
+ * ```ts
  * const context = useContext(ToggleGroupContext);
+ * ```
  */
 export const ToggleGroupContext = createContext<
   VariantProps<typeof toggleStyles>
@@ -74,7 +78,9 @@ type ToggleGroupItemProps = React.ComponentPropsWithRef<typeof Item> &
  * @param {ToggleGroupItemProps} props - The props for the ToggleGroupItem component.
  *
  * @example
+ * ```tsx
  * <ToggleGroupItem value='a'>A</ToggleGroupItem>
+ * ```
  */
 export const ToggleGroupItem = forwardRef<
   ToggleGroupItemRef,

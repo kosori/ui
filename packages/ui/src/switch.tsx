@@ -57,7 +57,9 @@ type SwitchProps = object & SwitchRadixProps & SwitchVariants;
  * @param {string} [size='medium'] - The size of the switch (e.g. 'small', 'medium', 'large').
  *
  * @example
+ * ```tsx
  * <Switch />
+ * ```
  *
  * @see {@link https://dub.sh/ui-switch Switch Docs} for further information.
  */

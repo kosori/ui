@@ -86,6 +86,7 @@ export type CarouselProps = {
  * @param {(api: CarouselApi) => void} [setApi] - Callback to set the carousel API.
  *
  * @example
+ * ```tsx
  * <Carousel>
  *   <CarouselContent>
  *     <CarouselItem>...</CarouselItem>
@@ -95,6 +96,7 @@ export type CarouselProps = {
  *   <CarouselPrevious />
  *   <CarouselNext />
  * </Carousel>
+ * ```
  *
  * @see {@link https://dub.sh/ui-carousel Carousel Docs} for further information.
  */
@@ -212,9 +214,11 @@ Carousel.displayName = 'Carousel';
  * @param {React.HTMLAttributes<HTMLDivElement>} props - Additional props to pass to the CarouselContent component.
  *
  * @example
+ * ```tsx
  * <CarouselContent>
  *   <CarouselItem>...</CarouselItem>
  * </CarouselContent>
+ * ```
  */
 export const CarouselContent = forwardRef<
   HTMLDivElement,
@@ -241,7 +245,9 @@ CarouselContent.displayName = 'CarouselContent';
  * @param {React.HTMLAttributes<HTMLDivElement>} props - Additional props to pass to the CarouselItem component.
  *
  * @example
+ * ```tsx
  * <CarouselItem>...</CarouselItem>
+ * ```
  */
 export const CarouselItem = forwardRef<
   HTMLDivElement,
@@ -268,7 +274,9 @@ CarouselItem.displayName = 'CarouselItem';
  * @param {React.ComponentProps<typeof Button>} props - Additional props to pass to the CarouselNext component.
  *
  * @example
+ * ```tsx
  * <CarouselNext />
+ * ```
  */
 export const CarouselNext = forwardRef<
   HTMLButtonElement,
@@ -304,7 +312,9 @@ export const CarouselNext = forwardRef<
  * @param {React.ComponentProps<typeof Button>} props - Additional props to pass to the CarouselPrevious component.
  *
  * @example
+ * ```tsx
  * <CarouselPrevious />
+ * ```
  */
 export const CarouselPrevious = forwardRef<
   HTMLButtonElement,

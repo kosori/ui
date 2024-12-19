@@ -30,6 +30,7 @@ type DrawerProps = React.ComponentProps<typeof DrawerPrimitive.Root>;
  * @param {boolean} [props.shouldScaleBackground=true] - Whether to scale the background when the drawer is open.
  *
  * @example
+ * ```tsx
  * <Drawer>
  *   <DrawerTrigger>Open</DrawerTrigger>
  *   <DrawerContent>
@@ -45,6 +46,7 @@ type DrawerProps = React.ComponentProps<typeof DrawerPrimitive.Root>;
  *     </DrawerFooter>
  *   </DrawerContent>
  * </Drawer>
+ * ```
  *
  * @see {@link https://dub.sh/ui-drawer Drawer Docs} for further information.
  */
@@ -60,8 +62,23 @@ export const Drawer = ({
 
 Drawer.displayName = 'Drawer';
 
+/**
+ * DrawerTrigger component that serves as the trigger for the Drawer.
+ *
+ * @param {React.ComponentPropsWithoutRef<typeof Trigger>} props - The props for the DrawerTrigger component.
+ *
+ * @example
+ * ```tsx
+ * <DrawerTrigger>Open</DrawerTrigger>
+ * ```
+ */
 export const DrawerTrigger = DrawerPrimitive.Trigger;
 
+/**
+ * DrawerPortal component that renders the Drawer in a portal.
+ *
+ * @param {DrawerPortalProps} props - The props for the DrawerPortal component.
+ */
 export const DrawerPortal = DrawerPrimitive.Portal;
 
 type DrawerOverlayRef = React.ElementRef<typeof DrawerPrimitive.Overlay>;
@@ -75,7 +92,9 @@ type DrawerOverlayProps = React.ComponentPropsWithoutRef<
  * @param {DrawerOverlayProps} props - The props for the DrawerOverlay component.
  *
  * @example
+ * ```tsx
  * <DrawerOverlay />
+ * ```
  */
 export const DrawerOverlay = forwardRef<DrawerOverlayRef, DrawerOverlayProps>(
   ({ className, ...props }, ref) => (
@@ -101,9 +120,11 @@ type DrawerContentProps = React.ComponentPropsWithoutRef<
  * @param {React.ReactNode} props.children - The content to be rendered inside the DrawerContent.
  *
  * @example
+ * ```tsx
  * <DrawerContent>
  *   <p>Your content goes here.</p>
  * </DrawerContent>
+ * ```
  */
 export const DrawerContent = forwardRef<DrawerContentRef, DrawerContentProps>(
   ({ className, children, ...props }, ref) => (
@@ -131,9 +152,11 @@ type DrawerHeaderProps = React.HTMLAttributes<HTMLDivElement>;
  * @param {DrawerHeaderProps} props - The props for the DrawerHeader component.
  *
  * @example
+ * ```tsx
  * <DrawerHeader>
  *   <DrawerTitle>Drawer Title</DrawerTitle>
  * </DrawerHeader>
+ * ```
  */
 export const DrawerHeader = ({ className, ...props }: DrawerHeaderProps) => (
   <div className={header({ className })} {...props} />
@@ -152,7 +175,9 @@ type DrawerTitleProps = React.ComponentPropsWithoutRef<
  * @param {DrawerTitleProps} props - The props for the DrawerTitle component.
  *
  * @example
+ * ```tsx
  * <DrawerTitle>Drawer Title</DrawerTitle>
+ * ```
  */
 export const DrawerTitle = forwardRef<DrawerTitleRef, DrawerTitleProps>(
   ({ className, ...props }, ref) => (
@@ -179,7 +204,9 @@ type DrawerDescriptionProps = React.ComponentPropsWithoutRef<
  * @param {DrawerDescriptionProps} props - The props for the DrawerDescription component.
  *
  * @example
+ * ```tsx
  * <DrawerDescription>Drawer Description</DrawerDescription>
+ * ```
  */
 export const DrawerDescription = forwardRef<
   DrawerDescriptionRef,
@@ -202,9 +229,11 @@ type DrawerFooterProps = React.HTMLAttributes<HTMLDivElement>;
  * @param {DrawerFooterProps} props - The props for the DrawerFooter component.
  *
  * @example
+ * ```tsx
  * <DrawerFooter>
  *   <Button>Close</Button>
  * </DrawerFooter>
+ * ```
  */
 export const DrawerFooter = ({ className, ...props }: DrawerFooterProps) => (
   <div className={footer({ className })} {...props} />

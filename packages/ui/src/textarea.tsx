@@ -24,7 +24,9 @@ export type TextareaProps = object &
  * @param {TextareaProps} props - The props for the Textarea component.
  *
  * @example
+ * ```tsx
  * <Textarea />
+ * ```
  *
  * @see {@link https://dub.sh/ui-textarea Textarea Docs} for further information.
  */
@@ -39,4 +41,5 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     );
   },
 );
+
 Textarea.displayName = 'Textarea';

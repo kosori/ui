@@ -23,7 +23,9 @@ type ProgressProps = React.ComponentPropsWithoutRef<typeof Root>;
  * @param {number} [value] - The current progress value (between 0 and 100).
  *
  * @example
+ * ```tsx
  * <Progress value={33} />
+ * ```
  *
  * @see {@link https://dub.sh/ui-progress Progress Docs} for further information.
  */

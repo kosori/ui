@@ -38,11 +38,13 @@ type ResizablePanelGroupProps = React.ComponentProps<typeof PanelGroup>;
  * @param {ResizablePanelGroupProps} props - The props for the ResizablePanelGroup component.
  *
  * @example
+ * ```tsx
  * <ResizablePanelGroup direction='horizontal'>
  *   <ResizablePanel>One</ResizablePanel>
  *   <ResizableHandle />
  *   <ResizablePanel>Two</ResizablePanel>
  * </ResizablePanelGroup>
+ * ```
  *
  * @see {@link https://dub.sh/ui-resizable-panel-group ResizablePanelGroup Docs} for further information.
  */
@@ -59,7 +61,9 @@ export const ResizablePanelGroup = ({
  * @param {React.ComponentProps<typeof Panel>} props - The props for the ResizablePanel component.
  *
  * @example
+ * ```tsx
  * <ResizablePanel>Content</ResizablePanel>
+ * ```
  */
 export const ResizablePanel = Panel;
 
@@ -74,7 +78,9 @@ type ResizableHandleProps = React.ComponentProps<typeof PanelResizeHandle> & {
  * @param {boolean} [withHandle] - Indicates if the handle should be displayed.
  *
  * @example
+ * ```tsx
  * <ResizableHandle withHandle />
+ * ```
  */
 export const ResizableHandle = ({
   withHandle,

@@ -31,6 +31,7 @@ const { base, content, item, previous, next, ellipsis, ellipsisIcon } =
  * @param {React.ComponentProps<'nav'>} props - The props for the Pagination component.
  *
  * @example
+ * ```tsx
  * <Pagination>
  *   <PaginationContent>
  *     <PaginationItem>
@@ -47,6 +48,7 @@ const { base, content, item, previous, next, ellipsis, ellipsisIcon } =
  *     </PaginationItem>
  *   </PaginationContent>
  * </Pagination>
+ * ```
  *
  * @see {@link https://dub.sh/ui-pagination Pagination Docs} for further information.
  */
@@ -73,9 +75,11 @@ type PaginationContentProps = React.ComponentProps<'ul'>;
  * @param {React.ComponentProps<'ul'>} props - The props for the PaginationContent component.
  *
  * @example
+ * ```tsx
  * <PaginationContent>
  *   {Pagination items here}
  * </PaginationContent>
+ * ```
  */
 export const PaginationContent = forwardRef<
   PaginationContentRef,
@@ -95,9 +99,11 @@ type PaginationItemProps = React.ComponentProps<'li'>;
  * @param {React.ComponentProps<'li'>} props - The props for the PaginationItem component.
  *
  * @example
+ * ```tsx
  * <PaginationItem>
  *   <PaginationLink href='#'>1</PaginationLink>
  * </PaginationItem>
+ * ```
  */
 export const PaginationItem = forwardRef<
   PaginationItemRef,
@@ -123,9 +129,10 @@ type PaginationLinkProps = {
  * @param {boolean} [icon=true] - Indicates if an icon should be displayed.
  *
  * @example
+ * ```tsx
  * <PaginationLink href='#'>1</PaginationLink>
+ * ```
  */
-
 export const PaginationLink = ({
   className,
   isActive,
@@ -157,9 +164,10 @@ type PaginationPreviousProps = React.ComponentProps<typeof PaginationLink>;
  * @param {PaginationPreviousProps} props - The props for the PaginationPrevious component.
  *
  * @example
+ * ```tsx
  * <PaginationPrevious href='#' />
+ * ```
  */
-
 export const PaginationPrevious = ({
   className,
   ...props
@@ -186,7 +194,9 @@ type PaginationNextProps = React.ComponentProps<typeof PaginationLink>;
  * @param {PaginationNextProps} props - The props for the PaginationNext component.
  *
  * @example
+ * ```tsx
  * <PaginationNext href='#' />
+ * ```
  */
 export const PaginationNext = ({
   className,
@@ -214,7 +224,9 @@ type PaginationEllipsisProps = React.ComponentProps<'span'>;
  * @param {PaginationEllipsisProps} props - The props for the PaginationEllipsis component.
  *
  * @example
+ * ```tsx
  * <PaginationEllipsis />
+ * ```
  */
 export const PaginationEllipsis = ({
   className,

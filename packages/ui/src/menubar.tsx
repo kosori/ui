@@ -130,6 +130,7 @@ type MenubarProps = React.ComponentPropsWithoutRef<typeof Root>;
  * @param {MenubarProps} props - The props for the Menubar component.
  *
  * @example
+ * ```tsx
  * <Menubar>
  *   <MenubarMenu>
  *     <MenubarTrigger>File</MenubarTrigger>
@@ -145,6 +146,7 @@ type MenubarProps = React.ComponentPropsWithoutRef<typeof Root>;
  *     </MenubarContent>
  *   </MenubarMenu>
  * </Menubar>
+ * ```
  *
  * @see {@link https://dub.sh/ui-menubar Menubar Docs} for further information.
  */
@@ -162,12 +164,14 @@ Menubar.displayName = Root.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof Menu>} props - The props for the MenubarMenu component.
  *
  * @example
+ * ```tsx
  * <MenubarMenu>
  *   <MenubarTrigger>File</MenubarTrigger>
  *   <MenubarContent>
  *     {Menu items here}
  *   </MenubarContent>
  * </MenubarMenu>
+ * ```
  */
 export const MenubarMenu = Menu;
 
@@ -180,7 +184,9 @@ type MenubarTriggerProps = React.ComponentPropsWithoutRef<typeof Trigger>;
  * @param {MenubarTriggerProps} props - The props for the MenubarTrigger component.
  *
  * @example
+ * ```tsx
  * <MenubarTrigger>File</MenubarTrigger>
+ * ```
  */
 export const MenubarTrigger = forwardRef<
   MenubarTriggerRef,
@@ -197,11 +203,13 @@ MenubarTrigger.displayName = Trigger.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof Portal>} props - The props for the MenubarPortal component.
  *
  * @example
+ * ```tsx
  * <MenubarPortal>
  *   <MenubarContent>
  *     {Menu items here}
  *   <MenubarContent />
  * </MenubarPortal>
+ * ```
  */
 export const MenubarPortal = Portal;
 
@@ -214,9 +222,11 @@ type MenubarContentProps = React.ComponentPropsWithoutRef<typeof Content>;
  * @param {MenubarContentProps} props - The props for the MenubarContent component.
  *
  * @example
+ * ```tsx
  * <MenubarContent>
  *   {Menu items here}
  * </MenubarContent>
+ * ```
  */
 export const MenubarContent = forwardRef<
   MenubarContentRef,
@@ -253,7 +263,9 @@ type MenubarItemProps = React.ComponentPropsWithoutRef<typeof Item> & {
  * @param {boolean} [inset] - Whether to add an inset to the item.
  *
  * @example
+ * ```tsx
  * <MenubarItem>New Tab</MenubarItem>
+ * ```
  */
 export const MenubarItem = forwardRef<MenubarItemRef, MenubarItemProps>(
   ({ className, inset, ...props }, ref) => (
@@ -269,9 +281,11 @@ MenubarItem.displayName = Item.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof Group>} props - The props for the MenubarGroup component.
  *
  * @example
+ * ```tsx
  * <MenubarGroup>
  *   {Grouped menu items here}
  * </MenubarGroup>
+ * ```
  */
 export const MenubarGroup = Group;
 
@@ -287,7 +301,9 @@ type MenubarLabelProps = React.ComponentPropsWithoutRef<typeof Label> & {
  * @param {boolean} [inset] - Whether to add an inset to the label.
  *
  * @example
+ * ```tsx
  * <MenubarLabel>File</MenubarLabel>
+ * ```
  */
 export const MenubarLabel = forwardRef<MenubarLabelRef, MenubarLabelProps>(
   ({ className, inset, ...props }, ref) => (
@@ -308,7 +324,9 @@ type MenubarCheckboxItemProps = React.ComponentPropsWithoutRef<
  * @param {MenubarCheckboxItemProps} props - The props for the MenubarCheckboxItem component.
  *
  * @example
+ * ```tsx
  * <MenubarCheckboxItem>Enable Feature</MenubarCheckboxItem>
+ * ```
  */
 export const MenubarCheckboxItem = forwardRef<
   MenubarCheckboxItemRef,
@@ -337,9 +355,11 @@ MenubarCheckboxItem.displayName = CheckboxItem.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof RadioGroup>} props - The props for the MenubarRadioGroup component.
  *
  * @example
+ * ```tsx
  * <MenubarRadioGroup>
  *   {Radio items here}
  * </MenubarRadioGroup>
+ * ```
  */
 export const MenubarRadioGroup = RadioGroup;
 
@@ -352,7 +372,9 @@ type MenubarRadioItemProps = React.ComponentPropsWithoutRef<typeof RadioItem>;
  * @param {MenubarRadioItemProps} props - The props for the MenubarRadioItem component.
  *
  * @example
+ * ```tsx
  * <MenubarRadioItem>Option 1</MenubarRadioItem>
+ * ```
  */
 export const MenubarRadioItem = forwardRef<
   MenubarRadioItemRef,
@@ -379,7 +401,9 @@ type MenubarSeparatorProps = React.ComponentPropsWithoutRef<typeof Separator>;
  * @param {MenubarSeparatorProps} props - The props for the MenubarSeparator component.
  *
  * @example
+ * ```tsx
  * <MenubarSeparator />
+ * ```
  */
 export const MenubarSeparator = forwardRef<
   MenubarSeparatorRef,
@@ -396,9 +420,11 @@ MenubarSeparator.displayName = Separator.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof Sub>} props - The props for the MenubarSub component.
  *
  * @example
+ * ```tsx
  * <MenubarSub>
  *   {Submenu items here}
  * </MenubarSub>
+ * ```
  */
 export const MenubarSub = Sub;
 
@@ -415,7 +441,9 @@ type MenubarSubTriggerProps = React.ComponentPropsWithoutRef<
  * @param {MenubarSubTriggerProps} props - The props for the MenubarSubTrigger component.
  *
  * @example
+ * ```tsx
  * <MenubarSubTrigger>More Options</MenubarSubTrigger>
+ * ```
  */
 export const MenubarSubTrigger = forwardRef<
   MenubarSubTriggerRef,
@@ -438,9 +466,11 @@ type MenubarSubContentProps = React.ComponentPropsWithoutRef<typeof SubContent>;
  * @param {MenubarSubContentProps} props - The props for the MenubarSubContent component.
  *
  * @example
+ * ```tsx
  * <MenubarSubContent>
  *   {Submenu items here}
  * </MenubarSubContent>
+ * ```
  */
 export const MenubarSubContent = forwardRef<
   MenubarSubContentRef,
@@ -459,7 +489,9 @@ type MenubarShortcutProps = React.HTMLAttributes<HTMLSpanElement>;
  * @param {MenubarShortcutProps} props - The props for the MenubarShortcut component.
  *
  * @example
+ * ```tsx
  * <MenubarShortcut>⌘T</MenubarShortcut>
+ * ```
  */
 export const MenubarShortcut = ({
   className,

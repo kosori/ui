@@ -31,11 +31,11 @@ const { item, label, description, message } = formStyles();
  * @param {React.ComponentPropsWithoutRef<typeof FormProvider>} props - The props for the Form component.
  *
  * @example
- * <>
- *   <Form>
- *     <FormField control={...} name='...' render={() => <FormControl />} />
- *   </Form>
- * </>
+ * ```tsx
+ * <Form>
+ *   <FormField control={...} name='...' render={() => <FormControl />} />
+ * </Form>
+ * ```
  *
  * @see {@link https://dub.sh/ui-form Form Docs} for further information.
  */
@@ -58,11 +58,13 @@ export const FormFieldContext = createContext<FormFieldContextValue>(
  * @param {ControllerProps<TFieldValues, TName>} props - The props for the FormField component.
  *
  * @example
+ * ```tsx
  * <FormField
  *   control={...}
  *   name='...'
  *   render={...} />
  * </>
+ * ```
  */
 export const FormField = <
   TFieldValues extends FieldValues = FieldValues,
@@ -118,14 +120,14 @@ type FormItemProps = React.HTMLAttributes<HTMLDivElement>;
  * @param {FormItemProps} props - The props for the FormItem component.
  *
  * @example
- * <>
- *   <FormItem>
- *     <FormLabel />
- *     <FormControl />
- *     <FormDescription />
- *     <FormMessage />
- *   </FormItem>
- * </>
+ * ```tsx
+ * <FormItem>
+ *   <FormLabel />
+ *   <FormControl />
+ *   <FormDescription />
+ *   <FormMessage />
+ * </FormItem>
+ * ```
  */
 export const FormItem = forwardRef<FormItemRef, FormItemProps>(
   ({ className, ...props }, ref) => {
@@ -150,7 +152,9 @@ type FormLabelProps = React.ComponentPropsWithoutRef<typeof Root>;
  * @param {FormLabelProps} props - The props for the FormLabel component.
  *
  * @example
+ * ```tsx
  * <FormLabel>Label</FormLabel>
+ * ```
  */
 export const FormLabel = forwardRef<FormLabelRef, FormLabelProps>(
   ({ className, ...props }, ref) => {
@@ -178,10 +182,11 @@ type FormControlProps = React.ComponentPropsWithoutRef<typeof Slot>;
  * @param {FormControlProps} props - The props for the FormControl component.
  *
  * @example
- * <>
- *   <FormControl>
- *     {...}
- *   </FormControl>
+ * ```tsx
+ * <FormControl>
+ *   {...}
+ * </FormControl>
+ * ```
  */
 export const FormControl = forwardRef<FormControlRef, FormControlProps>(
   ({ ...props }, ref) => {
@@ -215,7 +220,9 @@ type FormDescriptionProps = React.HTMLAttributes<HTMLParagraphElement>;
  * @param {FormDescriptionProps} props - The props for the FormDescription component.
  *
  * @example
+ * ```tsx
  * <FormDescription>Description</FormDescription>
+ * ```
  */
 export const FormDescription = forwardRef<
   FormDescriptionRef,
@@ -244,7 +251,9 @@ type FormMessageProps = React.HTMLAttributes<HTMLParagraphElement>;
  * @param {FormMessageProps} props - The props for the FormMessage component.
  *
  * @example
+ * ```tsx
  * <FormMessage>Error message</FormMessage>
+ * ```
  */
 export const FormMessage = forwardRef<FormMessageRef, FormMessageProps>(
   ({ className, children, ...props }, ref) => {

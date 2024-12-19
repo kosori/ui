@@ -82,6 +82,7 @@ type NavigationMenuProps = React.ComponentPropsWithoutRef<typeof Root>;
  * @param {NavigationMenuProps} props - The props for the NavigationMenu component.
  *
  * @example
+ * ```tsx
  * <NavigationMenu>
  *   <NavigationMenuList>
  *     <NavigationMenuItem>
@@ -92,6 +93,7 @@ type NavigationMenuProps = React.ComponentPropsWithoutRef<typeof Root>;
  *     </NavigationMenuItem>
  *   </NavigationMenuList>
  * </NavigationMenu>
+ * ```
  *
  * @see {@link https://dub.sh/ui-navigation-menu NavigationMenu Docs} for further information.
  */
@@ -116,9 +118,11 @@ type NavigationMenuListProps = React.ComponentPropsWithoutRef<typeof List>;
  * @param {NavigationMenuListProps} props - The props for the NavigationMenuList component.
  *
  * @example
+ * ```tsx
  * <NavigationMenuList>
  *   {Navigation items here}
  * </NavigationMenuList>
+ * ```
  */
 export const NavigationMenuList = forwardRef<
   NavigationMenuListRef,
@@ -135,9 +139,11 @@ NavigationMenuList.displayName = List.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof Item>} props - The props for the NavigationMenuItem component.
  *
  * @example
+ * ```tsx
  * <NavigationMenuItem>
  *   <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
  * </NavigationMenuItem>
+ * ```
  */
 export const NavigationMenuItem = Item;
 
@@ -152,7 +158,9 @@ type NavigationMenuTriggerProps = React.ComponentPropsWithoutRef<
  * @param {NavigationMenuTriggerProps} props - The props for the NavigationMenuTrigger component.
  *
  * @example
+ * ```tsx
  * <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
+ * ```
  */
 export const NavigationMenuTrigger = forwardRef<
   NavigationMenuTriggerRef,
@@ -177,9 +185,11 @@ type NavigationMenuContentProps = React.ComponentPropsWithoutRef<
  * @param {NavigationMenuContentProps} props - The props for the NavigationMenuContent component.
  *
  * @example
+ * ```tsx
  * <NavigationMenuContent>
  *   <NavigationMenuLink>Link</NavigationMenuLink>
  * </NavigationMenuContent>
+ * ```
  */
 export const NavigationMenuContent = forwardRef<
   NavigationMenuContentRef,
@@ -196,7 +206,9 @@ NavigationMenuContent.displayName = Content.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof Link>} props - The props for the NavigationMenuLink component.
  *
  * @example
+ * ```tsx
  * <NavigationMenuLink>Link</NavigationMenuLink>
+ * ```
  */
 export const NavigationMenuLink = Link;
 
@@ -211,7 +223,9 @@ type NavigationMenuIndicatorProps = React.ComponentPropsWithRef<
  * @param {NavigationMenuIndicatorProps} props - The props for the NavigationMenuIndicator component.
  *
  * @example
+ * ```tsx
  * <NavigationMenuIndicator />
+ * ```
  */
 export const NavigationMenuIndicator = forwardRef<
   NavigationMenuIndicatorRef,
@@ -235,7 +249,9 @@ type NavigationMenuViewportProps = React.ComponentPropsWithoutRef<
  * @param {NavigationMenuViewportProps} props - The props for the NavigationMenuViewport component.
  *
  * @example
+ * ```tsx
  * <NavigationMenuViewport />
+ * ```
  */
 export const NavigationMenuViewport = forwardRef<
   NavigationMenuViewportRef,

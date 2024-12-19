@@ -8,9 +8,11 @@ import { Root } from '@radix-ui/react-aspect-ratio';
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - Additional props to pass to the aspect ratio container.
  *
  * @example
+ * ```tsx
  * <AspectRatio ratio={16 / 9}>
- *     <Image src="..." alt="..." />
+ *     <Image src='...' alt='...' />
  * </AspectRatio>
+ * ```
  *
  * @see {@link https://dub.sh/ui-aspect-ratio Aspect Ratio Docs} for further information.
  */

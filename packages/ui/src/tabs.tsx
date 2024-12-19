@@ -29,6 +29,7 @@ const { list, trigger, content } = tabsStyles();
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the Tabs component.
  *
  * @example
+ * ```tsx
  * <Tabs defaultValue='account' className='w-[400px]'>
  *   <TabsList>
  *     <TabsTrigger value='account'>Account</TabsTrigger>
@@ -37,6 +38,7 @@ const { list, trigger, content } = tabsStyles();
  *   <TabsContent value='account'>Make changes to your account here.</TabsContent>
  *   <TabsContent value='password'>Change your password here.</TabsContent>
  * </Tabs>
+ * ```
  *
  * @see {@link https://dub.sh/ui-tabs Tabs Docs} for further information.
  */
@@ -51,9 +53,11 @@ type TabsListProps = React.ComponentPropsWithoutRef<typeof List>;
  * @param {TabsListProps} props - The props for the TabsList component.
  *
  * @example
+ * ```tsx
  * <TabsList>
  *   <TabsTrigger value='account'>Account</TabsTrigger>
  * </TabsList>
+ * ```
  */
 export const TabsList = forwardRef<TabsListRef, TabsListProps>(
   ({ className, ...props }, ref) => (
@@ -72,7 +76,9 @@ type TabsTriggerProps = React.ComponentPropsWithoutRef<typeof Trigger>;
  * @param {TabsTriggerProps} props - The props for the TabsTrigger component.
  *
  * @example
+ * ```tsx
  * <TabsTrigger value='account'>Account</TabsTrigger>
+ * ```
  */
 export const TabsTrigger = forwardRef<TabsTriggerRef, TabsTriggerProps>(
   ({ className, ...props }, ref) => (
@@ -91,7 +97,9 @@ type TabsContentProps = React.ComponentPropsWithoutRef<typeof Content>;
  * @param {TabsContentProps} props - The props for the TabsContent component.
  *
  * @example
+ * ```tsx
  * <TabsContent value='account'>Account details go here.</TabsContent>
+ * ```
  */
 export const TabsContent = forwardRef<TabsContentRef, TabsContentProps>(
   ({ className, ...props }, ref) => (

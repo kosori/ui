@@ -46,6 +46,7 @@ const { item, trigger, triggerIcon, content } = accordionStyles();
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - Additional props to pass to the accordion container.
  *
  * @example
+ * ```tsx
  * <Accordion type='single' collapsible>
  *   <AccordionItem value='item-1'>
  *     <AccordionTrigger>Is it accessible?</AccordionTrigger>
@@ -54,6 +55,7 @@ const { item, trigger, triggerIcon, content } = accordionStyles();
  *     </AccordionContent>
  *   </AccordionItem>
  * </Accordion>
+ * ```
  *
  * @see {@link https://dub.sh/ui-accordion Accordion Docs} for further information.
  */
@@ -68,12 +70,14 @@ type AccordionItemProps = React.ComponentPropsWithoutRef<typeof Item>;
  * @param {AccordionItemProps} props - Additional props to pass to the accordion item.
  *
  * @example
+ * ```tsx
  * <AccordionItem value='item-1'>
  *   <AccordionTrigger>Is it accessible?</AccordionTrigger>
  *   <AccordionContent>
  *     Yes. It adheres to the WAI-ARIA design pattern.
  *   </AccordionContent>
  * </AccordionItem>
+ * ```
  */
 export const AccordionItem = forwardRef<AccordionItemRef, AccordionItemProps>(
   ({ className, ...props }, ref) => (
@@ -92,7 +96,9 @@ type AccordionTriggerProps = React.ComponentPropsWithoutRef<typeof Trigger>;
  * @param {AccordionTriggerProps} props - Additional props to pass to the accordion trigger.
  *
  * @example
+ * ```tsx
  * <AccordionTrigger>Is it accessible?</AccordionTrigger>
+ * ```
  */
 export const AccordionTrigger = forwardRef<
   AccordionTriggerRef,
@@ -117,9 +123,11 @@ type AccordionContentProps = React.ComponentPropsWithoutRef<typeof Content>;
  * @param {AccordionContentProps} props - Additional props to pass to the accordion content.
  *
  * @example
+ * ```tsx
  * <AccordionContent>
  *   Yes. It adheres to the WAI-ARIA design pattern.
  * </AccordionContent>
+ * ```
  */
 export const AccordionContent = forwardRef<
   AccordionContentRef,

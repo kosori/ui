@@ -35,6 +35,7 @@ type RadioGroupProps = React.ComponentPropsWithoutRef<typeof Root>;
  * @param {RadioGroupProps} props - The props for the RadioGroup component.
  *
  * @example
+ * ```tsx
  * <RadioGroup defaultValue='option-one'>
  *   <div className='flex items-center space-x-2'>
  *     <RadioGroupItem value='option-one' id='option-one' />
@@ -45,6 +46,7 @@ type RadioGroupProps = React.ComponentPropsWithoutRef<typeof Root>;
  *     <Label htmlFor='option-two'>Option Two</Label>
  *   </div>
  * </RadioGroup>
+ * ```
  *
  * @see {@link https://dub.sh/ui-radio-group RadioGroup Docs} for further information.
  */
@@ -65,7 +67,9 @@ type RadioGroupItemProps = React.ComponentPropsWithoutRef<typeof Item>;
  * @param {RadioGroupItemProps} props - The props for the RadioGroupItem component.
  *
  * @example
+ * ```tsx
  * <RadioGroupItem value='option-one' id='option-one' />
+ * ```
  */
 export const RadioGroupItem = forwardRef<
   RadioGroupItemRef,

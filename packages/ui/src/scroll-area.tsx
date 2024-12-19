@@ -40,6 +40,7 @@ type ScrollAreaProps = React.ComponentPropsWithoutRef<typeof Root>;
  * @param {ScrollAreaProps} props - The props for the ScrollArea component.
  *
  * @example
+ * ```tsx
  * <ScrollArea className='h-[200px] w-[350px] rounded-md border p-4'>
  *   Jokester began sneaking into the castle in the middle of the night and leaving
  *   jokes all over the place: under the king's pillow, in his soup, even in the
@@ -48,6 +49,7 @@ type ScrollAreaProps = React.ComponentPropsWithoutRef<typeof Root>;
  *   Jokester were so funny that they couldn't help but laugh. And once they
  *   started laughing, they couldn't stop.
  * </ScrollArea>
+ * ```
  *
  * @see {@link https://dub.sh/ui-scroll-area ScrollArea Docs} for further information.
  */
@@ -57,7 +59,9 @@ type ScrollAreaProps = React.ComponentPropsWithoutRef<typeof Root>;
  * @param {ScrollAreaScrollbarProps} props - The props for the ScrollAreaScrollbar component.
  *
  * @example
+ * ```tsx
  * <ScrollAreaScrollbar orientation='vertical' />
+ * ```
  */
 export const ScrollArea = forwardRef<ScrollAreaRef, ScrollAreaProps>(
   ({ className, children, ...props }, ref) => (
@@ -82,7 +86,9 @@ type ScrollAreaScrollbarProps = React.ComponentPropsWithoutRef<
  * @param {ScrollAreaScrollbarProps} props - The props for the ScrollAreaScrollbar component.
  *
  * @example
+ * ```tsx
  * <ScrollAreaScrollbar orientation='vertical' />
+ * ```
  */
 export const ScrollAreaScrollbar = forwardRef<
   ScrollAreaScrollbarRef,

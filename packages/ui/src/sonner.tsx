@@ -37,7 +37,9 @@ type ToasterProps = React.ComponentProps<typeof Sonner>;
  * @param {ToasterProps} props - The props for the Toaster component.
  *
  * @example
+ * ```ts
  * toast('Event has been created.');
+ * ```
  *
  * @see {@link https://dub.sh/ui-toaster Toaster Docs} for further information.
  */

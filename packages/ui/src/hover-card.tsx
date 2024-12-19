@@ -27,12 +27,14 @@ const { content } = hoverCardStyles();
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the HoverCard component.
  *
  * @example
+ * ```tsx
  * <HoverCard>
  *   <HoverCardTrigger>Hover</HoverCardTrigger>
  *   <HoverCardContent>
  *     The React Framework.
  *   </HoverCardContent>
  * </HoverCard>
+ * ```
  *
  * @see {@link https://dub.sh/ui-hover-card HoverCard Docs} for further information.
  */
@@ -44,7 +46,9 @@ export const HoverCard = Root;
  * @param {React.ComponentPropsWithoutRef<typeof Trigger>} props - The props for the HoverCardTrigger component.
  *
  * @example
+ * ```tsx
  * <HoverCardTrigger>Hover</HoverCardTrigger>
+ * ```
  */
 export const HoverCardTrigger = Trigger;
 
@@ -54,11 +58,13 @@ export const HoverCardTrigger = Trigger;
  * @param {React.ComponentPropsWithoutRef<typeof Portal>} props - The props for the HoverCardPortal component.
  *
  * @example
+ * ```tsx
  * <HoverCardPortal>
  *   <HoverCardContent>
  *     The React Framework – created and maintained by @vercel.
  *   </HoverCardContent>
  * </HoverCardPortal>
+ * ```
  */
 export const HoverCardPortal = Portal;
 
@@ -73,11 +79,11 @@ type HoverCardContentProps = React.ComponentPropsWithoutRef<typeof Content>;
  * @param {number} [sideOffset=4] - The offset from the side.
  *
  * @example
- * <>
- *   <HoverCardContent>
- *     The React Framework – created and maintained by @vercel.
- *   </HoverCardContent>
- * </>
+ * ```tsx
+ * <HoverCardContent>
+ *   The React Framework – created and maintained by @vercel.
+ * </HoverCardContent>
+ * ```
  *
  * @see {@link https://dub.sh/ui-hover-card-content HoverCardContent Docs} for further information.
  */

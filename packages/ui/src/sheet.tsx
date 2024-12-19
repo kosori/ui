@@ -96,6 +96,7 @@ const {
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - The props for the Sheet component.
  *
  * @example
+ * ```tsx
  * <Sheet>
  *   <SheetTrigger>Open</SheetTrigger>
  *   <SheetContent>
@@ -108,6 +109,7 @@ const {
  *     </SheetHeader>
  *   </SheetContent>
  * </Sheet>
+ * ```
  *
  * @see {@link https://dub.sh/ui-sheet Sheet Docs} for further information.
  */
@@ -119,7 +121,9 @@ export const Sheet = Root;
  * @param {React.ComponentPropsWithoutRef<typeof Trigger>} props - The props for the SheetTrigger component.
  *
  * @example
+ * ```tsx
  * <SheetTrigger>Open</SheetTrigger>
+ * ```
  */
 export const SheetTrigger = Trigger;
 
@@ -129,7 +133,9 @@ export const SheetTrigger = Trigger;
  * @param {React.ComponentPropsWithoutRef<typeof Portal>} props - The props for the SheetPortal component.
  *
  * @example
+ * ```tsx
  * <SheetPortal>{Your portal content}</SheetPortal>
+ * ```
  */
 export const SheetPortal = Portal;
 
@@ -142,7 +148,9 @@ type SheetOverlayProps = React.ComponentPropsWithoutRef<typeof Overlay>;
  * @param {SheetOverlayProps} props - The props for the SheetOverlay component.
  *
  * @example
+ * ```tsx
  * <SheetOverlay />
+ * ```
  */
 
 export const SheetOverlay = forwardRef<SheetOverlayRef, SheetOverlayProps>(
@@ -165,11 +173,12 @@ type SheetContentProps = React.ComponentPropsWithoutRef<typeof Content> &
  * @param {'top' | 'bottom' | 'left' | 'right'} [side='right'] - The side of the sheet to display the content (e.g. 'top', 'bottom', 'left', 'right').
  *
  * @example
+ * ```tsx
  * <SheetContent>
  *   {Your content here}
  * </SheetContent>
+ * ```
  */
-
 export const SheetContent = forwardRef<SheetContentRadixRef, SheetContentProps>(
   ({ side = 'right', className, children, ...props }, ref) => (
     <SheetPortal>
@@ -194,7 +203,9 @@ SheetContent.displayName = Content.displayName;
  * @param {React.ComponentPropsWithoutRef<typeof Close>} props - The props for the SheetClose component.
  *
  * @example
+ * ```tsx
  * <SheetClose />
+ * ```
  */
 export const SheetClose = Close;
 
@@ -204,9 +215,11 @@ export const SheetClose = Close;
  * @param {React.HTMLAttributes<HTMLDivElement>} props - The props for the SheetHeader component.
  *
  * @example
+ * ```tsx
  * <SheetHeader>
  *   <SheetTitle>Title</SheetTitle>
  * </SheetHeader>
+ * ```
  */
 export const SheetHeader = ({
   className,
@@ -226,7 +239,9 @@ type SheetTitleProps = React.ComponentPropsWithoutRef<typeof Title>;
  * @param {SheetTitleProps} props - The props for the SheetTitle component.
  *
  * @example
+ * ```tsx
  * <SheetTitle>Title</SheetTitle>
+ * ```
  */
 export const SheetTitle = forwardRef<SheetTitleRef, SheetTitleProps>(
   ({ className, ...props }, ref) => (
@@ -245,7 +260,9 @@ type SheetDescriptionProps = React.ComponentPropsWithoutRef<typeof Description>;
  * @param {SheetDescriptionProps} props - The props for the SheetDescription component.
  *
  * @example
+ * ```tsx
  * <SheetDescription>Description text here.</SheetDescription>
+ * ```
  */
 export const SheetDescription = forwardRef<
   SheetDescriptionRef,
@@ -262,9 +279,11 @@ SheetDescription.displayName = Description.displayName;
  * @param {React.HTMLAttributes<HTMLDivElement>} props - The props for the SheetFooter component.
  *
  * @example
+ * ```tsx
  * <SheetFooter>
  *   {Footer content here}
  * </SheetFooter>
+ * ```
  */
 export const SheetFooter = ({
   className,

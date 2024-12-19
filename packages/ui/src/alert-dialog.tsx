@@ -52,6 +52,7 @@ const { overlay, content, header, title, description, footer } =
  * @param {React.ComponentPropsWithoutRef<typeof Root>} props - Additional props to pass to the alert dialog.
  *
  * @example
+ * ```tsx
  * <AlertDialog>
  *   <AlertDialogTrigger>Open Alert</AlertDialogTrigger>
  *   <AlertDialogContent>
@@ -67,6 +68,7 @@ const { overlay, content, header, title, description, footer } =
  *     </AlertDialogFooter>
  *   </AlertDialogContent>
  * </AlertDialog>
+ * ```
  *
  * @see {@link https://dub.sh/ui-alert-dialog Alert Dialog Docs} for further information.
  */
@@ -78,7 +80,9 @@ export const AlertDialog = Root;
  * @param {React.ComponentPropsWithoutRef<typeof Trigger>} props - Additional props to pass to the alert dialog trigger.
  *
  * @example
+ * ```tsx
  * <AlertDialogTrigger>Open Alert</AlertDialogTrigger>
+ * ```
  */
 export const AlertDialogTrigger = Trigger;
 
@@ -88,10 +92,12 @@ export const AlertDialogTrigger = Trigger;
  * @param {AlertDialogPortalProps} props - Additional props to pass to the alert dialog portal.
  *
  * @example
+ * ```tsx
  * <AlertDialogPortal>
  *   <AlertDialogOverlay />
  *   <AlertDialogContent>...</AlertDialogContent>
  * </AlertDialogPortal>
+ * ```
  */
 export const AlertDialogPortal = ({
   children,
@@ -109,7 +115,9 @@ type AlertDialogOverlayProps = React.ComponentPropsWithoutRef<typeof Overlay>;
  * @param {AlertDialogOverlayProps} props - Additional props to pass to the alert dialog overlay.
  *
  * @example
+ * ```tsx
  * <AlertDialogOverlay />
+ * ```
  */
 export const AlertDialogOverlay = forwardRef<
   AlertDialogOverlayRef,
@@ -129,12 +137,14 @@ type AlertDialogContentProps = React.ComponentPropsWithoutRef<typeof Content>;
  * @param {AlertDialogContentProps} props - Additional props to pass to the alert dialog content.
  *
  * @example
+ * ```tsx
  * <AlertDialogContent>
  *   <AlertDialogTitle>Confirm Action</AlertDialogTitle>
  *   <AlertDialogDescription>
  *     Are you sure you want to proceed with this action?
  *   </AlertDialogDescription>
  * </AlertDialogContent>
+ * ```
  */
 export const AlertDialogContent = forwardRef<
   AlertDialogContentRef,
@@ -162,7 +172,9 @@ type AlertDialogCancelProps = object &
  * @param {AlertDialogCancelProps} props - Additional props to pass to the cancel button.
  *
  * @example
+ * ```tsx
  * <AlertDialogCancel>Cancel</AlertDialogCancel>
+ * ```
  */
 export const AlertDialogCancel = forwardRef<
   AlertDialogCancelRef,
@@ -197,7 +209,9 @@ type AlertDialogActionProps = object &
  * @param {AlertDialogActionProps} props - Additional props to pass to the action button.
  *
  * @example
+ * ```tsx
  * <AlertDialogAction>Confirm</AlertDialogAction>
+ * ```
  */
 export const AlertDialogAction = forwardRef<
   AlertDialogActionRef,
@@ -226,12 +240,14 @@ type AlertDialogHeaderProps = React.HTMLAttributes<HTMLDivElement>;
  * @param {AlertDialogHeaderProps} props - Additional props to pass to the alert dialog header.
  *
  * @example
+ * ```tsx
  * <AlertDialogHeader>
  *   <AlertDialogTitle>Confirm Action</AlertDialogTitle>
  *   <AlertDialogDescription>
  *     Are you sure you want to proceed with this action?
  *   </AlertDialogDescription>
  * </AlertDialogHeader>
+ * ```
  */
 export const AlertDialogHeader = ({
   className,
@@ -251,7 +267,9 @@ type AlertDialogTitleProps = React.ComponentPropsWithoutRef<typeof Title>;
  * @param {AlertDialogTitleProps} props - Additional props to pass to the alert dialog title.
  *
  * @example
+ * ```tsx
  * <AlertDialogTitle>Confirm Action</AlertDialogTitle>
+ * ```
  */
 export const AlertDialogTitle = forwardRef<
   AlertDialogTitleRef,
@@ -273,9 +291,11 @@ type AlertDialogDescriptionProps = React.ComponentPropsWithoutRef<
  * @param {AlertDialogDescriptionProps} props - Additional props to pass to the alert dialog description.
  *
  * @example
+ * ```tsx
  * <AlertDialogDescription>
  *   Are you sure you want to proceed with this action?
  * </AlertDialogDescription>
+ * ```
  */
 export const AlertDialogDescription = forwardRef<
   AlertDialogDescriptionRef,
@@ -294,10 +314,12 @@ type AlertDialogFooterProps = React.HTMLAttributes<HTMLDivElement>;
  * @param {AlertDialogFooterProps} props - Additional props to pass to the alert dialog footer.
  *
  * @example
+ * ```tsx
  * <AlertDialogFooter>
  *   <AlertDialogCancel>Cancel</AlertDialogCancel>
  *   <AlertDialogAction>Confirm</AlertDialogAction>
  * </AlertDialogFooter>
+ * ```
  */
 export const AlertDialogFooter = ({
   className,

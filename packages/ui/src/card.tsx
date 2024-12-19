@@ -22,6 +22,7 @@ type CardProps = React.HTMLAttributes<HTMLDivElement>;
  * @param {CardProps} props - The props for the Card component.
  *
  * @example
+ * ```tsx
  * <Card>
  *   <CardHeader>
  *     <CardTitle>Card Title</CardTitle>
@@ -34,6 +35,7 @@ type CardProps = React.HTMLAttributes<HTMLDivElement>;
  *     <p>Card Footer</p>
  *   </CardFooter>
  * </Card>
+ * ```
  *
  * @see {@link https://dub.sh/ui-card Card Docs} for further information.
  */
@@ -51,6 +53,14 @@ type CardHeaderProps = React.HTMLAttributes<HTMLDivElement>;
  * CardHeader component that serves as the header section of the Card.
  *
  * @param {CardHeaderProps} props - Additional props to pass to the CardHeader component.
+ *
+ * @example
+ * ```tsx
+ * <CardHeader>
+ *   <CardTitle>Card Title</CardTitle>
+ *   <CardDescription>Card Description</CardDescription>
+ * </CardHeader>
+ * ```
  */
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ className, ...props }, ref) => (
@@ -66,6 +76,11 @@ type CardTitleProps = React.HTMLAttributes<HTMLHeadingElement>;
  * CardTitle component that displays the title of the Card.
  *
  * @param {CardTitleProps} props - Additional props to pass to the CardTitle component.
+ *
+ * @example
+ * ```tsx
+ * <CardTitle>Card Title</CardTitle>
+ * ```
  */
 export const CardTitle = forwardRef<HTMLParagraphElement, CardTitleProps>(
   ({ className, ...props }, ref) => (
@@ -81,6 +96,11 @@ type CardDescriptionProps = React.HTMLAttributes<HTMLParagraphElement>;
  * CardDescription component that provides a brief description of the Card's content.
  *
  * @param {CardDescriptionProps} props - Additional props to pass to the CardDescription component.
+ *
+ * @example
+ * ```tsx
+ * <CardDescription>Card Description</CardDescription>
+ * ```
  */
 export const CardDescription = forwardRef<
   HTMLParagraphElement,
@@ -97,6 +117,13 @@ type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
  * CardContent component that serves as the main content area of the Card.
  *
  * @param {CardContentProps} props - Additional props to pass to the CardContent component.
+ *
+ * @example
+ * ```tsx
+ * <CardContent>
+ *   <p>Card Content</p>
+ * </CardContent>
+ * ```
  */
 export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
   ({ className, ...props }, ref) => (
@@ -112,6 +139,13 @@ type CardFooterProps = React.HTMLAttributes<HTMLDivElement>;
  * CardFooter component that serves as the footer section of the Card.
  *
  * @param {CardFooterProps} props - Additional props to pass to the CardFooter component.
+ *
+ * @example
+ * ```tsx
+ * <CardFooter>
+ *   <p>Card Footer</p>
+ * </CardFooter>
+ * ```
  */
 export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
   ({ className, ...props }, ref) => (
