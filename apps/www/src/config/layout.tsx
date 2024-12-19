@@ -5,7 +5,6 @@ import { AppWindowMacIcon, LayoutTemplateIcon } from 'lucide-react';
 
 import { source } from '~/app/source';
 import { Logo } from '~/components/Layout/Logo';
-import { NavModes } from '~/components/Layout/NavModes';
 
 // shared configuration
 export const baseOptions: HomeLayoutProps = {
@@ -14,23 +13,25 @@ export const baseOptions: HomeLayoutProps = {
     enableSearch: false,
     transparentMode: 'top',
     title: <Logo />,
-    children: <NavModes />,
   },
   links: [
     {
-      icon: <CodeSandboxLogoIcon />,
       text: 'Examples',
+      icon: <CodeSandboxLogoIcon />,
       url: '/examples',
+      active: 'url',
     },
     {
       icon: <AppWindowMacIcon />,
       text: 'Templates',
       url: '/templates',
+      active: 'url',
     },
     {
       icon: <LayoutTemplateIcon />,
       text: 'Showcase',
       url: '/showcase',
+      active: 'url',
     },
   ],
 };
@@ -41,6 +42,18 @@ export const docsOptions: DocsLayoutProps = {
   tree: source.pageTree,
   nav: {
     ...baseOptions.nav,
-    children: undefined,
+  },
+  sidebar: {
+    tabs: {
+      transform(option, node) {
+        const meta = source.getNodeMeta(node);
+        if (!meta) return option;
+
+        return {
+          ...option,
+          icon: <div className=''>{node.icon}</div>,
+        };
+      },
+    },
   },
 };
