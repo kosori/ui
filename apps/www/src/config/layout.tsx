@@ -10,7 +10,6 @@ import { Logo } from '~/components/Layout/Logo';
 export const baseOptions: HomeLayoutProps = {
   githubUrl: 'https://github.com/kosori/ui',
   nav: {
-    enableSearch: false,
     transparentMode: 'top',
     title: <Logo />,
   },
