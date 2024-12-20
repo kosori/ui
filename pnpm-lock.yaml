@@ -118,7 +118,7 @@ importers:
         specifier: ^2.10.4
         version: 2.10.4(@types/react@18.3.17)(react@18.3.1)
       next:
-        specifier: ^15.1.1
+        specifier: ^15.1.2
         version: 15.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: catalog:react18
@@ -449,7 +449,7 @@ importers:
         specifier: ^1.2.4
         version: 1.2.4(eslint@9.17.0(jiti@1.21.7))
       '@next/eslint-plugin-next':
-        specifier: ^15.1.1
+        specifier: ^15.1.2
         version: 15.1.2
       eslint-plugin-import:
         specifier: ^2.31.0
