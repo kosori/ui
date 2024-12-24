@@ -106,8 +106,8 @@ importers:
         specifier: ^1.3.4
         version: 1.3.4(typescript@5.7.2)
       fumadocs-mdx:
-        specifier: ^11.2.0
-        version: 11.2.0(acorn@8.14.0)(fumadocs-core@14.6.4(@types/react@18.3.17)(next@15.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        specifier: ^11.2.1
+        version: 11.2.1(acorn@8.14.0)(fumadocs-core@14.6.4(@types/react@18.3.17)(next@15.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       fumadocs-ui:
         specifier: ^14.6.3
         version: 14.6.3(@types/react-dom@18.3.5(@types/react@18.3.17))(@types/react@18.3.17)(next@15.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.7.2)))
@@ -3166,8 +3166,8 @@ packages:
   fumadocs-docgen@1.3.4:
     resolution: {integrity: sha512-NL/ZXxckbAE4J6rXP4gGQTUQtX3P+rv0dM+XUAhWgWItuL9Z3fzVsY3e4wWpYnp0TpHRySYnNg3RcbSmovrFyQ==}
 
-  fumadocs-mdx@11.2.0:
-    resolution: {integrity: sha512-J1X1G/naXBgcBJJ7x2LwyhqD5FDJMJCOB9WhiCd3piZKTy8V6gGBCIQPjwKAF+FzmGFVFzjcZGXA4qRVsYQITA==}
+  fumadocs-mdx@11.2.1:
+    resolution: {integrity: sha512-w7Eo0+xSbOvs7/MXngHx4M6DEIIkiU3Zl+9FBQK4Af8eIUldJ8+el4rZcWjUnL35adakztYmfhEOZcOGFaUrfg==}
     hasBin: true
     peerDependencies:
       fumadocs-core: ^14.0.0
@@ -7979,7 +7979,7 @@ snapshots:
       - supports-color
       - typescript
 
-  fumadocs-mdx@11.2.0(acorn@8.14.0)(fumadocs-core@14.6.4(@types/react@18.3.17)(next@15.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  fumadocs-mdx@11.2.1(acorn@8.14.0)(fumadocs-core@14.6.4(@types/react@18.3.17)(next@15.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       '@mdx-js/mdx': 3.1.0(acorn@8.14.0)
       chokidar: 4.0.3
