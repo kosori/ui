@@ -21,11 +21,8 @@ icon: Footprints
 
     ```tsx title="app/layout.tsx"
     import type { Metadata } from 'next';
-    import { Inter } from 'next/font/google';
     import './globals.css';
     import { ThemeProvider } from 'next-themes'; // [!code highlight]
-
-    const inter = Inter({ subsets: ['latin'] });
 
     export const metadata: Metadata = {
       title: 'Create Next App',
@@ -39,10 +36,12 @@ icon: Footprints
     }>) {
       return (
         <html lang='en'>
-          <body className={inter.className}>
-            <ThemeProvider attribute='class'> // [!code highlight]
+          <body>
+            // [!code highlight:1]
+            <ThemeProvider attribute='class'>
               {children}
-            </ThemeProvider> // [!code highlight]
+            // [!code highlight:1]
+            </ThemeProvider>
           </body>
         </html>
       );
@@ -59,12 +58,10 @@ icon: Footprints
     ```ts title="tailwind.config.ts"
     import type { Config } from 'tailwindcss';
 
-    const config: Config = {
-      darkMode: 'class',  // [!code highlight]
+    export default {
+      darkMode: 'class', // [!code highlight]
       // ...
-    };
-
-    export default config;
+    } satisfies Config;
     ```
 
   </Step>
@@ -77,14 +74,14 @@ icon: Footprints
     ```ts title="tailwind.config.ts"
     import type { Config } from 'tailwindcss';
 
-    const config: Config = {
+    export default {
       darkMode: 'class',
       content: [
         '...',
       ],
       theme: {
         // ...
-        // [!code highlight:12]
+        // [!code highlight:11]
         borderRadius: {
           none: '0px',
           sm: 'calc(var(--radius) - 3px)',
@@ -98,9 +95,7 @@ icon: Footprints
         },
       },
       plugins: [],
-    };
-
-    export default config;
+    } satisfies Config;
     ```
 
   </Step>
@@ -113,7 +108,7 @@ icon: Footprints
     ```ts title="tailwind.config.ts"
     import type { Config } from 'tailwindcss';
 
-    const config: Config = {
+    export default {
       darkMode: 'class',
       content: [
         '...',
@@ -122,7 +117,7 @@ icon: Footprints
         // ...
         extend: {
           // ...
-          // [!code highlight:17]
+          // [!code highlight:16]
           colors: {
             primary: {
               base: 'var(--primary-1)',
@@ -140,7 +135,7 @@ icon: Footprints
               'text-contrast': 'var(--primary-12)',
             },
 
-            // [!code highlight:16]
+            // [!code highlight:15]
             grey: {
               base: 'var(--grey-1)',
               'bg-subtle': 'var(--grey-2)',
@@ -157,7 +152,7 @@ icon: Footprints
               'text-contrast': 'var(--grey-12)',
             },
 
-            // [!code highlight:16]
+            // [!code highlight:15]
             info: {
               base: 'var(--info-1)',
               'bg-subtle': 'var(--info-2)',
@@ -174,7 +169,7 @@ icon: Footprints
               'text-contrast': 'var(--info-12)',
             },
 
-            // [!code highlight:16]
+            // [!code highlight:15]
             success: {
               base: 'var(--success-1)',
               'bg-subtle': 'var(--success-2)',
@@ -191,7 +186,7 @@ icon: Footprints
               'text-contrast': 'var(--success-12)',
             },
 
-            // [!code highlight:16]
+            // [!code highlight:15]
             warning: {
               base: 'var(--warning-1)',
               'bg-subtle': 'var(--warning-2)',
@@ -208,7 +203,7 @@ icon: Footprints
               'text-contrast': 'var(--warning-12)',
             },
 
-            // [!code highlight:17]
+            // [!code highlight:16]
             error: {
               base: 'var(--error-1)',
               'bg-subtle': 'var(--error-2)',
@@ -228,9 +223,7 @@ icon: Footprints
         },
       },
       plugins: [],
-    };
-
-    export default config;
+    } satisfies Config;
     ```
 
   </Step>
@@ -241,7 +234,9 @@ icon: Footprints
     Extend the `keyframes` and `animation` objects in your `theme` object.
 
     ```ts title="tailwind.config.ts"
-    const config: Config = {
+    import type { Config } from 'tailwindcss';
+
+    export default {
       darkMode: 'class',
       content: [
         '...',
@@ -250,7 +245,7 @@ icon: Footprints
         // ...
         extend: {
           // ...
-          // [!code highlight:34]
+          // [!code highlight:33]
           keyframes: {
             'accordion-down': {
               from: { height: '0' },
@@ -286,7 +281,7 @@ icon: Footprints
           },
         },
       },
-    };
+    } satisfies Config;
     ```
 
   </Step>
@@ -300,10 +295,10 @@ icon: Footprints
     import type { Config } from 'tailwindcss';
     import animate from 'tailwindcss-animate'; // [!code highlight]
 
-    const config: Config = {
-      // ...,
+    export default {
+      // ...
       plugins: [animate], // [!code highlight]
-    };
+    } satisfies Config;
     ```
 
   </Step>
@@ -314,7 +309,7 @@ icon: Footprints
     Add the border radius and color variables to your CSS file. You can learn more about using CSS variables for theming in the [colors section](/docs/ui/colors).
 
     ```css title="app/globals.css"
-      // [!code highlight:13]
+      // [!code highlight:12]
       @import '@radix-ui/colors/violet.css';
       @import '@radix-ui/colors/violet-dark.css';
       @import '@radix-ui/colors/mauve.css';
@@ -335,7 +330,7 @@ icon: Footprints
       :root {
         --radius: 5rem; /* [!code highlight] */
 
-        /* [!code highlight:13] */
+        /* [!code highlight:12] */
         --primary-1: var(--violet-1);
         --primary-2: var(--violet-2);
         --primary-3: var(--violet-3);
@@ -349,7 +344,7 @@ icon: Footprints
         --primary-11: var(--violet-11);
         --primary-12: var(--violet-12);
 
-        /* [!code highlight:13] */
+        /* [!code highlight:12] */
         --grey-1: var(--mauve-1);
         --grey-2: var(--mauve-2);
         --grey-3: var(--mauve-3);
@@ -363,7 +358,7 @@ icon: Footprints
         --grey-11: var(--mauve-11);
         --grey-12: var(--mauve-12);
 
-        /* [!code highlight:13] */
+        /* [!code highlight:12] */
         --info-1: var(--blue-1);
         --info-2: var(--blue-2);
         --info-3: var(--blue-3);
@@ -377,7 +372,7 @@ icon: Footprints
         --info-11: var(--blue-11);
         --info-12: var(--blue-12);
 
-        /* [!code highlight:13] */
+        /* [!code highlight:12] */
         --success-1: var(--green-1);
         --success-2: var(--green-2);
         --success-3: var(--green-3);
@@ -391,7 +386,7 @@ icon: Footprints
         --success-11: var(--green-11);
         --success-12: var(--green-12);
 
-        /* [!code highlight:13] */
+        /* [!code highlight:12] */
         --warning-1: var(--yellow-1);
         --warning-2: var(--yellow-2);
         --warning-3: var(--yellow-3);
@@ -405,7 +400,7 @@ icon: Footprints
         --warning-11: var(--yellow-11);
         --warning-12: var(--yellow-12);
 
-        /* [!code highlight:13] */
+        /* [!code highlight:12] */
         --error-1: var(--red-1);
         --error-2: var(--red-2);
         --error-3: var(--red-3);
@@ -420,7 +415,7 @@ icon: Footprints
         --error-12: var(--red-12);
 
       .dark {
-        /* [!code highlight:13] */
+        /* [!code highlight:12] */
         --primary-1: var(--violet-dark-1);
         --primary-2: var(--violet-dark-2);
         --primary-3: var(--violet-dark-3);
@@ -434,7 +429,7 @@ icon: Footprints
         --primary-11: var(--violet-dark-11);
         --primary-12: var(--violet-dark-12);
 
-        /* [!code highlight:13] */
+        /* [!code highlight:12] */
         --grey-1: var(--mauve-dark-1);
         --grey-2: var(--mauve-dark-2);
         --grey-3: var(--mauve-dark-3);
@@ -448,7 +443,7 @@ icon: Footprints
         --grey-11: var(--mauve-dark-11);
         --grey-12: var(--mauve-dark-12);
 
-        /* [!code highlight:13] */
+        /* [!code highlight:12] */
         --info-1: var(--blue-dark-1);
         --info-2: var(--blue-dark-2);
         --info-3: var(--blue-dark-3);
@@ -462,7 +457,7 @@ icon: Footprints
         --info-11: var(--blue-dark-11);
         --info-12: var(--blue-dark-12);
 
-        /* [!code highlight:13] */
+        /* [!code highlight:12] */
         --success-1: var(--green-dark-1);
         --success-2: var(--green-dark-2);
         --success-3: var(--green-dark-3);
@@ -476,7 +471,7 @@ icon: Footprints
         --success-11: var(--green-dark-11);
         --success-12: var(--green-dark-12);
 
-        /* [!code highlight:13] */
+        /* [!code highlight:12] */
         --warning-1: var(--yellow-dark-1);
         --warning-2: var(--yellow-dark-2);
         --warning-3: var(--yellow-dark-3);
@@ -490,7 +485,7 @@ icon: Footprints
         --warning-11: var(--yellow-dark-11);
         --warning-12: var(--yellow-dark-12);
 
-        /* [!code highlight:13] */
+        /* [!code highlight:12] */
         --error-1: var(--red-dark-1);
         --error-2: var(--red-dark-2);
         --error-3: var(--red-dark-3);
