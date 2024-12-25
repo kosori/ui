@@ -36,7 +36,14 @@ export const ColorOption = ({
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            className='w-full justify-start'
+            className={clsx(
+              'w-full justify-start',
+              'border border-grey-border text-grey-text-contrast bg-grey-base',
+              'hover:border-grey-border-hover hover:bg-grey-bg-subtle',
+              'active:bg-grey-bg',
+              'focus-visible:ring-grey-focus-ring',
+              'disabled:border-grey-line disabled:bg-grey-base disabled:text-grey-line'
+            )}
             size='small'
             variant='outline'
           >
@@ -59,8 +66,13 @@ export const ColorOption = ({
                 key={color.name}
                 className={clsx(
                   'w-full justify-start',
+                  'border border-grey-border text-grey-text-contrast bg-grey-base',
+                  'hover:border-grey-border-hover hover:bg-grey-bg-subtle',
+                  'active:bg-grey-bg',
+                  'focus-visible:ring-grey-focus-ring',
+                  'disabled:border-grey-line disabled:bg-grey-base disabled:text-grey-line',
                   selectedColor === color.color &&
-                    'bg-primary-bg hover:bg-primary-bg',
+                    'bg-grey-bg hover:bg-grey-bg',
                 )}
                 size='small'
                 variant='outline'
