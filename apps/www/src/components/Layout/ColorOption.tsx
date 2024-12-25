@@ -38,11 +38,11 @@ export const ColorOption = ({
           <Button
             className={clsx(
               'w-full justify-start',
-              'border border-grey-border text-grey-text-contrast bg-grey-base',
+              'border-grey-border bg-grey-base text-grey-text-contrast',
               'hover:border-grey-border-hover hover:bg-grey-bg-subtle',
               'active:bg-grey-bg',
               'focus-visible:ring-grey-focus-ring',
-              'disabled:border-grey-line disabled:bg-grey-base disabled:text-grey-line'
+              'disabled:border-grey-line disabled:bg-grey-base disabled:text-grey-line',
             )}
             size='small'
             variant='outline'
@@ -66,7 +66,7 @@ export const ColorOption = ({
                 key={color.name}
                 className={clsx(
                   'w-full justify-start',
-                  'border border-grey-border text-grey-text-contrast bg-grey-base',
+                  'border-grey-border bg-grey-base text-grey-text-contrast',
                   'hover:border-grey-border-hover hover:bg-grey-bg-subtle',
                   'active:bg-grey-bg',
                   'focus-visible:ring-grey-focus-ring',
