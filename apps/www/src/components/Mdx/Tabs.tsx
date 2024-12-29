@@ -7,7 +7,7 @@ export const InstallTabs = (props: Props) => {
   return (
     <Tabs
       className={clsx(
-        'border-none',
+        'border-none bg-grey-base',
         '[&>div:first-child]:rounded-xl [&>div:first-child]:border',
         // '[&>*:not(:first-child):not(:last-child)]',
         '[&>*:not(:first-child):not(:last-child)]:mt-8',
