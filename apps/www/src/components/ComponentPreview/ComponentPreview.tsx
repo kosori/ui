@@ -35,7 +35,7 @@ export const ComponentPreview = ({
         items={['Preview', 'Code']}
       >
         <Tab className='p-0' value='Preview'>
-          <div className='not-prose flex min-h-[350px] items-center justify-center p-4'>
+          <div className='not-prose flex min-h-[350px] items-center justify-center rounded-b-xl bg-grey-bg-subtle p-4'>
             {PreviewComponent}
           </div>
         </Tab>
