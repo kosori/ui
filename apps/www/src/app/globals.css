@@ -2290,4 +2290,8 @@
   * {
     @apply border-grey-line;
   }
+
+  ::selection {
+    @apply bg-primary-solid text-grey-base;
+  }
 }
