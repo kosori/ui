@@ -2,73 +2,123 @@ import path from 'path';
 import { cosmiconfig } from 'cosmiconfig';
 import { loadConfig } from 'tsconfig-paths';
 
-import type { RawConfig } from '~/commands/init/schema';
-import { configSchema, rawConfigSchema } from '~/commands/init/schema';
-import { resolveImport } from '~/utils/resolveImport';
+import type { ProjectInfo } from '../types';
+import { Config, RawConfig } from '~/commands/init/schema';
+import { highlighter } from '~/utils/highlighter';
+import { resolveImport } from '~/utils/resolve-import';
+import { getProjectInfo } from './project-info';
 
-const explorer = cosmiconfig('kosori', {
+/**
+ * Configuration schema URL for validation
+ */
+const SCHEMA_URL = 'https://kosori.codingcodax.dev/schema.json';
+
+/**
+ * Configuration explorer instance for finding kosori config files
+ */
+const configExplorer = cosmiconfig('kosori', {
   searchPlaces: ['kosori.config.json'],
 });
 
-export const getConfig = async ({ cwd }: { cwd: string }) => {
-  const config = await getRawConfig({ cwd });
+/**
+ * Loads and validates the project configuration
+ * @param projectRoot - The root directory of the project
+ * @returns Parsed and resolved configuration or null if not found
+ */
+export const loadProjectConfig = async (projectRoot: string) => {
+  const rawConfig = await loadRawConfig(projectRoot);
 
-  if (!config) return null;
+  if (!rawConfig) return null;
 
-  return resolveConfigPaths({ cwd, config });
+  return resolveConfigurationPaths(projectRoot, rawConfig);
 };
 
-export const getRawConfig = async ({ cwd }: { cwd: string }) => {
+/**
+ * Loads the raw configuration file without path resolution
+ * @param projectRoot - The root directory of the project
+ * @returns Raw configuration object or null if not found
+ * @throws Error if configuration is invalid
+ */
+export const loadRawConfig = async (projectRoot: string) => {
   try {
-    const configResult = await explorer.search(cwd);
+    const configResult = await configExplorer.search(projectRoot);
 
     if (!configResult) return null;
 
-    return rawConfigSchema.parse(configResult.config);
+    return RawConfig.parse(configResult.config);
   } catch {
+    const configPath = path.join(projectRoot, 'kosori.config.json');
     throw new Error(
-      `Invalid configuration found in: ${cwd}/kosori.config.json`,
+      `Invalid configuration found in: ${highlighter.info(configPath)}`,
     );
   }
 };
 
-export const resolveConfigPaths = ({
-  cwd,
-  config,
-}: {
-  cwd: string;
-  config: RawConfig;
-}) => {
-  const tsConfig = loadConfig(cwd);
+/**
+ * Resolves relative paths in the configuration to absolute paths
+ * @param projectRoot - The root directory of the project
+ * @param rawConfig - The raw configuration object
+ * @returns Configuration with resolved absolute paths
+ * @throws Error if tsconfig.json cannot be loaded
+ */
+export const resolveConfigurationPaths = (
+  projectRoot: string,
+  rawConfig: RawConfig,
+) => {
+  const tsConfig = loadConfig(projectRoot);
 
   if (tsConfig.resultType === 'failed') {
     throw new Error(`Failed to load tsconfig.json. ${tsConfig.message}`.trim());
   }
 
-  const layoutFile =
-    config.project === 'next-app' || config.project === 'next-app-src'
-      ? 'layout.tsx'
-      : '_app.tsx';
-  let layoutPath = '';
-
-  if (config.project === 'next-app' && layoutFile === 'layout.tsx')
-    layoutPath = path.resolve(cwd, 'app/layout.tsx');
-  if (config.project === 'next-app-src' && layoutFile === 'layout.tsx')
-    layoutPath = path.resolve(cwd, 'src/app/layout.tsx');
-  if (config.project === 'next-pages' && layoutFile === '_app.tsx')
-    layoutPath = path.resolve(cwd, 'pages/_app.tsx');
-  if (config.project === 'next-pages-src' && layoutFile === '_app.tsx')
-    layoutPath = path.resolve(cwd, 'src/pages/_app.tsx');
-
-  return configSchema.parse({
-    ...config,
+  return Config.parse({
+    ...rawConfig,
     resolvedPaths: {
-      tailwindConfig: path.resolve(cwd, config.tailwind.config),
-      tailwindCss: path.resolve(cwd, config.tailwind.css),
-      utils: resolveImport(config.aliases.utils, tsConfig),
-      components: resolveImport(config.aliases.components, tsConfig),
-      ui: resolveImport(config.aliases.ui, tsConfig),
-      layout: path.resolve(cwd, layoutPath),
+      cwd: projectRoot,
+      tailwindConfig: path.resolve(projectRoot, rawConfig.tailwind.config),
+      tailwindCss: path.resolve(projectRoot, rawConfig.tailwind.css),
+      utils: resolveImport(rawConfig.aliases.utils, tsConfig),
+      components: resolveImport(rawConfig.aliases.components, tsConfig),
+      ui: resolveImport(rawConfig.aliases.ui, tsConfig),
     },
   });
+};
+
+/**
+ * Creates or loads project configuration based on provided or detected project information
+ * @param cwd - The path to the project directory
+ * @param existingProjectInfo - Optional existing project information to use instead of detecting
+ * @returns Resolved project configuration or null if required information is missing
+ */
+export const createOrLoadProjectConfig = async (
+  cwd: string,
+  existingProjectInfo: ProjectInfo | null = null,
+) => {
+  const projectRoot = path.resolve(process.cwd(), cwd);
+  const [existingConfig, projectInfo] = await Promise.all([
+    loadProjectConfig(projectRoot),
+    existingProjectInfo
+      ? Promise.resolve(existingProjectInfo)
+      : getProjectInfo(projectRoot),
+  ]);
+
+  if (existingConfig) return existingConfig;
+
+  const defaultConfig: RawConfig = {
+    $schema: SCHEMA_URL,
+    rsc: projectInfo.isRSC,
+    tsx: projectInfo.isTsx,
+    tailwind: {
+      config: projectInfo.tailwindConfigFile ?? '',
+      css: projectInfo.tailwindCssFile ?? '',
+    },
+    aliases: {
+      components: `${projectInfo.aliasPrefix}/components`,
+      utils: `${projectInfo.aliasPrefix}/utils`,
+      ui: `${projectInfo.aliasPrefix}/components/ui`,
+      hooks: `${projectInfo.aliasPrefix}/hooks`,
+    },
+  };
+
+  return resolveConfigurationPaths(projectRoot, defaultConfig);
 };
