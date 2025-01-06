@@ -16,9 +16,7 @@ import {
  * @param projectRoot - The root directory of the project to analyze
  * @returns ProjectInfo object containing framework and configuration details
  */
-export const getProjectInfo = async (
-  projectRoot: string,
-): Promise<ProjectInfo | null> => {
+export const getProjectInfo = async (projectRoot: string) => {
   const [
     frameworkConfigFiles,
     hasSrcDirectory,
