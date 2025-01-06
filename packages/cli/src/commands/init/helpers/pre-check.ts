@@ -34,9 +34,6 @@ export const validateProject = async (options: InitOptions) => {
   validateProjectInitialization(options);
 
   const projectInfo = await getProjectInfo(projectRoot);
-  if (!projectInfo) {
-    return { errors, projectInfo: null };
-  }
 
   // Detect and validate framework
   validateFramework(projectRoot, projectInfo);
