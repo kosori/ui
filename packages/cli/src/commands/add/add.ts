@@ -10,7 +10,7 @@ import { handleError } from '~/utils/handle-error';
 import { highlight } from '~/utils/highlight';
 import { getPackageManager } from '~/utils/package';
 import { writeFiles } from '~/utils/writeFiles';
-import { getConfig } from '../init/helpers/config';
+import { loadProjectConfig } from '../init/helpers/config';
 import { getComponents, getComponentsIndex } from './helpers/components';
 import { transform } from './helpers/transform';
 import { componentsPrompts } from './prompts';
@@ -41,7 +41,7 @@ export const add = new Command()
       const cwd = path.resolve(options.cwd);
       const overwrite = options.overwrite;
       const skip = options.yes;
-      const config = await getConfig({ cwd });
+      const config = await loadProjectConfig(cwd);
 
       if (!existsSync(cwd)) {
         throw new Error(`The path ${cwd} does not exist. Please try again.`);
