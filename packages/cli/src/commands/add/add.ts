@@ -6,7 +6,7 @@ import color from 'picocolors';
 
 import { buildPrettifier } from '~/utils/buildPrettifier';
 import { installDependencies } from '~/utils/dependencies';
-import { handleError } from '~/utils/handleError';
+import { handleError } from '~/utils/handle-error';
 import { highlight } from '~/utils/highlight';
 import { getPackageManager } from '~/utils/package';
 import { writeFiles } from '~/utils/writeFiles';
