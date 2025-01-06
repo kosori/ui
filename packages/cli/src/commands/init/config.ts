@@ -82,3 +82,10 @@ export const ERROR_COLORS = [
   { label: 'Tomato', value: 'tomato' },
   { label: 'Crimson', value: 'crimson' },
 ];
+
+export const ERRORS = {
+  MISSING_DIR_OR_EMPTY_PROJECT: '1',
+  UNSUPPORTED_FRAMEWORK: '2',
+  TAILWIND_NOT_CONFIGURED: '3',
+  IMPORT_ALIAS_MISSING: '4',
+};
