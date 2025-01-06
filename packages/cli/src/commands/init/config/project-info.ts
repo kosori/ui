@@ -1,3 +1,8 @@
+/**
+ * Mapping of framework identifiers to their configuration file prefixes.
+ * Used to detect framework types based on their configuration files.
+ * @const
+ */
 export const CONFIG_FILE_PATTERNS = {
   next: 'next.config.',
   astro: 'astro.config.',
@@ -6,7 +11,12 @@ export const CONFIG_FILE_PATTERNS = {
   vite: 'vite.config.',
 } as const;
 
-export const PROJECT_SAHRED_IGNORE = [
+/**
+ * List of directories and patterns to ignore when scanning project files.
+ * These are common build outputs and dependency directories that should be excluded.
+ * @const
+ */
+export const PROJECT_SHARED_IGNORE = [
   '**/node_modules/**',
   '.next',
   'public',
@@ -14,8 +24,16 @@ export const PROJECT_SAHRED_IGNORE = [
   'build',
 ];
 
-export type Framework = (typeof FRAMEWORKS)[keyof typeof FRAMEWORKS];
-
+/**
+ * Comprehensive configuration for supported frameworks.
+ * Each framework entry contains:
+ * @property {string} name - The identifier for the framework
+ * @property {string} label - Display name for the framework
+ * @property {Object} links - Framework-specific documentation links
+ * @property {string} links.installation - URL to Kosori installation guide
+ * @property {string} links.tailwind - URL to Tailwind CSS setup guide
+ * @const
+ */
 export const FRAMEWORKS = {
   'next-app': {
     name: 'next-app',
@@ -30,7 +48,7 @@ export const FRAMEWORKS = {
     label: 'Next.js',
     links: {
       installation: 'https://kosori.codingcodax.dev/docs/ui/installation/next',
-      taiwind: 'https://tailwindcss.com/docs/guides/nextjs',
+      tailwind: 'https://tailwindcss.com/docs/guides/nextjs',
     },
   },
   remix: {
