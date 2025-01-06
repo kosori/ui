@@ -9,30 +9,33 @@ export const InitOptions = z.object({
   cwd: z.string(),
 });
 
-export type RawConfig = z.infer<typeof rawConfigSchema>;
-export const rawConfigSchema = z.object({
-  $schema: z.string().optional(),
-  tailwind: z.object({
-    config: z.string(),
-    css: z.string(),
-  }),
-  aliases: z.object({
-    components: z.string(),
-    utils: z.string(),
-    ui: z.string(),
-    hooks: z.string(),
-  }),
-  project: z.enum(['next-app', 'next-app-src', 'next-pages', 'next-pages-src']),
-});
+export type RawConfig = z.infer<typeof RawConfig>;
+export const RawConfig = z
+  .object({
+    $schema: z.string().optional(),
+    rsc: z.coerce.boolean().default(false),
+    tsx: z.coerce.boolean().default(true),
+    tailwind: z.object({
+      config: z.string(),
+      css: z.string(),
+    }),
+    aliases: z.object({
+      components: z.string(),
+      utils: z.string(),
+      ui: z.string(),
+      hooks: z.string(),
+    }),
+  })
+  .strict();
 
-export type Config = z.infer<typeof configSchema>;
-export const configSchema = rawConfigSchema.extend({
+export type Config = z.infer<typeof Config>;
+export const Config = RawConfig.extend({
   resolvedPaths: z.object({
+    cwd: z.string(),
     tailwindConfig: z.string(),
     tailwindCss: z.string(),
     utils: z.string(),
     components: z.string(),
     ui: z.string(),
-    layout: z.string(),
   }),
 });
