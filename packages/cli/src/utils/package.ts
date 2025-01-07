@@ -2,26 +2,12 @@ import { detect } from '@antfu/ni';
 
 export type PackageManager = 'yarn' | 'pnpm' | 'npm' | 'bun';
 
-export const getPackageManager = async ({
-  targetDir,
-}: {
-  targetDir: string;
-}) => {
-  const detectedPackageManager = await detect({
-    cwd: targetDir,
-    programmatic: true,
-  });
+export const getPackageManager = async (targetDir: string) => {
+  const packageManager = await detect({ cwd: targetDir, programmatic: true });
 
-  if (!detectedPackageManager) return 'npm';
+  if (packageManager === 'yarn@berry') return 'yarn';
+  if (packageManager === 'pnpm@6') return 'pnpm';
+  if (packageManager === 'bun') return 'bun';
 
-  const packageManagerMap: Record<string, PackageManager> = {
-    'yarn@berry': 'yarn',
-    'yarn@1': 'yarn',
-    pnpm: 'pnpm',
-    'pnpm@6': 'pnpm',
-    npm: 'npm',
-    bun: 'bun',
-  };
-
-  return packageManagerMap[detectedPackageManager] ?? 'npm';
+  return packageManager ?? 'npm';
 };
