@@ -32,7 +32,7 @@ export const init = new Command()
       await runInit(options);
 
       p.outro(
-        `${highlighter.success('Success!')} Project initialization completed.\n   You may now add components.`,
+        `${highlighter.success('Success!')} Project initialization completed.\n   You may now add components/hooks.`,
       );
     } catch (error) {
       handleError(error);
@@ -52,7 +52,9 @@ const runInit = async (options: InitOptions) => {
     });
 
     if (p.isCancel(shouldContinue) || !shouldContinue) {
-      p.cancel('The configuration was not written.');
+      p.cancel(
+        `Operation cancelled. No changes were made to your project.\n   To skip this prompt and proceed automatically next time, run the ${highlighter.bold('init')} command with the ${highlighter.bold('--yes')} flag.`,
+      );
       process.exit(0);
     }
   }
