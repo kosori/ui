@@ -6,7 +6,7 @@ import type { InitOptions } from '../schema';
 import type { ProjectInfo } from '../types';
 import { highlighter } from '~/utils/highlighter';
 import { logger } from '~/utils/logger';
-import { ERRORS } from '../config';
+import { ERRORS } from '../config/errors';
 import { getProjectInfo } from './project-info';
 
 /**
