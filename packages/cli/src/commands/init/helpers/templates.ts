@@ -1,4 +1,5 @@
 import { promises as fs } from 'fs';
+import path from 'path';
 
 import type { Config } from '../schema';
 import {
@@ -20,7 +21,7 @@ export const generateProjectTemplates = async (
   await Promise.all([
     updateTailwindConfiguration(resolvedPaths.tailwindConfig),
     updateGlobalStylesheet(resolvedPaths.tailwindCss),
-    generateUtilityFunction(resolvedPaths.utils),
+    generateUtilityFunction(`${resolvedPaths.utils}/cn.ts`),
   ]);
 };
 
@@ -60,5 +61,6 @@ const updateGlobalStylesheet = async (stylesheetPath: string) => {
  * @returns Promise resolving to the generation result
  */
 const generateUtilityFunction = async (utilityPath: string) => {
+  await fs.mkdir(path.dirname(utilityPath), { recursive: true });
   await fs.writeFile(utilityPath, CN_FUNCTION, 'utf8');
 };
