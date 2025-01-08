@@ -8,7 +8,7 @@ import { buildPrettifier } from '~/utils/buildPrettifier';
 import { installDependencies } from '~/utils/dependencies';
 import { handleError } from '~/utils/handle-error';
 import { highlight } from '~/utils/highlight';
-import { getPackageManager } from '~/utils/package';
+import { detectPackageManager } from '~/utils/package';
 import { writeFiles } from '~/utils/writeFiles';
 import { loadProjectConfig } from '../init/helpers/config';
 import { getComponents, getComponentsIndex } from './helpers/components';
@@ -155,7 +155,7 @@ export const add = new Command()
             }
           }
 
-          const packageManager = await getPackageManager({ targetDir: cwd });
+          const packageManager = await detectPackageManager(cwd);
 
           spin.start();
           spin.message('Installing dependencies');
