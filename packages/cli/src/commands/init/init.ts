@@ -5,7 +5,9 @@ import { Command } from 'commander';
 
 import { handleError } from '~/utils/handle-error';
 import { highlighter } from '~/utils/highlighter';
+import { INITIAL_DEPENDENCIES } from './config/dependencies';
 import { createOrLoadProjectConfig } from './helpers/config';
+import { installDependencies } from './helpers/dependencies';
 import { validateProject } from './helpers/pre-check';
 import { generateProjectTemplates } from './helpers/templates';
 import { InitOptions } from './schema';
@@ -38,7 +40,7 @@ export const init = new Command()
   });
 
 const runInit = async (options: InitOptions) => {
-  const { projectInfo } = await validateProject(options);
+  await validateProject(options);
 
   const { resolvedPaths, ...projectConfig } = await createOrLoadProjectConfig(
     options.cwd,
@@ -46,7 +48,7 @@ const runInit = async (options: InitOptions) => {
 
   if (!options.yes) {
     const shouldContinue = await p.confirm({
-      message: `Write configuration to ${highlighter.info('"kosori.config.json"')}. Proceed?`,
+      message: 'Write configuration and files. Proceed?',
     });
 
     if (p.isCancel(shouldContinue) || !shouldContinue) {
@@ -65,20 +67,6 @@ const runInit = async (options: InitOptions) => {
         return 'Configuration written';
       },
     },
-  ]);
-
-  if (!options.yes) {
-    const shouldContinue = await p.confirm({
-      message: `Write/update ${highlighter.info(projectConfig.tailwind.config)}, ${highlighter.info('global.css')} and ${highlighter.info('cn.ts')}. Proceed?`,
-    });
-
-    if (p.isCancel(shouldContinue) || !shouldContinue) {
-      p.cancel('The configuration was not written.');
-      process.exit(0);
-    }
-  }
-
-  await p.tasks([
     {
       title: 'Writing/updating files',
       task: async () => {
@@ -86,23 +74,10 @@ const runInit = async (options: InitOptions) => {
         return 'Files written/updated';
       },
     },
-  ]);
-
-  if (!options.yes) {
-    const shouldContinue = await p.confirm({
-      message: `Install dependencies. Proceed?`,
-    });
-
-    if (p.isCancel(shouldContinue) || !shouldContinue) {
-      p.cancel('The dependencies were not installed.');
-      process.exit(0);
-    }
-  }
-
-  await p.tasks([
     {
       title: 'Installing dependencies',
-      task: () => {
+      task: async () => {
+        await installDependencies(INITIAL_DEPENDENCIES, resolvedPaths.cwd);
         return 'Dependencies installed';
       },
     },
