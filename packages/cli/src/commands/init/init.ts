@@ -24,7 +24,6 @@ export const init = new Command()
     'the working directory. defaults to current working directory',
     process.cwd(),
   )
-  .option('-s, --silent', 'no output', false)
   .action(async (opts) => {
     try {
       const options = InitOptions.parse(opts);
