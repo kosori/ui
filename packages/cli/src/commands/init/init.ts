@@ -3,8 +3,10 @@ import path from 'path';
 import * as p from '@clack/prompts';
 import { Command } from 'commander';
 
+import type { ProjectInfo } from './types';
 import { handleError } from '~/utils/handle-error';
 import { highlighter } from '~/utils/highlighter';
+import { logger } from '~/utils/logger';
 import { INITIAL_DEPENDENCIES } from './config/dependencies';
 import { createOrLoadProjectConfig } from './helpers/config';
 import { installDependencies } from './helpers/dependencies';
@@ -40,7 +42,22 @@ export const init = new Command()
   });
 
 const runInit = async (options: InitOptions) => {
-  await validateProject(options);
+  let projectInfo!: ProjectInfo;
+
+  await p.tasks([
+    {
+      title: 'Cheking requirements',
+      task: async () => {
+        const { projectInfo: pi } = await validateProject(options);
+        projectInfo = pi;
+        return 'Requirements fulfilled';
+      },
+    },
+  ]);
+
+  logger.info(
+    `Your project uses ${highlighter.info(projectInfo.framework.label)}.\nAnd the alias prefix is ${highlighter.info(projectInfo.aliasPrefix)}.`,
+  );
 
   const { resolvedPaths, ...projectConfig } = await createOrLoadProjectConfig(
     options.cwd,
