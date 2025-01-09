@@ -18,4 +18,5 @@ export const highlighter = {
   bgInfo: colors.bgCyan,
 
   bold: colors.bold,
+  underline: colors.underline,
 };
