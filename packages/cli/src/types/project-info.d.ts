@@ -1,4 +1,4 @@
-import type { FRAMEWORKS } from './config/project-info';
+import type { FRAMEWORKS } from '~/config/project-info';
 
 /**
  * Type representing the supported framework configurations.
