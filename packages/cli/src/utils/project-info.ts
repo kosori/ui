@@ -4,12 +4,12 @@ import fg from 'fast-glob';
 import fs from 'fs-extra';
 import { loadConfig } from 'tsconfig-paths';
 
-import type { ProjectInfo } from '../types';
+import type { ProjectInfo } from '~/types/project-info';
 import {
   CONFIG_FILE_PATTERNS,
   FRAMEWORKS,
   PROJECT_SHARED_IGNORE,
-} from '../config/project-info';
+} from '~/config/project-info';
 
 /**
  * Analyzes a project directory and returns information about its framework, configuration, and setup
