@@ -3,13 +3,13 @@ import path from 'path';
 import * as p from '@clack/prompts';
 import { Command } from 'commander';
 
-import type { ProjectInfo } from './types';
+import type { ProjectInfo } from '~/types/project-info';
+import { createOrLoadProjectConfig } from '~/utils/config';
+import { installDependencies } from '~/utils/dependencies';
 import { handleError } from '~/utils/handle-error';
 import { highlighter } from '~/utils/highlighter';
 import { logger } from '~/utils/logger';
 import { INITIAL_DEPENDENCIES } from './config/dependencies';
-import { createOrLoadProjectConfig } from './helpers/config';
-import { installDependencies } from './helpers/dependencies';
 import { validateProject } from './helpers/pre-check';
 import { generateProjectTemplates } from './helpers/templates';
 import { InitOptions } from './schema';
