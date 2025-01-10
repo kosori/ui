@@ -2,11 +2,11 @@ import { resolve } from 'path';
 import fs from 'fs-extra';
 
 import type { InitOptions } from '../schema';
-import type { ProjectInfo } from '../types';
+import type { ProjectInfo } from '~/types/project-info';
 import { highlighter } from '~/utils/highlighter';
 import { logger } from '~/utils/logger';
+import { getProjectInfo } from '~/utils/project-info';
 import { ERRORS } from '../config/errors';
-import { getProjectInfo } from './project-info';
 
 /**
  * Configuration file name for the project
@@ -22,14 +22,13 @@ const CONFIG_FILENAME = 'kosori.config.json';
  */
 export const validateProject = async (options: InitOptions) => {
   const errors: Record<string, boolean> = {};
-  const projectRoot = resolve(process.cwd(), options.cwd);
 
-  validateProjectDirectory(projectRoot, options);
+  validateProjectDirectory(options);
   validateProjectInitialization(options);
 
-  const projectInfo = await getProjectInfo(projectRoot);
+  const projectInfo = await getProjectInfo(options.cwd);
 
-  validateFramework(projectRoot, projectInfo);
+  validateFramework(options.cwd, projectInfo);
   validateTailwindSetup(projectInfo, errors);
   validateTypeScriptSetup(projectInfo, errors);
 
@@ -44,15 +43,12 @@ export const validateProject = async (options: InitOptions) => {
 /**
  * Validates whether the project directory exists and contains a package.json file
  */
-const validateProjectDirectory = (
-  projectRoot: string,
-  options: InitOptions,
-) => {
+const validateProjectDirectory = (options: InitOptions) => {
   const packageJsonExist = fs.existsSync(resolve(options.cwd, 'package.json'));
 
-  if (!fs.existsSync(projectRoot) || !packageJsonExist) {
+  if (!fs.existsSync(options.cwd) || !packageJsonExist) {
     logger.error(
-      `The directory ${highlighter.info(projectRoot)} does not exist or does not contain a ${highlighter.info('package.json')} file.`,
+      `The directory ${highlighter.info(options.cwd)} does not exist or does not contain a ${highlighter.info('package.json')} file.`,
     );
     process.exit(1);
   }
