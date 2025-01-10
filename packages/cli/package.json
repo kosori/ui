@@ -35,7 +35,7 @@
   },
   "prettier": "@kosori/prettier-config",
   "dependencies": {
-    "@antfu/ni": "^0.23.2",
+    "@antfu/ni": "^23.2.0",
     "@clack/core": "^0.4.1",
     "@clack/prompts": "^0.9.1",
     "@prettier/sync": "^0.5.2",
