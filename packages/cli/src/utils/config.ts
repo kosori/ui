@@ -2,11 +2,11 @@ import path from 'path';
 import { cosmiconfig } from 'cosmiconfig';
 import { loadConfig } from 'tsconfig-paths';
 
-import type { ProjectInfo } from '../types';
+import type { ProjectInfo } from '~/types/project-info';
 import { Config, RawConfig } from '~/commands/init/schema';
 import { highlighter } from '~/utils/highlighter';
+import { getProjectInfo } from '~/utils/project-info';
 import { resolveImport } from '~/utils/resolve-import';
-import { getProjectInfo } from './project-info';
 
 /**
  * Configuration schema URL for validation
@@ -86,15 +86,14 @@ export const resolveConfigurationPaths = (
 
 /**
  * Creates or loads project configuration based on provided or detected project information
- * @param cwd - The path to the project directory
+ * @param projectRoot - The root directory of the project
  * @param existingProjectInfo - Optional existing project information to use instead of detecting
  * @returns Resolved project configuration or null if required information is missing
  */
 export const createOrLoadProjectConfig = async (
-  cwd: string,
+  projectRoot: string,
   existingProjectInfo: ProjectInfo | null = null,
 ) => {
-  const projectRoot = path.resolve(process.cwd(), cwd);
   const [existingConfig, projectInfo] = await Promise.all([
     loadProjectConfig(projectRoot),
     existingProjectInfo
