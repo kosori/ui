@@ -24,9 +24,12 @@ export const init = new Command()
     'the working directory. defaults to current working directory',
     process.cwd(),
   )
-  .action(async (opts) => {
+  .action(async ({ cwd, ...opts }: { cwd: string }) => {
     try {
-      const options = InitOptions.parse(opts);
+      const options = InitOptions.parse({
+        cwd: path.resolve(cwd),
+        ...opts,
+      });
 
       p.intro(highlighter.bgInfo(highlighter.bold(' @kosori/cli init ')));
 
