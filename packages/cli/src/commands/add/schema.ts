@@ -1,19 +1,18 @@
 import { z } from 'zod';
 
-export const typeSchema = z
-  .literal('components')
-  .or(z.literal('hooks'))
-  .optional();
+export type Type = z.infer<typeof Type>;
+export const Type = z.literal('components').or(z.literal('hooks')).optional();
 
-export const itemsSchema = z.array(z.string());
+export type Items = z.infer<typeof Items>;
+export const Items = z.array(z.string());
 
-export const initOptionsSchema = z.object({
+export type InitOptions = z.infer<typeof InitOptions>;
+export const InitOptions = z.object({
   yes: z.boolean(),
   overwrite: z.boolean(),
   cwd: z.string(),
   all: z.boolean(),
   path: z.string().optional(),
-  silent: z.boolean(),
 });
 
 export const indexSingle = z.object({
