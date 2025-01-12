@@ -15,16 +15,16 @@ export const InitOptions = z.object({
   path: z.string().optional(),
 });
 
-export const indexSingle = z.object({
+export type ComponentIndex = z.infer<typeof ComponentIndex>;
+export const ComponentIndex = z.object({
   name: z.string(),
   dependencies: z.array(z.string()).optional(),
   required: z.array(z.string()).optional(),
   type: z.literal('component:ui'),
 });
 
-export type Index = z.infer<typeof index>;
-export const index = z.array(indexSingle);
+export type ComponentsIndices = z.infer<typeof ComponentsIndices>;
+export const ComponentsIndices = z.array(ComponentIndex);
 
-export const component = indexSingle.extend({ content: z.string() });
-
-export const components = z.array(component);
+export type ComponentJson = z.infer<typeof ComponentJson>;
+export const ComponentJson = ComponentIndex.extend({ content: z.string() });
