@@ -51,7 +51,7 @@
     "picocolors": "^1.1.1",
     "ts-morph": "^25.0.0",
     "tsconfig-paths": "^4.2.0",
-    "type-fest": "^4.31.0"
+    "type-fest": "^4.32.0"
   },
   "devDependencies": {
     "@kosori/eslint-config": "workspace:*",
