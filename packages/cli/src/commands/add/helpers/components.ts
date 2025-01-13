@@ -144,11 +144,16 @@ export class ComponentManager {
         },
       },
     ]);
-    const componentsToInstall = this.options.all
+    const rawComponentsToInstall = this.options.all
       ? indices.map(({ name }) => name)
       : componentList.length
         ? componentList
         : await this.promptForComponentSelection(indices);
+    const componentsToInstall = this.options.all
+      ? rawComponentsToInstall
+      : indices
+          .filter(({ name }) => rawComponentsToInstall.includes(name))
+          .flatMap(({ name, required }) => [name, ...(required ?? [])]);
 
     const components = await this.fetchComponentsJson(componentsToInstall);
     const transformedComponents = await this.tansformComponents(components);
