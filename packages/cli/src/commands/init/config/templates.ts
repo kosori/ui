@@ -1,0 +1,326 @@
+export const CN_FUNCTION = `import type { ClassValue } from "clsx";
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));`;
+
+export const TAILWIND_IMPORT_PLUGIN = `import animate from 'tailwindcss-animate';`;
+
+export const TAILWIND_THEME = `
+      borderRadius: {
+        none: '0px',
+        sm: 'calc(var(--radius) - 3px)',
+        DEFAULT: 'var(--radius)',
+        md: 'var(--radius)',
+        lg: 'calc(var(--radius) + 3px)',
+        xl: 'calc(var(--radius) + 6px)',
+        '2xl': 'calc(var(--radius) + 9px)',
+        '3xl': 'calc(var(--radius) + 12px)',
+        full: '9999px',
+      },
+
+      colors: {
+        primary: {
+          base: 'hsl(var(--primary-1))',
+          'bg-subtle': 'hsl(var(--primary-2))',
+          bg: 'hsl(var(--primary-3))',
+          'bg-hover': 'hsl(var(--primary-4))',
+          'bg-active': 'hsl(var(--primary-5))',
+          line: 'hsl(var(--primary-6))',
+          border: 'hsl(var(--primary-7))',
+          'border-hover': 'hsl(var(--primary-8))',
+          'focus-ring': 'hsl(var(--primary-8))',
+          solid: 'hsl(var(--primary-9))',
+          'solid-hover': 'hsl(var(--primary-10))',
+          text: 'hsl(var(--primary-11))',
+          'text-contrast': 'hsl(var(--primary-12))',
+        },
+
+        grey: {
+          base: 'hsl(var(--grey-1))',
+          'bg-subtle': 'hsl(var(--grey-2))',
+          bg: 'hsl(var(--grey-3))',
+          'bg-hover': 'hsl(var(--grey-4))',
+          'bg-active': 'hsl(var(--grey-5))',
+          line: 'hsl(var(--grey-6))',
+          border: 'hsl(var(--grey-7))',
+          'border-hover': 'hsl(var(--grey-8))',
+          'focus-ring': 'hsl(var(--grey-8))',
+          solid: 'hsl(var(--grey-9))',
+          'solid-hover': 'hsl(var(--grey-10))',
+          text: 'hsl(var(--grey-11))',
+          'text-contrast': 'hsl(var(--grey-12))',
+        },
+
+        info: {
+          base: 'hsl(var(--info-1))',
+          'bg-subtle': 'hsl(var(--info-2))',
+          bg: 'hsl(var(--info-3))',
+          'bg-hover': 'hsl(var(--info-4))',
+          'bg-active': 'hsl(var(--info-5))',
+          line: 'hsl(var(--info-6))',
+          border: 'hsl(var(--info-7))',
+          'border-hover': 'hsl(var(--info-8))',
+          'focus-ring': 'hsl(var(--info-8))',
+          solid: 'hsl(var(--info-9))',
+          'solid-hover': 'hsl(var(--info-10))',
+          text: 'hsl(var(--info-11))',
+          'text-contrast': 'hsl(var(--info-12))',
+        },
+
+        success: {
+          base: 'hsl(var(--success-1))',
+          'bg-subtle': 'hsl(var(--success-2))',
+          bg: 'hsl(var(--success-3))',
+          'bg-hover': 'hsl(var(--success-4))',
+          'bg-active': 'hsl(var(--success-5))',
+          line: 'hsl(var(--success-6))',
+          border: 'hsl(var(--success-7))',
+          'border-hover': 'hsl(var(--success-8))',
+          'focus-ring': 'hsl(var(--success-8))',
+          solid: 'hsl(var(--success-9))',
+          'solid-hover': 'hsl(var(--success-10))',
+          text: 'hsl(var(--success-11))',
+          'text-contrast': 'hsl(var(--success-12))',
+        },
+
+        warning: {
+          base: 'hsl(var(--warning-1))',
+          'bg-subtle': 'hsl(var(--warning-2))',
+          bg: 'hsl(var(--warning-3))',
+          'bg-hover': 'hsl(var(--warning-4))',
+          'bg-active': 'hsl(var(--warning-5))',
+          line: 'hsl(var(--warning-6))',
+          border: 'hsl(var(--warning-7))',
+          'border-hover': 'hsl(var(--warning-8))',
+          'focus-ring': 'hsl(var(--warning-8))',
+          solid: 'hsl(var(--warning-9))',
+          'solid-hover': 'hsl(var(--warning-10))',
+          text: 'hsl(var(--warning-11))',
+          'text-contrast': 'hsl(var(--warning-12))',
+        },
+
+        error: {
+          base: 'hsl(var(--error-1))',
+          'bg-subtle': 'hsl(var(--error-2))',
+          bg: 'hsl(var(--error-3))',
+          'bg-hover': 'hsl(var(--error-4))',
+          'bg-active': 'hsl(var(--error-5))',
+          line: 'hsl(var(--error-6))',
+          border: 'hsl(var(--error-7))',
+          'border-hover': 'hsl(var(--error-8))',
+          'focus-ring': 'hsl(var(--error-8))',
+          solid: 'hsl(var(--error-9))',
+          'solid-hover': 'hsl(var(--error-10))',
+          text: 'hsl(var(--error-11))',
+          'text-contrast': 'hsl(var(--error-12))',
+        },
+      },
+
+      keyframes: {
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
+        'caret-blink': {
+          '0%,70%,100%': { opacity: '1' },
+          '20%,50%': { opacity: '0' },
+        },
+        'collapsible-down': {
+          from: { height: '0' },
+          to: {
+            height: 'var(--radix-collapsible-content-height)',
+          },
+        },
+        'collapsible-up': {
+          from: {
+            height: 'var(--radix-collapsible-content-height)',
+          },
+          to: { height: '0' },
+        },
+        shimmer: {
+          '100%': {
+            transform: 'translateX(100%)',
+          },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        'caret-blink': 'caret-blink 1.25s ease-out infinite',
+        'collapsible-down': 'collapsible-down 0.15s ease-out',
+        'collapsible-up': 'collapsible-up 0.15s ease-out',
+        shimmer: 'shimmer 2s infinite',
+      `;
+
+export const GLOBALS_CSS = `@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --radius: 0.25rem;
+ 
+    --primary-1: 240 20% 99%;
+    --primary-2: 240 20% 98%;
+    --primary-3: 240 11.1% 94.7%;
+    --primary-4: 240 9.52% 91.8%;
+    --primary-5: 250 10.7% 89%;
+    --primary-6: 257 9.86% 86.1%;
+    --primary-7: 253 9.89% 82.2%;
+    --primary-8: 245 8.66% 75.1%;
+    --primary-9: 250 8.57% 13.7%;
+    --primary-10: 249 6.19% 22.2%;
+    --primary-11: 255 3.88% 40.4%;
+    --primary-12: 250 8.57% 13.7%;
+ 
+    --grey-1: 300 20% 99%;
+    --grey-2: 270 20% 98%;
+    --grey-3: 285 14% 95%;
+    --grey-4: 276 12% 92%;
+    --grey-5: 274 12% 89%;
+    --grey-6: 262 11% 86%;
+    --grey-7: 258 11% 82%;
+    --grey-8: 249 10% 75%;
+    --grey-9: 249 6% 57%;
+    --grey-10: 250 5% 53%;
+    --grey-11: 252 5% 41%;
+    --grey-12: 257 10% 14%;
+ 
+    --info-1: 210 100% 99%;
+    --info-2: 207 100% 98%;
+    --info-3: 205 92% 95%;
+    --info-4: 203 100% 92%;
+    --info-5: 206 100% 88%;
+    --info-6: 207 93% 83%;
+    --info-7: 207 85% 76%;
+    --info-8: 206 82% 65%;
+    --info-9: 206 100% 50%;
+    --info-10: 207 96% 48%;
+    --info-11: 208 88% 43%;
+    --info-12: 216 71% 23%;
+ 
+    --success-1: 140 60% 99%;
+    --success-2: 137 47% 97%;
+    --success-3: 139 47% 93%;
+    --success-4: 140 49% 89%;
+    --success-5: 142 44% 84%;
+    --success-6: 144 41% 77%;
+    --success-7: 146 40% 68%;
+    --success-8: 151 40% 54%;
+    --success-9: 151 55% 42%;
+    --success-10: 152 56% 39%;
+    --success-11: 154 60% 32%;
+    --success-12: 155 40% 16%;
+ 
+    --warning-1: 60 50% 98%;
+    --warning-2: 54 91% 95%;
+    --warning-3: 56 100% 86%;
+    --warning-4: 53 100% 79%;
+    --warning-5: 50 100% 72%;
+    --warning-6: 48 85% 68%;
+    --warning-7: 46 70% 65%;
+    --warning-8: 45 65% 53%;
+    --warning-9: 53 100% 58%;
+    --warning-10: 52 100% 50%;
+    --warning-11: 41 100% 31%;
+    --warning-12: 42 39% 20%;
+ 
+    --error-1: 0 100% 99%;
+    --error-2: 0 100% 98%;
+    --error-3: 357 90% 96%;
+    --error-4: 358 100% 93%;
+    --error-5: 359 100% 90%;
+    --error-6: 359 94% 87%;
+    --error-7: 359 77% 81%;
+    --error-8: 359 70% 74%;
+    --error-9: 358 75% 59%;
+    --error-10: 358 69% 55%;
+    --error-11: 358 65% 49%;
+    --error-12: 351 63% 24%;
+ 
+    .dark {
+      --primary-1: 260 8.11% 7.25%;
+      --primary-2: 260 5.66% 10.4%;
+      --primary-3: 255 5.56% 14.1%;
+      --primary-4: 260 3.45% 17.1%;
+      --primary-5: 264 4.95% 19.8%;
+      --primary-6: 270 5% 23.5%;
+      --primary-7: 260 4.05% 29%;
+      --primary-8: 260 3.03% 38.8%;
+      --primary-9: 270 6.25% 93.7%;
+      --primary-10: 260 4.11% 71.4%;
+      --primary-11: 260 4.11% 71.4%;
+      --primary-12: 270 6.25% 93.7%;
+ 
+      --grey-1: 270 6% 7%;
+      --grey-2: 270 4% 10%;
+      --grey-3: 260 4% 14%;
+      --grey-4: 270 5% 17%;
+      --grey-5: 264 5% 20%;
+      --grey-6: 270 5% 24%;
+      --grey-7: 257 5% 29%;
+      --grey-8: 258 5% 39%;
+      --grey-9: 251 5% 45%;
+      --grey-10: 251 4% 50%;
+      --grey-11: 258 7% 72%;
+      --grey-12: 240 6% 94%;
+ 
+      --info-1: 215 42% 9%;
+      --info-2: 218 39% 11%;
+      --info-3: 212 69% 16%;
+      --info-4: 209 100% 19%;
+      --info-5: 207 100% 23%;
+      --info-6: 209 79% 30%;
+      --info-7: 211 66% 37%;
+      --info-8: 211 65% 45%;
+      --info-9: 206 100% 50%;
+      --info-10: 210 100% 62%;
+      --info-11: 210 100% 72%;
+      --info-12: 205 100% 88%;
+ 
+      --success-1: 154 20% 7%;
+      --success-2: 153 20% 9%;
+      --success-3: 152 41% 13%;
+      --success-4: 154 55% 15%;
+      --success-5: 154 52% 19%;
+      --success-6: 153 46% 23%;
+      --success-7: 152 44% 28%;
+      --success-8: 151 45% 34%;
+      --success-9: 151 55% 42%;
+      --success-10: 151 55% 45%;
+      --success-11: 151 65% 54%;
+      --success-12: 144 70% 82%;
+ 
+      --warning-1: 47 29% 6%;
+      --warning-2: 45 29% 8%;
+      --warning-3: 45 80% 10%;
+      --warning-4: 48 100% 11%;
+      --warning-5: 47 100% 13%;
+      --warning-6: 48 95% 16%;
+      --warning-7: 46 63% 25%;
+      --warning-8: 45 60% 32%;
+      --warning-9: 53 100% 58%;
+      --warning-10: 60 100% 67%;
+      --warning-11: 53 90% 62%;
+      --warning-12: 53 79% 84%;
+ 
+      --error-1: 0 19% 8%;
+      --error-2: 355 25% 10%;
+      --error-3: 350 53% 15%;
+      --error-4: 348 68% 19%;
+      --error-5: 350 63% 23%;
+      --error-6: 352 53% 29%;
+      --error-7: 355 47% 37%;
+      --error-8: 358 45% 49%;
+      --error-9: 358 75% 59%;
+      --error-10: 360 79% 65%;
+      --error-11: 2 100% 79%;
+      --error-12: 350 100% 91%;
+    }
+  }
+}`;

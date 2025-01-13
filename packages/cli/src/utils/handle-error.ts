@@ -1,16 +1,16 @@
-import { consola } from 'consola/basic';
+import { logger } from '~/utils/logger';
 
 export const handleError = (error: unknown) => {
   if (typeof error === 'string') {
-    consola.error(error);
+    logger.error(error);
     process.exit(1);
   }
 
   if (error instanceof Error) {
-    consola.error(error.message);
+    logger.error(error.message);
     process.exit(1);
   }
 
-  consola.error('Something went wrong. Please try again.');
+  logger.error('Something went wrong. Please try again.');
   process.exit(1);
 };

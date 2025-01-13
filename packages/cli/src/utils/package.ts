@@ -1,27 +1,21 @@
 import { detect } from '@antfu/ni';
 
-export type PackageManager = 'yarn' | 'pnpm' | 'npm' | 'bun';
-
-export const getPackageManager = async ({
-  targetDir,
-}: {
-  targetDir: string;
-}) => {
-  const detectedPackageManager = await detect({
-    cwd: targetDir,
+/**
+ * Detects the package manager used in a project
+ * Falls back to npm if no specific package manager is detected
+ *
+ * @param projectRoot - The root directory of the project
+ * @returns Promise resolving to the detected package manager
+ */
+export const detectPackageManager = async (projectRoot: string) => {
+  const detectedManager = await detect({
+    cwd: projectRoot,
     programmatic: true,
   });
 
-  if (!detectedPackageManager) return 'npm';
+  if (detectedManager === 'yarn@berry') return 'yarn';
+  if (detectedManager === 'pnpm@6') return 'pnpm';
+  if (detectedManager === 'bun') return 'bun';
 
-  const packageManagerMap: Record<string, PackageManager> = {
-    'yarn@berry': 'yarn',
-    'yarn@1': 'yarn',
-    pnpm: 'pnpm',
-    'pnpm@6': 'pnpm',
-    npm: 'npm',
-    bun: 'bun',
-  };
-
-  return packageManagerMap[detectedPackageManager] ?? 'npm';
+  return detectedManager ?? 'npm';
 };

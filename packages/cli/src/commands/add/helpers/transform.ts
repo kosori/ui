@@ -4,62 +4,91 @@ import path from 'path';
 import type { SourceFile } from 'ts-morph';
 import { Project, ScriptKind } from 'ts-morph';
 
-import type { Config } from '~/commands/init/schema';
-
 const project = new Project({ compilerOptions: {} });
 
-export const createTempSourceFile = async ({
-  filename,
-}: {
-  filename: string;
-}) => {
-  const dir = await fs.mkdtemp(path.join(tmpdir(), 'kosori-'));
+/** Type for module specifier and alias pairs */
+type ModuleMappings = { specifier: string; alias: string }[];
 
-  return path.join(dir, filename);
+/**
+ * Creates a temporary source file in the system's temporary directory.
+ *
+ * @param filename - The name of the temporary file to create.
+ * @returns The full path to the created temporary file.
+ */
+export const createTemporarySourceFile = async (
+  filename: string,
+): Promise<string> => {
+  const tempDir = await fs.mkdtemp(path.join(tmpdir(), 'kosori-'));
+  return path.join(tempDir, filename);
 };
 
-export const replaceImports = ({
-  sourceFile,
-  config,
-}: {
+type UpdateImportDeclarations = {
   sourceFile: SourceFile;
-  config: Config;
-}) => {
+  moduleMappings: ModuleMappings;
+};
+
+/**
+ * Replaces specific import declarations in a source file based on the provided
+ * configuration and module specifier mappings.
+ *
+ * @param params - The parameters for replacing imports.
+ * @param params.sourceFile - The source file to modify.
+ * @param params.moduleMappings - An array of module specifier and alias pairs.
+ * @returns The modified source file.
+ */
+export const updateImportDeclarations = ({
+  sourceFile,
+  moduleMappings,
+}: UpdateImportDeclarations): SourceFile => {
   const importDeclarations = sourceFile.getImportDeclarations();
 
   for (const importDeclaration of importDeclarations) {
     const moduleSpecifier = importDeclaration.getModuleSpecifierValue();
 
-    // Replace @kosori/ui with the components alias.
-    if (moduleSpecifier.startsWith('@kosori/ui/')) {
-      importDeclaration.setModuleSpecifier(
-        moduleSpecifier.replace(/^@kosori\/ui/, config.aliases.ui),
-      );
+    for (const { specifier, alias } of moduleMappings) {
+      const regex = new RegExp(`^${specifier}`);
+      if (moduleSpecifier.startsWith(specifier)) {
+        importDeclaration.setModuleSpecifier(
+          moduleSpecifier.replace(regex, alias),
+        );
+      }
     }
   }
 
   return sourceFile;
 };
 
-export const transform = async ({
-  config,
-  name,
-  content,
-}: {
-  config: Config;
+type TransformContent = {
   name: string;
   content: string;
-}) => {
-  const tempFile = await createTempSourceFile({ filename: name });
+  moduleMappings: ModuleMappings;
+};
+
+/**
+ * Transforms the provided content by creating a temporary source file,
+ * updating its import declarations, and returning the modified content.
+ *
+ * @param params - The parameters for the transformation.
+ * @param params.name - The name of the temporary source file.
+ * @param params.content - The content to be transformed.
+ * @param params.moduleMappings - An array of module specifier and alias pairs.
+ * @returns The full text of the modified source file.
+ */
+export const transformContent = async ({
+  name,
+  content,
+  moduleMappings,
+}: TransformContent): Promise<string> => {
+  const tempFilePath = await createTemporarySourceFile(name);
   const sourceFile = project.createSourceFile(
-    tempFile,
+    tempFilePath,
     content.replace(/\\n/g, '\n'),
     {
       scriptKind: ScriptKind.JSX,
     },
   );
 
-  replaceImports({ sourceFile, config });
+  updateImportDeclarations({ sourceFile, moduleMappings });
 
   return sourceFile.getFullText();
 };

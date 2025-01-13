@@ -1,21 +1,26 @@
 import { execa } from 'execa';
 
-import type { PackageManager } from './package';
+import { detectPackageManager } from '~/utils/package';
 
-export const installDependencies = async ({
-  packageManager,
-  dependencies,
-  targetDir,
-}: {
-  packageManager: PackageManager;
-  dependencies: string[];
-  targetDir: string;
-}) => {
-  return await execa(
-    packageManager,
-    [packageManager === 'npm' ? 'install' : 'add', ...dependencies],
-    {
-      cwd: targetDir,
-    },
-  );
+/**
+ * Installs project dependencies using the detected package manager
+ * @param dependencies - Array of dependency packages to install
+ * @param projectRoot - Root directory where dependencies should be installed
+ * @returns Promise resolving to installation result
+ */
+export const installDependencies = async (
+  dependencies: string[],
+  projectRoot: string,
+) => {
+  const uniqueDependencies = [...new Set(dependencies)];
+
+  if (uniqueDependencies.length === 0) return;
+
+  const packageManager = await detectPackageManager(projectRoot);
+
+  const installCommand = packageManager === 'npm' ? 'install' : 'add';
+
+  await execa(packageManager, [installCommand, ...uniqueDependencies], {
+    cwd: projectRoot,
+  });
 };

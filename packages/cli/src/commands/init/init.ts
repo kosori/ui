@@ -1,118 +1,106 @@
-import { existsSync } from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
 import * as p from '@clack/prompts';
 import { Command } from 'commander';
-import color from 'picocolors';
 
+import type { ProjectInfo } from '~/types/project-info';
+import { createOrLoadProjectConfig } from '~/utils/config';
 import { installDependencies } from '~/utils/dependencies';
-import { handleError } from '~/utils/handleError';
-import { highlight } from '~/utils/highlight';
-import { getPackageManager } from '~/utils/package';
-import { INITIAL_DEPENDENCIES } from './config';
-import { createConfig } from './helpers/createConfig';
-import { existsConfig, tailwindExists } from './helpers/exists';
-import { getProjectConfig } from './helpers/getProjectInfo';
-import { writeTemplates } from './helpers/writeTemplates';
-import { initOptionsSchema, typeSchema } from './schema';
+import { handleError } from '~/utils/handle-error';
+import { highlighter } from '~/utils/highlighter';
+import { logger } from '~/utils/logger';
+import { INITIAL_DEPENDENCIES } from './config/dependencies';
+import { validateProject } from './helpers/pre-check';
+import { generateProjectTemplates } from './helpers/templates';
+import { InitOptions } from './schema';
 
 export const init = new Command()
   .name('init')
   .description('initializes your project')
-  .argument('<type>', 'the type to initialize')
   .option('-y, --yes', 'skip confirmation prompt', false)
+  .option('-f, --force', 'overwrite existing files', false)
   .option(
     '-c, --cwd <path>',
     'the working directory. defaults to current working directory',
     process.cwd(),
   )
-  .option('-s, --silent', 'no output', false)
-  .action(async (cliType, opts) => {
+  .action(async ({ cwd, ...opts }: { cwd: string }) => {
     try {
-      const type = typeSchema.parse(cliType);
-      const options = initOptionsSchema.parse(opts);
-      const cwd = path.resolve(options.cwd);
-      const skip = options.yes;
+      const options = InitOptions.parse({
+        cwd: path.resolve(cwd),
+        ...opts,
+      });
 
-      if (!existsSync(cwd)) {
-        throw new Error(`Directory ${cwd} does not exist`);
-      }
+      p.intro(highlighter.bgInfo(highlighter.bold(' @kosori/cli init ')));
 
-      if (type === 'ui') {
-        await tailwindExists({ cwd });
-        await existsConfig({ cwd });
+      await runInit(options);
 
-        const projectConfig = await getProjectConfig({ cwd });
-
-        p.intro(color.bgCyan(color.black(' UI ')));
-
-        if (!projectConfig) throw new Error('Failed to get project config');
-        const { resolvedPaths: _, ...config } = projectConfig;
-
-        try {
-          const spin = p.spinner();
-
-          if (!skip) {
-            const shouldContinue = await p.confirm({
-              message: `Write configuration to ${highlight('kosori.config.json')}?`,
-            });
-
-            if (shouldContinue === false) {
-              p.outro(color.bgCyan(color.black(' No config written! ')));
-              return;
-            }
-          }
-
-          spin.start();
-          spin.message('Creating config');
-          await createConfig({ cwd, config });
-          spin.stop('Config created!');
-
-          if (!skip) {
-            const shouldContinue = await p.confirm({
-              // TODO: render `layout.tsx` or `_app.tsx` based on the project type
-              message: `Write ${highlight('globals.css')}, ${highlight('tailwind.config.ts')}, ${highlight('layout.tsx')} and ${highlight('cn.ts')} files?`,
-            });
-
-            if (shouldContinue === false) {
-              p.outro(color.bgCyan(color.black(' No files written! ')));
-              return;
-            }
-          }
-
-          spin.start();
-          spin.message('Writing templates');
-          await writeTemplates({ projectConfig });
-          spin.stop('Files written!');
-
-          if (!skip) {
-            const shouldContinue = await p.confirm({
-              message: `Install the dependencies?`,
-            });
-
-            if (shouldContinue === false) {
-              p.outro(
-                color.bgCyan(color.black(' No dependencies installed! ')),
-              );
-              return;
-            }
-
-            const packageManager = await getPackageManager({ targetDir: cwd });
-            spin.start();
-            spin.message('Installing dependencies');
-            await installDependencies({
-              packageManager,
-              dependencies: INITIAL_DEPENDENCIES,
-              targetDir: cwd,
-            });
-            spin.stop('Dependencies installed!');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-
-        p.outro(color.bgCyan(color.black(' Success! ')));
-      }
+      p.outro(
+        `${highlighter.success('Success!')} Project initialization completed.\n   You may now add components/hooks.`,
+      );
     } catch (error) {
       handleError(error);
     }
   });
+
+const runInit = async (options: InitOptions) => {
+  let projectInfo!: ProjectInfo;
+
+  await p.tasks([
+    {
+      title: 'Cheking requirements',
+      task: async () => {
+        const { projectInfo: pi } = await validateProject(options);
+        projectInfo = pi;
+        return 'Requirements fulfilled';
+      },
+    },
+  ]);
+
+  logger.info(
+    `Your project uses ${highlighter.info(projectInfo.framework.label)}.\nAnd the alias prefix is ${highlighter.info(projectInfo.aliasPrefix)}.`,
+  );
+
+  const { resolvedPaths, ...projectConfig } = await createOrLoadProjectConfig(
+    options.cwd,
+  );
+
+  if (!options.yes) {
+    const shouldContinue = await p.confirm({
+      message: 'Write configuration and files. Proceed?',
+    });
+
+    if (p.isCancel(shouldContinue) || !shouldContinue) {
+      p.cancel(
+        `Operation cancelled. No changes were made to your project.\n   To skip this prompt and proceed automatically next time, run the ${highlighter.bold('init')} command with the ${highlighter.bold('--yes')} flag.`,
+      );
+      process.exit(0);
+    }
+  }
+
+  await p.tasks([
+    {
+      title: 'Writing kosori.config.json',
+      task: async () => {
+        const file = path.resolve(options.cwd, 'kosori.config.json');
+        const data = JSON.stringify(projectConfig, null, 2);
+        await fs.writeFile(file, data, 'utf8');
+        return 'Configuration written';
+      },
+    },
+    {
+      title: 'Writing/updating files',
+      task: async () => {
+        await generateProjectTemplates(resolvedPaths);
+        return 'Files written/updated';
+      },
+    },
+    {
+      title: 'Installing dependencies',
+      task: async () => {
+        await installDependencies(INITIAL_DEPENDENCIES, resolvedPaths.cwd);
+        return 'Dependencies installed';
+      },
+    },
+  ]);
+};
