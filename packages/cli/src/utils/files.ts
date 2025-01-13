@@ -23,6 +23,8 @@ export const writeFile = async ({
 }: WriteFile): Promise<string | undefined> => {
   const { name, content } = file;
   const filePath = path.resolve(targetDir, name);
+  const dirPath = path.dirname(filePath);
+  await fs.mkdir(dirPath, { recursive: true });
 
   if (existsSync(filePath) && !overwrite) return name;
 
