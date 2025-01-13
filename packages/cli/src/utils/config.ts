@@ -3,7 +3,7 @@ import { cosmiconfig } from 'cosmiconfig';
 import { loadConfig } from 'tsconfig-paths';
 
 import type { ProjectInfo } from '~/types/project-info';
-import { Config, RawConfig } from '~/commands/init/schema';
+import { Config, RawConfig } from '~/schema';
 import { highlighter } from '~/utils/highlighter';
 import { getProjectInfo } from '~/utils/project-info';
 import { resolveImport } from '~/utils/resolve-import';
