@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-import type { Config } from '../schema';
+import type { Config } from '~/schema';
 import {
   CN_FUNCTION,
   GLOBALS_CSS,
