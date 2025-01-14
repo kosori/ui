@@ -43,7 +43,7 @@
     "@clack/prompts": "^0.9.1",
     "@prettier/sync": "^0.5.2",
     "commander": "^13.0.0",
-    "consola": "^3.3.3",
+    "consola": "^3.4.0",
     "cosmiconfig": "^9.0.0",
     "execa": "^9.5.2",
     "fast-glob": "^3.3.3",
