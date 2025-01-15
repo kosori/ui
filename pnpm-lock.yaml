@@ -70,8 +70,8 @@ importers:
   apps/www:
     dependencies:
       '@icons-pack/react-simple-icons':
-        specifier: ^10.2.0
-        version: 10.2.0(react@18.3.1)
+        specifier: ^11.0.1
+        version: 11.0.1(react@18.3.1)
       '@kosori/hooks':
         specifier: workspace:*
         version: link:../../packages/hooks
@@ -861,8 +861,8 @@ packages:
       '@vue/compiler-sfc':
         optional: true
 
-  '@icons-pack/react-simple-icons@10.2.0':
-    resolution: {integrity: sha512-QDUxup8D3GdIIzwGpxQs6bjeFV5mJes25qqf4aqP/PaBYQNCar7AiyD8C14636TosCG0A/QqAUwm/Hviep4d4g==}
+  '@icons-pack/react-simple-icons@11.0.1':
+    resolution: {integrity: sha512-K+PsqUAIuWHztSIlUc55CjTXpjSGkrM6Dl0YMKseJCLgbGZKnabaJZ5j8wtSizNaKRjadoQQ5fhjh1OSepdMeg==}
     peerDependencies:
       react: ^16.13 || ^17 || ^18 || ^19
 
@@ -5397,7 +5397,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@icons-pack/react-simple-icons@10.2.0(react@18.3.1)':
+  '@icons-pack/react-simple-icons@11.0.1(react@18.3.1)':
     dependencies:
       react: 18.3.1
 
