@@ -7,9 +7,9 @@ import { DocsBody, DocsPage } from 'fumadocs-ui/page';
 import { Badge } from '@kosori/ui/badge';
 
 import { source } from '~/app/source';
-import { MDXComponents } from '~/components/Mdx';
+import { MDXComponents } from '~/components/mdx';
 import { versions } from '~/config/versions';
-import { Contribute } from '../_components/Contribute';
+import { Contribute } from '../_components/contribute';
 
 export const generateStaticParams = () => {
   return source.generateParams();
