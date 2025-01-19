@@ -17,7 +17,7 @@ export const ComponentPreview = ({
       return (
         <p className='text-sm text-grey-text'>
           Component{' '}
-          <code className='relative rounded bg-grey-bg px-[0.3rem] py-[0.2rem] font-mono text-sm'>
+          <code className='relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm'>
             {name}
           </code>{' '}
           not found in the library.
@@ -35,7 +35,7 @@ export const ComponentPreview = ({
         items={['Preview', 'Code']}
       >
         <Tab className='p-0' value='Preview'>
-          <div className='not-prose flex min-h-[350px] items-center justify-center rounded-b-xl bg-grey-bg-subtle p-4'>
+          <div className='not-prose flex min-h-[350px] items-center justify-center rounded-b-xl p-4'>
             {PreviewComponent}
           </div>
         </Tab>
