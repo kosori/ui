@@ -3,8 +3,8 @@ import type { HomeLayoutProps } from 'fumadocs-ui/layouts/home';
 import { CodeSandboxLogoIcon } from '@radix-ui/react-icons';
 import { AppWindowMacIcon, LayoutTemplateIcon } from 'lucide-react';
 
+import { Logo } from '~/app/_components/logo';
 import { source } from '~/app/source';
-import { Logo } from '~/components/Layout/Logo';
 
 // shared configuration
 export const baseOptions: HomeLayoutProps = {

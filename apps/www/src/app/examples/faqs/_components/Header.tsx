@@ -9,7 +9,7 @@ import {
   NavigationMenuList,
 } from '@kosori/ui/navigation-menu';
 
-import { Logo } from '~/components/Layout/Logo';
+import { Logo } from '~/app/_components/logo';
 
 export const Header = () => {
   return (
