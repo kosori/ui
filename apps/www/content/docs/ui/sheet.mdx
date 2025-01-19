@@ -10,7 +10,7 @@ dependencies: ['@radix-ui/react-dialog']
 <ComponentPreview name='sheet'>
 ```json doc-gen:file
 {
-  "file": "./src/components/demos/Sheet/Sheet.tsx",
+  "file": "./src/components/demos/sheet/sheet.tsx",
   "codeblock": true
 }
 ```
@@ -120,7 +120,7 @@ import {
 <ComponentPreview name='sheet-sides'>
 ```json doc-gen:file
 {
-  "file": "./src/components/demos/Sheet/SheetSides.tsx",
+  "file": "./src/components/demos/sheet/sheet-sides.tsx",
   "codeblock": true
 }
 ```
@@ -133,7 +133,7 @@ You can adjust the size of the sheet using CSS classes:
 ```tsx
 <Sheet>
   <SheetTrigger>Open</SheetTrigger>
-  // [!code highlight:2]
+  // [!code highlight:1]
   <SheetContent className='w-[400px] sm:w-[540px]'>
     <SheetHeader>
       <SheetTitle>Are you absolutely sure?</SheetTitle>

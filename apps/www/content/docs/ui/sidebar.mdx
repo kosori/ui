@@ -129,7 +129,7 @@ export const AppSidebar = () => {
 Let's start with the most basic sidebar. A collapsible sidebar with a menu.
 
 <Steps>
-    
+
     <Step>
       ### Add the provider to root of your app
 
@@ -141,13 +141,16 @@ Let's start with the most basic sidebar. A collapsible sidebar with a menu.
 
       const Layout = ({ children }: React.PropsWithChildren) => {
         return (
-          <SidebarProvider> // [!code highlight]
+          {/* [!code highlight:1] */}
+          <SidebarProvider>
             <AppSidebar />
             <main>
-              <SidebarTrigger />  // [!code highlight]
+              {/* [!code highlight:1] */}
+              <SidebarTrigger />
               {children}
             </main>
-          </SidebarProvider> // [!code highlight]
+          {/* [!code highlight:1] */}
+          </SidebarProvider>
         );
       };
 
@@ -450,11 +453,11 @@ export const AppSidebar = () => {
 ```tsx
 <SidebarProvider>
   <Sidebar variant='inset' />
+  {/* [!code highlight:1] */}
   <SidebarInset>
-    // [!code highlight]
     <main>{children}</main>
+    {/* [!code highlight:1] */}
   </SidebarInset>
-  // [!code highlight]
 </SidebarProvider>
 ```
 
@@ -728,7 +731,7 @@ export const AppSidebar = () => {
   return (
     <SidebarGroup>
       <SidebarGroupLabel asChild>Projects</SidebarGroupLabel>
-      // [!code highlight:4]
+      {/* [!code highlight:3] */}
       <SidebarGroupAction title='Add Project'>
         <Plus /> <span className='sr-only'>Add Project</span>
       </SidebarGroupAction>
@@ -1048,7 +1051,8 @@ const NavProjectsSkeleton = () => {
     <SidebarMenu>
       {Array.from({ length: 5 }).map((_, index) => (
         <SidebarMenuItem key={index}>
-          <SidebarMenuSkeleton showIcon /> // [!code highlight]
+          {/* [!code highlight:1] */}
+          <SidebarMenuSkeleton showIcon />
         </SidebarMenuItem>
       ))}
     </SidebarMenu>
@@ -1089,7 +1093,7 @@ const AppSidebar = () => {
         <SidebarGroup>
           <SidebarGroupLabel>Projects</SidebarGroupLabel>
           <SidebarGroupContent>
-            // [!code highlight:4]
+            {/* [!code highlight:3] */}
             <React.Suspense fallback={<NavProjectsSkeleton />}>
               <NavProjects />
             </React.Suspense>
