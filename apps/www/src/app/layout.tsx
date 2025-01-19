@@ -1,12 +1,11 @@
 import type { Metadata, Viewport } from 'next';
-import { clsx } from 'clsx/lite';
 
 import '~/app/globals.css';
 
 import type { PropsWithChildren } from 'react';
 
-import { ThemeLoader } from '~/components/Layout/ThemeLoader';
 import { Body } from './_components/body';
+import { ThemeLoader } from './_components/theme-loader';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
@@ -65,9 +64,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html suppressHydrationWarning lang='en'>
       <Body>
         <Providers>
-          <div className='' vaul-drawer-wrapper=''>
-            {children}
-          </div>
+          <div vaul-drawer-wrapper=''>{children}</div>
 
           <ThemeLoader />
         </Providers>
