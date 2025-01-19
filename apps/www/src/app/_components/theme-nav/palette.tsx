@@ -5,7 +5,7 @@ import { Button } from '@kosori/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@kosori/ui/popover';
 import { Separator } from '@kosori/ui/separator';
 
-import { ColorOption } from './ColorOption';
+import { ColorOption } from './color-option';
 
 export const Palette = () => {
   return (

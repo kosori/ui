@@ -1,6 +1,6 @@
-import { BorderRadius } from './BorderRadius';
-import { CopyTheme } from './CopyTheme';
-import { Palette } from './Palette';
+import { BorderRadius } from './border-radius';
+import { CopyTheme } from './copy-theme';
+import { Palette } from './palette';
 
 export const ThemeNav = () => {
   return (
