@@ -10,9 +10,9 @@ import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import defaultComponents from 'fumadocs-ui/mdx';
 
-import { ComponentPreview } from '~/components/ComponentPreview';
-import { PagePreview } from '~/components/PagePreview';
-import { InstallTabs, KosoriCLITabs } from './Tabs';
+import { ComponentPreview } from './component-preview';
+import { PagePreview } from './page-preview';
+import { InstallTabs, KosoriCLITabs } from './tabs';
 
 export const MDXComponents: TypeMDXComponents = {
   ...defaultComponents,

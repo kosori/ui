@@ -2,7 +2,7 @@ import type { PropsWithChildren } from 'react';
 import { useMemo } from 'react';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-import { Components } from './Components';
+import { Components } from '~/components/components';
 
 type Props = { name: string };
 
