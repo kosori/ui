@@ -1,0 +1,115 @@
+---
+title: Next.js
+description: Installation guide for Next.js.
+---
+
+<Steps>
+
+  <Step>
+    ### Create project
+
+    Run the `create next-app` command to create a new Next.js project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npm create next-app@latest --ts --tailwind
+      ```
+
+      ```bash tab="pnpm"
+      pnpm create next-app@latest --ts --tailwind
+      ```
+
+      ```bash tab="yarn"
+      yarn create next-app@latest --ts --tailwind
+      ```
+
+      ```bash tab="bun"
+      bun create next-app@latest --ts --tailwind
+      ```
+
+    </KosoriCLITabs>
+
+    Walk through the prompts and choose the options you want.
+
+    ```text
+    What is your project named? › my-app
+    Would you like to use ESLint? › Yes
+    Would you like your code inside a `src/` directory? › Yes
+    Would you like to use App Router? (recommended) › Yes
+    Would you like to use Turbopack for `next dev`? › Yes
+    Would you like to customize the import alias (`@/*` by default)? › Yes
+    What import alias would you like configured? › ~/*
+    ```
+
+  </Step>
+
+  <Step>
+    ### Run the CLI
+
+    Run the `@kosori/cli init` command to configure the project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli init
+      ```
+
+      ```bash tab="pnpm"
+      pnpx @kosori/cli init
+      ```
+
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli init
+      ```
+
+      ```bash tab="bun"
+      bunx @kosori/cli init
+      ```
+
+    </KosoriCLITabs>
+
+  </Step>
+
+  <Step>
+    ### That's it!
+
+    You can now start adding components or hooks to your project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli add components button
+      ```
+
+      ```bash tab="pnpm"
+      pnpx @kosori/cli add components button
+      ```
+
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli add components button
+      ```
+
+      ```bash tab="bun"
+      bunx @kosori/cli add components button
+      ```
+
+    </KosoriCLITabs>
+
+    The command will install the `Button` component to your project. And you can import it in your code.
+
+    ```tsx
+    import { Button } from '~/components/ui/button'; // [!code highlight]
+
+    export const Home = () => {
+      return (
+        <div>
+          {/* [!code highlight:1] */}
+          <Button>Click me</Button>
+        </div>
+      )
+    }
+
+    export default Home;
+    ```
+
+  </Step>
+  
+</Steps>

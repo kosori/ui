@@ -1,0 +1,234 @@
+---
+title: Vite
+description: Installation guide for Vite.
+---
+
+<Steps>
+
+  <Step>
+    ### Create project
+
+    Run the `create vite` command to create a new React project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npm create vite@latest
+      ```
+
+      ```bash tab="pnpm"
+      pnpm create vite@latest
+      ```
+
+      ```bash tab="yarn"
+      yarn create vite@latest
+      ```
+
+      ```bash tab="bun"
+      bun create vite@latest
+      ```
+
+    </KosoriCLITabs>
+
+  </Step>
+
+  <Step>
+    ### Install Tailwind CSS
+
+    Install `tailwindcss` and its peer dependencies.
+
+    ```package-install
+    -D tailwindcss postcss autoprefixer
+    ```
+
+    Then generate the `tailwind.config.js` and `postcss.config.js` files.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx tailwindcss init -p
+      ```
+
+      ```bash tab="pnpm"
+      pnpx tailwindcss init -p
+      ```
+
+      ```bash tab="yarn"
+      yarn dlx tailwindcss init -p
+      ```
+
+      ```bash tab="bun"
+      bunx tailwindcss init -p
+      ```
+
+    </KosoriCLITabs>
+
+    Add this import header in your main css file, src/index.css in this case:
+
+    ```css
+    /* [!code highlight:3] */
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    /* ... */
+    ```
+
+    Configure the tailwind template paths in tailwind.config.js:
+
+    ```js
+    /** @type {import('tailwindcss').Config} */
+    export default {
+      content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"], /* [!code highlight] */
+      theme: {
+        extend: {},
+      },
+      plugins: [],
+    };
+    ```
+
+  </Step>
+
+  <Step>
+    ### Update `tsconfig.json`
+
+    The current version of Vite splits TypeScript configuration into three files, two of which need to be edited.
+    Add the `baseUrl` and `paths` properties to the `compilerOptions` section of the `tsconfig.json` and `tsconfig.app.json` files:
+
+    ```json
+    {
+      "files": [],
+      "references": [
+        { "path": "./tsconfig.app.json" },
+        { "path": "./tsconfig.node.json" }
+      ],
+      /* [!code highlight:6] */
+      "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+          "~/*": ["./src/*"]
+        }
+      }
+    }
+    ```
+
+  </Step>
+
+  <Step>
+    ### Update `tsconfig.app.json`
+
+    Add the following code to the `tsconfig.app.json` file to resolve paths, for your IDE:
+
+    ```json
+    {
+      "compilerOptions": {
+          // ...
+          /* [!code highlight:4] */
+          "baseUrl": ".",
+          "paths": {
+            "~/*": ["./src/*"]
+          },
+        }
+        // ...
+      }
+    }
+    ```
+
+  </Step>
+
+  <Step>
+    ### Update `vite.config.ts`
+
+    Add the following code to the `vite.config.ts` so your app can resolve paths without error:
+
+    ```package-install
+    -D @types/node
+    ```
+
+    ```ts
+    import path from "path"; /* [!code highlight] */
+    import { defineConfig } from "vite";
+    import react from "@vitejs/plugin-react";
+
+    // https://vite.dev/config/
+    export default defineConfig({
+      plugins: [react()],
+      /* [!code highlight:5] */
+      resolve: {
+        alias: {
+          "~": path.resolve(__dirname, "./src"),
+        },
+      },
+    });
+    ```
+
+  </Step>
+
+  <Step>
+    ### Run the CLI
+
+    Run the `@kosori/cli init` command to configure the project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli init
+      ```
+
+      ```bash tab="pnpm"
+      pnpx @kosori/cli init
+      ```
+
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli init
+      ```
+
+      ```bash tab="bun"
+      bunx @kosori/cli init
+      ```
+
+    </KosoriCLITabs>
+
+  </Step>
+
+  <Step>
+    ### That's it!
+
+    You can now start adding components or hooks to your project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli add components button
+      ```
+
+      ```bash tab="pnpm"
+      pnpx @kosori/cli add components button
+      ```
+
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli add components button
+      ```
+
+      ```bash tab="bun"
+      bunx @kosori/cli add components button
+      ```
+
+    </KosoriCLITabs>
+
+    The command will install the `Button` component to your project. And you can import it in your code.
+
+    ```tsx
+    import { Button } from '~/components/ui/button'; // [!code highlight]
+
+    export const Home = () => {
+      return (
+        <div>
+          {/* [!code highlight:1] */}
+          <Button>Click me</Button>
+        </div>
+      )
+    }
+
+    export default Home;
+    ```
+
+  </Step>
+  
+</Steps>

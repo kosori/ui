@@ -1,0 +1,103 @@
+---
+title: Remix
+description: Installation guide for Remix.
+---
+
+<Steps>
+
+  <Step>
+    ### Create project
+
+    Run the `create remix` command to create a new React project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npm create remix@latest
+      ```
+
+      ```bash tab="pnpm"
+      pnpm create remix@latest
+      ```
+
+      ```bash tab="yarn"
+      yarn create remix@latest
+      ```
+
+      ```bash tab="bun"
+      bun create remix@latest
+      ```
+
+    </KosoriCLITabs>
+
+  </Step>
+
+  <Step>
+    ### Run the CLI
+
+    Run the `@kosori/cli init` command to configure the project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli init
+      ```
+
+      ```bash tab="pnpm"
+      pnpx @kosori/cli init
+      ```
+
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli init
+      ```
+
+      ```bash tab="bun"
+      bunx @kosori/cli init
+      ```
+
+    </KosoriCLITabs>
+
+  </Step>
+
+  <Step>
+    ### That's it!
+
+    You can now start adding components or hooks to your project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli add components button
+      ```
+
+      ```bash tab="pnpm"
+      pnpx @kosori/cli add components button
+      ```
+
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli add components button
+      ```
+
+      ```bash tab="bun"
+      bunx @kosori/cli add components button
+      ```
+
+    </KosoriCLITabs>
+
+    The command will install the `Button` component to your project. And you can import it in your code.
+
+    ```tsx
+    import { Button } from '~/components/ui/button'; // [!code highlight]
+
+    export const Home = () => {
+      return (
+        <div>
+          {/* [!code highlight:1] */}
+          <Button>Click me</Button>
+        </div>
+      )
+    }
+
+    export default Home;
+    ```
+
+  </Step>
+  
+</Steps>

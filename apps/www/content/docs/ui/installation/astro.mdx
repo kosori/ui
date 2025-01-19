@@ -1,0 +1,181 @@
+---
+title: Astro
+description: Installation guide for Astro.
+---
+
+<Steps>
+
+  <Step>
+    ### Create project
+
+    Run the `create astro` command to create a new React project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npm create astro@latest --add react --add tailwindcss
+      ```
+
+      ```bash tab="pnpm"
+      pnpm create astro@latest --add react --add tailwindcss
+      ```
+
+      ```bash tab="yarn"
+      yarn create astro@latest --add react --add tailwindcss
+      ```
+
+      ```bash tab="bun"
+      bun create astro@latest --add react --add tailwindcss
+      ```
+
+    </KosoriCLITabs>
+
+    Walk through the prompts and choose the options you want.
+
+    ```text
+    Where should we create your new project? › my-app
+    How would you like to start your new project? › A basic, minimal starter
+    Install dependencies? › Yes
+    Initialize a new git repository? › Yes
+    ```
+
+  </Step>
+
+  <Step>
+    ### Create `.css` file
+
+    Create a new file named `src/styles/global.css` with the following code:
+
+    ```css title="src/styles/global.css"
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+    ```
+
+  </Step>
+
+  <Step>
+    ### Import the `global.css` file
+
+    Import the `global.css` file in your `src/pages/index.astro` file:
+
+    ```astro title="src/pages/index.astro"
+    ---
+    import '@/styles/globals.css'
+    ---
+    ```
+
+  </Step>
+
+  <Step>
+    ### Disable `appBaseStyles`
+
+    To prevent serving the Tailwind base styles twice, we need to tell Astro not to apply the base styles, since we already include them in our own `globals.css` file.
+    To do this, set the `applyBaseStyles` config option for the tailwind plugin in `astro.config.mjs` to `false`.
+
+    ```astro title="astro.config.mjs"
+    export default defineConfig({
+      integrations: [react(), tailwind({ applyBaseStyles: false })] // [!code highlight]
+    });
+    ```
+
+  </Step>
+  
+  <Step>
+    ### Update `tsconfig.json`
+
+    Add the `baseUrl` and `paths` properties to the `compilerOptions` section of the `tsconfig.json` file:
+
+    ```json
+    {
+      "extends": "astro/tsconfigs/strict",
+      "include": [
+        ".astro/types.d.ts",
+        "**/*"
+      ],
+      "exclude": [
+        "dist"
+      ],
+      "compilerOptions": {
+        "jsx": "react-jsx",
+        "jsxImportSource": "react",
+        /* [!code highlight:4] */
+        "baseUrl": ".",
+        "paths": {
+          "~/*": ["./src/*"]
+        }
+      }
+    }
+    ```
+
+  </Step>
+
+  <Step>
+    ### Run the CLI
+
+    Run the `@kosori/cli init` command to configure the project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli init
+      ```
+
+      ```bash tab="pnpm"
+      pnpx @kosori/cli init
+      ```
+
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli init
+      ```
+
+      ```bash tab="bun"
+      bunx @kosori/cli init
+      ```
+
+    </KosoriCLITabs>
+
+  </Step>
+
+  <Step>
+    ### That's it!
+
+    You can now start adding components or hooks to your project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli add components button
+      ```
+
+      ```bash tab="pnpm"
+      pnpx @kosori/cli add components button
+      ```
+
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli add components button
+      ```
+
+      ```bash tab="bun"
+      bunx @kosori/cli add components button
+      ```
+
+    </KosoriCLITabs>
+
+    The command will install the `Button` component to your project. And you can import it in your code.
+
+    ```tsx
+    import { Button } from '~/components/ui/button'; // [!code highlight]
+
+    export const Home = () => {
+      return (
+        <div>
+          {/* [!code highlight:1] */}
+          <Button>Click me</Button>
+        </div>
+      )
+    }
+
+    export default Home;
+    ```
+
+  </Step>
+  
+</Steps>

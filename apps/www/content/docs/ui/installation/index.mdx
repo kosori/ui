@@ -1,31 +1,54 @@
 ---
 title: Installation
-description: How to set up Kõsori UI in your Next.js project.
+description: How to install Kõsori UI on your project.
 icon: Rocket
 ---
 
-import { Footprints, Terminal } from 'lucide-react';
+import {
+  SiAstro,
+  SiGatsby,
+  SiNextdotjs,
+  SiReact,
+  SiRemix,
+  SiVite,
+} from '@icons-pack/react-simple-icons';
 
-The following guides assumes that you have a Next.js project created with:
-
-```bash
-npm create next-app@latest kosori-example --typescript --tailwind --eslint
-```
-
-You can install Kõsori UI using the CLI or doing the installation manually.
+## Frameworks
 
 <Cards>
   <Card
-    icon={<Terminal />}
-    href="/docs/ui/installation/cli"
-    title="CLI"
-    description="Installation using the Kósori CLI."
+    icon={<SiNextdotjs />}
+    href="/docs/ui/installation/next"
+    title="Next.js"
+  />
+  
+  <Card
+    icon={<SiVite />}
+    href="/docs/ui/installation/vite"
+    title="Vite"
   />
 
   <Card
-    icon={<Footprints />}
+    icon={<SiRemix />}
+    href="/docs/ui/installation/remix"
+    title="Remix"
+  />
+  
+  <Card
+    icon={<SiAstro />}
+    href="/docs/ui/installation/astro"
+    title="Astro"
+  />
+  
+  <Card
+    icon={<SiGatsby />}
+    href="/docs/ui/installation/gatsby"
+    title="Gatsby"
+  />
+  
+  <Card
+    icon={<SiReact />}
     href="/docs/ui/installation/manual"
     title="Manual"
-    description="Step by step manually installation."
   />
 </Cards>

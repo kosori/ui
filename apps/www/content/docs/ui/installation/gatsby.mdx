@@ -1,0 +1,155 @@
+---
+title: Gatsby
+description: Installation guide for Gatsby.
+---
+
+<Steps>
+
+  <Step>
+    ### Create project
+
+    Run the `create next-app` command to create a new Next.js project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npm create gatsby@latest -ts
+      ```
+
+      ```bash tab="pnpm"
+      pnpm create gatsby@latest -ts
+      ```
+
+      ```bash tab="yarn"
+      yarn create gatsby@latest -ts
+      ```
+
+      ```bash tab="bun"
+      bun create gatsby@latest -ts
+      ```
+
+    </KosoriCLITabs>
+
+    Walk through the prompts and choose the options you want.
+
+    ```text
+    What would you like to call your site? › my-app
+    What would you like to name the folder where your site will be created? › my-ap
+    Will you be using a CMS? › Choose whatever you want
+    Would you like to install a styling system? › Tailwind CSS
+    Would you like to install additional features with other plugins? › Choose whatever you want
+    Shall we do this? › Yes
+    ```
+
+  </Step>
+
+  <Step>
+    ### Update `tsconfig.json`
+
+    Add the `baseUrl` and `paths` properties to the `compilerOptions` section of the `tsconfig.json` file:
+
+    ```json
+    {
+      /* ... */
+      "compilerOptions": {
+        /* [!code highlight:4] */
+        "baseUrl": ".",
+        "paths": {
+          "~/*": ["./src/*"]
+        }
+      }
+      /* ... */
+    }
+    ```
+
+  </Step>
+
+  <Step>
+    ### Create `gatsby-node.ts`
+
+    ```ts
+    import * as path from "path";
+
+    export const onCreateWebpackConfig = ({ actions }) => {
+      actions.setWebpackConfig({
+        resolve: {
+          alias: {
+            "~/components": path.resolve(__dirname, "src/components"),
+            "~/lib/utils": path.resolve(__dirname, "src/lib/utils"),
+          },
+        },
+      });
+    };
+    ```
+
+  </Step>
+
+  <Step>
+    ### Create project
+
+    Run the `@kosori/cli init` command to configure the project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli init
+      ```
+
+      ```bash tab="pnpm"
+      pnpx @kosori/cli init
+      ```
+
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli init
+      ```
+
+      ```bash tab="bun"
+      bunx @kosori/cli init
+      ```
+
+    </KosoriCLITabs>
+
+  </Step>
+
+  <Step>
+    ### That's it!
+
+    You can now start adding components or hooks to your project.
+
+    <KosoriCLITabs>
+      ```bash tab="npm"
+      npx @kosori/cli add components button
+      ```
+
+      ```bash tab="pnpm"
+      pnpx @kosori/cli add components button
+      ```
+
+      ```bash tab="yarn"
+      yarn dlx @kosori/cli add components button
+      ```
+
+      ```bash tab="bun"
+      bunx @kosori/cli add components button
+      ```
+
+    </KosoriCLITabs>
+
+    The command will install the `Button` component to your project. And you can import it in your code.
+
+    ```tsx
+    import { Button } from '~/components/ui/button'; // [!code highlight]
+
+    export const Home = () => {
+      return (
+        <div>
+          {/* [!code highlight:1] */}
+          <Button>Click me</Button>
+        </div>
+      )
+    }
+
+    export default Home;
+    ```
+
+  </Step>
+  
+</Steps>
