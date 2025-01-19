@@ -6,7 +6,10 @@ import { baseOptions } from '~/config/layout';
 
 const MarketingLayout = ({ children }: PropsWithChildren) => {
   return (
-    <HomeLayout {...baseOptions}>
+    <HomeLayout
+      className='min-h-screen bg-grey-base text-grey-text'
+      {...baseOptions}
+    >
       {children}
       <ThemeNav />
     </HomeLayout>
