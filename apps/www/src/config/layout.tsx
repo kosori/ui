@@ -50,7 +50,17 @@ export const docsOptions: DocsLayoutProps = {
 
         return {
           ...option,
-          icon: <div className=''>{node.icon}</div>,
+          icon: (
+            <div
+              className='rounded-md border bg-gradient-to-t from-grey-bg-subtle p-0.5 shadow-md'
+              style={{
+                color: `hsl(var(--${meta.file.dirname}-color))`,
+                backgroundColor: `hsl(var(--${meta.file.dirname}-color)/.3)`,
+              }}
+            >
+              {node.icon}
+            </div>
+          ),
         };
       },
     },
