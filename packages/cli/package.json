@@ -42,7 +42,7 @@
     "@clack/core": "^0.4.1",
     "@clack/prompts": "^0.9.1",
     "@prettier/sync": "^0.5.2",
-    "commander": "^13.0.0",
+    "commander": "^13.1.0",
     "consola": "^3.4.0",
     "cosmiconfig": "^9.0.0",
     "execa": "^9.5.2",
