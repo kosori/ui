@@ -182,8 +182,8 @@ importers:
   packages/cli:
     dependencies:
       '@antfu/ni':
-        specifier: ^23.2.0
-        version: 23.2.0
+        specifier: ^23.3.0
+        version: 23.3.0
       '@clack/core':
         specifier: ^0.4.1
         version: 0.4.1
@@ -555,8 +555,8 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  '@antfu/ni@23.2.0':
-    resolution: {integrity: sha512-PsqWG9QcgTQ0eyEMxYaaJMxoCaCmy8InPkToC7MQuOHHUPQknMZtCrnzZSZDXk+X9Z93eGFh+v0mE2X6FWNtuw==}
+  '@antfu/ni@23.3.0':
+    resolution: {integrity: sha512-H3avrIQMnmo8rJu9w62vE/c4WGgLCGemnBDg83pgdARIttKgyJpTOX5hQ4JFjeZ7fRfrzkRCCDg3vLxseH4Xtg==}
     hasBin: true
 
   '@babel/code-frame@7.26.2':
@@ -5141,7 +5141,7 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
-  '@antfu/ni@23.2.0': {}
+  '@antfu/ni@23.3.0': {}
 
   '@babel/code-frame@7.26.2':
     dependencies:
