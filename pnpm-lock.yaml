@@ -35,10 +35,10 @@ catalogs:
       version: 3.24.1
   react18:
     '@types/react':
-      specifier: ^18.3.11
+      specifier: ^18.3.18
       version: 18.3.18
     '@types/react-dom':
-      specifier: ^18.3.1
+      specifier: ^18.3.5
       version: 18.3.5
     react:
       specifier: 18.3.1
