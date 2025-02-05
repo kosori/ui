@@ -40,7 +40,7 @@
   "dependencies": {
     "@antfu/ni": "^23.3.1",
     "@clack/core": "^0.4.1",
-    "@clack/prompts": "^0.9.1",
+    "@clack/prompts": "^0.10.0",
     "@prettier/sync": "^0.5.2",
     "commander": "^13.1.0",
     "consola": "^3.4.0",
