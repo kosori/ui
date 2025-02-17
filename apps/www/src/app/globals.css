@@ -4,14 +4,26 @@
 
 .ui {
   --fd-primary: var(--ui-color);
+  --fd-background: var(--grey-1);
+  --fd-secondary: var(--grey-3);
+  --fd-accent: var(--grey-4);
+  --fd-card: var(--grey-1);
 }
 
 .hooks {
   --fd-primary: var(--hooks-color);
+  --fd-background: var(--grey-1);
+  --fd-secondary: var(--grey-3);
+  --fd-accent: var(--grey-4);
+  --fd-card: var(--grey-1);
 }
 
 .mini {
   --fd-primary: var(--mini-color);
+  --fd-background: var(--grey-1);
+  --fd-secondary: var(--grey-3);
+  --fd-accent: var(--grey-4);
+  --fd-card: var(--grey-1);
 }
 
 @layer base {
