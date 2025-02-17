@@ -50,7 +50,10 @@ export const ComboboxPopoverDemo = () => {
       <p className='text-sm text-grey-text'>Status</p>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button className='w-[150px] justify-start' variant='outline'>
+          <Button
+            className='w-[150px] justify-start font-normal'
+            variant='outline'
+          >
             {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set status</>}
           </Button>
         </PopoverTrigger>

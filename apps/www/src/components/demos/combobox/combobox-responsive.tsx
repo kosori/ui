@@ -52,7 +52,10 @@ export const ComboboxResponsiveDemo = () => {
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button className='w-[150px] justify-start' variant='outline'>
+          <Button
+            className='w-[150px] justify-start font-normal'
+            variant='outline'
+          >
             {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set status</>}
           </Button>
         </PopoverTrigger>
@@ -66,7 +69,10 @@ export const ComboboxResponsiveDemo = () => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button className='w-[150px] justify-start' variant='outline'>
+        <Button
+          className='w-[150px] justify-start font-normal'
+          variant='outline'
+        >
           {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set status</>}
         </Button>
       </DrawerTrigger>
