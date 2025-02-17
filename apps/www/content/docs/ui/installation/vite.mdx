@@ -10,24 +10,9 @@ description: Installation guide for Vite.
 
     Run the `create vite` command to create a new React project.
 
-    <KosoriCLITabs>
-      ```bash tab="npm"
-      npm create vite@latest
-      ```
-
-      ```bash tab="pnpm"
-      pnpm create vite@latest
-      ```
-
-      ```bash tab="yarn"
-      yarn create vite@latest
-      ```
-
-      ```bash tab="bun"
-      bun create vite@latest
-      ```
-
-    </KosoriCLITabs>
+    ```package-install
+    npm create vite
+    ```
 
   </Step>
 
@@ -42,24 +27,9 @@ description: Installation guide for Vite.
 
     Then generate the `tailwind.config.js` and `postcss.config.js` files.
 
-    <KosoriCLITabs>
-      ```bash tab="npm"
-      npx tailwindcss init -p
-      ```
-
-      ```bash tab="pnpm"
-      pnpx tailwindcss init -p
-      ```
-
-      ```bash tab="yarn"
-      yarn dlx tailwindcss init -p
-      ```
-
-      ```bash tab="bun"
-      bunx tailwindcss init -p
-      ```
-
-    </KosoriCLITabs>
+    ```package-install
+    npx tailwindcss init -p
+    ```
 
     Add this import header in your main css file, src/index.css in this case:
 
@@ -167,24 +137,9 @@ description: Installation guide for Vite.
 
     Run the `@kosori/cli init` command to configure the project.
 
-    <KosoriCLITabs>
-      ```bash tab="npm"
-      npx @kosori/cli init
-      ```
-
-      ```bash tab="pnpm"
-      pnpx @kosori/cli init
-      ```
-
-      ```bash tab="yarn"
-      yarn dlx @kosori/cli init
-      ```
-
-      ```bash tab="bun"
-      bunx @kosori/cli init
-      ```
-
-    </KosoriCLITabs>
+    ```package-install
+    npx @kosori/cli init
+    ```
 
   </Step>
 
@@ -193,24 +148,9 @@ description: Installation guide for Vite.
 
     You can now start adding components or hooks to your project.
 
-    <KosoriCLITabs>
-      ```bash tab="npm"
-      npx @kosori/cli add components button
-      ```
-
-      ```bash tab="pnpm"
-      pnpx @kosori/cli add components button
-      ```
-
-      ```bash tab="yarn"
-      yarn dlx @kosori/cli add components button
-      ```
-
-      ```bash tab="bun"
-      bunx @kosori/cli add components button
-      ```
-
-    </KosoriCLITabs>
+    ```package-install
+    npx @kosori/cli add components button
+    ```
 
     The command will install the `Button` component to your project. And you can import it in your code.
 
