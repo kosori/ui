@@ -12,7 +12,7 @@ import defaultComponents from 'fumadocs-ui/mdx';
 
 import { ComponentPreview } from './component-preview';
 import { PagePreview } from './page-preview';
-import { InstallTabs, KosoriCLITabs } from './tabs';
+import { InstallTabs } from './tabs';
 
 export const MDXComponents: TypeMDXComponents = {
   ...defaultComponents,
@@ -37,6 +37,5 @@ export const MDXComponents: TypeMDXComponents = {
   TypeTable,
   // Custom
   InstallTabs,
-  KosoriCLITabs,
   PagePreview,
 };
