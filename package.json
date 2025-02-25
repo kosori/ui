@@ -21,9 +21,9 @@
   "prettier": "@kosori/prettier-config",
   "devDependencies": {
     "@kosori/prettier-config": "workspace:*",
-    "@turbo/gen": "^2.4.3",
+    "@turbo/gen": "^2.4.4",
     "prettier": "catalog:",
-    "turbo": "^2.4.3",
+    "turbo": "^2.4.4",
     "typescript": "catalog:"
   },
   "packageManager": "pnpm@10.4.1",
