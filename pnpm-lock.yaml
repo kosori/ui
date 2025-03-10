@@ -182,8 +182,8 @@ importers:
   packages/cli:
     dependencies:
       '@antfu/ni':
-        specifier: ^23.3.1
-        version: 23.3.1
+        specifier: ^24.1.0
+        version: 24.1.0
       '@clack/core':
         specifier: ^0.4.1
         version: 0.4.1
@@ -555,8 +555,8 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  '@antfu/ni@23.3.1':
-    resolution: {integrity: sha512-C90iyzm/jLV7Lomv2UzwWUzRv9WZr1oRsFRKsX5HjQL4EXrbi9H/RtBkjCP+NF+ABZXUKpAa4F1dkoTaea4zHg==}
+  '@antfu/ni@24.1.0':
+    resolution: {integrity: sha512-Pq54C1N16BjLX4aHd7VJiuqxl+KoT9wOSyAZSnC2qDf1MraZ2c2b6FldjfeNsP1HBPvNhlCmZI91bNdmwXuuWQ==}
     hasBin: true
 
   '@babel/code-frame@7.26.2':
@@ -2379,6 +2379,10 @@ packages:
     resolution: {integrity: sha512-bN798gFfQX+viw3R7yrGWRqnrN2oRkEkUjjl4JNn4E8GxxbjtG3FbrEIIY3l8/hrwUwIeCZvi4QuOTP4MErVug==}
     engines: {node: '>=12'}
 
+  ansis@3.17.0:
+    resolution: {integrity: sha512-0qWUglt9JEqLFr3w1I1pbrChn1grhaiAR2ocX1PP/flRmxgtwTzPFFFnfIlD6aMOLQZgSuCRlidD70lvx8yhzg==}
+    engines: {node: '>=14'}
+
   any-promise@1.3.0:
     resolution: {integrity: sha512-7UvmKalWRt1wgjL1RrGxoSJW/0QZFIegpeGvZG9kjp8vrRu55XTHbwnqq2GpXm9uLbcuhxm3IqX9OB4MZR1b2A==}
 
@@ -3269,6 +3273,9 @@ packages:
 
   functions-have-names@1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
+
+  fzf@0.5.2:
+    resolution: {integrity: sha512-Tt4kuxLXFKHy8KT40zwsUPUkg1CrsgY25FxA2U/j/0WgEDCk3ddc/zLTCCcbSHX9FcKtLuVaDGtGE/STWC+j3Q==}
 
   geist@1.3.1:
     resolution: {integrity: sha512-Q4gC1pBVPN+D579pBaz0TRRnGA4p9UK6elDY/xizXdFk/g4EKR5g0I+4p/Kj6gM0SajDBZ/0FvDV9ey9ud7BWw==}
@@ -4209,6 +4216,9 @@ packages:
 
   package-json-from-dist@1.0.1:
     resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
+
+  package-manager-detector@1.0.0:
+    resolution: {integrity: sha512-7elnH+9zMsRo7aS72w6MeRugTpdRvInmEB4Kmm9BVvPw/SLG8gXUGQ+4wF0Mys0RSWPz0B9nuBbDe8vFeA2sfg==}
 
   param-case@2.1.1:
     resolution: {integrity: sha512-eQE845L6ot89sk2N8liD8HAuH4ca6Vvr7VWAWwt7+kvvG5aBcPmmphQ68JsEG2qa9n1TykS2DLeMt363AAH8/w==}
@@ -5320,7 +5330,12 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
-  '@antfu/ni@23.3.1': {}
+  '@antfu/ni@24.1.0':
+    dependencies:
+      ansis: 3.17.0
+      fzf: 0.5.2
+      package-manager-detector: 1.0.0
+      tinyexec: 0.3.2
 
   '@babel/code-frame@7.26.2':
     dependencies:
@@ -7144,6 +7159,8 @@ snapshots:
 
   ansi-styles@6.2.1: {}
 
+  ansis@3.17.0: {}
+
   any-promise@1.3.0: {}
 
   anymatch@3.1.3:
@@ -8310,6 +8327,8 @@ snapshots:
       is-callable: 1.2.7
 
   functions-have-names@1.2.3: {}
+
+  fzf@0.5.2: {}
 
   geist@1.3.1(next@15.2.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
@@ -9617,6 +9636,8 @@ snapshots:
       netmask: 2.0.2
 
   package-json-from-dist@1.0.1: {}
+
+  package-manager-detector@1.0.0: {}
 
   param-case@2.1.1:
     dependencies:
