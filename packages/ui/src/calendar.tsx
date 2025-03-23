@@ -1,112 +1,85 @@
 'use client';
 
-import type { CalendarDay, DayPickerProps, Modifiers } from 'react-day-picker';
-import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronUpIcon,
-} from '@radix-ui/react-icons';
+import type { DayPickerProps } from 'react-day-picker';
+import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 import { clsx } from 'clsx/lite';
 import { DayPicker } from 'react-day-picker';
 import { tv } from 'tailwind-variants';
 
-import { Button, buttonStyles } from '@kosori/ui/button';
+import { buttonStyles } from '@kosori/ui/button';
 
 const calendarStyles = tv({
   slots: {
-    base: 'p-2',
-    // classes
-    months: 'relative flex',
-    month_caption: 'relative mx-10 flex h-7 items-center justify-center',
-    weekdays: 'flex flex-row',
-    weekday: 'w-8 select-none text-[0.8rem] font-normal text-grey-text',
-    month: 'w-full gap-y-4',
-    caption: 'relative flex items-center justify-center pt-1',
-    caption_label: 'truncate text-sm font-medium',
-    button_next: buttonStyles({
-      variant: 'outline',
-      icon: true,
-      size: 'small',
-      className: clsx(
-        'absolute right-0 size-7 bg-transparent p-0 opacity-50',
-        'hover:opacity-100',
-      ),
-    }),
+    months: 'relative flex flex-col gap-4 sm:flex-row',
+    month: 'w-full',
+    month_caption:
+      'relative z-20 mx-10 mb-1 flex h-9 items-center justify-center',
+    caption_label: 'text-sm font-medium',
+    nav: 'absolute top-0 z-10 flex w-full justify-between',
     button_previous: buttonStyles({
-      variant: 'outline',
+      variant: 'ghost',
       icon: true,
       size: 'small',
       className: clsx(
-        'absolute left-0 size-7 bg-transparent opacity-50',
-        'hover:opacity-100',
+        'size-9 p-0 text-grey-text',
+        'hover:text-grey-text-contrast',
       ),
     }),
-    nav: 'flex items-start',
-    month_grid: 'mt-4',
-    week: 'mt-2 flex w-full',
-    day: 'rounded-lg p-0',
-    // day button
-    day_button_base: 'bg-transparent font-normal text-grey-text',
-    today: clsx(
-      'bg-primary-bg font-medium text-primary-solid',
-      'hover:bg-primary-bg-hover',
-      'active:bg-primary-bg-active',
+    button_next: buttonStyles({
+      variant: 'ghost',
+      icon: true,
+      size: 'small',
+      className: clsx(
+        'size-9 p-0 text-grey-text',
+        'hover:text-grey-text-contrast',
+      ),
+    }),
+    weekday: 'size-9 p-0 text-xs font-normal text-grey-text',
+    day_button: clsx(
+      'relative flex size-9 items-center justify-center whitespace-nowrap rounded-lg p-0 text-grey-text-contrast outline-none',
+      'hover:bg-grey-bg hover:text-grey-text-contrast',
+      'focus-visible:z-10 focus-visible:ring-4 focus-visible:ring-grey-focus-ring',
+      'group-data-[disabled]:pointer-events-none group-data-[disabled]:text-grey-solid group-data-[disabled]:line-through',
+      'group-data-[selected]:bg-primary-solid group-data-[selected]:text-primary-base',
+      'group-data-[outside]:text-grey-solid',
+      'group-data-[selected]:group-data-[outside]:text-primary-base',
+      'group-[.range-middle]:group-data-[selected]:bg-grey-bg group-[.range-middle]:group-data-[selected]:text-grey-text-contrast',
+      'group-[.range-middle]:rounded-none',
+      'group-[.range-end:not(.range-start)]:rounded-s-none',
+      'group-[.range-start:not(.range-end)]:rounded-e-none',
+      'group-[[data-selected]:not(.range-middle)]:duration-150 group-[[data-selected]:not(.range-middle)]:[transition-property:color,background-color,border-radius,box-shadow]',
     ),
-    outside: 'pointer-events-none text-grey-text opacity-50',
-    disabled: '!bg-transparent !text-grey-line',
+    day: 'group size-9 px-0 py-px text-sm',
+    range_start: 'range-start',
+    range_end: 'range-end',
+    range_middle: 'range-middle',
+    today:
+      '*:after:pointer-events-none *:after:absolute *:after:bottom-1 *:after:start-1/2 *:after:z-10 *:after:size-[3px] *:after:-translate-x-1/2 *:after:rounded-full *:after:bg-primary-solid *:after:transition-colors [&[data-disabled]>*]:after:bg-grey-line [&[data-selected]:not(.range-middle)>*]:after:bg-grey-base',
+    outside:
+      'text-grey-text data-[selected]:bg-grey-bg-active data-[selected]:text-grey-text',
     hidden: 'invisible',
-    selected: clsx(
-      'bg-primary-solid text-primary-base',
-      'hover:bg-primary-solid-hover',
-      'active:bg-primary-solid-hover',
-    ),
-    range_start: clsx(
-      'rounded-e-none rounded-s-lg bg-primary-solid text-primary-base',
-      'hover:bg-primary-solid-hover',
-      'active:bg-primary-solid-hover',
-    ),
-    range_end: clsx(
-      'rounded-e-lg rounded-s-none bg-primary-solid text-primary-base',
-      'hover:bg-primary-solid-hover',
-      'active:bg-primary-solid-hover',
-    ),
-    range_middle: clsx(
-      'rounded-none bg-primary-bg text-primary-text-contrast',
-      'hover:bg-primary-bg-hover',
-      'active:bg-primary-bg-active',
-    ),
-    disabled_range_middle: 'bg-primary-solid',
-    range_start_end: 'rounded-lg',
+    week_number: 'size-9 select-none p-0 text-xs font-medium text-grey-text',
   },
 });
 
 const {
-  base,
   months,
-  month_caption,
-  weekdays,
-  weekday,
   month,
-  caption,
+  month_caption,
   caption_label,
-  button_next,
-  button_previous,
   nav,
-  month_grid,
-  week,
+  button_previous,
+  button_next,
+  weekday,
+  day_button,
   day,
-  day_button_base,
-  today,
-  outside,
-  disabled,
-  hidden,
-  selected,
   range_start,
   range_end,
   range_middle,
-  disabled_range_middle,
-  range_start_end,
+  today,
+  outside,
+  hidden,
+  week_number,
 } = calendarStyles();
 
 export type CalendarProps = DayPickerProps;
@@ -115,30 +88,52 @@ export const Calendar = ({
   className,
   classNames,
   showOutsideDays = true,
+  components: userComponents,
   ...props
 }: CalendarProps) => {
   return (
     <DayPicker
-      className={base({ className })}
+      className={clsx('w-fit', className)}
       classNames={{
         months: months(),
-        month_caption: month_caption(),
-        weekdays: weekdays(),
-        weekday: weekday(),
         month: month(),
-        caption: caption(),
+        month_caption: month_caption(),
         caption_label: caption_label(),
-        button_next: button_next(),
-        button_previous: button_previous(),
         nav: nav(),
-        month_grid: month_grid(),
-        week: week(),
+        button_previous: button_previous(),
+        button_next: button_next(),
+        weekday: weekday(),
+        day_button: day_button(),
         day: day(),
+        range_start: range_start(),
+        range_end: range_end(),
+        range_middle: range_middle(),
+        today: today(),
+        outside: outside(),
+        hidden: hidden(),
+        week_number: week_number(),
         ...classNames,
       }}
       components={{
-        DayButton,
-        Chevron,
+        Chevron: (props) => {
+          if (props.orientation === 'left')
+            return (
+              <ChevronLeftIcon
+                className='size-4'
+                {...props}
+                aria-hidden='true'
+              />
+            );
+
+          return (
+            <ChevronRightIcon
+              className='size-4'
+              {...props}
+              aria-hidden='true'
+            />
+          );
+        },
+        ...userComponents,
       }}
       showOutsideDays={showOutsideDays}
       {...props}
@@ -147,62 +142,3 @@ export const Calendar = ({
 };
 
 Calendar.displayName = 'Calendar';
-
-type DayButtonProps = {
-  day: CalendarDay;
-  modifiers: Modifiers;
-} & JSX.IntrinsicElements['button'];
-
-const DayButton = ({
-  modifiers,
-  className,
-  ...buttonProps
-}: DayButtonProps) => {
-  return (
-    <Button
-      icon
-      className={clsx(
-        className,
-        day_button_base(),
-        modifiers.today && today(),
-        modifiers.outside && outside(),
-        modifiers.disabled && disabled(),
-        modifiers.hidden && hidden(),
-        modifiers.selected && selected(),
-        modifiers.range_start && range_start(),
-        modifiers.range_end && range_end(),
-        modifiers.range_middle && range_middle(),
-        modifiers.disabled && modifiers.range_middle && disabled_range_middle(),
-        modifiers.range_start && modifiers.range_end && range_start_end(),
-      )}
-      size='small'
-      variant='ghost'
-      {...buttonProps}
-      aria-disabled={modifiers.disabled ?? buttonProps['aria-disabled']}
-      aria-hidden={modifiers.hidden ?? buttonProps['aria-hidden']}
-      aria-selected={modifiers.selected ?? buttonProps['aria-selected']}
-    />
-  );
-};
-
-type ChevronProps = {
-  className?: string;
-  size?: number;
-  disabled?: boolean;
-  orientation?: 'up' | 'down' | 'left' | 'right';
-};
-
-const Chevron = ({ orientation, disabled, className }: ChevronProps) => {
-  const Component =
-    orientation === 'left'
-      ? ChevronLeftIcon
-      : orientation === 'right'
-        ? ChevronRightIcon
-        : orientation === 'up'
-          ? ChevronUpIcon
-          : ChevronDownIcon;
-
-  return (
-    <Component aria-disabled={disabled} className={clsx('size-4', className)} />
-  );
-};
