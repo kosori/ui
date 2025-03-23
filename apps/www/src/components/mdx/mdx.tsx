@@ -16,9 +16,9 @@ import { InstallTabs } from './tabs';
 
 export const MDXComponents: TypeMDXComponents = {
   ...defaultComponents,
-  pre: ({ ref: _ref, ...props }) => (
+  pre: ({ ref: _ref, children, ...props }) => (
     <CodeBlock {...props}>
-      <Pre className='max-h-[350px]'>{props.children}</Pre>
+      <Pre className='max-h-[350px]'>{children}</Pre>
     </CodeBlock>
   ),
   img: (props) => <ImageZoom {...(props as ImageZoomProps)} />,

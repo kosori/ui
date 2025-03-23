@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss';
-import { createPreset } from 'fumadocs-ui/tailwind-plugin';
 import { fontFamily } from 'tailwindcss/defaultTheme';
 
 import baseConfig from '@kosori/tailwind-config/web';
@@ -14,7 +13,7 @@ export default {
     './content/**/*.{md,mdx}',
     './src/mdx-components.{ts,tsx}',
   ],
-  presets: [createPreset(), baseConfig],
+  presets: [baseConfig],
   theme: {
     extend: {
       fontFamily: {

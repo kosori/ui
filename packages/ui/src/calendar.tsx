@@ -151,7 +151,7 @@ Calendar.displayName = 'Calendar';
 type DayButtonProps = {
   day: CalendarDay;
   modifiers: Modifiers;
-} & JSX.IntrinsicElements['button'];
+} & React.ComponentProps<'button'>;
 
 const DayButton = ({
   modifiers,
