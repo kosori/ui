@@ -44,7 +44,10 @@ export const FormDemo = () => {
 
   return (
     <Form {...form}>
-      <form className='w-2/3 space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className='w-full max-w-xs space-y-6'
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FormField
           control={form.control}
           name='username'
