@@ -646,6 +646,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'input-end-icon': {
+    name: 'input-end-icon',
+    type: 'component:example',
+    component: lazy(() =>
+      import('./demos/input').then((module) => ({
+        default: module.InputEndIconDemo,
+      })),
+    ),
+  },
   'input-file': {
     name: 'input-file',
     type: 'component:example',
