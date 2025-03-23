@@ -102,6 +102,7 @@
       "@radix-ui/react-label",
       "@radix-ui/react-slot",
       "react-hook-form",
+      "zod",
       "@hookform/resolvers"
     ],
     "required": ["label", "button"],
