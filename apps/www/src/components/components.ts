@@ -655,6 +655,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'input-invalid': {
+    name: 'input-invalid',
+    type: 'component:example',
+    component: lazy(() =>
+      import('./demos/input').then((module) => ({
+        default: module.InputInvalidDemo,
+      })),
+    ),
+  },
   'input-label': {
     name: 'input-label',
     type: 'component:example',
