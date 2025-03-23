@@ -673,6 +673,15 @@ export const Components: Record<string, Component> = {
       })),
     ),
   },
+  'input-start-icon': {
+    name: 'input-start-icon',
+    type: 'component:example',
+    component: lazy(() =>
+      import('./demos/input').then((module) => ({
+        default: module.InputStartIconDemo,
+      })),
+    ),
+  },
   'input-otp': {
     name: 'input-otp',
     type: 'component:example',
