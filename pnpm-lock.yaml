@@ -112,8 +112,8 @@ importers:
         specifier: ^14.7.7
         version: 14.7.7(@types/react-dom@18.3.7(@types/react@18.3.21))(@types/react@18.3.21)(fumadocs-core@15.0.11(@types/react@18.3.21)(next@15.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.15.3)(typescript@5.8.3)))
       geist:
-        specifier: ^1.4.1
-        version: 1.4.1(next@15.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        specifier: ^1.4.2
+        version: 1.4.2(next@15.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       jotai:
         specifier: ^2.12.3
         version: 2.12.3(@types/react@18.3.21)(react@18.3.1)
@@ -3814,8 +3814,8 @@ packages:
   fzf@0.5.2:
     resolution: {integrity: sha512-Tt4kuxLXFKHy8KT40zwsUPUkg1CrsgY25FxA2U/j/0WgEDCk3ddc/zLTCCcbSHX9FcKtLuVaDGtGE/STWC+j3Q==}
 
-  geist@1.4.1:
-    resolution: {integrity: sha512-uyVD2rGwXoGNqr+SfXzz3eL2h6zDG72d6vPbfm6u2BEfk8WT23BC1lxSwAV/FIFezPkTutAw00MQ0at5W+5olA==}
+  geist@1.4.2:
+    resolution: {integrity: sha512-OQUga/KUc8ueijck6EbtT07L4tZ5+TZgjw8PyWfxo16sL5FWk7gNViPNU8hgCFjy6bJi9yuTP+CRpywzaGN8zw==}
     peerDependencies:
       next: '>=13.2.0'
 
@@ -9566,7 +9566,7 @@ snapshots:
 
   fzf@0.5.2: {}
 
-  geist@1.4.1(next@15.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  geist@1.4.2(next@15.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       next: 15.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
