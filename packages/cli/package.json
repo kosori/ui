@@ -60,7 +60,7 @@
     "@types/fs-extra": "^11.0.4",
     "eslint": "catalog:",
     "prettier": "catalog:",
-    "tsup": "^8.4.0",
+    "tsup": "^8.5.0",
     "typescript": "catalog:"
   },
   "publishConfig": {
