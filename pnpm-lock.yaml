@@ -106,8 +106,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       fumadocs-mdx:
-        specifier: ^11.6.3
-        version: 11.6.3(acorn@8.14.0)(fumadocs-core@15.0.11(@types/react@18.3.21)(next@15.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        specifier: ^11.6.4
+        version: 11.6.4(acorn@8.14.0)(fumadocs-core@15.0.11(@types/react@18.3.21)(next@15.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       fumadocs-ui:
         specifier: ^14.7.7
         version: 14.7.7(@types/react-dom@18.3.7(@types/react@18.3.21))(@types/react@18.3.21)(fumadocs-core@15.0.11(@types/react@18.3.21)(next@15.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.15.18)(typescript@5.8.3)))
@@ -3399,8 +3399,8 @@ packages:
   estree-util-value-to-estree@3.3.2:
     resolution: {integrity: sha512-hYH1aSvQI63Cvq3T3loaem6LW4u72F187zW4FHpTrReJSm6W66vYTFNO1vH/chmcOulp1HlAj1pxn8Ag0oXI5Q==}
 
-  estree-util-value-to-estree@3.3.3:
-    resolution: {integrity: sha512-Db+m1WSD4+mUO7UgMeKkAwdbfNWwIxLt48XF2oFU9emPfXkIu+k5/nlOj313v7wqtAPo0f9REhUvznFrPkG8CQ==}
+  estree-util-value-to-estree@3.4.0:
+    resolution: {integrity: sha512-Zlp+gxis+gCfK12d3Srl2PdX2ybsEA8ZYy6vQGVQTNNYLEGRQQ56XB64bjemN8kxIKXP1nC9ip4Z+ILy9LGzvQ==}
 
   estree-util-visit@2.0.0:
     resolution: {integrity: sha512-m5KgiH85xAhhW8Wta0vShLcUvOsh3LLPI2YVwcbio1l7E09NTLL1EyMZFM1OyWowoH0skScNbhOPl4kcBgzTww==}
@@ -3545,8 +3545,8 @@ packages:
   fumadocs-docgen@2.0.0:
     resolution: {integrity: sha512-jaM/rsCFEvC8rO6Nf0sYXDHp1xOWPAaz0zJHyFyt/CWFSj/nnBaeVIjN/bFX3ZUb93Nnx0I3s42NzAHYKsZI0w==}
 
-  fumadocs-mdx@11.6.3:
-    resolution: {integrity: sha512-R7ca68TDnPwJGx3YhCzIrcZfqo8Buq9k3piZMFV8ydO6gNJijdJ9iyddHi/D3DABfmMrgEL551EFxRsaDUU27A==}
+  fumadocs-mdx@11.6.4:
+    resolution: {integrity: sha512-pGczNrR+w31JJ8/L9TfFFoe0dGNV43suz2YXyz1iD1yQ2j2VldLqYZ12UyRi7IsqTiVBFUSkRks1iYBRvNr/4w==}
     hasBin: true
     peerDependencies:
       '@fumadocs/mdx-remote': ^1.2.0
@@ -8786,7 +8786,7 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.6
 
-  estree-util-value-to-estree@3.3.3:
+  estree-util-value-to-estree@3.4.0:
     dependencies:
       '@types/estree': 1.0.6
 
@@ -8968,14 +8968,14 @@ snapshots:
       unist-util-visit: 5.0.0
       zod: 3.24.4
 
-  fumadocs-mdx@11.6.3(acorn@8.14.0)(fumadocs-core@15.0.11(@types/react@18.3.21)(next@15.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  fumadocs-mdx@11.6.4(acorn@8.14.0)(fumadocs-core@15.0.11(@types/react@18.3.21)(next@15.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       '@mdx-js/mdx': 3.1.0(acorn@8.14.0)
       '@standard-schema/spec': 1.0.0
       chokidar: 4.0.3
       cross-spawn: 7.0.6
       esbuild: 0.25.4
-      estree-util-value-to-estree: 3.3.3
+      estree-util-value-to-estree: 3.4.0
       fast-glob: 3.3.3
       fumadocs-core: 15.0.11(@types/react@18.3.21)(next@15.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       gray-matter: 4.0.3
