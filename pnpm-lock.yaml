@@ -31,8 +31,8 @@ catalogs:
       specifier: ^5.8.3
       version: 5.8.3
     zod:
-      specifier: ^3.25.7
-      version: 3.25.7
+      specifier: ^3.25.20
+      version: 3.25.20
   react18:
     '@types/react':
       specifier: ^18.3.22
@@ -80,7 +80,7 @@ importers:
         version: link:../../packages/ui
       '@t3-oss/env-nextjs':
         specifier: ^0.11.1
-        version: 0.11.1(typescript@5.8.3)(zod@3.25.7)
+        version: 0.11.1(typescript@5.8.3)(zod@3.25.20)
       '@tanstack/react-query':
         specifier: 'catalog:'
         version: 5.76.1(react@18.3.1)
@@ -134,7 +134,7 @@ importers:
         version: 2.2.2
       zod:
         specifier: 'catalog:'
-        version: 3.25.7
+        version: 3.25.20
     devDependencies:
       '@kosori/eslint-config':
         specifier: workspace:*
@@ -444,7 +444,7 @@ importers:
         version: 5.8.3
       zod:
         specifier: 'catalog:'
-        version: 3.25.7
+        version: 3.25.20
 
   tooling/eslint:
     dependencies:
@@ -5721,8 +5721,8 @@ packages:
     peerDependencies:
       zod: ^3.18.0
 
-  zod@3.24.4:
-    resolution: {integrity: sha512-OdqJE9UDRPwWsrHjLN2F8bPxvwJBK22EHLWtanu0LSYr5YqzsaaW3RMgmjwr8Rypg5k+meEJdSPXJZXE/yqOMg==}
+  zod@3.25.20:
+    resolution: {integrity: sha512-z03fqpTMDF1G02VLKUMt6vyACE7rNWkh3gpXVHgPTw28NPtDFRGvcpTtPwn2kMKtQ0idtYJUTxchytmnqYswcw==}
 
   zod@3.25.7:
     resolution: {integrity: sha512-YGdT1cVRmKkOg6Sq7vY7IkxdphySKnXhaUmFI4r4FcuFVNgpCb9tZfNwXbT6BPjD5oz0nubFsoo9pIqKrDcCvg==}
@@ -7515,16 +7515,16 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@t3-oss/env-core@0.11.1(typescript@5.8.3)(zod@3.25.7)':
+  '@t3-oss/env-core@0.11.1(typescript@5.8.3)(zod@3.25.20)':
     dependencies:
-      zod: 3.25.7
+      zod: 3.25.20
     optionalDependencies:
       typescript: 5.8.3
 
-  '@t3-oss/env-nextjs@0.11.1(typescript@5.8.3)(zod@3.25.7)':
+  '@t3-oss/env-nextjs@0.11.1(typescript@5.8.3)(zod@3.25.20)':
     dependencies:
-      '@t3-oss/env-core': 0.11.1(typescript@5.8.3)(zod@3.25.7)
-      zod: 3.25.7
+      '@t3-oss/env-core': 0.11.1(typescript@5.8.3)(zod@3.25.20)
+      zod: 3.25.20
     optionalDependencies:
       typescript: 5.8.3
 
@@ -8638,8 +8638,8 @@ snapshots:
       '@babel/plugin-transform-private-methods': 7.25.9(@babel/core@7.26.10)
       eslint: 9.27.0(jiti@2.4.2)
       hermes-parser: 0.25.1
-      zod: 3.24.4
-      zod-validation-error: 3.4.0(zod@3.24.4)
+      zod: 3.25.7
+      zod-validation-error: 3.4.0(zod@3.25.7)
     transitivePeerDependencies:
       - supports-color
 
@@ -9000,7 +9000,7 @@ snapshots:
       npm-to-yarn: 3.0.1
       oxc-transform: 0.53.0
       unist-util-visit: 5.0.0
-      zod: 3.25.7
+      zod: 3.25.20
 
   fumadocs-mdx@11.6.5(acorn@8.14.0)(fumadocs-core@15.0.11(@types/react@18.3.22)(next@15.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
@@ -9018,7 +9018,7 @@ snapshots:
       picocolors: 1.1.1
       tinyglobby: 0.2.13
       unist-util-visit: 5.0.0
-      zod: 3.25.7
+      zod: 3.25.20
     transitivePeerDependencies:
       - acorn
       - supports-color
@@ -11705,11 +11705,11 @@ snapshots:
 
   yoctocolors@2.1.1: {}
 
-  zod-validation-error@3.4.0(zod@3.24.4):
+  zod-validation-error@3.4.0(zod@3.25.7):
     dependencies:
-      zod: 3.24.4
+      zod: 3.25.7
 
-  zod@3.24.4: {}
+  zod@3.25.20: {}
 
   zod@3.25.7: {}
 
