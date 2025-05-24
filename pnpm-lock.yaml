@@ -278,7 +278,7 @@ importers:
     dependencies:
       '@hookform/resolvers':
         specifier: ^4.0.0
-        version: 4.0.0(react-hook-form@7.54.2(react@18.3.1))
+        version: 4.0.0(react-hook-form@7.56.4(react@18.3.1))
       '@kosori/hooks':
         specifier: workspace:*
         version: link:../hooks
@@ -388,8 +388,8 @@ importers:
         specifier: ^9.7.0
         version: 9.7.0(react@18.3.1)
       react-hook-form:
-        specifier: ^7.54.2
-        version: 7.54.2(react@18.3.1)
+        specifier: ^7.56.4
+        version: 7.56.4(react@18.3.1)
       react-resizable-panels:
         specifier: ^3.0.2
         version: 3.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -4843,8 +4843,8 @@ packages:
     peerDependencies:
       react: ^18.3.1
 
-  react-hook-form@7.54.2:
-    resolution: {integrity: sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==}
+  react-hook-form@7.56.4:
+    resolution: {integrity: sha512-Rob7Ftz2vyZ/ZGsQZPaRdIefkgOSrQSPXfqBdvOPwJfoGnjwRJUs7EM7Kc1mcoDv3NOtqBzPGbcMB8CGn9CKgw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
@@ -6113,9 +6113,9 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@hookform/resolvers@4.0.0(react-hook-form@7.54.2(react@18.3.1))':
+  '@hookform/resolvers@4.0.0(react-hook-form@7.56.4(react@18.3.1))':
     dependencies:
-      react-hook-form: 7.54.2(react@18.3.1)
+      react-hook-form: 7.56.4(react@18.3.1)
 
   '@humanfs/core@0.19.1': {}
 
@@ -10614,7 +10614,7 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
-  react-hook-form@7.54.2(react@18.3.1):
+  react-hook-form@7.56.4(react@18.3.1):
     dependencies:
       react: 18.3.1
 
