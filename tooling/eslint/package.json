@@ -23,7 +23,7 @@
     "eslint-plugin-react-hooks": "rc",
     "eslint-plugin-tailwindcss": "^3.18.0",
     "eslint-plugin-turbo": "^2.5.4",
-    "typescript-eslint": "^8.34.0"
+    "typescript-eslint": "^8.34.1"
   },
   "devDependencies": {
     "@kosori/prettier-config": "workspace:*",
