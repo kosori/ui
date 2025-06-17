@@ -106,8 +106,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       fumadocs-mdx:
-        specifier: ^11.6.8
-        version: 11.6.8(acorn@8.14.0)(fumadocs-core@15.0.11(@types/react@18.3.23)(next@15.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        specifier: ^11.6.9
+        version: 11.6.9(acorn@8.14.0)(fumadocs-core@15.0.11(@types/react@18.3.23)(next@15.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       fumadocs-ui:
         specifier: ^14.7.7
         version: 14.7.7(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(fumadocs-core@15.0.11(@types/react@18.3.23)(next@15.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.15.32)(typescript@5.8.3)))
@@ -3771,15 +3771,20 @@ packages:
   fumadocs-docgen@2.0.1:
     resolution: {integrity: sha512-wKRofILRuyxJsdT3GLtKE4q+iH5gUGDDklNmrRndz/6Mdn+R2dKNFj+GMh4xGADAQ1bDUU+KVJfiaEZ3UUq0Lw==}
 
-  fumadocs-mdx@11.6.8:
-    resolution: {integrity: sha512-hn+KGXNXRJLAYxTFfBI2dokiV3UCp8hBkB3CUA/pWdMzLg06Vee4UHoVlQm0hKs05XT6syHRbAxaOZvaOviGfQ==}
+  fumadocs-mdx@11.6.9:
+    resolution: {integrity: sha512-Gm29CFOpvBe8m8r4Es0U6xsVvGaKEMiACsJeUYr6QdZiTYKXkl9a+gI6kkOfPJ/Aoyb561mh3Q0JSONX37GT5w==}
     hasBin: true
     peerDependencies:
       '@fumadocs/mdx-remote': ^1.2.0
       fumadocs-core: ^14.0.0 || ^15.0.0
       next: ^15.3.0
+      vite: 6.x.x
     peerDependenciesMeta:
       '@fumadocs/mdx-remote':
+        optional: true
+      next:
+        optional: true
+      vite:
         optional: true
 
   fumadocs-ui@14.7.7:
@@ -9337,7 +9342,7 @@ snapshots:
       unist-util-visit: 5.0.0
       zod: 3.25.67
 
-  fumadocs-mdx@11.6.8(acorn@8.14.0)(fumadocs-core@15.0.11(@types/react@18.3.23)(next@15.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  fumadocs-mdx@11.6.9(acorn@8.14.0)(fumadocs-core@15.0.11(@types/react@18.3.23)(next@15.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       '@mdx-js/mdx': 3.1.0(acorn@8.14.0)
       '@standard-schema/spec': 1.0.0
@@ -9347,12 +9352,13 @@ snapshots:
       fumadocs-core: 15.0.11(@types/react@18.3.23)(next@15.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       js-yaml: 4.1.0
       lru-cache: 11.1.0
-      next: 15.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       picocolors: 1.1.1
       tinyexec: 1.0.1
       tinyglobby: 0.2.14
       unist-util-visit: 5.0.0
       zod: 3.25.67
+    optionalDependencies:
+      next: 15.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     transitivePeerDependencies:
       - acorn
       - supports-color
