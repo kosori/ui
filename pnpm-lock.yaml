@@ -161,8 +161,8 @@ importers:
         specifier: catalog:react18
         version: 18.3.7(@types/react@18.3.23)
       dotenv-cli:
-        specifier: ^8.0.0
-        version: 8.0.0
+        specifier: ^9.0.0
+        version: 9.0.0
       eslint:
         specifier: 'catalog:'
         version: 9.31.0(jiti@1.21.7)
@@ -3393,8 +3393,8 @@ packages:
   dot-case@2.1.1:
     resolution: {integrity: sha512-HnM6ZlFqcajLsyudHq7LeeLDr2rFAVYtDv/hV5qchQEidSck8j9OPUsXY9KwJv/lHMtYlX4DjRQqwFYa+0r8Ug==}
 
-  dotenv-cli@8.0.0:
-    resolution: {integrity: sha512-aLqYbK7xKOiTMIRf1lDPbI+Y+Ip/wo5k3eyp6ePysVaSqbyxjyK3dK35BTxG+rmd7djf5q2UPs4noPNH+cj0Qw==}
+  dotenv-cli@9.0.0:
+    resolution: {integrity: sha512-NhGrQum/u1VTBxnSnlNwVkTP3gojYO8T6Fntyru93wbR1hPo8aFhDFJiBPmkT0771i7f5Rd7EQDaOreS8jY8gA==}
     hasBin: true
 
   dotenv-expand@10.0.0:
@@ -3405,8 +3405,8 @@ packages:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
 
-  dotenv@16.4.7:
-    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
+  dotenv@17.2.0:
+    resolution: {integrity: sha512-Q4sgBT60gzd0BB0lSyYD3xM4YxrXA9y4uBDof1JNYGzOXrQdQ6yX+7XIAqoFOGQFOTK1D3Hts5OllpxMDZFONQ==}
     engines: {node: '>=12'}
 
   dunder-proto@1.0.1:
@@ -8801,10 +8801,10 @@ snapshots:
     dependencies:
       no-case: 2.3.2
 
-  dotenv-cli@8.0.0:
+  dotenv-cli@9.0.0:
     dependencies:
       cross-spawn: 7.0.6
-      dotenv: 16.4.7
+      dotenv: 17.2.0
       dotenv-expand: 10.0.0
       minimist: 1.2.8
 
@@ -8812,7 +8812,7 @@ snapshots:
 
   dotenv@16.0.3: {}
 
-  dotenv@16.4.7: {}
+  dotenv@17.2.0: {}
 
   dunder-proto@1.0.1:
     dependencies:
