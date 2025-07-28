@@ -403,8 +403,8 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1
       tailwind-variants:
-        specifier: ^2.0.0
-        version: 2.0.0(tailwind-merge@3.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.16.5)(typescript@5.8.3)))
+        specifier: ^2.0.1
+        version: 2.0.1(tailwind-merge@3.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.16.5)(typescript@5.8.3)))
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.16.5)(typescript@5.8.3)))
@@ -5597,8 +5597,8 @@ packages:
   tailwind-merge@3.3.1:
     resolution: {integrity: sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g==}
 
-  tailwind-variants@2.0.0:
-    resolution: {integrity: sha512-qXwOfOwrbXsVLgwHypDKQ0bXvqZLyJS5NdgsRFyNi+8NIFuJvx4hDwUFSIwJ3AMMwPlyf2hUGGuLZbT6I6Wldg==}
+  tailwind-variants@2.0.1:
+    resolution: {integrity: sha512-1wt8c4PWO3jbZcKGBrjIV8cehWarREw1C2os0k8Mcq0nof/CbafNhUUjb0LRWiiRfAvDK6v1deswtHLsygKglw==}
     engines: {node: '>=16.x', pnpm: '>=7.x'}
     peerDependencies:
       tailwind-merge: '>=3.0.0'
@@ -11780,7 +11780,7 @@ snapshots:
 
   tailwind-merge@3.3.1: {}
 
-  tailwind-variants@2.0.0(tailwind-merge@3.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.16.5)(typescript@5.8.3))):
+  tailwind-variants@2.0.1(tailwind-merge@3.3.1)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.16.5)(typescript@5.8.3))):
     dependencies:
       tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.16.5)(typescript@5.8.3))
     optionalDependencies:
