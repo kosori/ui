@@ -33,7 +33,7 @@
     "fumadocs-mdx": "^11.6.10",
     "fumadocs-ui": "^14.7.7",
     "geist": "^1.4.2",
-    "jotai": "^2.12.5",
+    "jotai": "^2.13.0",
     "next": "^15.4.5",
     "react": "catalog:react18",
     "react-dom": "catalog:react18",
