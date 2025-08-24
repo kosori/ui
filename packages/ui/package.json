@@ -24,7 +24,7 @@
   },
   "prettier": "@kosori/prettier-config",
   "dependencies": {
-    "@hookform/resolvers": "^4.0.0",
+    "@hookform/resolvers": "^5.2.1",
     "@kosori/hooks": "workspace:*",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
