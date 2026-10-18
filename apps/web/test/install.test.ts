@@ -155,6 +155,26 @@ test('installing the preset and Button leaves a Consumer project that typechecks
 
     expect(existsSync(join(scratch, 'components/ui/button.tsx'))).toBe(true);
 
+    const addExample = await run(
+      shadcn,
+      ['add', '@kosori/button-example', '-y', '-s'],
+      scratch,
+      cliEnv
+    );
+    expect(addExample.exitCode, addExample.stdout + addExample.stderr).toBe(0);
+
+    // The Example is what the page renders, so the file an install writes and
+    // the file the docs read must be the same bytes.
+    const installedExample = await readFile(
+      join(scratch, 'components/button-example.tsx'),
+      'utf8'
+    );
+    const shippedExample = await readFile(
+      join(webDir, 'registry/zen/button-example.tsx'),
+      'utf8'
+    );
+    expect(installedExample).toBe(shippedExample);
+
     const css = await readFile(join(scratch, 'app/globals.css'), 'utf8');
     expect(declarations(css, ':root')).toContain('--background: oklch(1 0 0)');
     expect(declarations(css, ':root')).toContain('--radius: 0.625rem');

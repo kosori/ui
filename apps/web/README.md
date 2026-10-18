@@ -22,13 +22,21 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 ## UI
 
-UI components come from [shadcn/ui](https://ui.shadcn.com/) on top of [Base UI](https://base-ui.com/). Add new components with:
+The `zen` Style ships as a shadcn Registry. Registry source lives in `registry/zen`
+and is built into `public/r/zen` with:
 
 ```sh
-bunx --bun shadcn@latest add <component>
+bun run registry:build
 ```
 
-Components live in `components/ui` and are imported with the `~/` alias, for example `~/components/ui/button`.
+Components arrive as editable source at a Consumer project's own aliases:
+
+```sh
+bunx --bun shadcn@latest add @kosori/button
+```
+
+Inside this app the consumer's `@/components/ui/*` alias resolves to `registry/zen/*`
+(see `tsconfig.json`), so documentation renders the same file an install writes.
 
 Icons come from [`@tabler/icons-react`](https://tabler.io/icons) (`iconLibrary: "tabler"` in `components.json`).
 

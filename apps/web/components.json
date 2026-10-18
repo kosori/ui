@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "base-nova",
+  "style": "zen",
   "rsc": true,
   "tsx": true,
   "tailwind": {
@@ -21,5 +21,7 @@
   },
   "menuColor": "default",
   "menuAccent": "subtle",
-  "registries": {}
+  "registries": {
+    "@kosori": "https://kosori.codingcodax.dev/r/{style}/{name}.json"
+  }
 }
