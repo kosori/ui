@@ -7,6 +7,7 @@
     "build": "next build",
     "check-types": "next typegen && tsc --noEmit",
     "dev": "next dev --port 3000",
+    "registry:build": "shadcn build registry/zen/registry.json -o public/r/zen",
     "start": "next start",
     "test": "bun test"
   },

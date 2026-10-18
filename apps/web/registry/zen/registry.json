@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "kosori",
+  "homepage": "https://kosori.codingcodax.dev",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}
