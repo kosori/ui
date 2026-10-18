@@ -1,4 +1,4 @@
-import { Button } from '~/components/ui/button';
+import { Button } from '@/components/ui/button';
 
 const Page = () => (
   <main className='flex min-h-svh flex-col items-center justify-center gap-6 p-6'>
