@@ -13,6 +13,17 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "button-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button"],
+      "files": [
+        {
+          "path": "registry/zen/button-example.tsx",
+          "type": "registry:example"
+        }
+      ]
     }
   ]
 }

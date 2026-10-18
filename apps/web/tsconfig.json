@@ -7,7 +7,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@/components/ui/*": ["./registry/zen/*"]
     },
     "strictNullChecks": true
   },
