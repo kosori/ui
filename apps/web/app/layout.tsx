@@ -1,4 +1,5 @@
 import { cn } from 'cn';
+import { RootProvider } from 'fumadocs-ui/provider/next';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
@@ -13,13 +14,19 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  description: 'UI web app',
-  title: 'UI',
+  description: 'Copy-paste React components built on Base UI.',
+  title: 'kosori',
 };
 
 const Layout = ({ children }: LayoutProps<'/'>) => (
-  <html className={cn(geistSans.variable, geistMono.variable)} lang='en'>
-    <body>{children}</body>
+  <html
+    className={cn(geistSans.variable, geistMono.variable)}
+    lang='en'
+    suppressHydrationWarning
+  >
+    <body>
+      <RootProvider>{children}</RootProvider>
+    </body>
   </html>
 );
 
