@@ -54,7 +54,8 @@
     "formatter": {
       "quoteStyle": "single",
       "jsxQuoteStyle": "single"
-    }
+    },
+    "globals": ["Bun"]
   },
   "extends": [
     "ultracite/biome/core",
