@@ -1,13 +1,13 @@
-# web
+# @kosori/web
 
-Next.js app for Kiyora.
+Next.js app for UI.
 
 ## Getting Started
 
 Run the development server from the repo root:
 
 ```sh
-turbo dev --filter=web
+turbo dev --filter=@kosori/web
 ```
 
 Or from this directory:
