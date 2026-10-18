@@ -1,0 +1,51 @@
+---
+title: Installation
+description: Set up the zen Style with the shadcn CLI, then add components.
+---
+
+kosori installs through the stock [shadcn CLI](https://ui.shadcn.com/docs/cli).
+There is no kosori CLI and no kosori package: components arrive as source you
+own, at your own aliases.
+
+## Requirements
+
+- A React project the CLI recognises. This page is written against a Next.js
+  app; the CLI detects the framework itself.
+- Tailwind CSS v4. `init` validates this and stops if it finds anything older.
+
+## Set up the Style
+
+```bash
+npx shadcn@latest init --base base --preset https://kosori.codingcodax.dev/init/zen/neutral
+```
+
+Name the Base explicitly with `--base base`. A preset URL carries no Base, and
+without the flag the CLI asks which component library to use.
+
+That one command is the whole setup:
+
+- writes `zen` into `components.json` as the Style;
+- maps the `@kosori` Namespace to the Registry, so every later install resolves
+  `@kosori/<name>` against this Style;
+- copies the Style's Token block into your CSS entry, once for light and once
+  for dark;
+- adds the dependencies the Style needs — `@base-ui/react`,
+  `class-variance-authority`, `cn` and `@tabler/icons-react` — plus
+  `shadcn` and `tw-animate-css` as dev dependencies.
+
+The last segment of the preset URL is the Base color. Read
+[Theming](/docs/zen/theming) to pick a different one.
+
+## Add a component
+
+```bash
+npx shadcn@latest add @kosori/button
+```
+
+Button's source lands at the `ui` alias in your `components.json` — by default
+`@/components/ui/button.tsx` — with its imports rewritten to your aliases. It is
+your file now: edit it as you like.
+
+Because `init` already stored the Namespace, this command needs no arguments
+from you and no network round trip to shadcn's host. Its dependencies were
+installed by `init`; `add` installs anything a later component introduces.
