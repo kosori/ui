@@ -10,9 +10,15 @@ import { notFound, redirect } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import { source } from '@/lib/source';
 
-const Page = async (props: PageProps<'/docs/[[...slug]]'>) => {
+/** Resolve the requested documentation page and the route params that led to it. */
+const getDocsPage = async (props: PageProps<'/docs/[[...slug]]'>) => {
   const params = await props.params;
-  const page = source.getPage(params.slug);
+
+  return { page: source.getPage(params.slug), params };
+};
+
+const Page = async (props: PageProps<'/docs/[[...slug]]'>) => {
+  const { page, params } = await getDocsPage(props);
 
   if (!page) {
     if (!params.slug || params.slug.length === 0) {
@@ -47,8 +53,7 @@ export const generateStaticParams = async () => source.generateParams();
 export const generateMetadata = async (
   props: PageProps<'/docs/[[...slug]]'>
 ): Promise<Metadata> => {
-  const params = await props.params;
-  const page = source.getPage(params.slug);
+  const { page } = await getDocsPage(props);
 
   if (!page) {
     return {};

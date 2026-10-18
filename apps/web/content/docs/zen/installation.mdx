@@ -47,5 +47,7 @@ Button's source lands at the `ui` alias in your `components.json` — by default
 your file now: edit it as you like.
 
 Because `init` already stored the Namespace, this command needs no arguments
-from you and no network round trip to shadcn's host. Its dependencies were
-installed by `init`; `add` installs anything a later component introduces.
+from you. Setup still needs network access to shadcn's host: the CLI fetches its
+style list and Base color data from there, and our preset only removes the
+dependency on the values those return. Its dependencies were installed by
+`init`; `add` installs anything a later component introduces.

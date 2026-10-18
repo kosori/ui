@@ -23,8 +23,10 @@ Choose one by naming it in the preset URL:
 npx shadcn@latest init --base base --preset https://kosori.codingcodax.dev/init/zen/zinc
 ```
 
-The whole palette is written from the preset, so the install never reaches
-shadcn's host for it.
+Every palette value is written from the preset, so the values the CLI fetches
+from shadcn's host are discarded. The CLI still makes that request, so setup
+needs network access to shadcn's host — the in-repo copy removes the dependency
+on the returned values, not on the host.
 
 ## Radius
 

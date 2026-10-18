@@ -102,6 +102,13 @@ const serveInterop = () =>
     port: 0,
   });
 
+/** The Consumer route and layout files ADR-0003 says an install must not touch. */
+const routeFiles = ['app/layout.tsx', 'app/page.tsx'];
+
+/** Read the route and layout files from a project root, byte for byte. */
+const readRouteFiles = (root: string) =>
+  Promise.all(routeFiles.map((file) => readFile(join(root, file), 'utf8')));
+
 /** The declarations a CSS file holds inside a selector's block. */
 const declarations = (css: string, selector: string) => {
   const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -135,6 +142,16 @@ test('installing the preset and Button leaves a Consumer project that typechecks
     expect(config.style).toBe('zen');
     expect(config.tailwind.baseColor).toBe('neutral');
     expect(config.registries['@kosori']).toBe(productionNamespace);
+
+    // ADR-0003: an install writes only the component directory, the CSS entry
+    // and the dependency manifests. The layout and route files come through
+    // byte-identical.
+    const expectRoutesUntouched = async () => {
+      expect(await readRouteFiles(scratch)).toEqual(
+        await readRouteFiles(fixtureDir)
+      );
+    };
+    await expectRoutesUntouched();
 
     // The preset writes the production Namespace; pointing that same handle at
     // the harness afterwards keeps the shipped URL under assertion while the
@@ -174,6 +191,8 @@ test('installing the preset and Button leaves a Consumer project that typechecks
       'utf8'
     );
     expect(installedExample).toBe(shippedExample);
+
+    await expectRoutesUntouched();
 
     const css = await readFile(join(scratch, 'app/globals.css'), 'utf8');
     expect(declarations(css, ':root')).toContain('--background: oklch(1 0 0)');

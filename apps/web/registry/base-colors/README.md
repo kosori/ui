@@ -1,7 +1,9 @@
 # Base colors
 
-An in-repo copy of shadcn's base-colour data, so that an install takes no runtime
-dependency on shadcn's host.
+An in-repo copy of shadcn's base-colour data, so the Token values an install
+writes come from here rather than from the data shadcn's host returns. The CLI
+still fetches that data from the host, so this removes the dependency on the
+values, not on the host.
 
 Each file is the `cssVarsV4` block of `https://ui.shadcn.com/r/colors/<name>.json`
 verbatim: the light and dark Token values for one Base color, in oklch. The seven

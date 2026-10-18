@@ -83,4 +83,4 @@ A hand-written `Readonly<{ children: React.ReactNode }>` is a finding.
 package, `cva` variants, and `data-slot` attributes. Review only divergence from
 the upstream component; the rules above do not apply there.
 
-`registry/**` is the source shipped verbatim to Consumer projects, so it keeps shadcn's conventions for the same reason and the rules above do not apply there either.
+`registry/zen/**` is the source shipped verbatim to Consumer projects, so it keeps shadcn's conventions for the same reason and the rules above do not apply there either.

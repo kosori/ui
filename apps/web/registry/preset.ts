@@ -1,5 +1,5 @@
 import type { RegistryBaseItem, RegistryItem } from 'shadcn/schema';
-import { BASE_COLORS, type BaseColor, DEFAULT_BASE_COLOR } from './base-colors';
+import { BASE_COLORS, type BaseColor } from './base-colors';
 
 /** The Namespace a Consumer project maps to the Registry. */
 export const KOSORI_NAMESPACE = '@kosori';
@@ -74,11 +74,11 @@ export const findStyle = (name: string) => styles.get(name);
 /**
  * Compose the preset document for a Style at a Base color: the `registry:base`
  * item a Consumer project's `init` installs. The Token values are baked in, so
- * the install never reaches shadcn's host for a Base color.
+ * the values the CLI fetches from shadcn's host are discarded.
  */
 export const composeStyleItem = (
   style: Style,
-  baseColor: BaseColor = DEFAULT_BASE_COLOR
+  baseColor: BaseColor
 ): RegistryItem => {
   const tokens = BASE_COLORS[baseColor];
 
