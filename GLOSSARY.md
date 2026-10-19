@@ -25,8 +25,12 @@ A short handle (`@kosori`) that a consumer maps to a registry URL template, lett
 _Avoid_: Scope, alias, channel
 
 **Style**:
-A complete presentation of the library: the component source plus the default token values that source assumes. A consumer settles on one Style per project.
+A presentation of the library: the component source plus the default token values that source assumes. A consumer settles on one Style per project.
 _Avoid_: Preset, variant, skin, theme, flavor
+
+**Incomplete Style**:
+A Style that declares in its definition that it serves only part of the catalog. It may omit items another Style serves, but any item it does serve keeps the same Registry type as everywhere else.
+_Avoid_: Partial style, beta style, unfinished style
 
 **Base**:
 The primitive library kosori's components wrap. kosori has exactly one, Base UI; a project has no way to pick a different one.

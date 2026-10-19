@@ -29,8 +29,9 @@ lives in `registry/<style>` and is built into `public/r/<style>` with:
 bun run registry:build
 ```
 
-The build first enforces parity: every published Style must serve every item
-another Style serves, so a Style cannot become half-installable.
+The build first enforces parity: every complete Style must serve every item
+another complete Style serves, and two Styles that serve an item under the same
+name must agree on its type. An Incomplete Style may serve a subset.
 
 Components arrive as editable source at a Consumer project's own aliases:
 

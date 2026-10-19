@@ -58,6 +58,10 @@ Style is installable only when it serves every item another published Style
 serves, and every preset has a registry directory and a documentation
 directory. Defer the parameterised mechanism.
 
+> **Superseded in part by [ADR-0006](0006-incomplete-styles.md).** Coverage now
+> applies only to complete Styles; an Incomplete Style may serve a subset. Type
+> agreement still applies to every Style.
+
 Triggers for building it, whichever comes first:
 
 - a third Style;
@@ -72,7 +76,10 @@ Triggers for building it, whichever comes first:
 
 - Every new component lands in every published Style. The Registry build fails on
   a missing item or a Style directory without a preset rather than letting a
-  Style become silently half-installable.
+  Style become silently half-installable. **Superseded by
+  [ADR-0006](0006-incomplete-styles.md) for an Incomplete Style:** a complete
+  Style still fails on a missing item, but `kaze` may stay at six while `zen`
+  grows.
 - A Style's design difference is reviewable as six files, not as a whole
   catalogue; everything else in a Style diff is noise that the mechanism will
   delete.

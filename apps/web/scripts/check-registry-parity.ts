@@ -71,23 +71,26 @@ const catalogs = new Map(
 );
 
 const published = [...catalogs.keys()];
-const union = new Set(
-  [...catalogs.values()].flatMap((items) => [...items.keys()])
+const stylesByName = new Map(STYLES.map((style) => [style.name, style]));
+const complete = published.filter(
+  (style) => !stylesByName.get(style)?.incomplete
+);
+const coverage = new Set(
+  complete.flatMap((style) => [...(catalogs.get(style)?.keys() ?? [])])
+);
+const served = new Set(
+  published.flatMap((style) => [...(catalogs.get(style)?.keys() ?? [])])
 );
 
-const problems = published.flatMap((style) => {
+const problems = complete.flatMap((style) => {
   const items = catalogs.get(style);
 
-  return [...union].flatMap((name) => {
-    const type = items?.get(name);
-
-    if (type) {
+  return [...coverage].flatMap((name) => {
+    if (items?.has(name)) {
       return [];
     }
 
-    const servedBy = published.filter((other) =>
-      catalogs.get(other)?.has(name)
-    );
+    const servedBy = complete.filter((other) => catalogs.get(other)?.has(name));
 
     return [
       `${style} does not serve "${name}" (served by ${servedBy.join(', ')})`,
@@ -98,7 +101,7 @@ const problems = published.flatMap((style) => {
 const mismatched = published.flatMap((style) => {
   const items = catalogs.get(style);
 
-  return [...union].flatMap((name) => {
+  return [...served].flatMap((name) => {
     const type = items?.get(name);
     const expected = [...catalogs.values()]
       .find((other) => other.has(name))
@@ -116,6 +119,6 @@ const failures = [...problems, ...mismatched];
 
 if (failures.length > 0) {
   throw new Error(
-    `Registry parity failed. Every published Style must serve every item.\n${failures.join('\n')}`
+    `Registry parity failed. Every complete published Style must serve every item another complete Style serves, and every Style must agree on an item's type.\n${failures.join('\n')}`
   );
 }

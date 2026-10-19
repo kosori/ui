@@ -7,9 +7,10 @@ import {
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
+import { IncompleteStyleBanner } from '@/components/incomplete-style-banner';
 import { getMDXComponents } from '@/components/mdx';
 import { source } from '@/lib/source';
-import { isStyleName } from '@/registry/preset';
+import { findStyle, isStyleName } from '@/registry/preset';
 
 /** Resolve the requested documentation page and the route params that led to it. */
 const getDocsPage = async (props: PageProps<'/docs/[[...slug]]'>) => {
@@ -30,17 +31,20 @@ const Page = async (props: PageProps<'/docs/[[...slug]]'>) => {
   }
 
   const MDX = page.data.body;
-  const style = params.slug?.[0];
+  const segment = params.slug?.[0];
+  const style = segment && isStyleName(segment) ? segment : undefined;
+  const incomplete = style ? findStyle(style)?.incomplete : undefined;
 
   return (
     <DocsPage full={page.data.full} toc={page.data.toc}>
+      {style && incomplete ? <IncompleteStyleBanner name={style} /> : null}
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
         <MDX
           components={getMDXComponents(
             { a: createRelativeLink(source, page) },
-            style && isStyleName(style) ? style : undefined
+            style
           )}
         />
       </DocsBody>
