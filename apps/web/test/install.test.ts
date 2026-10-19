@@ -13,6 +13,7 @@ import {
 import { tmpdir } from 'node:os';
 import { join, relative } from 'node:path';
 import { GET } from '../app/init/[style]/[baseColor]/route';
+import { BASE_COLORS } from '../registry/base-colors';
 import { STYLES, styleRadius } from '../registry/preset';
 
 const webDir = join(import.meta.dirname, '..');
@@ -50,6 +51,29 @@ const REQUIRED_COMPONENTS = [
   'label',
   'separator',
 ];
+
+/**
+ * The semantic state Tokens coss ships. State colour is independent of Base
+ * color, so every palette must declare these exact values.
+ */
+const STATE_TOKENS = {
+  dark: {
+    info: 'var(--color-blue-500)',
+    'info-foreground': 'var(--color-blue-400)',
+    success: 'var(--color-emerald-500)',
+    'success-foreground': 'var(--color-emerald-400)',
+    warning: 'var(--color-amber-500)',
+    'warning-foreground': 'var(--color-amber-400)',
+  },
+  light: {
+    info: 'var(--color-blue-500)',
+    'info-foreground': 'var(--color-blue-700)',
+    success: 'var(--color-emerald-500)',
+    'success-foreground': 'var(--color-emerald-700)',
+    warning: 'var(--color-amber-500)',
+    'warning-foreground': 'var(--color-amber-700)',
+  },
+} as const;
 
 /** The directory shadcn installs a Registry item type into. */
 const installedDirs: Record<string, string> = {
@@ -374,6 +398,64 @@ test('installing a preset and every item of every Style leaves Consumer projects
         expect(typecheck.exitCode, typecheck.stdout + typecheck.stderr).toBe(0);
       } finally {
         await rm(scratch, { force: true, recursive: true });
+      }
+    }
+  } finally {
+    server.stop(true);
+  }
+}, 240_000);
+
+test('init writes the semantic state Tokens for every Base color in both schemes', async () => {
+  const server = serveInterop();
+  const origin = `http://127.0.0.1:${server.port}`;
+  const cliEnv = { ...process.env, REGISTRY_URL: `${origin}/r` };
+
+  try {
+    for (const style of STYLES) {
+      for (const baseColor of Object.keys(BASE_COLORS)) {
+        // biome-ignore lint/performance/noAwaitInLoops: each Base color owns a scratch project and a CLI run
+        const scratch = await mkdtemp(
+          join(tmpdir(), `kosori-tokens-${style.name}-${baseColor}-`)
+        );
+
+        try {
+          await cp(fixtureDir, scratch, { recursive: true });
+          await symlink(
+            join(webDir, 'node_modules'),
+            join(scratch, 'node_modules')
+          );
+
+          const init = await run(
+            shadcn,
+            [
+              'init',
+              `${origin}/init/${style.name}/${baseColor}`,
+              '-f',
+              '-s',
+              '--no-reinstall',
+            ],
+            scratch,
+            cliEnv
+          );
+          expect(init.exitCode, init.stdout + init.stderr).toBe(0);
+
+          const css = await readFile(join(scratch, 'app/globals.css'), 'utf8');
+
+          for (const [token, value] of Object.entries(STATE_TOKENS.light)) {
+            expect(
+              declarations(css, ':root'),
+              `${style.name}/${baseColor} light ${token}`
+            ).toContain(`--${token}: ${value}`);
+          }
+          for (const [token, value] of Object.entries(STATE_TOKENS.dark)) {
+            expect(
+              declarations(css, '.dark'),
+              `${style.name}/${baseColor} dark ${token}`
+            ).toContain(`--${token}: ${value}`);
+          }
+        } finally {
+          await rm(scratch, { force: true, recursive: true });
+        }
       }
     }
   } finally {
