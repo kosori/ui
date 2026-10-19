@@ -10,12 +10,14 @@ import { SeparatorExample as KazeSeparatorExample } from '@/lib/registry/preview
 import type { StyleName } from '@/registry/preset';
 import AccordionExample from '@/registry/zen/accordion-example';
 import AlertDialogExample from '@/registry/zen/alert-dialog-example';
+import AlertExample from '@/registry/zen/alert-example';
 import AvatarExample from '@/registry/zen/avatar-example';
 import BadgeExample from '@/registry/zen/badge-example';
 import BreadcrumbExample from '@/registry/zen/breadcrumb-example';
 import ButtonExample from '@/registry/zen/button-example';
 import ButtonGroupExample from '@/registry/zen/button-group-example';
 import CalendarExample from '@/registry/zen/calendar-example';
+import CardExample from '@/registry/zen/card-example';
 import CheckboxExample from '@/registry/zen/checkbox-example';
 import CollapsibleExample from '@/registry/zen/collapsible-example';
 import ComboboxExample from '@/registry/zen/combobox-example';
@@ -24,6 +26,7 @@ import ContextMenuExample from '@/registry/zen/context-menu-example';
 import DialogExample from '@/registry/zen/dialog-example';
 import DrawerExample from '@/registry/zen/drawer-example';
 import DropdownMenuExample from '@/registry/zen/dropdown-menu-example';
+import EmptyExample from '@/registry/zen/empty-example';
 import FieldExample from '@/registry/zen/field-example';
 import FormExample from '@/registry/zen/form-example';
 import HoverCardExample from '@/registry/zen/hover-card-example';
@@ -34,6 +37,7 @@ import KbdExample from '@/registry/zen/kbd-example';
 import LabelExample from '@/registry/zen/label-example';
 import PaginationExample from '@/registry/zen/pagination-example';
 import PopoverExample from '@/registry/zen/popover-example';
+import ProgressExample from '@/registry/zen/progress-example';
 import RadioGroupExample from '@/registry/zen/radio-group-example';
 import ScrollAreaExample from '@/registry/zen/scroll-area-example';
 import SelectExample from '@/registry/zen/select-example';
@@ -44,8 +48,10 @@ import SkeletonExample from '@/registry/zen/skeleton-example';
 import SliderExample from '@/registry/zen/slider-example';
 import SpinnerExample from '@/registry/zen/spinner-example';
 import SwitchExample from '@/registry/zen/switch-example';
+import TableExample from '@/registry/zen/table-example';
 import TabsExample from '@/registry/zen/tabs-example';
 import TextareaExample from '@/registry/zen/textarea-example';
+import ToastExample from '@/registry/zen/toast-example';
 import ToggleExample from '@/registry/zen/toggle-example';
 import ToggleGroupExample from '@/registry/zen/toggle-group-example';
 import TooltipExample from '@/registry/zen/tooltip-example';
@@ -58,6 +64,7 @@ const REGISTRY_DIR = join(process.cwd(), 'registry');
  */
 const exampleItems = {
   accordion: 'accordion-example',
+  alert: 'alert-example',
   'alert-dialog': 'alert-dialog-example',
   avatar: 'avatar-example',
   badge: 'badge-example',
@@ -65,6 +72,7 @@ const exampleItems = {
   button: 'button-example',
   'button-group': 'button-group-example',
   calendar: 'calendar-example',
+  card: 'card-example',
   checkbox: 'checkbox-example',
   collapsible: 'collapsible-example',
   combobox: 'combobox-example',
@@ -73,6 +81,7 @@ const exampleItems = {
   dialog: 'dialog-example',
   drawer: 'drawer-example',
   'dropdown-menu': 'dropdown-menu-example',
+  empty: 'empty-example',
   field: 'field-example',
   form: 'form-example',
   'hover-card': 'hover-card-example',
@@ -83,6 +92,7 @@ const exampleItems = {
   label: 'label-example',
   pagination: 'pagination-example',
   popover: 'popover-example',
+  progress: 'progress-example',
   'radio-group': 'radio-group-example',
   'scroll-area': 'scroll-area-example',
   select: 'select-example',
@@ -93,8 +103,10 @@ const exampleItems = {
   slider: 'slider-example',
   spinner: 'spinner-example',
   switch: 'switch-example',
+  table: 'table-example',
   tabs: 'tabs-example',
   textarea: 'textarea-example',
+  toast: 'toast-example',
   toggle: 'toggle-example',
   'toggle-group': 'toggle-group-example',
   tooltip: 'tooltip-example',
@@ -122,6 +134,7 @@ const exampleComponents: Record<
   },
   zen: {
     accordion: AccordionExample,
+    alert: AlertExample,
     'alert-dialog': AlertDialogExample,
     avatar: AvatarExample,
     badge: BadgeExample,
@@ -129,6 +142,7 @@ const exampleComponents: Record<
     button: ButtonExample,
     'button-group': ButtonGroupExample,
     calendar: CalendarExample,
+    card: CardExample,
     checkbox: CheckboxExample,
     collapsible: CollapsibleExample,
     combobox: ComboboxExample,
@@ -137,6 +151,7 @@ const exampleComponents: Record<
     dialog: DialogExample,
     drawer: DrawerExample,
     'dropdown-menu': DropdownMenuExample,
+    empty: EmptyExample,
     field: FieldExample,
     form: FormExample,
     'hover-card': HoverCardExample,
@@ -147,6 +162,7 @@ const exampleComponents: Record<
     label: LabelExample,
     pagination: PaginationExample,
     popover: PopoverExample,
+    progress: ProgressExample,
     'radio-group': RadioGroupExample,
     'scroll-area': ScrollAreaExample,
     select: SelectExample,
@@ -157,8 +173,10 @@ const exampleComponents: Record<
     slider: SliderExample,
     spinner: SpinnerExample,
     switch: SwitchExample,
+    table: TableExample,
     tabs: TabsExample,
     textarea: TextareaExample,
+    toast: ToastExample,
     toggle: ToggleExample,
     'toggle-group': ToggleGroupExample,
     tooltip: TooltipExample,

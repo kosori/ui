@@ -2,6 +2,7 @@ import { cn } from 'cn';
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { AnchoredToastProvider, ToastProvider } from '@/components/ui/toast';
 import './globals.css';
 
 const geistSans = localFont({
@@ -25,7 +26,11 @@ const Layout = ({ children }: LayoutProps<'/'>) => (
     suppressHydrationWarning
   >
     <body>
-      <RootProvider>{children}</RootProvider>
+      <ToastProvider>
+        <AnchoredToastProvider>
+          <RootProvider>{children}</RootProvider>
+        </AnchoredToastProvider>
+      </ToastProvider>
     </body>
   </html>
 );

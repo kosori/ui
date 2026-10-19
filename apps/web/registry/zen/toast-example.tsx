@@ -1,0 +1,55 @@
+'use client';
+
+import { Button } from '@/components/ui/button';
+import { toastManager } from '@/components/ui/toast';
+
+const addSuccessToast = () => {
+  toastManager.add({
+    description: 'Your changes have been saved.',
+    title: 'Success!',
+    type: 'success',
+  });
+};
+
+const addErrorToast = () => {
+  toastManager.add({
+    description: 'There was a problem with your request.',
+    title: 'Uh oh! Something went wrong.',
+    type: 'error',
+  });
+};
+
+const addInfoToast = () => {
+  toastManager.add({
+    description: 'You can add components to your app using the cli.',
+    title: 'Heads up!',
+    type: 'info',
+  });
+};
+
+const addWarningToast = () => {
+  toastManager.add({
+    description: 'Your session is about to expire.',
+    title: 'Warning!',
+    type: 'warning',
+  });
+};
+
+const ToastExample = () => (
+  <div className='flex flex-wrap gap-2'>
+    <Button onClick={addSuccessToast} variant='outline'>
+      Success Toast
+    </Button>
+    <Button onClick={addErrorToast} variant='outline'>
+      Error Toast
+    </Button>
+    <Button onClick={addInfoToast} variant='outline'>
+      Info Toast
+    </Button>
+    <Button onClick={addWarningToast} variant='outline'>
+      Warning Toast
+    </Button>
+  </div>
+);
+
+export default ToastExample;

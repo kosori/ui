@@ -26,6 +26,17 @@
       ]
     },
     {
+      "name": "alert",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/alert.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "alert-dialog",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
@@ -43,6 +54,18 @@
       "files": [
         {
           "path": "registry/zen/alert-dialog-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "alert-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/alert"],
+      "files": [
+        {
+          "path": "registry/zen/alert-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -193,6 +216,36 @@
       "files": [
         {
           "path": "registry/zen/calendar-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "card-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": [
+        "@kosori/button",
+        "@kosori/card",
+        "@kosori/field",
+        "@kosori/form",
+        "@kosori/input",
+        "@kosori/select"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/card-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -384,6 +437,29 @@
       "files": [
         {
           "path": "registry/zen/dropdown-menu-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/empty.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/button", "@kosori/empty"],
+      "files": [
+        {
+          "path": "registry/zen/empty-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -614,6 +690,28 @@
       "files": [
         {
           "path": "registry/zen/popover-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "progress-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/progress"],
+      "files": [
+        {
+          "path": "registry/zen/progress-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -871,6 +969,28 @@
       ]
     },
     {
+      "name": "table",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "table-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/badge", "@kosori/table"],
+      "files": [
+        {
+          "path": "registry/zen/table-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "tabs",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
@@ -911,6 +1031,29 @@
       "files": [
         {
           "path": "registry/zen/textarea-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/button"],
+      "files": [
+        {
+          "path": "registry/zen/toast.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toast-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button", "@kosori/toast"],
+      "files": [
+        {
+          "path": "registry/zen/toast-example.tsx",
           "type": "registry:example"
         }
       ]
