@@ -47,3 +47,11 @@ _Avoid_: CSS variable, custom property, design token
 **Example**:
 A demonstration of a Component in use, distributed as a registry item so that documentation and installation resolve it by the same name and the same path.
 _Avoid_: Demo, preview, story, sample, playground
+
+**Port**:
+A component taken from an upstream registry into a Style, copied verbatim except for the renames an install requires: imports, registry dependencies and item names. A Port diverges from its upstream through Tokens alone.
+_Avoid_: Fork, rewrite, adaptation
+
+**Pending**:
+A name a Style publishes as part of its catalog scope but does not yet serve. Pending names appear in documentation without a page and never appear in the registry catalog.
+_Avoid_: Missing, TODO, unimplemented

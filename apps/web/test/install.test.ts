@@ -13,6 +13,7 @@ import {
 import { tmpdir } from 'node:os';
 import { join, relative } from 'node:path';
 import { GET } from '../app/init/[style]/[baseColor]/route';
+import { PENDING_COMPONENTS } from '../lib/registry/pending';
 import { STYLES, styleRadius } from '../registry/preset';
 
 const webDir = join(import.meta.dirname, '..');
@@ -38,17 +39,16 @@ const readRegistry = async (style: string): Promise<RegistryItem[]> => {
 };
 
 /**
- * The components the catalog must serve. The install below runs over the whole
- * catalog, so this is what keeps coverage from shrinking: an addition is picked
- * up without an edit, and dropping one of these fails the run.
+ * Documentation pages that are not a catalog component. Every other page in a
+ * Style's directory must belong to a `registry:ui` item, so a renamed or
+ * deleted component cannot leave a page behind.
  */
-const REQUIRED_COMPONENTS = [
-  'button',
-  'dialog',
-  'field',
-  'input',
-  'label',
-  'separator',
+const NON_COMPONENT_PAGES = [
+  'components',
+  'date-picker',
+  'index',
+  'installation',
+  'theming',
 ];
 
 /** The directory shadcn installs a Registry item type into. */
@@ -286,19 +286,33 @@ test('installing a preset and every item of every Style leaves Consumer projects
 
         const items = await readRegistry(style.name);
         const components = items.filter((item) => item.type === 'registry:ui');
-        expect(components.map((item) => item.name)).toEqual(
-          expect.arrayContaining(REQUIRED_COMPONENTS)
-        );
+        const componentNames = components.map((item) => item.name);
 
-        // Adding a component means editing the catalog, its Example, the docs
-        // menu and a page. Every catalog component must ship an Example and a
-        // page, so a forgotten edit fails here instead of disappearing silently.
+        for (const pending of PENDING_COMPONENTS) {
+          expect(
+            componentNames,
+            `${pending} is Pending and also in the catalog`
+          ).not.toContain(pending);
+        }
+
+        // Coverage comes from the catalog alone: every component must ship an
+        // Example, a page and a menu entry, so a forgotten edit fails here
+        // instead of disappearing silently.
         const examples = items.filter(
           (item) => item.type === 'registry:example'
         );
         const meta: { pages: string[] } = JSON.parse(
           await readFile(join(docsDir, 'meta.json'), 'utf8')
         );
+        expect(
+          meta.pages,
+          'the components status page is not in the menu'
+        ).toContain('components');
+        expect(
+          existsSync(join(docsDir, 'components.mdx')),
+          'the components status page has no page'
+        ).toBe(true);
+
         for (const component of components) {
           expect(
             examples.some(
@@ -315,6 +329,23 @@ test('installing a preset and every item of every Style leaves Consumer projects
             `${component.name} is not in the docs menu`
           ).toContain(component.name);
         }
+
+        // Pending names are inert: they must never be a menu entry of their own.
+        for (const pending of PENDING_COMPONENTS) {
+          expect(
+            meta.pages,
+            `${pending} is Pending and in the docs menu`
+          ).not.toContain(pending);
+        }
+
+        const docsPages = (await readdir(docsDir))
+          .filter((file) => file.endsWith('.mdx'))
+          .map((file) => file.replace(/\.mdx$/, ''));
+        const knownPages = new Set([...componentNames, ...NON_COMPONENT_PAGES]);
+        expect(
+          docsPages.filter((page) => !knownPages.has(page)),
+          'a documentation page belongs to no catalog component'
+        ).toEqual([]);
 
         // Install every item the catalog serves, so coverage cannot shrink as
         // the catalog grows: a new item is exercised without touching this test.
