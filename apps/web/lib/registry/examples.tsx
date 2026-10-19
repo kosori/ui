@@ -12,9 +12,13 @@ import BadgeExample from '@/registry/zen/badge-example';
 import ButtonExample from '@/registry/zen/button-example';
 import DialogExample from '@/registry/zen/dialog-example';
 import FieldExample from '@/registry/zen/field-example';
+import FormExample from '@/registry/zen/form-example';
 import InputExample from '@/registry/zen/input-example';
+import InputGroupExample from '@/registry/zen/input-group-example';
+import InputOtpExample from '@/registry/zen/input-otp-example';
 import KbdExample from '@/registry/zen/kbd-example';
 import LabelExample from '@/registry/zen/label-example';
+import SelectExample from '@/registry/zen/select-example';
 import SeparatorExample from '@/registry/zen/separator-example';
 import SpinnerExample from '@/registry/zen/spinner-example';
 import TextareaExample from '@/registry/zen/textarea-example';
@@ -30,9 +34,13 @@ const exampleItems = {
   button: 'button-example',
   dialog: 'dialog-example',
   field: 'field-example',
+  form: 'form-example',
   input: 'input-example',
+  'input-group': 'input-group-example',
+  'input-otp': 'input-otp-example',
   kbd: 'kbd-example',
   label: 'label-example',
+  select: 'select-example',
   separator: 'separator-example',
   spinner: 'spinner-example',
   textarea: 'textarea-example',
@@ -63,9 +71,13 @@ const exampleComponents: Record<
     button: ButtonExample,
     dialog: DialogExample,
     field: FieldExample,
+    form: FormExample,
     input: InputExample,
+    'input-group': InputGroupExample,
+    'input-otp': InputOtpExample,
     kbd: KbdExample,
     label: LabelExample,
+    select: SelectExample,
     separator: SeparatorExample,
     spinner: SpinnerExample,
     textarea: TextareaExample,
