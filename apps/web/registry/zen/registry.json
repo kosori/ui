@@ -49,6 +49,29 @@
       ]
     },
     {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "context-menu-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/context-menu"],
+      "files": [
+        {
+          "path": "registry/zen/context-menu-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "dialog",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
@@ -72,6 +95,29 @@
       ]
     },
     {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/button", "@kosori/dropdown-menu"],
+      "files": [
+        {
+          "path": "registry/zen/dropdown-menu-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "field",
       "type": "registry:ui",
       "dependencies": ["class-variance-authority", "cn"],
@@ -90,6 +136,29 @@
       "files": [
         {
           "path": "registry/zen/field-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/hover-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "hover-card-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/button", "@kosori/hover-card"],
+      "files": [
+        {
+          "path": "registry/zen/hover-card-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -161,6 +230,51 @@
       ]
     },
     {
+      "name": "popover",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/popover.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "popover-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/button", "@kosori/popover"],
+      "files": [
+        {
+          "path": "registry/zen/popover-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/scroll-area"],
+      "files": [
+        {
+          "path": "registry/zen/scroll-area-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "separator",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
@@ -222,6 +336,28 @@
       "files": [
         {
           "path": "registry/zen/textarea-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button", "@kosori/tooltip"],
+      "files": [
+        {
+          "path": "registry/zen/tooltip-example.tsx",
           "type": "registry:example"
         }
       ]

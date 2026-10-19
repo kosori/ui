@@ -8,14 +8,20 @@
     "components",
     "badge",
     "button",
+    "context-menu",
     "dialog",
+    "dropdown-menu",
     "field",
+    "hover-card",
     "input",
     "kbd",
     "label",
+    "popover",
+    "scroll-area",
     "separator",
     "spinner",
     "textarea",
+    "tooltip",
     "theming"
   ]
 }

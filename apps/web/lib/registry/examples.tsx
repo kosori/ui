@@ -10,14 +10,20 @@ import { SeparatorExample as KazeSeparatorExample } from '@/lib/registry/preview
 import type { StyleName } from '@/registry/preset';
 import BadgeExample from '@/registry/zen/badge-example';
 import ButtonExample from '@/registry/zen/button-example';
+import ContextMenuExample from '@/registry/zen/context-menu-example';
 import DialogExample from '@/registry/zen/dialog-example';
+import DropdownMenuExample from '@/registry/zen/dropdown-menu-example';
 import FieldExample from '@/registry/zen/field-example';
+import HoverCardExample from '@/registry/zen/hover-card-example';
 import InputExample from '@/registry/zen/input-example';
 import KbdExample from '@/registry/zen/kbd-example';
 import LabelExample from '@/registry/zen/label-example';
+import PopoverExample from '@/registry/zen/popover-example';
+import ScrollAreaExample from '@/registry/zen/scroll-area-example';
 import SeparatorExample from '@/registry/zen/separator-example';
 import SpinnerExample from '@/registry/zen/spinner-example';
 import TextareaExample from '@/registry/zen/textarea-example';
+import TooltipExample from '@/registry/zen/tooltip-example';
 
 const REGISTRY_DIR = join(process.cwd(), 'registry');
 
@@ -28,14 +34,20 @@ const REGISTRY_DIR = join(process.cwd(), 'registry');
 const exampleItems = {
   badge: 'badge-example',
   button: 'button-example',
+  'context-menu': 'context-menu-example',
   dialog: 'dialog-example',
+  'dropdown-menu': 'dropdown-menu-example',
   field: 'field-example',
+  'hover-card': 'hover-card-example',
   input: 'input-example',
   kbd: 'kbd-example',
   label: 'label-example',
+  popover: 'popover-example',
+  'scroll-area': 'scroll-area-example',
   separator: 'separator-example',
   spinner: 'spinner-example',
   textarea: 'textarea-example',
+  tooltip: 'tooltip-example',
 } as const;
 
 /** The component names the documentation can render an Example for. */
@@ -61,14 +73,20 @@ const exampleComponents: Record<
   zen: {
     badge: BadgeExample,
     button: ButtonExample,
+    'context-menu': ContextMenuExample,
     dialog: DialogExample,
+    'dropdown-menu': DropdownMenuExample,
     field: FieldExample,
+    'hover-card': HoverCardExample,
     input: InputExample,
     kbd: KbdExample,
     label: LabelExample,
+    popover: PopoverExample,
+    'scroll-area': ScrollAreaExample,
     separator: SeparatorExample,
     spinner: SpinnerExample,
     textarea: TextareaExample,
+    tooltip: TooltipExample,
   },
 };
 
