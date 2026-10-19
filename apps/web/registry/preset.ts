@@ -94,6 +94,7 @@ export const composeStyleItem = (
       dark: tokens.dark,
       light: tokens.light,
       theme: {
+        '--font-heading': 'var(--font-sans)',
         '--font-mono': MONO_STACK,
         '--font-sans': SANS_STACK,
       },
