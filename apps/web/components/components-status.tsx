@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { readCatalog } from '@/lib/registry/catalog';
+import { isInternalItem } from '@/lib/registry/internal';
 import { PENDING_COMPONENTS } from '@/lib/registry/pending';
 import type { StyleName } from '@/registry/preset';
 
@@ -11,7 +12,7 @@ type Props = {
 const ComponentsStatus = async ({ style }: Props) => {
   const catalog = await readCatalog(style);
   const implemented = catalog
-    .filter((item) => item.type === 'registry:ui')
+    .filter((item) => item.type === 'registry:ui' && !isInternalItem(item.name))
     .map((item) => item.name)
     .sort();
 

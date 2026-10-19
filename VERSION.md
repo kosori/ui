@@ -20,12 +20,15 @@ One row per Port, ordered alphabetically by kosori name.
 | kosori | coss | sha256 |
 | --- | --- | --- |
 | alert-dialog | alert-dialog | d44513e3a157229eea1a9190aadbc479e356b47eb13c98e1a91ce4366fa11cf6 |
+| autocomplete | autocomplete | 31501bddfd630d1145fb5390acaf3f024c86e9aecfefc90a96422c43ed247ad9 |
 | avatar | avatar | 2fe6b7b5551b8867a42f764d7616d8a271409432ce696d32611d0d4b74341e9b |
 | badge | badge | 60f73554b462ec5e2929ccc58c0522b069c07e1268dbfb67749c2837347b788b |
 | button | button | 1e65556bde3071f90f61825cf573aec74bdd8695824470bea3dae4d68a6b8fc8 |
 | button-group | group | d2392c54a90e353762779639971bb9aaa44759a7bda81ea0cf1462afbf4492b0 |
 | calendar | calendar | 547ebebda2747dadee61815f41448a2b6cecce3ad125806666df7595013896f0 |
 | checkbox | checkbox | a1b8b4180a39a47c47bd2b50e432d0911da6efe3b963b065b3b5cb8893760047 |
+| combobox | combobox | 2cca986d7883560337fbd35009ee13648c9600a6633bb08c79de635c6dd15692 |
+| command | command | 26f77d2322179cd7a5694d865e85362d492db053a91cb0ef7c51b573e45076a4 |
 | context-menu | context-menu | c7dd4deefe1b4180ea242c0a97c3cca9a5112bc6113e212413f11be4738432fc |
 | dialog | dialog | 29e99f5d39307acd3781ee0c8f78aabe6d637f667fb3b7893820e4621ddcce7b |
 | drawer | drawer | 5853db0687904d22f40ec8ad641a99df5bff4aa8049bbd82503a82aa556ded4e |
@@ -45,6 +48,7 @@ One row per Port, ordered alphabetically by kosori name.
 | select | select | aa8821bbb4bd6b8b52a6cbaaf8d995f48b1001ad93d4bfa4e5b91b5e6d5f66a0 |
 | separator | separator | 48393a9f365097e350bb33f0e84d2df25efd6b374868aa075f8d6011378c1d6e |
 | sheet | sheet | f1d3361a490c9d9a49a4289604aaf6995cb0b138728c3068ba94ee6c9337978a |
+| sidebar | sidebar | 11e0381340b46a53f5a52c6a2a6a81a4c957c3690f889089764b60ba3da51965 |
 | skeleton | skeleton | 02e61d00c76b7ed5a1979c37c2a86b8a837a013909e84ac21c40bb5b56f9afd2 |
 | slider | slider | 952c61cfbb6950045792adf00f772a986bb07c7b7986caf40e509d60deb92ce6 |
 | spinner | spinner | 5116d0ec549bf70d20d5359a485e6792b6c87d89a389102ad6c3f44312c23972 |
@@ -53,6 +57,7 @@ One row per Port, ordered alphabetically by kosori name.
 | toggle | toggle | a32372d0eaa291bc81f61f4ddb1f5bb827c507fd53de03c6f709adc242ee5bfb |
 | toggle-group | toggle-group | 8c67854bffcf762299fb989721e47da30fea3268cb969fdc6c775c3fe89982bb |
 | tooltip | tooltip | 0ac59089d1d813b7eb1cd9e08ed2ff3b3931e4024df649ddb45b1eb43d50f694 |
+| use-media-query | use-media-query | 17d75ccaf898415db77dd72659c9b1fdb9338290ae54e8371b772e0b221c9fca |
 
 The hash is the SHA-256 of the upstream file's content exactly as the registry serves it: the `files[0].content` string after JSON decoding, with its original line endings and trailing newline, and no bytes added or removed.
 

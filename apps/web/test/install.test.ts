@@ -13,6 +13,7 @@ import {
 import { tmpdir } from 'node:os';
 import { join, relative } from 'node:path';
 import { GET } from '../app/init/[style]/[baseColor]/route';
+import { INTERNAL_ITEMS, isInternalItem } from '../lib/registry/internal';
 import { PENDING_COMPONENTS } from '../lib/registry/pending';
 import { BASE_COLORS } from '../registry/base-colors';
 import { STYLES, styleRadius } from '../registry/preset';
@@ -94,11 +95,14 @@ const installedPath = (item: RegistryItem, root: string) => {
       `No install surface is known for Registry item type "${item.type}"`
     );
   }
-  return join(root, dir, `${item.name}.tsx`);
+
+  const source = item.files[0]?.path ?? '';
+  const extension = source.slice(source.lastIndexOf('.'));
+
+  return join(root, dir, `${item.name}${extension}`);
 };
 
 /** The component directory, CSS entry and manifests an install may write. */
-const COMPONENTS_DIR = 'components';
 const CSS_ENTRY = 'app/globals.css';
 const DEPENDENCY_MANIFESTS = new Set([
   'bun.lock',
@@ -109,10 +113,11 @@ const DEPENDENCY_MANIFESTS = new Set([
   'pnpm-lock.yaml',
   'yarn.lock',
 ]);
+const ITEM_DIRS = [...new Set(Object.values(installedDirs))];
 
 const isInstallSurface = (path: string) =>
   path === CSS_ENTRY ||
-  path.startsWith(`${COMPONENTS_DIR}/`) ||
+  ITEM_DIRS.some((dir) => path.startsWith(`${dir}/`)) ||
   DEPENDENCY_MANIFESTS.has(path);
 
 /**
@@ -311,6 +316,9 @@ test('installing a preset and every item of every Style leaves Consumer projects
         const items = await readRegistry(style.name);
         const components = items.filter((item) => item.type === 'registry:ui');
         const componentNames = components.map((item) => item.name);
+        const documented = components.filter(
+          (component) => !isInternalItem(component.name)
+        );
 
         for (const pending of PENDING_COMPONENTS) {
           expect(
@@ -319,9 +327,17 @@ test('installing a preset and every item of every Style leaves Consumer projects
           ).not.toContain(pending);
         }
 
-        // Coverage comes from the catalog alone: every component must ship an
-        // Example, a page and a menu entry, so a forgotten edit fails here
-        // instead of disappearing silently.
+        for (const internal of INTERNAL_ITEMS) {
+          expect(
+            PENDING_COMPONENTS as readonly string[],
+            `${internal.name} is Internal and also Pending`
+          ).not.toContain(internal.name);
+        }
+
+        // Coverage comes from the catalog alone: every documented component
+        // must ship an Example, a page and a menu entry, so a forgotten edit
+        // fails here instead of disappearing silently. Internal items are
+        // exempt because a Consumer never installs them directly.
         const examples = items.filter(
           (item) => item.type === 'registry:example'
         );
@@ -337,7 +353,7 @@ test('installing a preset and every item of every Style leaves Consumer projects
           'the components status page has no page'
         ).toBe(true);
 
-        for (const component of components) {
+        for (const component of documented) {
           expect(
             examples.some(
               (example) => example.name === `${component.name}-example`
@@ -354,6 +370,18 @@ test('installing a preset and every item of every Style leaves Consumer projects
           ).toContain(component.name);
         }
 
+        // Internal items are installable but invisible: no page, no menu entry.
+        for (const internal of INTERNAL_ITEMS) {
+          expect(
+            meta.pages,
+            `${internal.name} is Internal and in the docs menu`
+          ).not.toContain(internal.name);
+          expect(
+            existsSync(join(docsDir, `${internal.name}.mdx`)),
+            `${internal.name} is Internal and has a documentation page`
+          ).toBe(false);
+        }
+
         // Pending names are inert: they must never be a menu entry of their own.
         for (const pending of PENDING_COMPONENTS) {
           expect(
@@ -365,7 +393,10 @@ test('installing a preset and every item of every Style leaves Consumer projects
         const docsPages = (await readdir(docsDir))
           .filter((file) => file.endsWith('.mdx'))
           .map((file) => file.replace(/\.mdx$/, ''));
-        const knownPages = new Set([...componentNames, ...NON_COMPONENT_PAGES]);
+        const knownPages = new Set([
+          ...documented.map((component) => component.name),
+          ...NON_COMPONENT_PAGES,
+        ]);
         expect(
           docsPages.filter((page) => !knownPages.has(page)),
           'a documentation page belongs to no catalog component'
@@ -435,6 +466,41 @@ test('installing a preset and every item of every Style leaves Consumer projects
     server.stop(true);
   }
 }, 240_000);
+
+test('every Internal item is installable under its declared type', async () => {
+  const catalogs = await Promise.all(
+    STYLES.map(async (style) => ({
+      items: await readRegistry(style.name),
+      name: style.name,
+    }))
+  );
+
+  for (const internal of INTERNAL_ITEMS) {
+    const served = catalogs.flatMap(({ items, name: style }) =>
+      items
+        .filter((item) => item.name === internal.name)
+        .map((item) => ({ style, type: item.type }))
+    );
+
+    expect(
+      served.length,
+      `${internal.name} is Internal but no catalog serves it`
+    ).toBeGreaterThan(0);
+
+    for (const entry of served) {
+      expect(entry.type, `${entry.style} serves ${internal.name}`).toBe(
+        internal.type
+      );
+    }
+
+    for (const { items, name: style } of catalogs) {
+      expect(
+        items.some((item) => item.name === `${internal.name}-example`),
+        `${style} documents Internal item ${internal.name}`
+      ).toBe(false);
+    }
+  }
+});
 
 test('init writes the semantic state Tokens for every Base color in both schemes', async () => {
   const server = serveInterop();
