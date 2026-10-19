@@ -28,4 +28,4 @@ const DialogExample = () => (
   </Dialog>
 );
 
-export default DialogExample;
+export { DialogExample };

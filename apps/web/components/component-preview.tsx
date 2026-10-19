@@ -6,33 +6,22 @@ import {
   exampleItemName,
   readExampleSource,
 } from '@/lib/registry/examples';
-import { findStyle, type StyleName } from '@/registry/preset';
-
-const RADIUS_SCALE = [
-  ['--radius-sm', 0.6],
-  ['--radius-md', 0.8],
-  ['--radius-lg', 1],
-  ['--radius-xl', 1.4],
-  ['--radius-2xl', 1.8],
-  ['--radius-3xl', 2.2],
-  ['--radius-4xl', 2.6],
-] as const;
+import {
+  findStyle,
+  radiusTokens,
+  type StyleName,
+  styleRadius,
+} from '@/registry/preset';
 
 /** The Token block a preview needs so the Style's radius reaches its examples. */
-const radiusTokens = (style: StyleName) => {
-  const radius = findStyle(style)?.tokens?.light?.radius;
+const previewRadiusTokens = (style: StyleName) => {
+  const definition = findStyle(style);
 
-  if (!radius) {
+  if (!definition) {
     return;
   }
 
-  return Object.fromEntries([
-    ['--radius', radius],
-    ...RADIUS_SCALE.map(([token, factor]) => [
-      token,
-      `calc(${radius} * ${factor})`,
-    ]),
-  ]);
+  return radiusTokens(styleRadius(definition, 'light'));
 };
 
 type Props = {
@@ -53,7 +42,7 @@ const ComponentPreview = async ({ name, style = 'zen' }: Props) => {
       </div>
       <div
         className='flex min-h-40 flex-wrap items-center gap-4 p-6'
-        style={radiusTokens(style)}
+        style={previewRadiusTokens(style)}
       >
         <ExamplePreview name={name} style={style} />
       </div>

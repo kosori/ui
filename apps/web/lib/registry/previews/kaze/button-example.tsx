@@ -11,4 +11,4 @@ const ButtonExample = () => (
   </div>
 );
 
-export default ButtonExample;
+export { ButtonExample };

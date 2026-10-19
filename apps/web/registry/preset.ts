@@ -1,5 +1,5 @@
 import type { RegistryBaseItem, RegistryItem } from 'shadcn/schema';
-import { BASE_COLORS, type BaseColor } from './base-colors';
+import { BASE_COLORS, type BaseColor, DEFAULT_BASE_COLOR } from './base-colors';
 
 /** The Namespace a Consumer project maps to the Registry. */
 export const KOSORI_NAMESPACE = '@kosori';
@@ -100,6 +100,39 @@ export const kaze = defineStyle({
 export const STYLES = [zen, kaze] as const;
 
 export type StyleName = (typeof STYLES)[number]['name'];
+
+/**
+ * The scale shadcn derives from `--radius`. It has one owner so a documentation
+ * preview and a Consumer project's Theme cannot drift apart.
+ */
+const RADIUS_SCALE = [
+  ['--radius-sm', 0.6],
+  ['--radius-md', 0.8],
+  ['--radius-lg', 1],
+  ['--radius-xl', 1.4],
+  ['--radius-2xl', 1.8],
+  ['--radius-3xl', 2.2],
+  ['--radius-4xl', 2.6],
+] as const;
+
+/**
+ * The radius a Style resolves to in a color scheme. A scheme inherits the light
+ * value when the Style does not override it, as `.dark` does in CSS.
+ */
+export const styleRadius = (style: Style, scheme: 'dark' | 'light') =>
+  style.tokens?.[scheme]?.radius ??
+  style.tokens?.light?.radius ??
+  BASE_COLORS[DEFAULT_BASE_COLOR].light.radius;
+
+/** Compose the Token block that derives the whole radius scale from one value. */
+export const radiusTokens = (radius: string) =>
+  Object.fromEntries([
+    ['--radius', radius],
+    ...RADIUS_SCALE.map(([token, factor]) => [
+      token,
+      `calc(${radius} * ${factor})`,
+    ]),
+  ]);
 
 const styles = new Map<string, Style>(
   STYLES.map((style) => [style.name, style])

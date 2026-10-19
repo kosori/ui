@@ -13,7 +13,7 @@ import {
 import { tmpdir } from 'node:os';
 import { join, relative } from 'node:path';
 import { GET } from '../app/init/[style]/[baseColor]/route';
-import { STYLES } from '../registry/preset';
+import { STYLES, styleRadius } from '../registry/preset';
 
 const webDir = join(import.meta.dirname, '..');
 const fixtureDir = join(import.meta.dirname, 'fixtures/consumer');
@@ -35,12 +35,6 @@ const readRegistry = async (style: string): Promise<RegistryItem[]> => {
     await readFile(join(webDir, `registry/${style}/registry.json`), 'utf8')
   );
   return catalog.items;
-};
-
-/** The radius Token each Style's preset must write, from the Style's design. */
-const RADIUS: Record<string, string> = {
-  kaze: '1rem',
-  zen: '0.625rem',
 };
 
 /**
@@ -220,6 +214,18 @@ const declarations = (css: string, selector: string) => {
   return css.match(new RegExp(`${escaped}\\s*\\{([^}]*)\\}`))?.[1] ?? '';
 };
 
+/**
+ * The declarations a color scheme resolves its radius from. `.dark` inherits
+ * every Token it does not restate, so an override wins only by being present.
+ */
+const radiusDeclarations = (css: string, scheme: 'dark' | 'light') => {
+  const dark = declarations(css, '.dark');
+
+  return scheme === 'dark' && dark.includes('--radius:')
+    ? dark
+    : declarations(css, ':root');
+};
+
 test('installing a preset and every item of every Style leaves Consumer projects that typecheck', async () => {
   const server = serveInterop();
   const origin = `http://127.0.0.1:${server.port}`;
@@ -350,11 +356,14 @@ test('installing a preset and every item of every Style leaves Consumer projects
         expect(declarations(css, ':root')).toContain(
           '--background: oklch(1 0 0)'
         );
-        expect(declarations(css, ':root')).toContain(
-          `--radius: ${RADIUS[style.name]}`
+        expect(radiusDeclarations(css, 'light')).toContain(
+          `--radius: ${styleRadius(style, 'light')}`
         );
         expect(declarations(css, '.dark')).toContain(
           '--background: oklch(0.145 0 0)'
+        );
+        expect(radiusDeclarations(css, 'dark')).toContain(
+          `--radius: ${styleRadius(style, 'dark')}`
         );
 
         const typecheck = await run(

@@ -8,4 +8,4 @@ const SeparatorExample = () => (
   </div>
 );
 
-export default SeparatorExample;
+export { SeparatorExample };

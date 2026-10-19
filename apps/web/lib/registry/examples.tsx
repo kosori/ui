@@ -1,12 +1,12 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { ComponentType } from 'react';
-import KazeButtonExample from '@/lib/registry/previews/kaze/button-example';
-import KazeDialogExample from '@/lib/registry/previews/kaze/dialog-example';
-import KazeFieldExample from '@/lib/registry/previews/kaze/field-example';
-import KazeInputExample from '@/lib/registry/previews/kaze/input-example';
-import KazeLabelExample from '@/lib/registry/previews/kaze/label-example';
-import KazeSeparatorExample from '@/lib/registry/previews/kaze/separator-example';
+import { ButtonExample as KazeButtonExample } from '@/lib/registry/previews/kaze/button-example';
+import { DialogExample as KazeDialogExample } from '@/lib/registry/previews/kaze/dialog-example';
+import { FieldExample as KazeFieldExample } from '@/lib/registry/previews/kaze/field-example';
+import { InputExample as KazeInputExample } from '@/lib/registry/previews/kaze/input-example';
+import { LabelExample as KazeLabelExample } from '@/lib/registry/previews/kaze/label-example';
+import { SeparatorExample as KazeSeparatorExample } from '@/lib/registry/previews/kaze/separator-example';
 import type { StyleName } from '@/registry/preset';
 import ButtonExample from '@/registry/zen/button-example';
 import DialogExample from '@/registry/zen/dialog-example';

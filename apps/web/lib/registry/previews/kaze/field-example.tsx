@@ -22,4 +22,4 @@ const FieldExample = () => (
   </FieldSet>
 );
 
-export default FieldExample;
+export { FieldExample };

@@ -1,7 +1,6 @@
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { MDXComponents } from 'mdx/types';
-import { ComponentPreview } from '@/components/component-preview';
-import type { ExampleName } from '@/lib/registry/examples';
+import { createStylePreview } from '@/components/style-preview';
 import type { StyleName } from '@/registry/preset';
 
 /**
@@ -14,9 +13,7 @@ export const getMDXComponents = (
 ) =>
   ({
     ...defaultMdxComponents,
-    ComponentPreview: (props: { name: ExampleName }) => (
-      <ComponentPreview {...props} style={style} />
-    ),
+    ComponentPreview: createStylePreview(style),
     ...components,
   }) satisfies MDXComponents;
 
