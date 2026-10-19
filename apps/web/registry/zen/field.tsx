@@ -1,113 +1,31 @@
 'use client';
 
-import { cva, type VariantProps } from 'class-variance-authority';
+import { Field as FieldPrimitive } from '@base-ui/react/field';
+import { Fieldset as FieldsetPrimitive } from '@base-ui/react/fieldset';
 import { cn } from 'cn';
-import { useMemo } from 'react';
+import type React from 'react';
 
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-
-function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
-  return (
-    <fieldset
-      className={cn(
-        'flex flex-col gap-4 has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3',
-        className
-      )}
-      data-slot='field-set'
-      {...props}
-    />
-  );
-}
-
-function FieldLegend({
+export function Field({
   className,
-  variant = 'legend',
   ...props
-}: React.ComponentProps<'legend'> & { variant?: 'legend' | 'label' }) {
+}: FieldPrimitive.Root.Props): React.ReactElement {
   return (
-    <legend
-      className={cn(
-        'mb-1.5 font-medium data-[variant=label]:text-sm data-[variant=legend]:text-base',
-        className
-      )}
-      data-slot='field-legend'
-      data-variant={variant}
-      {...props}
-    />
-  );
-}
-
-function FieldGroup({ className, ...props }: React.ComponentProps<'div'>) {
-  return (
-    <div
-      className={cn(
-        'group/field-group @container/field-group flex w-full flex-col gap-5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4',
-        className
-      )}
-      data-slot='field-group'
-      {...props}
-    />
-  );
-}
-
-const fieldVariants = cva(
-  'group/field flex w-full gap-2 data-[invalid=true]:text-destructive',
-  {
-    defaultVariants: {
-      orientation: 'vertical',
-    },
-    variants: {
-      orientation: {
-        horizontal:
-          'flex-row items-center has-[>[data-slot=field-content]]:items-start *:data-[slot=field-label]:flex-auto has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px',
-        responsive:
-          '@md/field-group:flex-row flex-col @md/field-group:items-center *:w-full @md/field-group:*:w-auto @md/field-group:has-[>[data-slot=field-content]]:items-start @md/field-group:*:data-[slot=field-label]:flex-auto [&>.sr-only]:w-auto @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px',
-        vertical: 'flex-col *:w-full [&>.sr-only]:w-auto',
-      },
-    },
-  }
-);
-
-function Field({
-  className,
-  orientation = 'vertical',
-  ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof fieldVariants>) {
-  return (
-    // biome-ignore lint/a11y/useSemanticElements: Field groups its own control; FieldSet owns the fieldset role
-    <div
-      className={cn(fieldVariants({ orientation }), className)}
-      data-orientation={orientation}
+    <FieldPrimitive.Root
+      className={cn('flex flex-col items-start gap-2', className)}
       data-slot='field'
-      role='group'
       {...props}
     />
   );
 }
 
-function FieldContent({ className, ...props }: React.ComponentProps<'div'>) {
-  return (
-    <div
-      className={cn(
-        'group/field-content flex flex-1 flex-col gap-0.5 leading-snug',
-        className
-      )}
-      data-slot='field-content'
-      {...props}
-    />
-  );
-}
-
-function FieldLabel({
+export function FieldLabel({
   className,
   ...props
-}: React.ComponentProps<typeof Label>) {
+}: FieldPrimitive.Label.Props): React.ReactElement {
   return (
-    <Label
+    <FieldPrimitive.Label
       className={cn(
-        'group/field-label peer/field-label flex w-fit gap-2 leading-snug has-[>[data-slot=field]]:has-[:focus-visible]:border-ring has-[>[data-slot=field]]:has-[:focus-visible]:ring-3 has-[>[data-slot=field]]:has-[:focus-visible]:ring-ring/50 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:bg-muted/50 *:data-[slot=field]:p-2.5 group-data-[disabled=true]/field:opacity-50 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10',
-        'has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col',
+        'inline-flex items-center gap-2 font-medium text-base/4.5 text-foreground data-disabled:opacity-64 sm:text-sm/4',
         className
       )}
       data-slot='field-label'
@@ -116,124 +34,76 @@ function FieldLabel({
   );
 }
 
-function FieldTitle({ className, ...props }: React.ComponentProps<'div'>) {
+export function FieldItem({
+  className,
+  ...props
+}: FieldPrimitive.Item.Props): React.ReactElement {
   return (
-    <div
-      className={cn(
-        'flex w-fit items-center gap-2 font-medium text-sm group-data-[disabled=true]/field:opacity-50',
-        className
-      )}
-      data-slot='field-label'
+    <FieldPrimitive.Item
+      className={cn('flex', className)}
+      data-slot='field-item'
       {...props}
     />
   );
 }
 
-function FieldDescription({ className, ...props }: React.ComponentProps<'p'>) {
+export function FieldDescription({
+  className,
+  ...props
+}: FieldPrimitive.Description.Props): React.ReactElement {
   return (
-    <p
-      className={cn(
-        'text-left font-normal text-muted-foreground text-sm leading-normal group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5',
-        'nth-last-2:-mt-1 last:mt-0',
-        '[&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4',
-        className
-      )}
+    <FieldPrimitive.Description
+      className={cn('text-muted-foreground text-xs', className)}
       data-slot='field-description'
       {...props}
     />
   );
 }
 
-function FieldSeparator({
-  children,
+export function FieldError({
   className,
   ...props
-}: React.ComponentProps<'div'> & {
-  children?: React.ReactNode;
-}) {
+}: FieldPrimitive.Error.Props): React.ReactElement {
   return (
-    <div
-      className={cn(
-        'relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2',
-        className
-      )}
-      data-content={!!children}
-      data-slot='field-separator'
-      {...props}
-    >
-      <Separator className='absolute inset-0 top-1/2' />
-      {!!children && (
-        <span
-          className='relative mx-auto block w-fit bg-background px-2 text-muted-foreground'
-          data-slot='field-separator-content'
-        >
-          {children}
-        </span>
-      )}
-    </div>
-  );
-}
-
-function FieldError({
-  className,
-  children,
-  errors,
-  ...props
-}: React.ComponentProps<'div'> & {
-  errors?: Array<{ message?: string } | undefined>;
-}) {
-  const content = useMemo(() => {
-    if (children) {
-      return children;
-    }
-
-    if (!errors?.length) {
-      return null;
-    }
-
-    const uniqueErrors = [
-      ...new Map(errors.map((error) => [error?.message, error])).values(),
-    ];
-
-    if (uniqueErrors.length === 1) {
-      return uniqueErrors[0]?.message;
-    }
-
-    return (
-      <ul className='ml-4 flex list-disc flex-col gap-1'>
-        {uniqueErrors.map(
-          (error, index) =>
-            error?.message && <li key={index}>{error.message}</li>
-        )}
-      </ul>
-    );
-  }, [children, errors]);
-
-  if (!content) {
-    return null;
-  }
-
-  return (
-    <div
-      className={cn('font-normal text-destructive text-sm', className)}
+    <FieldPrimitive.Error
+      className={cn('text-destructive-foreground text-xs', className)}
       data-slot='field-error'
-      role='alert'
       {...props}
-    >
-      {content}
-    </div>
+    />
   );
 }
 
-export {
-  Field,
-  FieldContent,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldLegend,
-  FieldSeparator,
-  FieldSet,
-  FieldTitle,
-};
+export const FieldControl: typeof FieldPrimitive.Control =
+  FieldPrimitive.Control;
+export const FieldValidity: typeof FieldPrimitive.Validity =
+  FieldPrimitive.Validity;
+
+export function Fieldset({
+  className,
+  ...props
+}: FieldsetPrimitive.Root.Props): React.ReactElement {
+  return (
+    <FieldsetPrimitive.Root
+      className={className}
+      data-slot='fieldset'
+      {...props}
+    />
+  );
+}
+export function FieldsetLegend({
+  className,
+  ...props
+}: FieldsetPrimitive.Legend.Props): React.ReactElement {
+  return (
+    <FieldsetPrimitive.Legend
+      className={cn('font-semibold text-foreground', className)}
+      data-slot='fieldset-legend'
+      {...props}
+    />
+  );
+}
+
+const FieldRoot = FieldPrimitive;
+const FieldsetRoot = FieldsetPrimitive;
+
+export { FieldRoot as FieldPrimitive, FieldsetRoot as FieldsetPrimitive };

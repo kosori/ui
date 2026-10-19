@@ -15,12 +15,16 @@ import ContextMenuExample from '@/registry/zen/context-menu-example';
 import DialogExample from '@/registry/zen/dialog-example';
 import DropdownMenuExample from '@/registry/zen/dropdown-menu-example';
 import FieldExample from '@/registry/zen/field-example';
+import FormExample from '@/registry/zen/form-example';
 import HoverCardExample from '@/registry/zen/hover-card-example';
 import InputExample from '@/registry/zen/input-example';
+import InputGroupExample from '@/registry/zen/input-group-example';
+import InputOtpExample from '@/registry/zen/input-otp-example';
 import KbdExample from '@/registry/zen/kbd-example';
 import LabelExample from '@/registry/zen/label-example';
 import PopoverExample from '@/registry/zen/popover-example';
 import ScrollAreaExample from '@/registry/zen/scroll-area-example';
+import SelectExample from '@/registry/zen/select-example';
 import SeparatorExample from '@/registry/zen/separator-example';
 import SpinnerExample from '@/registry/zen/spinner-example';
 import TextareaExample from '@/registry/zen/textarea-example';
@@ -40,12 +44,16 @@ const exampleItems = {
   dialog: 'dialog-example',
   'dropdown-menu': 'dropdown-menu-example',
   field: 'field-example',
+  form: 'form-example',
   'hover-card': 'hover-card-example',
   input: 'input-example',
+  'input-group': 'input-group-example',
+  'input-otp': 'input-otp-example',
   kbd: 'kbd-example',
   label: 'label-example',
   popover: 'popover-example',
   'scroll-area': 'scroll-area-example',
+  select: 'select-example',
   separator: 'separator-example',
   spinner: 'spinner-example',
   textarea: 'textarea-example',
@@ -80,12 +88,16 @@ const exampleComponents: Record<
     dialog: DialogExample,
     'dropdown-menu': DropdownMenuExample,
     field: FieldExample,
+    form: FormExample,
     'hover-card': HoverCardExample,
     input: InputExample,
+    'input-group': InputGroupExample,
+    'input-otp': InputOtpExample,
     kbd: KbdExample,
     label: LabelExample,
     popover: PopoverExample,
     'scroll-area': ScrollAreaExample,
+    select: SelectExample,
     separator: SeparatorExample,
     spinner: SpinnerExample,
     textarea: TextareaExample,
