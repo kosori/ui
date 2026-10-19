@@ -8,16 +8,21 @@ import { InputExample as KazeInputExample } from '@/lib/registry/previews/kaze/i
 import { LabelExample as KazeLabelExample } from '@/lib/registry/previews/kaze/label-example';
 import { SeparatorExample as KazeSeparatorExample } from '@/lib/registry/previews/kaze/separator-example';
 import type { StyleName } from '@/registry/preset';
+import AvatarExample from '@/registry/zen/avatar-example';
 import BadgeExample from '@/registry/zen/badge-example';
 import ButtonExample from '@/registry/zen/button-example';
+import ButtonGroupExample from '@/registry/zen/button-group-example';
 import DialogExample from '@/registry/zen/dialog-example';
 import FieldExample from '@/registry/zen/field-example';
 import InputExample from '@/registry/zen/input-example';
 import KbdExample from '@/registry/zen/kbd-example';
 import LabelExample from '@/registry/zen/label-example';
 import SeparatorExample from '@/registry/zen/separator-example';
+import SkeletonExample from '@/registry/zen/skeleton-example';
 import SpinnerExample from '@/registry/zen/spinner-example';
 import TextareaExample from '@/registry/zen/textarea-example';
+import ToggleExample from '@/registry/zen/toggle-example';
+import ToggleGroupExample from '@/registry/zen/toggle-group-example';
 
 const REGISTRY_DIR = join(process.cwd(), 'registry');
 
@@ -26,16 +31,21 @@ const REGISTRY_DIR = join(process.cwd(), 'registry');
  * the catalog contract, so they are shared rather than restated per Style.
  */
 const exampleItems = {
+  avatar: 'avatar-example',
   badge: 'badge-example',
   button: 'button-example',
+  'button-group': 'button-group-example',
   dialog: 'dialog-example',
   field: 'field-example',
   input: 'input-example',
   kbd: 'kbd-example',
   label: 'label-example',
   separator: 'separator-example',
+  skeleton: 'skeleton-example',
   spinner: 'spinner-example',
   textarea: 'textarea-example',
+  toggle: 'toggle-example',
+  'toggle-group': 'toggle-group-example',
 } as const;
 
 /** The component names the documentation can render an Example for. */
@@ -59,16 +69,21 @@ const exampleComponents: Record<
     separator: KazeSeparatorExample,
   },
   zen: {
+    avatar: AvatarExample,
     badge: BadgeExample,
     button: ButtonExample,
+    'button-group': ButtonGroupExample,
     dialog: DialogExample,
     field: FieldExample,
     input: InputExample,
     kbd: KbdExample,
     label: LabelExample,
     separator: SeparatorExample,
+    skeleton: SkeletonExample,
     spinner: SpinnerExample,
     textarea: TextareaExample,
+    toggle: ToggleExample,
+    'toggle-group': ToggleGroupExample,
   },
 };
 
