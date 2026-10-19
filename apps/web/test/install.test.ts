@@ -361,6 +361,28 @@ test('installing a preset and every item of every Style leaves Consumer projects
         const meta: { pages: string[] } = JSON.parse(
           await readFile(join(docsDir, 'meta.json'), 'utf8')
         );
+
+        // Internal items install as dependencies, but documentation never
+        // claims them: no Example, page or menu entry of their own.
+        for (const internal of items.filter((item) =>
+          isInternalItem(item.name)
+        )) {
+          expect(
+            examples.some(
+              (example) => example.name === `${internal.name}-example`
+            ),
+            `${internal.name} is internal and has an Example`
+          ).toBe(false);
+          expect(
+            existsSync(join(docsDir, `${internal.name}.mdx`)),
+            `${internal.name} is internal and has a documentation page`
+          ).toBe(false);
+          expect(
+            meta.pages,
+            `${internal.name} is internal and in the docs menu`
+          ).not.toContain(internal.name);
+        }
+
         expect(
           meta.pages,
           'the components status page is not in the menu'
