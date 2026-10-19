@@ -8,14 +8,17 @@ import { InputExample as KazeInputExample } from '@/lib/registry/previews/kaze/i
 import { LabelExample as KazeLabelExample } from '@/lib/registry/previews/kaze/label-example';
 import { SeparatorExample as KazeSeparatorExample } from '@/lib/registry/previews/kaze/separator-example';
 import type { StyleName } from '@/registry/preset';
+import AlertDialogExample from '@/registry/zen/alert-dialog-example';
 import BadgeExample from '@/registry/zen/badge-example';
 import ButtonExample from '@/registry/zen/button-example';
 import DialogExample from '@/registry/zen/dialog-example';
+import DrawerExample from '@/registry/zen/drawer-example';
 import FieldExample from '@/registry/zen/field-example';
 import InputExample from '@/registry/zen/input-example';
 import KbdExample from '@/registry/zen/kbd-example';
 import LabelExample from '@/registry/zen/label-example';
 import SeparatorExample from '@/registry/zen/separator-example';
+import SheetExample from '@/registry/zen/sheet-example';
 import SpinnerExample from '@/registry/zen/spinner-example';
 import TextareaExample from '@/registry/zen/textarea-example';
 
@@ -26,14 +29,17 @@ const REGISTRY_DIR = join(process.cwd(), 'registry');
  * the catalog contract, so they are shared rather than restated per Style.
  */
 const exampleItems = {
+  'alert-dialog': 'alert-dialog-example',
   badge: 'badge-example',
   button: 'button-example',
   dialog: 'dialog-example',
+  drawer: 'drawer-example',
   field: 'field-example',
   input: 'input-example',
   kbd: 'kbd-example',
   label: 'label-example',
   separator: 'separator-example',
+  sheet: 'sheet-example',
   spinner: 'spinner-example',
   textarea: 'textarea-example',
 } as const;
@@ -59,14 +65,17 @@ const exampleComponents: Record<
     separator: KazeSeparatorExample,
   },
   zen: {
+    'alert-dialog': AlertDialogExample,
     badge: BadgeExample,
     button: ButtonExample,
     dialog: DialogExample,
+    drawer: DrawerExample,
     field: FieldExample,
     input: InputExample,
     kbd: KbdExample,
     label: LabelExample,
     separator: SeparatorExample,
+    sheet: SheetExample,
     spinner: SpinnerExample,
     textarea: TextareaExample,
   },

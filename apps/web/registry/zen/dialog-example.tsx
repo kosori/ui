@@ -1,30 +1,72 @@
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
-  DialogContent,
+  DialogClose,
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogPanel,
+  DialogPopup,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { Field, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
 
 const DialogExample = () => (
   <Dialog>
     <DialogTrigger render={<Button variant='outline' />}>
-      Open dialog
+      Open parent
     </DialogTrigger>
-    <DialogContent>
+    <DialogPopup showCloseButton={false}>
       <DialogHeader>
-        <DialogTitle>kosori</DialogTitle>
+        <DialogTitle>Manage team member</DialogTitle>
         <DialogDescription>
-          A dialog composed from Registry items.
+          View and manage a user in your team.
         </DialogDescription>
       </DialogHeader>
-      <DialogFooter showCloseButton>
-        <Button>Continue</Button>
+      <DialogPanel className='grid gap-4'>
+        <div className='grid gap-1'>
+          <p className='text-muted-foreground text-sm'>Name</p>
+          <p className='font-medium text-sm'>Bora Baloglu</p>
+        </div>
+        <div className='grid gap-1'>
+          <p className='text-muted-foreground text-sm'>Email</p>
+          <p className='font-medium text-sm'>bora@example.com</p>
+        </div>
+      </DialogPanel>
+      <DialogFooter>
+        <Dialog>
+          <DialogTrigger render={<Button variant='outline' />}>
+            Edit details
+          </DialogTrigger>
+          <DialogPopup showCloseButton={false}>
+            <DialogHeader>
+              <DialogTitle>Edit details</DialogTitle>
+              <DialogDescription>
+                Make changes to the member&apos;s information.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogPanel className='grid gap-4'>
+              <Field>
+                <FieldLabel>Name</FieldLabel>
+                <Input defaultValue='Bora Baloglu' type='text' />
+              </Field>
+              <Field>
+                <FieldLabel>Email</FieldLabel>
+                <Input defaultValue='bora@example.com' type='text' />
+              </Field>
+            </DialogPanel>
+            <DialogFooter>
+              <DialogClose render={<Button variant='ghost' />}>
+                Cancel
+              </DialogClose>
+              <Button type='submit'>Save changes</Button>
+            </DialogFooter>
+          </DialogPopup>
+        </Dialog>
       </DialogFooter>
-    </DialogContent>
+    </DialogPopup>
   </Dialog>
 );
 

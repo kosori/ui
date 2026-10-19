@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -21,7 +22,8 @@ const DialogExample = () => (
           A dialog composed from Registry items.
         </DialogDescription>
       </DialogHeader>
-      <DialogFooter showCloseButton>
+      <DialogFooter>
+        <DialogClose render={<Button variant='outline' />}>Close</DialogClose>
         <Button>Continue</Button>
       </DialogFooter>
     </DialogContent>

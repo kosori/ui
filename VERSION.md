@@ -19,12 +19,16 @@ One row per Port, ordered alphabetically by kosori name.
 
 | kosori | coss | sha256 |
 | --- | --- | --- |
+| alert-dialog | alert-dialog | d44513e3a157229eea1a9190aadbc479e356b47eb13c98e1a91ce4366fa11cf6 |
 | badge | badge | 60f73554b462ec5e2929ccc58c0522b069c07e1268dbfb67749c2837347b788b |
 | button | button | 1e65556bde3071f90f61825cf573aec74bdd8695824470bea3dae4d68a6b8fc8 |
+| dialog | dialog | 29e99f5d39307acd3781ee0c8f78aabe6d637f667fb3b7893820e4621ddcce7b |
+| drawer | drawer | 5853db0687904d22f40ec8ad641a99df5bff4aa8049bbd82503a82aa556ded4e |
 | input | input | 3d488d491eb4e63642adc8b9354b0b0cc5b8ec4e284bbc26da7e2516f24980a4 |
 | kbd | kbd | ad8f26b95d8307f460316cd27a2b595d04069df2561395b5d39067a99e407cb5 |
 | label | label | edaf5fb049b3e2f27ddd70a6c6772c7d99e920c589b41019b8f4fa602113e695 |
 | separator | separator | 48393a9f365097e350bb33f0e84d2df25efd6b374868aa075f8d6011378c1d6e |
+| sheet | sheet | f1d3361a490c9d9a49a4289604aaf6995cb0b138728c3068ba94ee6c9337978a |
 | spinner | spinner | 5116d0ec549bf70d20d5359a485e6792b6c87d89a389102ad6c3f44312c23972 |
 | textarea | textarea | 3e30e41c099d7343cb0a603557acd4e8b7c94b43139a7a489df322c04c5f601c |
 
