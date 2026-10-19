@@ -4,9 +4,32 @@
   "homepage": "https://kosori.codingcodax.dev",
   "items": [
     {
+      "name": "badge",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/badge"],
+      "files": [
+        {
+          "path": "registry/zen/badge-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
+      "registryDependencies": ["@kosori/spinner"],
       "files": [
         {
           "path": "registry/zen/button.tsx",
@@ -94,9 +117,31 @@
       ]
     },
     {
-      "name": "label",
+      "name": "kbd",
       "type": "registry:ui",
       "dependencies": ["cn"],
+      "files": [
+        {
+          "path": "registry/zen/kbd.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kbd-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/kbd"],
+      "files": [
+        {
+          "path": "registry/zen/kbd-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
           "path": "registry/zen/label.tsx",
@@ -107,7 +152,7 @@
     {
       "name": "label-example",
       "type": "registry:example",
-      "registryDependencies": ["@kosori/label"],
+      "registryDependencies": ["@kosori/input", "@kosori/label"],
       "files": [
         {
           "path": "registry/zen/label-example.tsx",
@@ -133,6 +178,50 @@
       "files": [
         {
           "path": "registry/zen/separator-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "dependencies": ["@tabler/icons-react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spinner-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/spinner"],
+      "files": [
+        {
+          "path": "registry/zen/spinner-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "textarea-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/textarea"],
+      "files": [
+        {
+          "path": "registry/zen/textarea-example.tsx",
           "type": "registry:example"
         }
       ]

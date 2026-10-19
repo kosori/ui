@@ -6,12 +6,16 @@
     "index",
     "installation",
     "components",
+    "badge",
     "button",
     "dialog",
     "field",
     "input",
+    "kbd",
     "label",
     "separator",
+    "spinner",
+    "textarea",
     "theming"
   ]
 }
