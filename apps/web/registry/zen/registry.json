@@ -49,6 +49,28 @@
       ]
     },
     {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/checkbox", "@kosori/label"],
+      "files": [
+        {
+          "path": "registry/zen/checkbox-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "dialog",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
@@ -161,6 +183,28 @@
       ]
     },
     {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/radio-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "radio-group-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/label", "@kosori/radio-group"],
+      "files": [
+        {
+          "path": "registry/zen/radio-group-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "separator",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
@@ -183,6 +227,28 @@
       ]
     },
     {
+      "name": "slider",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/slider.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "slider-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/field", "@kosori/slider"],
+      "files": [
+        {
+          "path": "registry/zen/slider-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "spinner",
       "type": "registry:ui",
       "dependencies": ["@tabler/icons-react", "cn"],
@@ -200,6 +266,28 @@
       "files": [
         {
           "path": "registry/zen/spinner-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "switch-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/label", "@kosori/switch"],
+      "files": [
+        {
+          "path": "registry/zen/switch-example.tsx",
           "type": "registry:example"
         }
       ]

@@ -10,13 +10,17 @@ import { SeparatorExample as KazeSeparatorExample } from '@/lib/registry/preview
 import type { StyleName } from '@/registry/preset';
 import BadgeExample from '@/registry/zen/badge-example';
 import ButtonExample from '@/registry/zen/button-example';
+import CheckboxExample from '@/registry/zen/checkbox-example';
 import DialogExample from '@/registry/zen/dialog-example';
 import FieldExample from '@/registry/zen/field-example';
 import InputExample from '@/registry/zen/input-example';
 import KbdExample from '@/registry/zen/kbd-example';
 import LabelExample from '@/registry/zen/label-example';
+import RadioGroupExample from '@/registry/zen/radio-group-example';
 import SeparatorExample from '@/registry/zen/separator-example';
+import SliderExample from '@/registry/zen/slider-example';
 import SpinnerExample from '@/registry/zen/spinner-example';
+import SwitchExample from '@/registry/zen/switch-example';
 import TextareaExample from '@/registry/zen/textarea-example';
 
 const REGISTRY_DIR = join(process.cwd(), 'registry');
@@ -28,13 +32,17 @@ const REGISTRY_DIR = join(process.cwd(), 'registry');
 const exampleItems = {
   badge: 'badge-example',
   button: 'button-example',
+  checkbox: 'checkbox-example',
   dialog: 'dialog-example',
   field: 'field-example',
   input: 'input-example',
   kbd: 'kbd-example',
   label: 'label-example',
+  'radio-group': 'radio-group-example',
   separator: 'separator-example',
+  slider: 'slider-example',
   spinner: 'spinner-example',
+  switch: 'switch-example',
   textarea: 'textarea-example',
 } as const;
 
@@ -61,13 +69,17 @@ const exampleComponents: Record<
   zen: {
     badge: BadgeExample,
     button: ButtonExample,
+    checkbox: CheckboxExample,
     dialog: DialogExample,
     field: FieldExample,
     input: InputExample,
     kbd: KbdExample,
     label: LabelExample,
+    'radio-group': RadioGroupExample,
     separator: SeparatorExample,
+    slider: SliderExample,
     spinner: SpinnerExample,
+    switch: SwitchExample,
     textarea: TextareaExample,
   },
 };

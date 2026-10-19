@@ -8,13 +8,17 @@
     "components",
     "badge",
     "button",
+    "checkbox",
     "dialog",
     "field",
     "input",
     "kbd",
     "label",
+    "radio-group",
     "separator",
+    "slider",
     "spinner",
+    "switch",
     "textarea",
     "theming"
   ]
