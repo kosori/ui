@@ -19,6 +19,7 @@ One row per Port, ordered alphabetically by kosori name.
 
 | kosori | coss | sha256 |
 | --- | --- | --- |
+| alert-dialog | alert-dialog | d44513e3a157229eea1a9190aadbc479e356b47eb13c98e1a91ce4366fa11cf6 |
 | avatar | avatar | 2fe6b7b5551b8867a42f764d7616d8a271409432ce696d32611d0d4b74341e9b |
 | badge | badge | 60f73554b462ec5e2929ccc58c0522b069c07e1268dbfb67749c2837347b788b |
 | button | button | 1e65556bde3071f90f61825cf573aec74bdd8695824470bea3dae4d68a6b8fc8 |
@@ -26,6 +27,8 @@ One row per Port, ordered alphabetically by kosori name.
 | calendar | calendar | 547ebebda2747dadee61815f41448a2b6cecce3ad125806666df7595013896f0 |
 | checkbox | checkbox | a1b8b4180a39a47c47bd2b50e432d0911da6efe3b963b065b3b5cb8893760047 |
 | context-menu | context-menu | c7dd4deefe1b4180ea242c0a97c3cca9a5112bc6113e212413f11be4738432fc |
+| dialog | dialog | 29e99f5d39307acd3781ee0c8f78aabe6d637f667fb3b7893820e4621ddcce7b |
+| drawer | drawer | 5853db0687904d22f40ec8ad641a99df5bff4aa8049bbd82503a82aa556ded4e |
 | dropdown-menu | menu | 19ed2b219a4a3606488d6bf66d13055bce7b6d5d438f77a1caea5648e4c44aae |
 | field | field | 02ffda39f73f04638f580fd1fbb76e783cb252f9a87ecebdd62fb4bd0d1393ff |
 | field | fieldset | 1ec36d2a2c60fd1ba229682a876f8d672ade66019513bac1a6747885d369f2a6 |
@@ -41,6 +44,7 @@ One row per Port, ordered alphabetically by kosori name.
 | scroll-area | scroll-area | 6274eace4599cba26e731b0f02cd2307d2207947162ccc575e45984e87aa269f |
 | select | select | aa8821bbb4bd6b8b52a6cbaaf8d995f48b1001ad93d4bfa4e5b91b5e6d5f66a0 |
 | separator | separator | 48393a9f365097e350bb33f0e84d2df25efd6b374868aa075f8d6011378c1d6e |
+| sheet | sheet | f1d3361a490c9d9a49a4289604aaf6995cb0b138728c3068ba94ee6c9337978a |
 | skeleton | skeleton | 02e61d00c76b7ed5a1979c37c2a86b8a837a013909e84ac21c40bb5b56f9afd2 |
 | slider | slider | 952c61cfbb6950045792adf00f772a986bb07c7b7986caf40e509d60deb92ce6 |
 | spinner | spinner | 5116d0ec549bf70d20d5359a485e6792b6c87d89a389102ad6c3f44312c23972 |

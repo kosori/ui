@@ -4,6 +4,28 @@
   "homepage": "https://kosori.codingcodax.dev",
   "items": [
     {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/alert-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/alert-dialog", "@kosori/button"],
+      "files": [
+        {
+          "path": "registry/zen/alert-dialog-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "avatar",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
@@ -164,7 +186,7 @@
       "name": "dialog",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
-      "registryDependencies": ["@kosori/button"],
+      "registryDependencies": ["@kosori/button", "@kosori/scroll-area"],
       "files": [
         {
           "path": "registry/zen/dialog.tsx",
@@ -175,10 +197,38 @@
     {
       "name": "dialog-example",
       "type": "registry:example",
-      "registryDependencies": ["@kosori/button", "@kosori/dialog"],
+      "registryDependencies": [
+        "@kosori/button",
+        "@kosori/dialog",
+        "@kosori/field",
+        "@kosori/input"
+      ],
       "files": [
         {
           "path": "registry/zen/dialog-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/button", "@kosori/scroll-area"],
+      "files": [
+        {
+          "path": "registry/zen/drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "drawer-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button", "@kosori/drawer"],
+      "files": [
+        {
+          "path": "registry/zen/drawer-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -502,6 +552,29 @@
       "files": [
         {
           "path": "registry/zen/separator-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/button", "@kosori/scroll-area"],
+      "files": [
+        {
+          "path": "registry/zen/sheet.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sheet-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button", "@kosori/sheet"],
+      "files": [
+        {
+          "path": "registry/zen/sheet-example.tsx",
           "type": "registry:example"
         }
       ]

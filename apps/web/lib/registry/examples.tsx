@@ -8,6 +8,7 @@ import { InputExample as KazeInputExample } from '@/lib/registry/previews/kaze/i
 import { LabelExample as KazeLabelExample } from '@/lib/registry/previews/kaze/label-example';
 import { SeparatorExample as KazeSeparatorExample } from '@/lib/registry/previews/kaze/separator-example';
 import type { StyleName } from '@/registry/preset';
+import AlertDialogExample from '@/registry/zen/alert-dialog-example';
 import AvatarExample from '@/registry/zen/avatar-example';
 import BadgeExample from '@/registry/zen/badge-example';
 import ButtonExample from '@/registry/zen/button-example';
@@ -16,6 +17,7 @@ import CalendarExample from '@/registry/zen/calendar-example';
 import CheckboxExample from '@/registry/zen/checkbox-example';
 import ContextMenuExample from '@/registry/zen/context-menu-example';
 import DialogExample from '@/registry/zen/dialog-example';
+import DrawerExample from '@/registry/zen/drawer-example';
 import DropdownMenuExample from '@/registry/zen/dropdown-menu-example';
 import FieldExample from '@/registry/zen/field-example';
 import FormExample from '@/registry/zen/form-example';
@@ -30,6 +32,7 @@ import RadioGroupExample from '@/registry/zen/radio-group-example';
 import ScrollAreaExample from '@/registry/zen/scroll-area-example';
 import SelectExample from '@/registry/zen/select-example';
 import SeparatorExample from '@/registry/zen/separator-example';
+import SheetExample from '@/registry/zen/sheet-example';
 import SkeletonExample from '@/registry/zen/skeleton-example';
 import SliderExample from '@/registry/zen/slider-example';
 import SpinnerExample from '@/registry/zen/spinner-example';
@@ -46,6 +49,7 @@ const REGISTRY_DIR = join(process.cwd(), 'registry');
  * the catalog contract, so they are shared rather than restated per Style.
  */
 const exampleItems = {
+  'alert-dialog': 'alert-dialog-example',
   avatar: 'avatar-example',
   badge: 'badge-example',
   button: 'button-example',
@@ -54,6 +58,7 @@ const exampleItems = {
   checkbox: 'checkbox-example',
   'context-menu': 'context-menu-example',
   dialog: 'dialog-example',
+  drawer: 'drawer-example',
   'dropdown-menu': 'dropdown-menu-example',
   field: 'field-example',
   form: 'form-example',
@@ -68,6 +73,7 @@ const exampleItems = {
   'scroll-area': 'scroll-area-example',
   select: 'select-example',
   separator: 'separator-example',
+  sheet: 'sheet-example',
   skeleton: 'skeleton-example',
   slider: 'slider-example',
   spinner: 'spinner-example',
@@ -99,6 +105,7 @@ const exampleComponents: Record<
     separator: KazeSeparatorExample,
   },
   zen: {
+    'alert-dialog': AlertDialogExample,
     avatar: AvatarExample,
     badge: BadgeExample,
     button: ButtonExample,
@@ -107,6 +114,7 @@ const exampleComponents: Record<
     checkbox: CheckboxExample,
     'context-menu': ContextMenuExample,
     dialog: DialogExample,
+    drawer: DrawerExample,
     'dropdown-menu': DropdownMenuExample,
     field: FieldExample,
     form: FormExample,
@@ -121,6 +129,7 @@ const exampleComponents: Record<
     'scroll-area': ScrollAreaExample,
     select: SelectExample,
     separator: SeparatorExample,
+    sheet: SheetExample,
     skeleton: SkeletonExample,
     slider: SliderExample,
     spinner: SpinnerExample,
