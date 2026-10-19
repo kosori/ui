@@ -6,14 +6,32 @@ import {
   exampleItemName,
   readExampleSource,
 } from '@/lib/registry/examples';
+import {
+  findStyle,
+  radiusTokens,
+  type StyleName,
+  styleRadius,
+} from '@/registry/preset';
+
+/** The Token block a preview needs so the Style's radius reaches its examples. */
+const previewRadiusTokens = (style: StyleName) => {
+  const definition = findStyle(style);
+
+  if (!definition) {
+    return;
+  }
+
+  return radiusTokens(styleRadius(definition, 'light'));
+};
 
 type Props = {
   name: ExampleName;
+  style?: StyleName;
 };
 
 /** A Registry Example: the live composition beside the source an install ships. */
-const ComponentPreview = async ({ name }: Props) => {
-  const source = await readExampleSource(name);
+const ComponentPreview = async ({ name, style = 'zen' }: Props) => {
+  const source = await readExampleSource(style, name);
 
   return (
     <div className='not-prose my-6 overflow-hidden rounded-xl border'>
@@ -22,8 +40,11 @@ const ComponentPreview = async ({ name }: Props) => {
           {exampleFileName(name)}
         </span>
       </div>
-      <div className='flex min-h-40 flex-wrap items-center gap-4 p-6'>
-        <ExamplePreview name={name} />
+      <div
+        className='flex min-h-40 flex-wrap items-center gap-4 p-6'
+        style={previewRadiusTokens(style)}
+      >
+        <ExamplePreview name={name} style={style} />
       </div>
       <ServerCodeBlock
         code={source}
