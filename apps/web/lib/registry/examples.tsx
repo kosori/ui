@@ -10,6 +10,7 @@ import { SeparatorExample as KazeSeparatorExample } from '@/lib/registry/preview
 import type { StyleName } from '@/registry/preset';
 import BadgeExample from '@/registry/zen/badge-example';
 import ButtonExample from '@/registry/zen/button-example';
+import CalendarExample from '@/registry/zen/calendar-example';
 import CheckboxExample from '@/registry/zen/checkbox-example';
 import DialogExample from '@/registry/zen/dialog-example';
 import FieldExample from '@/registry/zen/field-example';
@@ -32,6 +33,7 @@ const REGISTRY_DIR = join(process.cwd(), 'registry');
 const exampleItems = {
   badge: 'badge-example',
   button: 'button-example',
+  calendar: 'calendar-example',
   checkbox: 'checkbox-example',
   dialog: 'dialog-example',
   field: 'field-example',
@@ -69,6 +71,7 @@ const exampleComponents: Record<
   zen: {
     badge: BadgeExample,
     button: ButtonExample,
+    calendar: CalendarExample,
     checkbox: CheckboxExample,
     dialog: DialogExample,
     field: FieldExample,
