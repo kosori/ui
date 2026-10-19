@@ -15,9 +15,13 @@ import ButtonGroupExample from '@/registry/zen/button-group-example';
 import CalendarExample from '@/registry/zen/calendar-example';
 import DialogExample from '@/registry/zen/dialog-example';
 import FieldExample from '@/registry/zen/field-example';
+import FormExample from '@/registry/zen/form-example';
 import InputExample from '@/registry/zen/input-example';
+import InputGroupExample from '@/registry/zen/input-group-example';
+import InputOtpExample from '@/registry/zen/input-otp-example';
 import KbdExample from '@/registry/zen/kbd-example';
 import LabelExample from '@/registry/zen/label-example';
+import SelectExample from '@/registry/zen/select-example';
 import SeparatorExample from '@/registry/zen/separator-example';
 import SkeletonExample from '@/registry/zen/skeleton-example';
 import SpinnerExample from '@/registry/zen/spinner-example';
@@ -39,9 +43,13 @@ const exampleItems = {
   calendar: 'calendar-example',
   dialog: 'dialog-example',
   field: 'field-example',
+  form: 'form-example',
   input: 'input-example',
+  'input-group': 'input-group-example',
+  'input-otp': 'input-otp-example',
   kbd: 'kbd-example',
   label: 'label-example',
+  select: 'select-example',
   separator: 'separator-example',
   skeleton: 'skeleton-example',
   spinner: 'spinner-example',
@@ -78,9 +86,13 @@ const exampleComponents: Record<
     calendar: CalendarExample,
     dialog: DialogExample,
     field: FieldExample,
+    form: FormExample,
     input: InputExample,
+    'input-group': InputGroupExample,
+    'input-otp': InputOtpExample,
     kbd: KbdExample,
     label: LabelExample,
+    select: SelectExample,
     separator: SeparatorExample,
     skeleton: SkeletonExample,
     spinner: SpinnerExample,

@@ -2,24 +2,30 @@ import {
   Field,
   FieldDescription,
   FieldLabel,
-  FieldSeparator,
-  FieldSet,
+  Fieldset,
+  FieldsetLegend,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 
 const FieldExample = () => (
-  <FieldSet className='w-full max-w-sm'>
+  <Fieldset className='flex w-full flex-col gap-6'>
+    <FieldsetLegend>Billing Details</FieldsetLegend>
     <Field>
-      <FieldLabel htmlFor='kosori-name'>Name</FieldLabel>
-      <Input id='kosori-name' placeholder='kosori' />
-      <FieldDescription>Shown on your public profile.</FieldDescription>
+      <FieldLabel>Company</FieldLabel>
+      <Input placeholder='Enter company name' type='text' />
+      <FieldDescription>
+        The name that will appear on invoices.
+      </FieldDescription>
     </Field>
-    <FieldSeparator>or</FieldSeparator>
+
     <Field>
-      <FieldLabel htmlFor='kosori-email'>Email</FieldLabel>
-      <Input id='kosori-email' placeholder='you@example.com' type='email' />
+      <FieldLabel>Tax ID</FieldLabel>
+      <Input placeholder='Enter tax identification number' type='text' />
+      <FieldDescription>
+        Your business tax identification number.
+      </FieldDescription>
     </Field>
-  </FieldSet>
+  </Fieldset>
 );
 
 export default FieldExample;
