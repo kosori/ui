@@ -1,0 +1,33 @@
+---
+title: Introduction
+description: kosori is a copy-paste React component library built on Base UI.
+---
+
+kosori ships React components as editable source. You install them with the
+stock [shadcn CLI](https://ui.shadcn.com/docs/cli), they land in your project at
+your own aliases, and from then on you own them. kosori takes no runtime
+dependency on your app, and your app takes none on kosori.
+
+## Styles
+
+A **Style** is one complete presentation of the library: the component source
+plus the default Token values that source assumes. A project settles on one
+Style, and this documentation is written per Style. Two Styles ship today,
+`zen` and `kaze`. Because every Style documents the same page paths, the
+switcher in the sidebar moves you between the same page in each Style — the
+page you are reading is `kaze`.
+
+<Cards>
+  <Card title='Installation' href='/docs/kaze/installation'>
+    Set up `kaze` with one command and add your first component.
+  </Card>
+  <Card title='Theming' href='/docs/kaze/theming'>
+    Learn which Tokens a Style writes and which are yours to change.
+  </Card>
+</Cards>
+
+## Base UI, not Radix
+
+Every component wraps a [Base UI](https://base-ui.com) primitive. There is one
+Base and no way to choose another, so nothing in a Style's name or in a Registry
+URL has to carry it.

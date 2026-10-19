@@ -1,0 +1,46 @@
+---
+title: Theming
+description: How a Style's Tokens reach your components, and what stays yours.
+---
+
+A Style ships two things: component source, and the default Token values that
+source assumes. `init` writes the Token block into your CSS entry, and every
+kosori component reads colours, radii and typography from it.
+
+## Where the Tokens land
+
+`init` merges the Style's block into the CSS file named in `components.json`,
+once under `:root` and once under `.dark`. Change a value there and every
+component follows — no component source is touched.
+
+## Base color
+
+The Base color is the palette behind the colour Tokens. `kaze` proposes
+`neutral`; `mauve`, `mist`, `olive`, `stone`, `taupe` and `zinc` are the others.
+Choose one by naming it in the preset URL:
+
+```bash
+npx shadcn@latest init --base base --preset https://kosori.codingcodax.dev/init/kaze/zinc
+```
+
+Every palette value is written from the preset, so the values the CLI fetches
+from shadcn's host are discarded. The CLI still makes that request, so setup
+needs network access to shadcn's host — the in-repo copy removes the dependency
+on the returned values, not on the host.
+
+## Radius
+
+Every corner comes from one Token, `--radius`. The Style's `@theme inline` block
+derives `--radius-sm` through `--radius-4xl` from it, so changing `--radius`
+reshapes every component at once.
+
+## Typography is yours
+
+kosori ships no font. The Style sets `--font-sans` and `--font-mono` to a plain
+system stack, and an install never writes to your layout or route files — the
+two parts of a project kosori understands least.
+
+That leaves the typeface to you. Point `--font-sans` at your own font where you
+set up your layout — a licensed face, a self-hosted file or a webfont are all
+your call — and every component picks it up. This documentation site does
+exactly that with a local font of its own.

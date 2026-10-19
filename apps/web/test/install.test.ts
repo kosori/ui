@@ -13,9 +13,9 @@ import {
 import { tmpdir } from 'node:os';
 import { join, relative } from 'node:path';
 import { GET } from '../app/init/[style]/[baseColor]/route';
+import { STYLES } from '../registry/preset';
 
 const webDir = join(import.meta.dirname, '..');
-const docsDir = join(webDir, 'content/docs/zen');
 const fixtureDir = join(import.meta.dirname, 'fixtures/consumer');
 const shadcn = join(webDir, 'node_modules/.bin/shadcn');
 const tsc = join(webDir, 'node_modules/.bin/tsc');
@@ -29,12 +29,18 @@ type RegistryItem = {
   type: string;
 };
 
-/** Read the catalog the Registry serves. The install runs over all of it. */
-const readRegistry = async (): Promise<RegistryItem[]> => {
+/** Read the catalog a Style's Registry serves. The install runs over all of it. */
+const readRegistry = async (style: string): Promise<RegistryItem[]> => {
   const catalog: { items: RegistryItem[] } = JSON.parse(
-    await readFile(join(webDir, 'registry/zen/registry.json'), 'utf8')
+    await readFile(join(webDir, `registry/${style}/registry.json`), 'utf8')
   );
   return catalog.items;
+};
+
+/** The radius Token each Style's preset must write, from the Style's design. */
+const RADIUS: Record<string, string> = {
+  kaze: '1rem',
+  zen: '0.625rem',
 };
 
 /**
@@ -159,13 +165,16 @@ const run = (
     }
   );
 
-/** Build the Registry into the docs app's static output, discarding stale output. */
-const buildRegistry = async () => {
-  await rm(join(webDir, 'public/r'), { force: true, recursive: true });
+/** Build a Style's Registry into the docs app's static output, discarding stale output. */
+const buildRegistry = async (style: string) => {
+  await rm(join(webDir, 'public/r', style), {
+    force: true,
+    recursive: true,
+  });
 
   return run(
     shadcn,
-    ['build', 'registry/zen/registry.json', '-o', 'public/r/zen'],
+    ['build', `registry/${style}/registry.json`, '-o', `public/r/${style}`],
     webDir
   );
 };
@@ -211,126 +220,154 @@ const declarations = (css: string, selector: string) => {
   return css.match(new RegExp(`${escaped}\\s*\\{([^}]*)\\}`))?.[1] ?? '';
 };
 
-test('installing the preset and every catalog item leaves a Consumer project that typechecks', async () => {
-  const build = await buildRegistry();
-  expect(build.exitCode, build.stdout + build.stderr).toBe(0);
-
+test('installing a preset and every item of every Style leaves Consumer projects that typecheck', async () => {
   const server = serveInterop();
   const origin = `http://127.0.0.1:${server.port}`;
   const cliEnv = { ...process.env, REGISTRY_URL: `${origin}/r` };
-  const scratch = await mkdtemp(join(tmpdir(), 'kosori-consumer-'));
 
   try {
-    await cp(fixtureDir, scratch, { recursive: true });
-    await symlink(join(webDir, 'node_modules'), join(scratch, 'node_modules'));
+    for (const style of STYLES) {
+      const docsDir = join(webDir, 'content/docs', style.name);
 
-    // ADR-0003: an install writes only the component directory, the CSS entry
-    // and the dependency manifests. Record the whole tree before it installs.
-    const before = await readTree(scratch);
+      // biome-ignore lint/performance/noAwaitInLoops: each Style owns a scratch project and a CLI run
+      const build = await buildRegistry(style.name);
+      expect(build.exitCode, build.stdout + build.stderr).toBe(0);
 
-    const init = await run(
-      shadcn,
-      ['init', `${origin}/init/zen/neutral`, '-f', '-s', '--no-reinstall'],
-      scratch,
-      cliEnv
-    );
-    expect(init.exitCode, init.stdout + init.stderr).toBe(0);
-
-    const config = JSON.parse(
-      await readFile(join(scratch, 'components.json'), 'utf8')
-    );
-    expect(config.style).toBe('zen');
-    expect(config.tailwind.baseColor).toBe('neutral');
-    expect(config.registries['@kosori']).toBe(productionNamespace);
-
-    // The preset writes the production Namespace; pointing that same handle at
-    // the harness afterwards keeps the shipped URL under assertion while the
-    // locally-run `add` never has to resolve production.
-    config.registries['@kosori'] = `${origin}/r/{style}/{name}.json`;
-    await writeFile(
-      join(scratch, 'components.json'),
-      `${JSON.stringify(config, null, 2)}\n`
-    );
-
-    const items = await readRegistry();
-    const components = items.filter((item) => item.type === 'registry:ui');
-    expect(components.map((item) => item.name)).toEqual(
-      expect.arrayContaining(REQUIRED_COMPONENTS)
-    );
-
-    // Adding a component means editing the catalog, its Example, the docs menu
-    // and a page. Every catalog component must ship an Example and a page, so a
-    // forgotten edit fails here instead of disappearing silently.
-    const examples = items.filter((item) => item.type === 'registry:example');
-    const meta: { pages: string[] } = JSON.parse(
-      await readFile(join(docsDir, 'meta.json'), 'utf8')
-    );
-    for (const component of components) {
-      expect(
-        examples.some(
-          (example) => example.name === `${component.name}-example`
-        ),
-        `${component.name} has no Example`
-      ).toBe(true);
-      expect(
-        existsSync(join(docsDir, `${component.name}.mdx`)),
-        `${component.name} has no documentation page`
-      ).toBe(true);
-      expect(meta.pages, `${component.name} is not in the docs menu`).toContain(
-        component.name
+      const scratch = await mkdtemp(
+        join(tmpdir(), `kosori-consumer-${style.name}-`)
       );
-    }
 
-    // Install every item the catalog serves, so coverage cannot shrink as the
-    // catalog grows: a new item is exercised without touching this test.
-    const add = await run(
-      shadcn,
-      ['add', ...items.map((item) => `@kosori/${item.name}`), '-y', '-s'],
-      scratch,
-      cliEnv
-    );
-    expect(add.exitCode, add.stdout + add.stderr).toBe(0);
-
-    // Every catalog item installs. The file an install writes and the file the
-    // docs read must be the same bytes for every item, so a transform that would
-    // rewrite a source file fails the suite rather than reaching a Consumer.
-    await Promise.all(
-      items.map(async (item) => {
-        const installed = installedPath(item, scratch);
-        expect(existsSync(installed), item.name).toBe(true);
-        expect(await readFile(installed, 'utf8'), item.name).toBe(
-          await readFile(join(webDir, item.files[0].path), 'utf8')
+      try {
+        await cp(fixtureDir, scratch, { recursive: true });
+        await symlink(
+          join(webDir, 'node_modules'),
+          join(scratch, 'node_modules')
         );
-      })
-    );
 
-    // ADR-0003: nothing outside the component directory, the CSS entry and the
-    // dependency manifests may change, so a write into `lib/` or a stray
-    // manifest fails rather than passing unnoticed.
-    const after = await readTree(scratch);
-    const outsideSurface = [...new Set([...before.keys(), ...after.keys()])]
-      .filter((path) => before.get(path) !== after.get(path))
-      .filter((path) => !isInstallSurface(path));
-    expect(
-      outsideSurface,
-      'install wrote outside the component directory, CSS entry and manifests'
-    ).toEqual([]);
+        // ADR-0003: an install writes only the component directory, the CSS
+        // entry and the dependency manifests. Record the tree before it runs.
+        const before = await readTree(scratch);
 
-    const css = await readFile(join(scratch, 'app/globals.css'), 'utf8');
-    expect(declarations(css, ':root')).toContain('--background: oklch(1 0 0)');
-    expect(declarations(css, ':root')).toContain('--radius: 0.625rem');
-    expect(declarations(css, '.dark')).toContain(
-      '--background: oklch(0.145 0 0)'
-    );
+        const init = await run(
+          shadcn,
+          [
+            'init',
+            `${origin}/init/${style.name}/neutral`,
+            '-f',
+            '-s',
+            '--no-reinstall',
+          ],
+          scratch,
+          cliEnv
+        );
+        expect(init.exitCode, init.stdout + init.stderr).toBe(0);
 
-    const typecheck = await run(
-      tsc,
-      ['--noEmit', '-p', 'tsconfig.json'],
-      scratch
-    );
-    expect(typecheck.exitCode, typecheck.stdout + typecheck.stderr).toBe(0);
+        const config = JSON.parse(
+          await readFile(join(scratch, 'components.json'), 'utf8')
+        );
+        expect(config.style).toBe(style.name);
+        expect(config.tailwind.baseColor).toBe('neutral');
+        expect(config.registries['@kosori']).toBe(productionNamespace);
+
+        // The preset writes the production Namespace; pointing that same handle
+        // at the harness afterwards keeps the shipped URL under assertion while
+        // the locally-run `add` never has to resolve production.
+        config.registries['@kosori'] = `${origin}/r/{style}/{name}.json`;
+        await writeFile(
+          join(scratch, 'components.json'),
+          `${JSON.stringify(config, null, 2)}\n`
+        );
+
+        const items = await readRegistry(style.name);
+        const components = items.filter((item) => item.type === 'registry:ui');
+        expect(components.map((item) => item.name)).toEqual(
+          expect.arrayContaining(REQUIRED_COMPONENTS)
+        );
+
+        // Adding a component means editing the catalog, its Example, the docs
+        // menu and a page. Every catalog component must ship an Example and a
+        // page, so a forgotten edit fails here instead of disappearing silently.
+        const examples = items.filter(
+          (item) => item.type === 'registry:example'
+        );
+        const meta: { pages: string[] } = JSON.parse(
+          await readFile(join(docsDir, 'meta.json'), 'utf8')
+        );
+        for (const component of components) {
+          expect(
+            examples.some(
+              (example) => example.name === `${component.name}-example`
+            ),
+            `${component.name} has no Example`
+          ).toBe(true);
+          expect(
+            existsSync(join(docsDir, `${component.name}.mdx`)),
+            `${component.name} has no documentation page`
+          ).toBe(true);
+          expect(
+            meta.pages,
+            `${component.name} is not in the docs menu`
+          ).toContain(component.name);
+        }
+
+        // Install every item the catalog serves, so coverage cannot shrink as
+        // the catalog grows: a new item is exercised without touching this test.
+        const add = await run(
+          shadcn,
+          ['add', ...items.map((item) => `@kosori/${item.name}`), '-y', '-s'],
+          scratch,
+          cliEnv
+        );
+        expect(add.exitCode, add.stdout + add.stderr).toBe(0);
+
+        // Every catalog item installs. The file an install writes and the file
+        // the docs read must be the same bytes for every item, so a transform
+        // that would rewrite a source file fails the suite rather than reaching
+        // a Consumer.
+        await Promise.all(
+          items.map(async (item) => {
+            const installed = installedPath(item, scratch);
+            expect(existsSync(installed), item.name).toBe(true);
+            expect(await readFile(installed, 'utf8'), item.name).toBe(
+              await readFile(join(webDir, item.files[0].path), 'utf8')
+            );
+          })
+        );
+
+        // ADR-0003: nothing outside the component directory, the CSS entry and
+        // the dependency manifests may change, so a write into `lib/` or a
+        // stray manifest fails rather than passing unnoticed.
+        const after = await readTree(scratch);
+        const outsideSurface = [...new Set([...before.keys(), ...after.keys()])]
+          .filter((path) => before.get(path) !== after.get(path))
+          .filter((path) => !isInstallSurface(path));
+        expect(
+          outsideSurface,
+          'install wrote outside the component directory, CSS entry and manifests'
+        ).toEqual([]);
+
+        const css = await readFile(join(scratch, 'app/globals.css'), 'utf8');
+        expect(declarations(css, ':root')).toContain(
+          '--background: oklch(1 0 0)'
+        );
+        expect(declarations(css, ':root')).toContain(
+          `--radius: ${RADIUS[style.name]}`
+        );
+        expect(declarations(css, '.dark')).toContain(
+          '--background: oklch(0.145 0 0)'
+        );
+
+        const typecheck = await run(
+          tsc,
+          ['--noEmit', '-p', 'tsconfig.json'],
+          scratch
+        );
+        expect(typecheck.exitCode, typecheck.stdout + typecheck.stderr).toBe(0);
+      } finally {
+        await rm(scratch, { force: true, recursive: true });
+      }
+    }
   } finally {
     server.stop(true);
-    await rm(scratch, { force: true, recursive: true });
   }
-}, 120_000);
+}, 240_000);

@@ -1,0 +1,141 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "kosori",
+  "homepage": "https://kosori.codingcodax.dev",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
+      "files": [
+        {
+          "path": "registry/kaze/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button"],
+      "files": [
+        {
+          "path": "registry/kaze/button-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/button"],
+      "files": [
+        {
+          "path": "registry/kaze/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dialog-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button", "@kosori/dialog"],
+      "files": [
+        {
+          "path": "registry/kaze/dialog-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority", "cn"],
+      "registryDependencies": ["@kosori/label", "@kosori/separator"],
+      "files": [
+        {
+          "path": "registry/kaze/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "field-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/field", "@kosori/input"],
+      "files": [
+        {
+          "path": "registry/kaze/field-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/kaze/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/input"],
+      "files": [
+        {
+          "path": "registry/kaze/input-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "dependencies": ["cn"],
+      "files": [
+        {
+          "path": "registry/kaze/label.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "label-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/label"],
+      "files": [
+        {
+          "path": "registry/kaze/label-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/kaze/separator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/separator"],
+      "files": [
+        {
+          "path": "registry/kaze/separator-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import { source } from '@/lib/source';
+import { isStyleName } from '@/registry/preset';
 
 /** Resolve the requested documentation page and the route params that led to it. */
 const getDocsPage = async (props: PageProps<'/docs/[[...slug]]'>) => {
@@ -29,6 +30,7 @@ const Page = async (props: PageProps<'/docs/[[...slug]]'>) => {
   }
 
   const MDX = page.data.body;
+  const style = params.slug?.[0];
 
   return (
     <DocsPage full={page.data.full} toc={page.data.toc}>
@@ -36,9 +38,10 @@ const Page = async (props: PageProps<'/docs/[[...slug]]'>) => {
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
         <MDX
-          components={getMDXComponents({
-            a: createRelativeLink(source, page),
-          })}
+          components={getMDXComponents(
+            { a: createRelativeLink(source, page) },
+            style && isStyleName(style) ? style : undefined
+          )}
         />
       </DocsBody>
     </DocsPage>

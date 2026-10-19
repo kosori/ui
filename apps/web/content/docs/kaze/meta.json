@@ -1,0 +1,16 @@
+{
+  "title": "kaze",
+  "description": "The second kosori Style.",
+  "root": "style",
+  "pages": [
+    "index",
+    "installation",
+    "button",
+    "dialog",
+    "field",
+    "input",
+    "label",
+    "separator",
+    "theming"
+  ]
+}
