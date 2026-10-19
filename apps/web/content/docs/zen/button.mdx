@@ -1,10 +1,11 @@
 ---
 title: Button
-description: A button triggers an action from a click, tap or keyboard input.
+description: A button or a component that looks like a button.
 ---
 
-Button wraps the [Base UI Button](https://base-ui.com/react/components/button)
-primitive, styles it with `cva` variants and marks it with `data-slot`.
+Button composes Base UI's `useRender` and `mergeProps` with `cva` variants,
+renders [Spinner](/docs/zen/spinner) as its loading indicator and marks itself
+with `data-slot`.
 
 ## Installation
 

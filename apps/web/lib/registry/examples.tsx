@@ -8,12 +8,16 @@ import { InputExample as KazeInputExample } from '@/lib/registry/previews/kaze/i
 import { LabelExample as KazeLabelExample } from '@/lib/registry/previews/kaze/label-example';
 import { SeparatorExample as KazeSeparatorExample } from '@/lib/registry/previews/kaze/separator-example';
 import type { StyleName } from '@/registry/preset';
+import BadgeExample from '@/registry/zen/badge-example';
 import ButtonExample from '@/registry/zen/button-example';
 import DialogExample from '@/registry/zen/dialog-example';
 import FieldExample from '@/registry/zen/field-example';
 import InputExample from '@/registry/zen/input-example';
+import KbdExample from '@/registry/zen/kbd-example';
 import LabelExample from '@/registry/zen/label-example';
 import SeparatorExample from '@/registry/zen/separator-example';
+import SpinnerExample from '@/registry/zen/spinner-example';
+import TextareaExample from '@/registry/zen/textarea-example';
 
 const REGISTRY_DIR = join(process.cwd(), 'registry');
 
@@ -22,12 +26,16 @@ const REGISTRY_DIR = join(process.cwd(), 'registry');
  * the catalog contract, so they are shared rather than restated per Style.
  */
 const exampleItems = {
+  badge: 'badge-example',
   button: 'button-example',
   dialog: 'dialog-example',
   field: 'field-example',
   input: 'input-example',
+  kbd: 'kbd-example',
   label: 'label-example',
   separator: 'separator-example',
+  spinner: 'spinner-example',
+  textarea: 'textarea-example',
 } as const;
 
 /** The component names the documentation can render an Example for. */
@@ -38,7 +46,10 @@ export type ExampleName = keyof typeof exampleItems;
  * it differs only in the components that markup resolves to, which is why the
  * render module is bound per Style while the item name and source are shared.
  */
-const exampleComponents = {
+const exampleComponents: Record<
+  StyleName,
+  Partial<Record<ExampleName, ComponentType>>
+> = {
   kaze: {
     button: KazeButtonExample,
     dialog: KazeDialogExample,
@@ -48,14 +59,18 @@ const exampleComponents = {
     separator: KazeSeparatorExample,
   },
   zen: {
+    badge: BadgeExample,
     button: ButtonExample,
     dialog: DialogExample,
     field: FieldExample,
     input: InputExample,
+    kbd: KbdExample,
     label: LabelExample,
     separator: SeparatorExample,
+    spinner: SpinnerExample,
+    textarea: TextareaExample,
   },
-} satisfies Record<StyleName, Record<ExampleName, ComponentType>>;
+};
 
 /** The Registry item a Consumer installs for an Example. */
 export const exampleItemName = (name: ExampleName) => exampleItems[name];
@@ -76,6 +91,10 @@ type Props = {
 /** Render a Registry Example live for the Style a page documents. */
 export const ExamplePreview = ({ name, style }: Props) => {
   const Example = exampleComponents[style][name];
+
+  if (!Example) {
+    throw new Error(`No ${name} Example is registered for ${style}`);
+  }
 
   return <Example />;
 };
