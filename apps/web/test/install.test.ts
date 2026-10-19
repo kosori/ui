@@ -250,6 +250,36 @@ const radiusDeclarations = (css: string, scheme: 'dark' | 'light') => {
     : declarations(css, ':root');
 };
 
+test('date-picker is documented as a composition with no registry item', async () => {
+  const docsDir = join(webDir, 'content/docs/zen');
+  const catalog = await readRegistry('zen');
+  const meta: { pages: string[] } = JSON.parse(
+    await readFile(join(docsDir, 'meta.json'), 'utf8')
+  );
+  const page = await readFile(join(docsDir, 'date-picker.mdx'), 'utf8');
+
+  expect(meta.pages, 'date-picker is not in the docs menu').toContain(
+    'date-picker'
+  );
+  expect(
+    catalog.map((item) => item.name),
+    'date-picker is a composition and must not ship as a registry item'
+  ).not.toContain('date-picker');
+  expect(PENDING_COMPONENTS, 'date-picker is documented').not.toContain(
+    'date-picker'
+  );
+  expect(page, 'the page has no live preview').toContain(
+    '<DatePickerPreview />'
+  );
+  expect(page, 'the page has no usage snippet').toContain('## Usage');
+  expect(page, 'the snippet does not compose calendar').toContain(
+    "from '@/components/ui/calendar'"
+  );
+  expect(page, 'the snippet does not compose popover').toContain(
+    "from '@/components/ui/popover'"
+  );
+});
+
 test('installing a preset and every item of every Style leaves Consumer projects that typecheck', async () => {
   const server = serveInterop();
   const origin = `http://127.0.0.1:${server.port}`;
