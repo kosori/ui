@@ -1,6 +1,6 @@
 # An install adds components, CSS and dependencies — nothing else
 
-shadcn's init also vendors a font and patches the consumer's `layout.tsx`. kosori's preset ships no font: it sets `--font-sans` and `--font-mono` to a plain stack and leaves typography to the consumer. The general rule this is an instance of: no kosori registry item writes into a consumer's application routes or layout. The install surface is components, the CSS entry file, and package dependencies.
+shadcn's init also vendors a font and patches the consumer's `layout.tsx`. kosori's preset ships no font: it sets `--font-sans`, `--font-mono` and `--font-heading` to plain stacks and leaves typography to the consumer. The general rule this is an instance of: no kosori registry item writes into a consumer's application routes or layout. The install surface is components, the CSS entry file, and package dependencies.
 
 A consumer's layout and route files are the part of their project kosori understands least, and fonts are the part of a style that is least kosori's to choose — licensed, self-hosted and CDN fonts are all normal. Patch them and every future install silently becomes a source of conflicts in files nobody expected a component library to touch.
 

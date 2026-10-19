@@ -2,5 +2,15 @@
   "title": "zen",
   "description": "The first kosori Style.",
   "root": "style",
-  "pages": ["index", "installation", "button", "theming"]
+  "pages": [
+    "index",
+    "installation",
+    "button",
+    "dialog",
+    "field",
+    "input",
+    "label",
+    "separator",
+    "theming"
+  ]
 }

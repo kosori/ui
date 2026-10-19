@@ -4,21 +4,124 @@ import { existsSync } from 'node:fs';
 import {
   cp,
   mkdtemp,
+  readdir,
   readFile,
   rm,
   symlink,
   writeFile,
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
 import { GET } from '../app/init/[style]/[baseColor]/route';
 
 const webDir = join(import.meta.dirname, '..');
+const docsDir = join(webDir, 'content/docs/zen');
 const fixtureDir = join(import.meta.dirname, 'fixtures/consumer');
 const shadcn = join(webDir, 'node_modules/.bin/shadcn');
 const tsc = join(webDir, 'node_modules/.bin/tsc');
 const productionNamespace =
   'https://kosori.codingcodax.dev/r/{style}/{name}.json';
+
+/** One Registry item of the Style's catalog, as `shadcn build` validates and serves it. */
+type RegistryItem = {
+  files: { path: string }[];
+  name: string;
+  type: string;
+};
+
+/** Read the catalog the Registry serves. The install runs over all of it. */
+const readRegistry = async (): Promise<RegistryItem[]> => {
+  const catalog: { items: RegistryItem[] } = JSON.parse(
+    await readFile(join(webDir, 'registry/zen/registry.json'), 'utf8')
+  );
+  return catalog.items;
+};
+
+/**
+ * The components the catalog must serve. The install below runs over the whole
+ * catalog, so this is what keeps coverage from shrinking: an addition is picked
+ * up without an edit, and dropping one of these fails the run.
+ */
+const REQUIRED_COMPONENTS = [
+  'button',
+  'dialog',
+  'field',
+  'input',
+  'label',
+  'separator',
+];
+
+/** The directory shadcn installs a Registry item type into. */
+const installedDirs: Record<string, string> = {
+  'registry:example': 'components',
+  'registry:hook': 'hooks',
+  'registry:lib': 'lib',
+  'registry:ui': 'components/ui',
+};
+
+/**
+ * Where an install writes an item into a Consumer project. A type with no known
+ * directory fails loudly rather than guessing a path.
+ */
+const installedPath = (item: RegistryItem, root: string) => {
+  const dir = installedDirs[item.type];
+  if (!dir) {
+    throw new Error(
+      `No install surface is known for Registry item type "${item.type}"`
+    );
+  }
+  return join(root, dir, `${item.name}.tsx`);
+};
+
+/** The component directory, CSS entry and manifests an install may write. */
+const COMPONENTS_DIR = 'components';
+const CSS_ENTRY = 'app/globals.css';
+const DEPENDENCY_MANIFESTS = new Set([
+  'bun.lock',
+  'bun.lockb',
+  'components.json',
+  'package-lock.json',
+  'package.json',
+  'pnpm-lock.yaml',
+  'yarn.lock',
+]);
+
+const isInstallSurface = (path: string) =>
+  path === CSS_ENTRY ||
+  path.startsWith(`${COMPONENTS_DIR}/`) ||
+  DEPENDENCY_MANIFESTS.has(path);
+
+/**
+ * Read a project's tree as relative path to contents, skipping installed
+ * dependencies. A byte-for-byte compare of two trees is how ADR-0003's install
+ * surface is held to the whole project, not just its route files.
+ */
+const readTree = async (root: string) => {
+  const tree = new Map<string, string>();
+
+  const visit = async (dir: string): Promise<void> => {
+    const entries = await readdir(dir, { withFileTypes: true });
+    await Promise.all(
+      entries.map(async (entry) => {
+        if (entry.name === 'node_modules' || entry.name === '.next') {
+          return;
+        }
+
+        const path = join(dir, entry.name);
+        if (entry.isDirectory()) {
+          await visit(path);
+          return;
+        }
+        if (entry.isFile()) {
+          tree.set(relative(root, path), await readFile(path, 'utf8'));
+        }
+      })
+    );
+  };
+
+  await visit(root);
+  return tree;
+};
 
 /**
  * The shape shadcn's CLI expects from `${REGISTRY_URL}/colors/<baseColor>.json`.
@@ -102,20 +205,13 @@ const serveInterop = () =>
     port: 0,
   });
 
-/** The Consumer route and layout files ADR-0003 says an install must not touch. */
-const routeFiles = ['app/layout.tsx', 'app/page.tsx'];
-
-/** Read the route and layout files from a project root, byte for byte. */
-const readRouteFiles = (root: string) =>
-  Promise.all(routeFiles.map((file) => readFile(join(root, file), 'utf8')));
-
 /** The declarations a CSS file holds inside a selector's block. */
 const declarations = (css: string, selector: string) => {
   const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   return css.match(new RegExp(`${escaped}\\s*\\{([^}]*)\\}`))?.[1] ?? '';
 };
 
-test('installing the preset and Button leaves a Consumer project that typechecks', async () => {
+test('installing the preset and every catalog item leaves a Consumer project that typechecks', async () => {
   const build = await buildRegistry();
   expect(build.exitCode, build.stdout + build.stderr).toBe(0);
 
@@ -127,6 +223,10 @@ test('installing the preset and Button leaves a Consumer project that typechecks
   try {
     await cp(fixtureDir, scratch, { recursive: true });
     await symlink(join(webDir, 'node_modules'), join(scratch, 'node_modules'));
+
+    // ADR-0003: an install writes only the component directory, the CSS entry
+    // and the dependency manifests. Record the whole tree before it installs.
+    const before = await readTree(scratch);
 
     const init = await run(
       shadcn,
@@ -143,16 +243,6 @@ test('installing the preset and Button leaves a Consumer project that typechecks
     expect(config.tailwind.baseColor).toBe('neutral');
     expect(config.registries['@kosori']).toBe(productionNamespace);
 
-    // ADR-0003: an install writes only the component directory, the CSS entry
-    // and the dependency manifests. The layout and route files come through
-    // byte-identical.
-    const expectRoutesUntouched = async () => {
-      expect(await readRouteFiles(scratch)).toEqual(
-        await readRouteFiles(fixtureDir)
-      );
-    };
-    await expectRoutesUntouched();
-
     // The preset writes the production Namespace; pointing that same handle at
     // the harness afterwards keeps the shipped URL under assertion while the
     // locally-run `add` never has to resolve production.
@@ -162,37 +252,69 @@ test('installing the preset and Button leaves a Consumer project that typechecks
       `${JSON.stringify(config, null, 2)}\n`
     );
 
+    const items = await readRegistry();
+    const components = items.filter((item) => item.type === 'registry:ui');
+    expect(components.map((item) => item.name)).toEqual(
+      expect.arrayContaining(REQUIRED_COMPONENTS)
+    );
+
+    // Adding a component means editing the catalog, its Example, the docs menu
+    // and a page. Every catalog component must ship an Example and a page, so a
+    // forgotten edit fails here instead of disappearing silently.
+    const examples = items.filter((item) => item.type === 'registry:example');
+    const meta: { pages: string[] } = JSON.parse(
+      await readFile(join(docsDir, 'meta.json'), 'utf8')
+    );
+    for (const component of components) {
+      expect(
+        examples.some(
+          (example) => example.name === `${component.name}-example`
+        ),
+        `${component.name} has no Example`
+      ).toBe(true);
+      expect(
+        existsSync(join(docsDir, `${component.name}.mdx`)),
+        `${component.name} has no documentation page`
+      ).toBe(true);
+      expect(meta.pages, `${component.name} is not in the docs menu`).toContain(
+        component.name
+      );
+    }
+
+    // Install every item the catalog serves, so coverage cannot shrink as the
+    // catalog grows: a new item is exercised without touching this test.
     const add = await run(
       shadcn,
-      ['add', '@kosori/button', '-y', '-s'],
+      ['add', ...items.map((item) => `@kosori/${item.name}`), '-y', '-s'],
       scratch,
       cliEnv
     );
     expect(add.exitCode, add.stdout + add.stderr).toBe(0);
 
-    expect(existsSync(join(scratch, 'components/ui/button.tsx'))).toBe(true);
-
-    const addExample = await run(
-      shadcn,
-      ['add', '@kosori/button-example', '-y', '-s'],
-      scratch,
-      cliEnv
+    // Every catalog item installs. The file an install writes and the file the
+    // docs read must be the same bytes for every item, so a transform that would
+    // rewrite a source file fails the suite rather than reaching a Consumer.
+    await Promise.all(
+      items.map(async (item) => {
+        const installed = installedPath(item, scratch);
+        expect(existsSync(installed), item.name).toBe(true);
+        expect(await readFile(installed, 'utf8'), item.name).toBe(
+          await readFile(join(webDir, item.files[0].path), 'utf8')
+        );
+      })
     );
-    expect(addExample.exitCode, addExample.stdout + addExample.stderr).toBe(0);
 
-    // The Example is what the page renders, so the file an install writes and
-    // the file the docs read must be the same bytes.
-    const installedExample = await readFile(
-      join(scratch, 'components/button-example.tsx'),
-      'utf8'
-    );
-    const shippedExample = await readFile(
-      join(webDir, 'registry/zen/button-example.tsx'),
-      'utf8'
-    );
-    expect(installedExample).toBe(shippedExample);
-
-    await expectRoutesUntouched();
+    // ADR-0003: nothing outside the component directory, the CSS entry and the
+    // dependency manifests may change, so a write into `lib/` or a stray
+    // manifest fails rather than passing unnoticed.
+    const after = await readTree(scratch);
+    const outsideSurface = [...new Set([...before.keys(), ...after.keys()])]
+      .filter((path) => before.get(path) !== after.get(path))
+      .filter((path) => !isInstallSurface(path));
+    expect(
+      outsideSurface,
+      'install wrote outside the component directory, CSS entry and manifests'
+    ).toEqual([]);
 
     const css = await readFile(join(scratch, 'app/globals.css'), 'utf8');
     expect(declarations(css, ':root')).toContain('--background: oklch(1 0 0)');
