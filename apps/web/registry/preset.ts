@@ -31,13 +31,15 @@ type StyleTokens = {
 /**
  * A Style: the component source plus the Token defaults that source assumes, as
  * a `registry:base` item. `style` and `tailwind.baseColor` are per-request and so
- * are supplied by the composer rather than carried here.
+ * are supplied by the composer rather than carried here. An Incomplete Style
+ * declares that it serves a subset of the catalog rather than all of it.
  */
 export type Style<Name extends string = string> = {
   css: NonNullable<RegistryBaseItem['css']>;
   config: StyleConfig;
   dependencies: string[];
   devDependencies: string[];
+  incomplete?: true;
   name: Name;
   tokens?: StyleTokens;
 };
@@ -92,6 +94,7 @@ export const kaze = defineStyle({
   css: STYLE_CSS,
   dependencies: STYLE_DEPENDENCIES,
   devDependencies: STYLE_DEV_DEPENDENCIES,
+  incomplete: true,
   name: 'kaze',
   tokens: { dark: { radius: '1rem' }, light: { radius: '1rem' } },
 });
