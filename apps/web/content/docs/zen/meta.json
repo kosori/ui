@@ -6,8 +6,10 @@
     "index",
     "installation",
     "components",
+    "avatar",
     "badge",
     "button",
+    "button-group",
     "calendar",
     "checkbox",
     "dialog",
@@ -21,10 +23,13 @@
     "radio-group",
     "select",
     "separator",
+    "skeleton",
     "slider",
     "spinner",
     "switch",
     "textarea",
+    "toggle",
+    "toggle-group",
     "theming"
   ]
 }

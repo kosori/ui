@@ -8,8 +8,10 @@ import { InputExample as KazeInputExample } from '@/lib/registry/previews/kaze/i
 import { LabelExample as KazeLabelExample } from '@/lib/registry/previews/kaze/label-example';
 import { SeparatorExample as KazeSeparatorExample } from '@/lib/registry/previews/kaze/separator-example';
 import type { StyleName } from '@/registry/preset';
+import AvatarExample from '@/registry/zen/avatar-example';
 import BadgeExample from '@/registry/zen/badge-example';
 import ButtonExample from '@/registry/zen/button-example';
+import ButtonGroupExample from '@/registry/zen/button-group-example';
 import CalendarExample from '@/registry/zen/calendar-example';
 import CheckboxExample from '@/registry/zen/checkbox-example';
 import DialogExample from '@/registry/zen/dialog-example';
@@ -23,10 +25,13 @@ import LabelExample from '@/registry/zen/label-example';
 import RadioGroupExample from '@/registry/zen/radio-group-example';
 import SelectExample from '@/registry/zen/select-example';
 import SeparatorExample from '@/registry/zen/separator-example';
+import SkeletonExample from '@/registry/zen/skeleton-example';
 import SliderExample from '@/registry/zen/slider-example';
 import SpinnerExample from '@/registry/zen/spinner-example';
 import SwitchExample from '@/registry/zen/switch-example';
 import TextareaExample from '@/registry/zen/textarea-example';
+import ToggleExample from '@/registry/zen/toggle-example';
+import ToggleGroupExample from '@/registry/zen/toggle-group-example';
 
 const REGISTRY_DIR = join(process.cwd(), 'registry');
 
@@ -35,8 +40,10 @@ const REGISTRY_DIR = join(process.cwd(), 'registry');
  * the catalog contract, so they are shared rather than restated per Style.
  */
 const exampleItems = {
+  avatar: 'avatar-example',
   badge: 'badge-example',
   button: 'button-example',
+  'button-group': 'button-group-example',
   calendar: 'calendar-example',
   checkbox: 'checkbox-example',
   dialog: 'dialog-example',
@@ -50,10 +57,13 @@ const exampleItems = {
   'radio-group': 'radio-group-example',
   select: 'select-example',
   separator: 'separator-example',
+  skeleton: 'skeleton-example',
   slider: 'slider-example',
   spinner: 'spinner-example',
   switch: 'switch-example',
   textarea: 'textarea-example',
+  toggle: 'toggle-example',
+  'toggle-group': 'toggle-group-example',
 } as const;
 
 /** The component names the documentation can render an Example for. */
@@ -77,8 +87,10 @@ const exampleComponents: Record<
     separator: KazeSeparatorExample,
   },
   zen: {
+    avatar: AvatarExample,
     badge: BadgeExample,
     button: ButtonExample,
+    'button-group': ButtonGroupExample,
     calendar: CalendarExample,
     checkbox: CheckboxExample,
     dialog: DialogExample,
@@ -92,10 +104,13 @@ const exampleComponents: Record<
     'radio-group': RadioGroupExample,
     select: SelectExample,
     separator: SeparatorExample,
+    skeleton: SkeletonExample,
     slider: SliderExample,
     spinner: SpinnerExample,
     switch: SwitchExample,
     textarea: TextareaExample,
+    toggle: ToggleExample,
+    'toggle-group': ToggleGroupExample,
   },
 };
 

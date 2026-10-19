@@ -4,6 +4,28 @@
   "homepage": "https://kosori.codingcodax.dev",
   "items": [
     {
+      "name": "avatar",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/avatar"],
+      "files": [
+        {
+          "path": "registry/zen/avatar-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "badge",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
@@ -44,6 +66,29 @@
       "files": [
         {
           "path": "registry/zen/button-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "button-group",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
+      "registryDependencies": ["@kosori/separator"],
+      "files": [
+        {
+          "path": "registry/zen/button-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button-group-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button", "@kosori/button-group"],
+      "files": [
+        {
+          "path": "registry/zen/button-group-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -348,6 +393,28 @@
       ]
     },
     {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "dependencies": ["cn"],
+      "files": [
+        {
+          "path": "registry/zen/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/skeleton"],
+      "files": [
+        {
+          "path": "registry/zen/skeleton-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "slider",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
@@ -431,6 +498,51 @@
       "files": [
         {
           "path": "registry/zen/textarea-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/toggle"],
+      "files": [
+        {
+          "path": "registry/zen/toggle-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
+      "registryDependencies": ["@kosori/separator", "@kosori/toggle"],
+      "files": [
+        {
+          "path": "registry/zen/toggle-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/toggle-group"],
+      "files": [
+        {
+          "path": "registry/zen/toggle-group-example.tsx",
           "type": "registry:example"
         }
       ]
