@@ -12,6 +12,7 @@ import AvatarExample from '@/registry/zen/avatar-example';
 import BadgeExample from '@/registry/zen/badge-example';
 import ButtonExample from '@/registry/zen/button-example';
 import ButtonGroupExample from '@/registry/zen/button-group-example';
+import CalendarExample from '@/registry/zen/calendar-example';
 import DialogExample from '@/registry/zen/dialog-example';
 import FieldExample from '@/registry/zen/field-example';
 import InputExample from '@/registry/zen/input-example';
@@ -35,6 +36,7 @@ const exampleItems = {
   badge: 'badge-example',
   button: 'button-example',
   'button-group': 'button-group-example',
+  calendar: 'calendar-example',
   dialog: 'dialog-example',
   field: 'field-example',
   input: 'input-example',
@@ -73,6 +75,7 @@ const exampleComponents: Record<
     badge: BadgeExample,
     button: ButtonExample,
     'button-group': ButtonGroupExample,
+    calendar: CalendarExample,
     dialog: DialogExample,
     field: FieldExample,
     input: InputExample,

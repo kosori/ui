@@ -94,6 +94,28 @@
       ]
     },
     {
+      "name": "calendar",
+      "type": "registry:ui",
+      "dependencies": ["@daypicker/react", "@tabler/icons-react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/calendar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "calendar-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/calendar"],
+      "files": [
+        {
+          "path": "registry/zen/calendar-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "dialog",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],

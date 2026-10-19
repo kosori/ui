@@ -23,6 +23,7 @@ One row per Port, ordered alphabetically by kosori name.
 | badge | badge | 60f73554b462ec5e2929ccc58c0522b069c07e1268dbfb67749c2837347b788b |
 | button | button | 1e65556bde3071f90f61825cf573aec74bdd8695824470bea3dae4d68a6b8fc8 |
 | button-group | group | d2392c54a90e353762779639971bb9aaa44759a7bda81ea0cf1462afbf4492b0 |
+| calendar | calendar | 547ebebda2747dadee61815f41448a2b6cecce3ad125806666df7595013896f0 |
 | input | input | 3d488d491eb4e63642adc8b9354b0b0cc5b8ec4e284bbc26da7e2516f24980a4 |
 | kbd | kbd | ad8f26b95d8307f460316cd27a2b595d04069df2561395b5d39067a99e407cb5 |
 | label | label | edaf5fb049b3e2f27ddd70a6c6772c7d99e920c589b41019b8f4fa602113e695 |
