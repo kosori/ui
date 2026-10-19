@@ -96,8 +96,7 @@
     {
       "name": "field",
       "type": "registry:ui",
-      "dependencies": ["class-variance-authority", "cn"],
-      "registryDependencies": ["@kosori/label", "@kosori/separator"],
+      "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
           "path": "registry/zen/field.tsx",
@@ -112,6 +111,33 @@
       "files": [
         {
           "path": "registry/zen/field-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "form",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "registry/zen/form.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "form-example",
+      "type": "registry:example",
+      "registryDependencies": [
+        "@kosori/button",
+        "@kosori/field",
+        "@kosori/form",
+        "@kosori/input"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/form-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -134,6 +160,52 @@
       "files": [
         {
           "path": "registry/zen/input-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "registryDependencies": ["@kosori/input", "@kosori/textarea"],
+      "files": [
+        {
+          "path": "registry/zen/input-group.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": ["class-variance-authority", "cn"]
+    },
+    {
+      "name": "input-group-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/input-group"],
+      "files": [
+        {
+          "path": "registry/zen/input-group-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "registryDependencies": ["@kosori/separator"],
+      "files": [
+        {
+          "path": "registry/zen/input-otp.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-otp-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/field", "@kosori/input-otp"],
+      "files": [
+        {
+          "path": "registry/zen/input-otp-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -178,6 +250,33 @@
       "files": [
         {
           "path": "registry/zen/label-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "@tabler/icons-react",
+        "class-variance-authority",
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/select"],
+      "files": [
+        {
+          "path": "registry/zen/select-example.tsx",
           "type": "registry:example"
         }
       ]
