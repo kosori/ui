@@ -33,7 +33,7 @@ The primitive library kosori's components wrap. kosori has exactly one, Base UI;
 _Avoid_: Headless library, primitives, foundation
 
 **Base color**:
-The named palette (`neutral`, `zinc`, …) that supplies the value of every colour token. It is independent of Style, and a Style only proposes a default.
+The named palette (`neutral`, `zinc`, …) that supplies the palette-specific colour Token values. State Tokens (`success`, `warning`, `info` and their foregrounds) are identical in every Base color. It is independent of Style, and a Style only proposes a default.
 _Avoid_: Palette, accent, brand colour
 
 **Token**:
