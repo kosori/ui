@@ -4,6 +4,28 @@
   "homepage": "https://kosori.codingcodax.dev",
   "items": [
     {
+      "name": "accordion",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "accordion-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/accordion"],
+      "files": [
+        {
+          "path": "registry/zen/accordion-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "alert-dialog",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
@@ -65,6 +87,32 @@
       "files": [
         {
           "path": "registry/zen/badge-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb-example",
+      "type": "registry:example",
+      "registryDependencies": [
+        "@kosori/breadcrumb",
+        "@kosori/button",
+        "@kosori/dropdown-menu"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/breadcrumb-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -155,6 +203,28 @@
       "files": [
         {
           "path": "registry/zen/checkbox-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "collapsible-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/collapsible"],
+      "files": [
+        {
+          "path": "registry/zen/collapsible-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -441,6 +511,29 @@
       ]
     },
     {
+      "name": "pagination",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/button"],
+      "files": [
+        {
+          "path": "registry/zen/pagination.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pagination-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/pagination"],
+      "files": [
+        {
+          "path": "registry/zen/pagination-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
@@ -504,6 +597,17 @@
         {
           "path": "registry/zen/scroll-area-example.tsx",
           "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "segmented-control",
+      "type": "registry:lib",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "lib/segmented-control.ts",
+          "type": "registry:lib"
         }
       ]
     },
@@ -663,6 +767,29 @@
       "files": [
         {
           "path": "registry/zen/switch-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "registryDependencies": ["@kosori/segmented-control"],
+      "files": [
+        {
+          "path": "registry/zen/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/tabs"],
+      "files": [
+        {
+          "path": "registry/zen/tabs-example.tsx",
           "type": "registry:example"
         }
       ]

@@ -8,13 +8,16 @@ import { InputExample as KazeInputExample } from '@/lib/registry/previews/kaze/i
 import { LabelExample as KazeLabelExample } from '@/lib/registry/previews/kaze/label-example';
 import { SeparatorExample as KazeSeparatorExample } from '@/lib/registry/previews/kaze/separator-example';
 import type { StyleName } from '@/registry/preset';
+import AccordionExample from '@/registry/zen/accordion-example';
 import AlertDialogExample from '@/registry/zen/alert-dialog-example';
 import AvatarExample from '@/registry/zen/avatar-example';
 import BadgeExample from '@/registry/zen/badge-example';
+import BreadcrumbExample from '@/registry/zen/breadcrumb-example';
 import ButtonExample from '@/registry/zen/button-example';
 import ButtonGroupExample from '@/registry/zen/button-group-example';
 import CalendarExample from '@/registry/zen/calendar-example';
 import CheckboxExample from '@/registry/zen/checkbox-example';
+import CollapsibleExample from '@/registry/zen/collapsible-example';
 import ContextMenuExample from '@/registry/zen/context-menu-example';
 import DialogExample from '@/registry/zen/dialog-example';
 import DrawerExample from '@/registry/zen/drawer-example';
@@ -27,6 +30,7 @@ import InputGroupExample from '@/registry/zen/input-group-example';
 import InputOtpExample from '@/registry/zen/input-otp-example';
 import KbdExample from '@/registry/zen/kbd-example';
 import LabelExample from '@/registry/zen/label-example';
+import PaginationExample from '@/registry/zen/pagination-example';
 import PopoverExample from '@/registry/zen/popover-example';
 import RadioGroupExample from '@/registry/zen/radio-group-example';
 import ScrollAreaExample from '@/registry/zen/scroll-area-example';
@@ -37,6 +41,7 @@ import SkeletonExample from '@/registry/zen/skeleton-example';
 import SliderExample from '@/registry/zen/slider-example';
 import SpinnerExample from '@/registry/zen/spinner-example';
 import SwitchExample from '@/registry/zen/switch-example';
+import TabsExample from '@/registry/zen/tabs-example';
 import TextareaExample from '@/registry/zen/textarea-example';
 import ToggleExample from '@/registry/zen/toggle-example';
 import ToggleGroupExample from '@/registry/zen/toggle-group-example';
@@ -49,13 +54,16 @@ const REGISTRY_DIR = join(process.cwd(), 'registry');
  * the catalog contract, so they are shared rather than restated per Style.
  */
 const exampleItems = {
+  accordion: 'accordion-example',
   'alert-dialog': 'alert-dialog-example',
   avatar: 'avatar-example',
   badge: 'badge-example',
+  breadcrumb: 'breadcrumb-example',
   button: 'button-example',
   'button-group': 'button-group-example',
   calendar: 'calendar-example',
   checkbox: 'checkbox-example',
+  collapsible: 'collapsible-example',
   'context-menu': 'context-menu-example',
   dialog: 'dialog-example',
   drawer: 'drawer-example',
@@ -68,6 +76,7 @@ const exampleItems = {
   'input-otp': 'input-otp-example',
   kbd: 'kbd-example',
   label: 'label-example',
+  pagination: 'pagination-example',
   popover: 'popover-example',
   'radio-group': 'radio-group-example',
   'scroll-area': 'scroll-area-example',
@@ -78,6 +87,7 @@ const exampleItems = {
   slider: 'slider-example',
   spinner: 'spinner-example',
   switch: 'switch-example',
+  tabs: 'tabs-example',
   textarea: 'textarea-example',
   toggle: 'toggle-example',
   'toggle-group': 'toggle-group-example',
@@ -105,13 +115,16 @@ const exampleComponents: Record<
     separator: KazeSeparatorExample,
   },
   zen: {
+    accordion: AccordionExample,
     'alert-dialog': AlertDialogExample,
     avatar: AvatarExample,
     badge: BadgeExample,
+    breadcrumb: BreadcrumbExample,
     button: ButtonExample,
     'button-group': ButtonGroupExample,
     calendar: CalendarExample,
     checkbox: CheckboxExample,
+    collapsible: CollapsibleExample,
     'context-menu': ContextMenuExample,
     dialog: DialogExample,
     drawer: DrawerExample,
@@ -124,6 +137,7 @@ const exampleComponents: Record<
     'input-otp': InputOtpExample,
     kbd: KbdExample,
     label: LabelExample,
+    pagination: PaginationExample,
     popover: PopoverExample,
     'radio-group': RadioGroupExample,
     'scroll-area': ScrollAreaExample,
@@ -134,6 +148,7 @@ const exampleComponents: Record<
     slider: SliderExample,
     spinner: SpinnerExample,
     switch: SwitchExample,
+    tabs: TabsExample,
     textarea: TextareaExample,
     toggle: ToggleExample,
     'toggle-group': ToggleGroupExample,

@@ -11,8 +11,9 @@ import {
   writeFile,
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join, relative } from 'node:path';
+import { extname, join, relative } from 'node:path';
 import { GET } from '../app/init/[style]/[baseColor]/route';
+import { isInternalItem } from '../lib/registry/internal';
 import { PENDING_COMPONENTS } from '../lib/registry/pending';
 import { BASE_COLORS } from '../registry/base-colors';
 import { STYLES, styleRadius } from '../registry/preset';
@@ -94,11 +95,11 @@ const installedPath = (item: RegistryItem, root: string) => {
       `No install surface is known for Registry item type "${item.type}"`
     );
   }
-  return join(root, dir, `${item.name}.tsx`);
+  return join(root, dir, `${item.name}${extname(item.files[0].path)}`);
 };
 
-/** The component directory, CSS entry and manifests an install may write. */
-const COMPONENTS_DIR = 'components';
+/** The directories the catalog's item types install into. */
+const INSTALL_DIRS = [...new Set(Object.values(installedDirs))];
 const CSS_ENTRY = 'app/globals.css';
 const DEPENDENCY_MANIFESTS = new Set([
   'bun.lock',
@@ -112,7 +113,7 @@ const DEPENDENCY_MANIFESTS = new Set([
 
 const isInstallSurface = (path: string) =>
   path === CSS_ENTRY ||
-  path.startsWith(`${COMPONENTS_DIR}/`) ||
+  INSTALL_DIRS.some((dir) => path.startsWith(`${dir}/`)) ||
   DEPENDENCY_MANIFESTS.has(path);
 
 /**
@@ -339,7 +340,9 @@ test('installing a preset and every item of every Style leaves Consumer projects
         );
 
         const items = await readRegistry(style.name);
-        const components = items.filter((item) => item.type === 'registry:ui');
+        const components = items.filter(
+          (item) => item.type === 'registry:ui' && !isInternalItem(item.name)
+        );
         const componentNames = components.map((item) => item.name);
 
         for (const pending of PENDING_COMPONENTS) {
@@ -358,6 +361,28 @@ test('installing a preset and every item of every Style leaves Consumer projects
         const meta: { pages: string[] } = JSON.parse(
           await readFile(join(docsDir, 'meta.json'), 'utf8')
         );
+
+        // Internal items install as dependencies, but documentation never
+        // claims them: no Example, page or menu entry of their own.
+        for (const internal of items.filter((item) =>
+          isInternalItem(item.name)
+        )) {
+          expect(
+            examples.some(
+              (example) => example.name === `${internal.name}-example`
+            ),
+            `${internal.name} is internal and has an Example`
+          ).toBe(false);
+          expect(
+            existsSync(join(docsDir, `${internal.name}.mdx`)),
+            `${internal.name} is internal and has a documentation page`
+          ).toBe(false);
+          expect(
+            meta.pages,
+            `${internal.name} is internal and in the docs menu`
+          ).not.toContain(internal.name);
+        }
+
         expect(
           meta.pages,
           'the components status page is not in the menu'
