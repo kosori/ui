@@ -9,6 +9,7 @@
     "badge",
     "button",
     "calendar",
+    "checkbox",
     "dialog",
     "field",
     "form",
@@ -17,9 +18,12 @@
     "input-otp",
     "kbd",
     "label",
+    "radio-group",
     "select",
     "separator",
+    "slider",
     "spinner",
+    "switch",
     "textarea",
     "theming"
   ]

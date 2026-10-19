@@ -11,6 +11,7 @@ import type { StyleName } from '@/registry/preset';
 import BadgeExample from '@/registry/zen/badge-example';
 import ButtonExample from '@/registry/zen/button-example';
 import CalendarExample from '@/registry/zen/calendar-example';
+import CheckboxExample from '@/registry/zen/checkbox-example';
 import DialogExample from '@/registry/zen/dialog-example';
 import FieldExample from '@/registry/zen/field-example';
 import FormExample from '@/registry/zen/form-example';
@@ -19,9 +20,12 @@ import InputGroupExample from '@/registry/zen/input-group-example';
 import InputOtpExample from '@/registry/zen/input-otp-example';
 import KbdExample from '@/registry/zen/kbd-example';
 import LabelExample from '@/registry/zen/label-example';
+import RadioGroupExample from '@/registry/zen/radio-group-example';
 import SelectExample from '@/registry/zen/select-example';
 import SeparatorExample from '@/registry/zen/separator-example';
+import SliderExample from '@/registry/zen/slider-example';
 import SpinnerExample from '@/registry/zen/spinner-example';
+import SwitchExample from '@/registry/zen/switch-example';
 import TextareaExample from '@/registry/zen/textarea-example';
 
 const REGISTRY_DIR = join(process.cwd(), 'registry');
@@ -34,6 +38,7 @@ const exampleItems = {
   badge: 'badge-example',
   button: 'button-example',
   calendar: 'calendar-example',
+  checkbox: 'checkbox-example',
   dialog: 'dialog-example',
   field: 'field-example',
   form: 'form-example',
@@ -42,9 +47,12 @@ const exampleItems = {
   'input-otp': 'input-otp-example',
   kbd: 'kbd-example',
   label: 'label-example',
+  'radio-group': 'radio-group-example',
   select: 'select-example',
   separator: 'separator-example',
+  slider: 'slider-example',
   spinner: 'spinner-example',
+  switch: 'switch-example',
   textarea: 'textarea-example',
 } as const;
 
@@ -72,6 +80,7 @@ const exampleComponents: Record<
     badge: BadgeExample,
     button: ButtonExample,
     calendar: CalendarExample,
+    checkbox: CheckboxExample,
     dialog: DialogExample,
     field: FieldExample,
     form: FormExample,
@@ -80,9 +89,12 @@ const exampleComponents: Record<
     'input-otp': InputOtpExample,
     kbd: KbdExample,
     label: LabelExample,
+    'radio-group': RadioGroupExample,
     select: SelectExample,
     separator: SeparatorExample,
+    slider: SliderExample,
     spinner: SpinnerExample,
+    switch: SwitchExample,
     textarea: TextareaExample,
   },
 };
