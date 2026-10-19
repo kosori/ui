@@ -1,6 +1,11 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import ButtonExample from '@/registry/zen/button-example';
+import DialogExample from '@/registry/zen/dialog-example';
+import FieldExample from '@/registry/zen/field-example';
+import InputExample from '@/registry/zen/input-example';
+import LabelExample from '@/registry/zen/label-example';
+import SeparatorExample from '@/registry/zen/separator-example';
 
 /** The Style the documentation is written against. */
 const STYLE = 'zen';
@@ -14,6 +19,11 @@ const REGISTRY_DIR = join(process.cwd(), 'registry');
  */
 const exampleItems = {
   button: 'button-example',
+  dialog: 'dialog-example',
+  field: 'field-example',
+  input: 'input-example',
+  label: 'label-example',
+  separator: 'separator-example',
 } satisfies Record<string, string>;
 
 /**
@@ -23,6 +33,11 @@ const exampleItems = {
  */
 const exampleComponents = {
   button: ButtonExample,
+  dialog: DialogExample,
+  field: FieldExample,
+  input: InputExample,
+  label: LabelExample,
+  separator: SeparatorExample,
 } satisfies Record<ExampleName, React.ComponentType>;
 
 /** The component names the documentation can render an Example for. */

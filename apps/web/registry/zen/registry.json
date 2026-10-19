@@ -24,6 +24,118 @@
           "type": "registry:example"
         }
       ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/button"],
+      "files": [
+        {
+          "path": "registry/zen/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dialog-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button", "@kosori/dialog"],
+      "files": [
+        {
+          "path": "registry/zen/dialog-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority", "cn"],
+      "registryDependencies": ["@kosori/label", "@kosori/separator"],
+      "files": [
+        {
+          "path": "registry/zen/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "field-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/field", "@kosori/input"],
+      "files": [
+        {
+          "path": "registry/zen/field-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/input"],
+      "files": [
+        {
+          "path": "registry/zen/input-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "dependencies": ["cn"],
+      "files": [
+        {
+          "path": "registry/zen/label.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "label-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/label"],
+      "files": [
+        {
+          "path": "registry/zen/label-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/separator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/separator"],
+      "files": [
+        {
+          "path": "registry/zen/separator-example.tsx",
+          "type": "registry:example"
+        }
+      ]
     }
   ]
 }

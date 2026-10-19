@@ -20,6 +20,41 @@ const tsc = join(webDir, 'node_modules/.bin/tsc');
 const productionNamespace =
   'https://kosori.codingcodax.dev/r/{style}/{name}.json';
 
+/** One item of the Style's catalog, as `shadcn build` validates and serves it. */
+type CatalogItem = {
+  files: { path: string }[];
+  name: string;
+  type: string;
+};
+
+/** Read the catalog the Registry serves. The install runs over all of it. */
+const readCatalog = async (): Promise<CatalogItem[]> => {
+  const catalog: { items: CatalogItem[] } = JSON.parse(
+    await readFile(join(webDir, 'registry/zen/registry.json'), 'utf8')
+  );
+  return catalog.items;
+};
+
+/**
+ * The components the catalog must serve. The install below runs over the whole
+ * catalog, so this is what keeps coverage from shrinking: an addition is picked
+ * up without an edit, and dropping one of these fails the run.
+ */
+const REQUIRED_COMPONENTS = [
+  'button',
+  'dialog',
+  'field',
+  'input',
+  'label',
+  'separator',
+];
+
+/** Where an install writes an item into a Consumer project. */
+const installedPath = (item: CatalogItem, root: string) =>
+  item.type === 'registry:ui'
+    ? join(root, 'components/ui', `${item.name}.tsx`)
+    : join(root, 'components', `${item.name}.tsx`);
+
 /**
  * The shape shadcn's CLI expects from `${REGISTRY_URL}/colors/<baseColor>.json`.
  * The Tokens under test come from our preset, so the values here stay empty.
@@ -115,7 +150,7 @@ const declarations = (css: string, selector: string) => {
   return css.match(new RegExp(`${escaped}\\s*\\{([^}]*)\\}`))?.[1] ?? '';
 };
 
-test('installing the preset and Button leaves a Consumer project that typechecks', async () => {
+test('installing the preset and every catalog item leaves a Consumer project that typechecks', async () => {
   const build = await buildRegistry();
   expect(build.exitCode, build.stdout + build.stderr).toBe(0);
 
@@ -162,35 +197,37 @@ test('installing the preset and Button leaves a Consumer project that typechecks
       `${JSON.stringify(config, null, 2)}\n`
     );
 
+    const items = await readCatalog();
+    const components = items
+      .filter((item) => item.type === 'registry:ui')
+      .map((item) => item.name);
+    expect(components).toEqual(expect.arrayContaining(REQUIRED_COMPONENTS));
+
+    // Install every item the catalog serves, so coverage cannot shrink as the
+    // catalog grows: a new item is exercised without touching this test.
     const add = await run(
       shadcn,
-      ['add', '@kosori/button', '-y', '-s'],
+      ['add', ...items.map((item) => `@kosori/${item.name}`), '-y', '-s'],
       scratch,
       cliEnv
     );
     expect(add.exitCode, add.stdout + add.stderr).toBe(0);
 
-    expect(existsSync(join(scratch, 'components/ui/button.tsx'))).toBe(true);
+    // Every catalog item installs. The file an install writes and the file the
+    // docs read must be the same bytes for an Example, which the page renders:
+    // components may be transformed by the CLI, Examples are copied verbatim.
+    await Promise.all(
+      items.map(async (item) => {
+        const installed = installedPath(item, scratch);
+        expect(existsSync(installed), item.name).toBe(true);
 
-    const addExample = await run(
-      shadcn,
-      ['add', '@kosori/button-example', '-y', '-s'],
-      scratch,
-      cliEnv
+        if (item.type === 'registry:example') {
+          expect(await readFile(installed, 'utf8'), item.name).toBe(
+            await readFile(join(webDir, item.files[0].path), 'utf8')
+          );
+        }
+      })
     );
-    expect(addExample.exitCode, addExample.stdout + addExample.stderr).toBe(0);
-
-    // The Example is what the page renders, so the file an install writes and
-    // the file the docs read must be the same bytes.
-    const installedExample = await readFile(
-      join(scratch, 'components/button-example.tsx'),
-      'utf8'
-    );
-    const shippedExample = await readFile(
-      join(webDir, 'registry/zen/button-example.tsx'),
-      'utf8'
-    );
-    expect(installedExample).toBe(shippedExample);
 
     await expectRoutesUntouched();
 
