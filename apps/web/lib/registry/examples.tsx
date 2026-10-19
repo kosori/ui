@@ -18,6 +18,8 @@ import ButtonGroupExample from '@/registry/zen/button-group-example';
 import CalendarExample from '@/registry/zen/calendar-example';
 import CheckboxExample from '@/registry/zen/checkbox-example';
 import CollapsibleExample from '@/registry/zen/collapsible-example';
+import ComboboxExample from '@/registry/zen/combobox-example';
+import CommandExample from '@/registry/zen/command-example';
 import ContextMenuExample from '@/registry/zen/context-menu-example';
 import DialogExample from '@/registry/zen/dialog-example';
 import DrawerExample from '@/registry/zen/drawer-example';
@@ -37,6 +39,7 @@ import ScrollAreaExample from '@/registry/zen/scroll-area-example';
 import SelectExample from '@/registry/zen/select-example';
 import SeparatorExample from '@/registry/zen/separator-example';
 import SheetExample from '@/registry/zen/sheet-example';
+import SidebarExample from '@/registry/zen/sidebar-example';
 import SkeletonExample from '@/registry/zen/skeleton-example';
 import SliderExample from '@/registry/zen/slider-example';
 import SpinnerExample from '@/registry/zen/spinner-example';
@@ -64,6 +67,8 @@ const exampleItems = {
   calendar: 'calendar-example',
   checkbox: 'checkbox-example',
   collapsible: 'collapsible-example',
+  combobox: 'combobox-example',
+  command: 'command-example',
   'context-menu': 'context-menu-example',
   dialog: 'dialog-example',
   drawer: 'drawer-example',
@@ -83,6 +88,7 @@ const exampleItems = {
   select: 'select-example',
   separator: 'separator-example',
   sheet: 'sheet-example',
+  sidebar: 'sidebar-example',
   skeleton: 'skeleton-example',
   slider: 'slider-example',
   spinner: 'spinner-example',
@@ -125,6 +131,8 @@ const exampleComponents: Record<
     calendar: CalendarExample,
     checkbox: CheckboxExample,
     collapsible: CollapsibleExample,
+    combobox: ComboboxExample,
+    command: CommandExample,
     'context-menu': ContextMenuExample,
     dialog: DialogExample,
     drawer: DrawerExample,
@@ -144,6 +152,7 @@ const exampleComponents: Record<
     select: SelectExample,
     separator: SeparatorExample,
     sheet: SheetExample,
+    sidebar: SidebarExample,
     skeleton: SkeletonExample,
     slider: SliderExample,
     spinner: SpinnerExample,

@@ -8,7 +8,8 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@/components/ui/*": ["./registry/zen/*"]
+      "@/components/ui/*": ["./registry/zen/*"],
+      "@/hooks/*": ["./registry/zen/*"]
     },
     "strictNullChecks": true
   },

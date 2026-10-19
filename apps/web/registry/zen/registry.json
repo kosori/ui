@@ -48,6 +48,18 @@
       ]
     },
     {
+      "name": "autocomplete",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/input", "@kosori/scroll-area"],
+      "files": [
+        {
+          "path": "registry/zen/autocomplete.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "avatar",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
@@ -225,6 +237,56 @@
       "files": [
         {
           "path": "registry/zen/collapsible-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/input", "@kosori/scroll-area"],
+      "files": [
+        {
+          "path": "registry/zen/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "combobox-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/combobox"],
+      "files": [
+        {
+          "path": "registry/zen/combobox-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/autocomplete"],
+      "files": [
+        {
+          "path": "registry/zen/command.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "command-example",
+      "type": "registry:example",
+      "registryDependencies": [
+        "@kosori/button",
+        "@kosori/command",
+        "@kosori/kbd"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/command-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -684,6 +746,43 @@
       ]
     },
     {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "@tabler/icons-react",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [
+        "@kosori/button",
+        "@kosori/input",
+        "@kosori/scroll-area",
+        "@kosori/separator",
+        "@kosori/sheet",
+        "@kosori/skeleton",
+        "@kosori/tooltip",
+        "@kosori/use-media-query"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/sidebar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sidebar-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/sidebar"],
+      "files": [
+        {
+          "path": "registry/zen/sidebar-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "skeleton",
       "type": "registry:ui",
       "dependencies": ["cn"],
@@ -880,6 +979,16 @@
         {
           "path": "registry/zen/tooltip-example.tsx",
           "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "use-media-query",
+      "type": "registry:hook",
+      "files": [
+        {
+          "path": "registry/zen/use-media-query.ts",
+          "type": "registry:hook"
         }
       ]
     }
