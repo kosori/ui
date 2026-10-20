@@ -554,6 +554,109 @@ test('the composer derives an @theme colour mapping for every colour Token of ev
   }
 });
 
+/** The utility prefixes whose suffix names a colour Token. */
+const COLOUR_UTILITY_PREFIXES = [
+  'text',
+  'bg',
+  'border',
+  'ring',
+  'ring-offset',
+  'outline',
+  'fill',
+  'stroke',
+  'from',
+  'via',
+  'to',
+  'divide',
+  'shadow',
+  'accent',
+  'caret',
+  'decoration',
+  'placeholder',
+];
+
+/** A Token still referenced when its utility prefix is present. */
+const referencesToken = (source: string, token: string) =>
+  new RegExp(
+    `(?:^|[\\s:'"\\[()])(?:${COLOUR_UTILITY_PREFIXES.join('|')})-${token}(?![\\w-])`
+  ).test(source);
+
+/** The state Tokens an item and its Registry dependencies declare. */
+const declaredStateTokens = (
+  item: RegistryItem,
+  itemsByName: Map<string, RegistryItem>,
+  seen = new Set<string>()
+): Set<string> => {
+  if (seen.has(item.name)) {
+    return new Set();
+  }
+  seen.add(item.name);
+
+  const declared = new Set<string>([
+    ...Object.keys(item.cssVars?.light ?? {}),
+    ...Object.keys(item.cssVars?.dark ?? {}),
+    ...Object.keys(item.cssVars?.theme ?? {}).map((token) =>
+      token.replace(/^--color-/, '')
+    ),
+  ]);
+
+  for (const dependency of item.registryDependencies ?? []) {
+    const name = dependency.replace(/^@kosori\//, '');
+    const dependencyItem = itemsByName.get(name);
+    if (dependencyItem) {
+      for (const token of declaredStateTokens(dependencyItem, itemsByName, seen)) {
+        declared.add(token);
+      }
+    }
+  }
+
+  return declared;
+};
+
+test('a partial install declares every state Token its source references', async () => {
+  const items = await readCatalog('zen');
+  const itemsByName = new Map(items.map((item) => [item.name, item]));
+  const expected = BASE_COLORS.neutral;
+
+  for (const item of items.filter((entry) => entry.type === 'registry:ui')) {
+    const source = (
+      await Promise.all(
+        item.files.map((file) => readFile(join(webDir, file.path), 'utf8'))
+      )
+    ).join('\n');
+    const referenced = STATE_TOKEN_NAMES.filter((token) =>
+      referencesToken(source, token)
+    );
+    const declared = declaredStateTokens(item, itemsByName);
+
+    for (const token of referenced) {
+      expect(
+        declared.has(token),
+        `${item.name} references --${token} but no install declares it`
+      ).toBe(true);
+    }
+
+    for (const token of STATE_TOKEN_NAMES) {
+      if (!Object.hasOwn(item.cssVars?.light ?? {}, token)) {
+        continue;
+      }
+
+      expect(
+        item.cssVars?.light?.[token],
+        `${item.name} light --${token}`
+      ).toBe(expected.light[token]);
+      expect(
+        item.cssVars?.dark?.[token],
+        `${item.name} dark --${token}`
+      ).toBe(expected.dark[token]);
+      expect(
+        item.cssVars?.theme?.[`--color-${token}`],
+        `${item.name} @theme --color-${token}`
+      ).toBe(`var(--${token})`);
+    }
+  }
+});
+
 test('init writes the semantic state Tokens for every Base color in both schemes', async () => {
   const server = serveInterop();
   const origin = `http://127.0.0.1:${server.port}`;

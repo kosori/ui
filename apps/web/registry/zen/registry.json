@@ -28,6 +28,23 @@
     {
       "name": "alert",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "success": "var(--color-emerald-500)",
+          "warning": "var(--color-amber-500)",
+          "info": "var(--color-blue-500)"
+        },
+        "dark": {
+          "success": "var(--color-emerald-500)",
+          "warning": "var(--color-amber-500)",
+          "info": "var(--color-blue-500)"
+        },
+        "theme": {
+          "--color-success": "var(--success)",
+          "--color-warning": "var(--warning)",
+          "--color-info": "var(--info)"
+        }
+      },
       "dependencies": ["class-variance-authority", "cn"],
       "files": [
         {
@@ -107,6 +124,35 @@
     {
       "name": "badge",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "success": "var(--color-emerald-500)",
+          "success-foreground": "var(--color-emerald-700)",
+          "warning": "var(--color-amber-500)",
+          "warning-foreground": "var(--color-amber-700)",
+          "info": "var(--color-blue-500)",
+          "info-foreground": "var(--color-blue-700)",
+          "destructive-foreground": "var(--color-red-700)"
+        },
+        "dark": {
+          "success": "var(--color-emerald-500)",
+          "success-foreground": "var(--color-emerald-400)",
+          "warning": "var(--color-amber-500)",
+          "warning-foreground": "var(--color-amber-400)",
+          "info": "var(--color-blue-500)",
+          "info-foreground": "var(--color-blue-400)",
+          "destructive-foreground": "var(--color-red-400)"
+        },
+        "theme": {
+          "--color-success": "var(--success)",
+          "--color-success-foreground": "var(--success-foreground)",
+          "--color-warning": "var(--warning)",
+          "--color-warning-foreground": "var(--warning-foreground)",
+          "--color-info": "var(--info)",
+          "--color-info-foreground": "var(--info-foreground)",
+          "--color-destructive-foreground": "var(--destructive-foreground)"
+        }
+      },
       "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
       "files": [
         {
@@ -155,6 +201,17 @@
     {
       "name": "button",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "destructive-foreground": "var(--color-red-700)"
+        },
+        "dark": {
+          "destructive-foreground": "var(--color-red-400)"
+        },
+        "theme": {
+          "--color-destructive-foreground": "var(--destructive-foreground)"
+        }
+      },
       "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
       "registryDependencies": ["@kosori/spinner"],
       "files": [
@@ -347,6 +404,17 @@
     {
       "name": "context-menu",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "destructive-foreground": "var(--color-red-700)"
+        },
+        "dark": {
+          "destructive-foreground": "var(--color-red-400)"
+        },
+        "theme": {
+          "--color-destructive-foreground": "var(--destructive-foreground)"
+        }
+      },
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
       "files": [
         {
@@ -398,6 +466,17 @@
     {
       "name": "drawer",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "destructive-foreground": "var(--color-red-700)"
+        },
+        "dark": {
+          "destructive-foreground": "var(--color-red-400)"
+        },
+        "theme": {
+          "--color-destructive-foreground": "var(--destructive-foreground)"
+        }
+      },
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
       "registryDependencies": ["@kosori/button", "@kosori/scroll-area"],
       "files": [
@@ -421,6 +500,17 @@
     {
       "name": "dropdown-menu",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "destructive-foreground": "var(--color-red-700)"
+        },
+        "dark": {
+          "destructive-foreground": "var(--color-red-400)"
+        },
+        "theme": {
+          "--color-destructive-foreground": "var(--destructive-foreground)"
+        }
+      },
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
       "files": [
         {
@@ -467,6 +557,17 @@
     {
       "name": "field",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "destructive-foreground": "var(--color-red-700)"
+        },
+        "dark": {
+          "destructive-foreground": "var(--color-red-400)"
+        },
+        "theme": {
+          "--color-destructive-foreground": "var(--destructive-foreground)"
+        }
+      },
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
@@ -1038,6 +1139,23 @@
     {
       "name": "toast",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "success": "var(--color-emerald-500)",
+          "warning": "var(--color-amber-500)",
+          "info": "var(--color-blue-500)"
+        },
+        "dark": {
+          "success": "var(--color-emerald-500)",
+          "warning": "var(--color-amber-500)",
+          "info": "var(--color-blue-500)"
+        },
+        "theme": {
+          "--color-success": "var(--success)",
+          "--color-warning": "var(--warning)",
+          "--color-info": "var(--info)"
+        }
+      },
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
       "registryDependencies": ["@kosori/button"],
       "files": [
