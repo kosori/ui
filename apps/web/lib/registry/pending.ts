@@ -1,17 +1,14 @@
 /**
- * shadcn/ui names with no coss/ui equivalent yet. One list feeds both the
- * components status page and the install suite, so a name cannot be Pending
- * and shipped at the same time.
+ * shadcn/ui names the complete catalog publishes as part of its scope but does
+ * not yet serve. One list feeds both the components status page and the install
+ * suite, so a name cannot be Pending and shipped at the same time.
  */
 export const PENDING_COMPONENTS = [
-  'aspect-ratio',
   'attachment',
   'bubble',
   'carousel',
   'chart',
   'code-block',
-  'data-table',
-  'direction',
   'item',
   'marker',
   'menubar',
@@ -22,5 +19,4 @@ export const PENDING_COMPONENTS = [
   'questionnaire',
   'resizable',
   'trace',
-  'typography',
 ] as const;

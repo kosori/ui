@@ -15,6 +15,7 @@ import { extname, join, relative } from 'node:path';
 import type { RegistryItem } from 'shadcn/schema';
 import { GET } from '../app/init/[style]/[baseColor]/route';
 import { readCatalog } from '../lib/registry/catalog';
+import { COMPOSITIONS } from '../lib/registry/compositions';
 import { INTERNAL_ITEMS, isInternalItem } from '../lib/registry/internal';
 import { PENDING_COMPONENTS } from '../lib/registry/pending';
 import { BASE_COLORS } from '../registry/base-colors';
@@ -32,13 +33,7 @@ const productionNamespace =
  * Style's directory must belong to a `registry:ui` item, so a renamed or
  * deleted component cannot leave a page behind.
  */
-const NON_COMPONENT_PAGES = [
-  'components',
-  'date-picker',
-  'index',
-  'installation',
-  'theming',
-];
+const NON_COMPONENT_PAGES = ['components', 'index', 'installation', 'theming'];
 
 /**
  * The semantic state Tokens coss ships. State colour is independent of Base
@@ -412,6 +407,7 @@ test('installing a preset and every item of every Style leaves Consumer projects
           .map((file) => file.replace(/\.mdx$/, ''));
         const knownPages = new Set([
           ...documented.map((component) => component.name),
+          ...COMPOSITIONS,
           ...NON_COMPONENT_PAGES,
         ]);
         expect(

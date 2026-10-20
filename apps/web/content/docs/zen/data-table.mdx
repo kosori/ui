@@ -1,0 +1,55 @@
+---
+title: Data Table
+description: A table with sorting, filtering and pagination built on Table.
+---
+
+Data Table is a Composition, not a Registry item: shadcn/ui publishes it only as
+documentation, so there is no `@kosori/data-table` to install. Compose
+[Table](/docs/zen/table) with the controls a table needs.
+
+## Installation
+
+Install the components the table composes:
+
+```bash
+npx shadcn@latest add @kosori/table @kosori/input @kosori/dropdown-menu
+```
+
+## Usage
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+
+const invoices = [
+  { amount: '$250.00', method: 'Credit Card', status: 'Paid' },
+  { amount: '$150.00', method: 'PayPal', status: 'Pending' },
+];
+
+const DataTable = () => (
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Status</TableHead>
+        <TableHead>Method</TableHead>
+        <TableHead className='text-right'>Amount</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      {invoices.map((invoice) => (
+        <TableRow key={invoice.method}>
+          <TableCell>{invoice.status}</TableCell>
+          <TableCell>{invoice.method}</TableCell>
+          <TableCell className='text-right'>{invoice.amount}</TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table>
+);
+```
