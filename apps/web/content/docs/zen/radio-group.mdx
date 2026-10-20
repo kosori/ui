@@ -15,3 +15,23 @@ npx shadcn@latest add @kosori/radio-group
 ## Example
 
 <ComponentPreview name='radio-group' />
+
+## Usage
+
+```tsx
+import { Label } from '@/components/ui/label';
+import { Radio, RadioGroup } from '@/components/ui/radio-group';
+
+const RadioGroupDemo = () => (
+  <RadioGroup defaultValue='email'>
+    <Label className='flex items-center gap-2'>
+      <Radio value='email' />
+      Email
+    </Label>
+    <Label className='flex items-center gap-2'>
+      <Radio value='sms' />
+      SMS
+    </Label>
+  </RadioGroup>
+);
+```

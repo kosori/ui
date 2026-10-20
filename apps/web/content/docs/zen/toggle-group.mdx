@@ -17,3 +17,20 @@ npx shadcn@latest add @kosori/toggle-group
 ## Example
 
 <ComponentPreview name='toggle-group' />
+
+## Usage
+
+```tsx
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+
+const ToggleGroupDemo = () => (
+  <ToggleGroup defaultValue={['bold']}>
+    <ToggleGroupItem aria-label='Toggle bold' value='bold'>
+      B
+    </ToggleGroupItem>
+    <ToggleGroupItem aria-label='Toggle italic' value='italic'>
+      I
+    </ToggleGroupItem>
+  </ToggleGroup>
+);
+```

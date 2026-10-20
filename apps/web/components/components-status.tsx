@@ -5,11 +5,15 @@ import { PENDING_COMPONENTS } from '@/lib/registry/pending';
 import type { StyleName } from '@/registry/preset';
 
 type Props = {
-  style: StyleName;
+  style?: StyleName;
 };
 
 /** List a Style's implemented components and its Pending names. */
 const ComponentsStatus = async ({ style }: Props) => {
+  if (!style) {
+    throw new Error('Components status requires a Style');
+  }
+
   const catalog = await readCatalog(style);
   const implemented = catalog
     .filter((item) => item.type === 'registry:ui' && !isInternalItem(item.name))
@@ -55,9 +59,7 @@ const ComponentsStatus = async ({ style }: Props) => {
  */
 export const createComponentsStatus = (style?: StyleName) => {
   /** Render the components status for the page's Style. */
-  const StyleComponentsStatus = () => (
-    <ComponentsStatus style={style ?? 'zen'} />
-  );
+  const StyleComponentsStatus = () => <ComponentsStatus style={style} />;
 
   return StyleComponentsStatus;
 };

@@ -18,3 +18,20 @@ npx shadcn@latest add @kosori/tabs
 ## Example
 
 <ComponentPreview name='tabs' />
+
+## Usage
+
+```tsx
+import { Tabs, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
+
+const TabsDemo = () => (
+  <Tabs defaultValue='account'>
+    <TabsList>
+      <TabsTab value='account'>Account</TabsTab>
+      <TabsTab value='password'>Password</TabsTab>
+    </TabsList>
+    <TabsPanel value='account'>Account settings</TabsPanel>
+    <TabsPanel value='password'>Password settings</TabsPanel>
+  </Tabs>
+);
+```

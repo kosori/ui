@@ -18,3 +18,29 @@ npx shadcn@latest add @kosori/toast
 ## Example
 
 <ComponentPreview name='toast' />
+
+## Usage
+
+```tsx
+'use client';
+
+import { Button } from '@/components/ui/button';
+import { ToastProvider, toastManager } from '@/components/ui/toast';
+
+const Notify = () => (
+  <Button
+    onClick={() =>
+      toastManager.add({ title: 'Saved', type: 'success' })
+    }
+    variant='outline'
+  >
+    Show toast
+  </Button>
+);
+
+const ToastDemo = () => (
+  <ToastProvider>
+    <Notify />
+  </ToastProvider>
+);
+```

@@ -17,3 +17,27 @@ npx shadcn@latest add @kosori/dropdown-menu
 ## Example
 
 <ComponentPreview name='dropdown-menu' />
+
+## Usage
+
+```tsx
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+
+const DropdownMenuDemo = () => (
+  <DropdownMenu>
+    <DropdownMenuTrigger render={<Button variant='outline' />}>
+      Open menu
+    </DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem>Edit</DropdownMenuItem>
+      <DropdownMenuItem>Delete</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
+);
+```

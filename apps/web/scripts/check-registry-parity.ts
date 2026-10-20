@@ -1,18 +1,9 @@
-import { readdir, readFile } from 'node:fs/promises';
+import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
+import { readCatalog } from '../lib/registry/catalog';
 import { STYLES } from '../registry/preset';
 
-type Item = {
-  name: string;
-  type: string;
-};
-
-type Catalog = {
-  items: Item[];
-};
-
 const webDir = join(import.meta.dirname, '..');
-const registryDir = join(webDir, 'registry');
 const docsDir = join(webDir, 'content/docs');
 
 /** Registry folders shared by every Style rather than owned by one. */
@@ -27,16 +18,7 @@ const directoryNames = async (dir: string) => {
   );
 };
 
-/** Read the items a published Style's catalog serves, keyed by name. */
-const readCatalog = async (style: string) => {
-  const catalog: Catalog = JSON.parse(
-    await readFile(join(registryDir, style, 'registry.json'), 'utf8')
-  );
-
-  return new Map(catalog.items.map((item) => [item.name, item.type]));
-};
-
-const registryStyles = await directoryNames(registryDir);
+const registryStyles = await directoryNames(join(webDir, 'registry'));
 for (const shared of SHARED_REGISTRY_DIRS) {
   registryStyles.delete(shared);
 }
@@ -64,9 +46,14 @@ if (missing.length > 0) {
 
 const catalogs = new Map(
   await Promise.all(
-    STYLES.map(
-      async (style) => [style.name, await readCatalog(style.name)] as const
-    )
+    STYLES.map(async (style) => {
+      const items = await readCatalog(style.name);
+
+      return [
+        style.name,
+        new Map(items.map((item) => [item.name, item.type])),
+      ] as const;
+    })
   )
 );
 

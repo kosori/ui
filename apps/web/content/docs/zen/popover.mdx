@@ -16,3 +16,23 @@ npx shadcn@latest add @kosori/popover
 ## Example
 
 <ComponentPreview name='popover' />
+
+## Usage
+
+```tsx
+import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverPopup,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+
+const PopoverDemo = () => (
+  <Popover>
+    <PopoverTrigger render={<Button variant='outline' />}>
+      Open popover
+    </PopoverTrigger>
+    <PopoverPopup>Popover content</PopoverPopup>
+  </Popover>
+);
+```

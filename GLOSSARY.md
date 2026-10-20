@@ -55,3 +55,7 @@ _Avoid_: Fork, rewrite, adaptation
 **Pending**:
 A name a Style publishes as part of its catalog scope but does not yet serve. Pending names appear in documentation without a page and never appear in the registry catalog.
 _Avoid_: Missing, TODO, unimplemented
+
+**Internal item**:
+A Registry item a Style ships only to satisfy another item's dependency. It installs and byte-matches like any other item but is never documented, never Pending, and has no Example, page or menu entry.
+_Avoid_: Hidden component, private item

@@ -17,3 +17,33 @@ npx shadcn@latest add @kosori/table
 ## Example
 
 <ComponentPreview name='table' />
+
+## Usage
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+
+const TableDemo = () => (
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Project</TableHead>
+        <TableHead>Status</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>kosori</TableCell>
+        <TableCell>Active</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+);
+```

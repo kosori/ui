@@ -17,3 +17,32 @@ npx shadcn@latest add @kosori/pagination
 ## Example
 
 <ComponentPreview name='pagination' />
+
+## Usage
+
+```tsx
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
+
+const PaginationDemo = () => (
+  <Pagination>
+    <PaginationContent>
+      <PaginationItem>
+        <PaginationPrevious href='#' />
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href='#'>1</PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationNext href='#' />
+      </PaginationItem>
+    </PaginationContent>
+  </Pagination>
+);
+```

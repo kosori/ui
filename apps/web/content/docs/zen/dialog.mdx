@@ -18,3 +18,37 @@ npx shadcn@latest add @kosori/dialog
 ## Example
 
 <ComponentPreview name='dialog' />
+
+## Usage
+
+```tsx
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogClose,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogPopup,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+
+const DialogDemo = () => (
+  <Dialog>
+    <DialogTrigger render={<Button variant='outline' />}>
+      Open dialog
+    </DialogTrigger>
+    <DialogPopup>
+      <DialogHeader>
+        <DialogTitle>Manage team member</DialogTitle>
+        <DialogDescription>View and manage a team member.</DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <DialogClose render={<Button variant='outline' />}>Cancel</DialogClose>
+        <Button>Save changes</Button>
+      </DialogFooter>
+    </DialogPopup>
+  </Dialog>
+);
+```

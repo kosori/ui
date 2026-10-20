@@ -1,6 +1,8 @@
 # Upstream pin
 
-kosori ports `zen` from [coss/ui](https://coss.com/ui). This file records the upstream revision a Port was taken from and the exact bytes of every ported item, so a future re-sync has a starting point. No upstream snapshot is vendored in this repository.
+kosori ports `zen` from [coss/ui](https://coss.com/ui). This file records the upstream revision a Port was taken from and the SHA-256 of every upstream item, so a future re-sync has a starting point. No upstream snapshot is vendored in this repository.
+
+The hash pins the upstream bytes, not the local source. A Port is formatted, renamed and adapted to kosori imports, so its local file is not byte-identical to upstream. What the install suite byte-matches is the local source file to the file an install writes.
 
 ## Revision
 
@@ -71,7 +73,7 @@ One row per Port, ordered alphabetically by kosori name.
 | tooltip | tooltip | 0ac59089d1d813b7eb1cd9e08ed2ff3b3931e4024df649ddb45b1eb43d50f694 |
 | use-media-query | use-media-query | 17d75ccaf898415db77dd72659c9b1fdb9338290ae54e8371b772e0b221c9fca |
 
-The hash is the SHA-256 of the upstream file's content exactly as the registry serves it: the `files[0].content` string after JSON decoding, with its original line endings and trailing newline, and no bytes added or removed.
+The hash is the SHA-256 of the upstream file's content exactly as the registry serves it: the `files[0].content` string after JSON decoding, with its original line endings and trailing newline, and no bytes added or removed. It does not hash the local port; use it only to compare one upstream fetch against another. The install suite separately byte-matches each local source file to the installed output.
 
 ## Adding an entry
 

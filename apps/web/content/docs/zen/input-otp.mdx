@@ -17,3 +17,20 @@ npx shadcn@latest add @kosori/input-otp
 ## Example
 
 <ComponentPreview name='input-otp' />
+
+## Usage
+
+```tsx
+import { OTPField, OTPFieldInput } from '@/components/ui/input-otp';
+
+const InputOtpDemo = () => (
+  <OTPField length={6}>
+    <OTPFieldInput />
+    <OTPFieldInput />
+    <OTPFieldInput />
+    <OTPFieldInput />
+    <OTPFieldInput />
+    <OTPFieldInput />
+  </OTPField>
+);
+```

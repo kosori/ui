@@ -19,3 +19,37 @@ npx shadcn@latest add @kosori/drawer
 ## Example
 
 <ComponentPreview name='drawer' />
+
+## Usage
+
+```tsx
+import { Button } from '@/components/ui/button';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerPopup,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
+
+const DrawerDemo = () => (
+  <Drawer>
+    <DrawerTrigger render={<Button variant='outline' />}>
+      Open drawer
+    </DrawerTrigger>
+    <DrawerPopup>
+      <DrawerHeader>
+        <DrawerTitle>Edit profile</DrawerTitle>
+        <DrawerDescription>Make changes to your profile.</DrawerDescription>
+      </DrawerHeader>
+      <DrawerFooter>
+        <DrawerClose render={<Button variant='outline' />}>Cancel</DrawerClose>
+        <Button>Save changes</Button>
+      </DrawerFooter>
+    </DrawerPopup>
+  </Drawer>
+);
+```

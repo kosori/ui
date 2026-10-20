@@ -120,10 +120,7 @@ export type ExampleName = keyof typeof exampleItems;
  * it differs only in the components that markup resolves to, which is why the
  * render module is bound per Style while the item name and source are shared.
  */
-const exampleComponents: Record<
-  StyleName,
-  Partial<Record<ExampleName, ComponentType>>
-> = {
+const exampleComponents = {
   kaze: {
     button: KazeButtonExample,
     dialog: KazeDialogExample,
@@ -181,7 +178,7 @@ const exampleComponents: Record<
     'toggle-group': ToggleGroupExample,
     tooltip: TooltipExample,
   },
-};
+} satisfies Record<StyleName, Partial<Record<ExampleName, ComponentType>>>;
 
 /** The Registry item a Consumer installs for an Example. */
 export const exampleItemName = (name: ExampleName) => exampleItems[name];
@@ -201,7 +198,9 @@ type Props = {
 
 /** Render a Registry Example live for the Style a page documents. */
 export const ExamplePreview = ({ name, style }: Props) => {
-  const Example = exampleComponents[style][name];
+  const StyleExamples: Partial<Record<ExampleName, ComponentType>> =
+    exampleComponents[style];
+  const Example = StyleExamples[name];
 
   if (!Example) {
     throw new Error(`No ${name} Example is registered for ${style}`);

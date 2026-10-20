@@ -24,6 +24,7 @@ npx shadcn@latest add @kosori/calendar @kosori/popover
 ```tsx
 'use client';
 
+import { IconCalendar } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -37,21 +38,24 @@ const DatePicker = () => {
   const [date, setDate] = useState<Date | undefined>();
 
   return (
-    <Popover>
-      <PopoverTrigger
-        render={<Button className='w-64 justify-start' variant='outline' />}
-      >
-        {date ? date.toLocaleDateString() : 'Pick a date'}
-      </PopoverTrigger>
-      <PopoverPopup>
-        <Calendar
-          defaultMonth={date}
-          mode='single'
-          onSelect={setDate}
-          selected={date}
-        />
-      </PopoverPopup>
-    </Popover>
+    <div className='not-prose flex min-h-40 items-center justify-center rounded-xl border p-6'>
+      <Popover>
+        <PopoverTrigger
+          render={<Button className='w-64 justify-start' variant='outline' />}
+        >
+          <IconCalendar aria-hidden='true' />
+          {date ? date.toLocaleDateString() : 'Pick a date'}
+        </PopoverTrigger>
+        <PopoverPopup>
+          <Calendar
+            defaultMonth={date}
+            mode='single'
+            onSelect={setDate}
+            selected={date}
+          />
+        </PopoverPopup>
+      </Popover>
+    </div>
   );
 };
 ```

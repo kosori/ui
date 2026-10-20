@@ -18,3 +18,20 @@ npx shadcn@latest add @kosori/collapsible
 ## Example
 
 <ComponentPreview name='collapsible' />
+
+## Usage
+
+```tsx
+import {
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
+
+const CollapsibleDemo = () => (
+  <Collapsible>
+    <CollapsibleTrigger>Show recovery keys</CollapsibleTrigger>
+    <CollapsiblePanel>4829-1735-6621</CollapsiblePanel>
+  </Collapsible>
+);
+```
