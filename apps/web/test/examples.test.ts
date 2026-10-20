@@ -44,6 +44,35 @@ const PROP_RULES: readonly PropRule[] = [
   { component: 'SidebarProvider', expected: 'true', prop: 'defaultOpen' },
 ];
 
+/**
+ * The variant props an Example of that component may show. Only components
+ * named by the Example's own file are checked, so a Button used as a popup
+ * trigger does not count as a Button Example.
+ */
+const OWN_VARIANT_RULES: readonly PropRule[] = [
+  { component: 'Alert', expected: 'default', prop: 'variant' },
+  { component: 'Badge', expected: 'default', prop: 'size' },
+  { component: 'Badge', expected: 'default', prop: 'variant' },
+  { component: 'Button', expected: 'default', prop: 'size' },
+  { component: 'Button', expected: 'default', prop: 'variant' },
+  { component: 'ButtonGroup', expected: 'horizontal', prop: 'orientation' },
+  { component: 'ContextMenuItem', expected: 'default', prop: 'variant' },
+  { component: 'ContextMenuLinkItem', expected: 'default', prop: 'variant' },
+  {
+    component: 'DropdownMenuCheckboxItem',
+    expected: 'default',
+    prop: 'variant',
+  },
+  { component: 'DropdownMenuItem', expected: 'default', prop: 'variant' },
+  { component: 'EmptyMedia', expected: 'default', prop: 'variant' },
+  { component: 'SelectTrigger', expected: 'default', prop: 'size' },
+  { component: 'SidebarMenuButton', expected: 'default', prop: 'size' },
+  { component: 'SidebarMenuButton', expected: 'default', prop: 'variant' },
+  { component: 'TabsList', expected: 'default', prop: 'variant' },
+  { component: 'Toggle', expected: 'default', prop: 'size' },
+  { component: 'Toggle', expected: 'default', prop: 'variant' },
+];
+
 /** Class fragments no Example may add to a component's shipped className. */
 const CLASS_RULES: readonly ClassRule[] = [
   { component: 'DrawerFooter', fragment: 'justify-center' },
@@ -206,6 +235,37 @@ const readTags = (source: string): JsxTag[] => {
   return tags;
 };
 
+/** The PascalCase component an Example file is named after. */
+const exampleComponent = (example: string) =>
+  example
+    .replace(/-example\.tsx$/, '')
+    .split('-')
+    .map((part) => `${part[0].toUpperCase()}${part.slice(1)}`)
+    .join('');
+
+/** One override of a tracked prop, or null when the tag uses the default. */
+const propViolation = (
+  example: string,
+  tag: JsxTag,
+  rule: PropRule
+): Violation | null => {
+  if (tag.name !== rule.component) {
+    return null;
+  }
+
+  const actual = tag.props.get(rule.prop);
+  if (actual === undefined || actual === rule.expected) {
+    return null;
+  }
+
+  return {
+    example,
+    message: `${example}: ${rule.component}.${rule.prop} is ${actual}, expected ${rule.expected}`,
+    target: `${rule.component}.${rule.prop}`,
+    value: actual,
+  };
+};
+
 /** Every way an Example departs from a component's shipped default. */
 const findViolations = async (): Promise<Violation[]> => {
   const files = (await readdir(examplesDir)).filter((file) =>
@@ -220,23 +280,17 @@ const findViolations = async (): Promise<Violation[]> => {
   const violations: Violation[] = [];
 
   for (const { example, source } of sources) {
+    const owner = exampleComponent(example);
+    const ownVariantRules = OWN_VARIANT_RULES.filter((rule) =>
+      rule.component.startsWith(owner)
+    );
+
     for (const tag of readTags(source)) {
-      for (const rule of PROP_RULES) {
-        if (tag.name !== rule.component) {
-          continue;
+      for (const rule of [...PROP_RULES, ...ownVariantRules]) {
+        const violation = propViolation(example, tag, rule);
+        if (violation) {
+          violations.push(violation);
         }
-
-        const actual = tag.props.get(rule.prop);
-        if (actual === undefined || actual === rule.expected) {
-          continue;
-        }
-
-        violations.push({
-          example,
-          message: `${example}: ${rule.component}.${rule.prop} is ${actual}, expected ${rule.expected}`,
-          target: `${rule.component}.${rule.prop}`,
-          value: actual,
-        });
       }
 
       for (const rule of CLASS_RULES) {
