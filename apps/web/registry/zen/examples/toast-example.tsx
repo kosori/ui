@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/toast';
 
 const addDefaultToast = () => {
-  toastManager.add({
+  toast.add({
     description: 'Monday, January 3rd at 6:00pm',
     title: 'Event has been created',
   });
