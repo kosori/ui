@@ -1,0 +1,46 @@
+---
+title: Breadcrumb
+description: Displays the path to the current resource using a hierarchy of links.
+---
+
+Breadcrumb composes Base UI's `useRender` and `mergeProps` so each link can
+render as the router's own anchor. The current page carries
+`aria-current='page'`, separators default to a Tabler chevron, and every part
+marks itself with `data-slot`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/breadcrumb
+```
+
+## Example
+
+<ComponentPreview name='breadcrumb' />
+
+## Usage
+
+```tsx
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+
+const BreadcrumbDemo = () => (
+  <Breadcrumb>
+    <BreadcrumbList>
+      <BreadcrumbItem>
+        <BreadcrumbLink href='/'>Home</BreadcrumbLink>
+      </BreadcrumbItem>
+      <BreadcrumbSeparator />
+      <BreadcrumbItem>
+        <BreadcrumbPage>Components</BreadcrumbPage>
+      </BreadcrumbItem>
+    </BreadcrumbList>
+  </Breadcrumb>
+);
+```

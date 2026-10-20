@@ -1,0 +1,30 @@
+---
+title: Kbd
+description: A component for displaying keyboard keys and shortcuts.
+---
+
+Kbd renders a `<kbd>` for a single key and KbdGroup groups keys into a
+shortcut; both mark themselves with `data-slot`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/kbd
+```
+
+## Example
+
+<ComponentPreview name='kbd' />
+
+## Usage
+
+```tsx
+import { Kbd, KbdGroup } from '@/components/ui/kbd';
+
+const KbdDemo = () => (
+  <KbdGroup>
+    <Kbd>⌘</Kbd>
+    <Kbd>K</Kbd>
+  </KbdGroup>
+);
+```

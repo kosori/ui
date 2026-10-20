@@ -1,0 +1,49 @@
+---
+title: Table
+description: A simple table component for displaying tabular data.
+---
+
+Table composes Base UI's `useRender` and `mergeProps` into a div container with
+`table`, `thead`, `tbody`, `tfoot`, `tr`, `th`, `td` and `caption` parts. Set
+`variant='card'` for separated borders and rounded row surfaces; every part
+marks itself with `data-slot`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/table
+```
+
+## Example
+
+<ComponentPreview name='table' />
+
+## Usage
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+
+const TableDemo = () => (
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Project</TableHead>
+        <TableHead>Status</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>kosori</TableCell>
+        <TableCell>Active</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+);
+```

@@ -1,0 +1,48 @@
+---
+title: Pagination
+description: A pagination with page navigation, next and previous links.
+---
+
+Pagination composes Base UI's `useRender` and `mergeProps` with the
+[Button](/docs/zen/button) variants, so every link can render as the router's own
+anchor. `PaginationLink` marks the current page with `aria-current='page'`, and
+every part marks itself with `data-slot`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/pagination
+```
+
+## Example
+
+<ComponentPreview name='pagination' />
+
+## Usage
+
+```tsx
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
+
+const PaginationDemo = () => (
+  <Pagination>
+    <PaginationContent>
+      <PaginationItem>
+        <PaginationPrevious href='#' />
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href='#'>1</PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationNext href='#' />
+      </PaginationItem>
+    </PaginationContent>
+  </Pagination>
+);
+```

@@ -4,9 +4,159 @@
   "homepage": "https://kosori.codingcodax.dev",
   "items": [
     {
+      "name": "accordion",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "accordion-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/accordion"],
+      "files": [
+        {
+          "path": "registry/zen/accordion-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/alert.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/alert-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/alert-dialog", "@kosori/button"],
+      "files": [
+        {
+          "path": "registry/zen/alert-dialog-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "alert-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/alert"],
+      "files": [
+        {
+          "path": "registry/zen/alert-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "autocomplete",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/input", "@kosori/scroll-area"],
+      "files": [
+        {
+          "path": "registry/zen/autocomplete.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/avatar"],
+      "files": [
+        {
+          "path": "registry/zen/avatar-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/badge"],
+      "files": [
+        {
+          "path": "registry/zen/badge-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb-example",
+      "type": "registry:example",
+      "registryDependencies": [
+        "@kosori/breadcrumb",
+        "@kosori/button",
+        "@kosori/dropdown-menu"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/breadcrumb-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
+      "registryDependencies": ["@kosori/spinner"],
       "files": [
         {
           "path": "registry/zen/button.tsx",
@@ -26,10 +176,202 @@
       ]
     },
     {
+      "name": "button-group",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
+      "registryDependencies": ["@kosori/separator"],
+      "files": [
+        {
+          "path": "registry/zen/button-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button-group-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button", "@kosori/button-group"],
+      "files": [
+        {
+          "path": "registry/zen/button-group-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "dependencies": ["@daypicker/react", "@tabler/icons-react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/calendar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "calendar-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/calendar"],
+      "files": [
+        {
+          "path": "registry/zen/calendar-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "card-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": [
+        "@kosori/button",
+        "@kosori/card",
+        "@kosori/field",
+        "@kosori/form",
+        "@kosori/input",
+        "@kosori/select"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/card-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/checkbox", "@kosori/label"],
+      "files": [
+        {
+          "path": "registry/zen/checkbox-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "collapsible-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/collapsible"],
+      "files": [
+        {
+          "path": "registry/zen/collapsible-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/input", "@kosori/scroll-area"],
+      "files": [
+        {
+          "path": "registry/zen/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "combobox-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/combobox"],
+      "files": [
+        {
+          "path": "registry/zen/combobox-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/autocomplete"],
+      "files": [
+        {
+          "path": "registry/zen/command.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "command-example",
+      "type": "registry:example",
+      "registryDependencies": [
+        "@kosori/button",
+        "@kosori/command",
+        "@kosori/kbd"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/command-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "context-menu-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/context-menu"],
+      "files": [
+        {
+          "path": "registry/zen/context-menu-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "dialog",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
-      "registryDependencies": ["@kosori/button"],
+      "registryDependencies": ["@kosori/button", "@kosori/scroll-area"],
       "files": [
         {
           "path": "registry/zen/dialog.tsx",
@@ -40,7 +382,12 @@
     {
       "name": "dialog-example",
       "type": "registry:example",
-      "registryDependencies": ["@kosori/button", "@kosori/dialog"],
+      "registryDependencies": [
+        "@kosori/button",
+        "@kosori/dialog",
+        "@kosori/field",
+        "@kosori/input"
+      ],
       "files": [
         {
           "path": "registry/zen/dialog-example.tsx",
@@ -49,10 +396,78 @@
       ]
     },
     {
-      "name": "field",
+      "name": "drawer",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/button", "@kosori/scroll-area"],
+      "files": [
+        {
+          "path": "registry/zen/drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "drawer-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button", "@kosori/drawer"],
+      "files": [
+        {
+          "path": "registry/zen/drawer-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/button", "@kosori/dropdown-menu"],
+      "files": [
+        {
+          "path": "registry/zen/dropdown-menu-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "empty",
       "type": "registry:ui",
       "dependencies": ["class-variance-authority", "cn"],
-      "registryDependencies": ["@kosori/label", "@kosori/separator"],
+      "files": [
+        {
+          "path": "registry/zen/empty.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/button", "@kosori/empty"],
+      "files": [
+        {
+          "path": "registry/zen/empty-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
           "path": "registry/zen/field.tsx",
@@ -67,6 +482,56 @@
       "files": [
         {
           "path": "registry/zen/field-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "form",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "registry/zen/form.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "form-example",
+      "type": "registry:example",
+      "registryDependencies": [
+        "@kosori/button",
+        "@kosori/field",
+        "@kosori/form",
+        "@kosori/input"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/form-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/hover-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "hover-card-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/button", "@kosori/hover-card"],
+      "files": [
+        {
+          "path": "registry/zen/hover-card-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -94,9 +559,77 @@
       ]
     },
     {
-      "name": "label",
+      "name": "input-group",
+      "type": "registry:ui",
+      "registryDependencies": ["@kosori/input", "@kosori/textarea"],
+      "files": [
+        {
+          "path": "registry/zen/input-group.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": ["class-variance-authority", "cn"]
+    },
+    {
+      "name": "input-group-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/input-group"],
+      "files": [
+        {
+          "path": "registry/zen/input-group-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "registryDependencies": ["@kosori/separator"],
+      "files": [
+        {
+          "path": "registry/zen/input-otp.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-otp-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/field", "@kosori/input-otp"],
+      "files": [
+        {
+          "path": "registry/zen/input-otp-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "kbd",
       "type": "registry:ui",
       "dependencies": ["cn"],
+      "files": [
+        {
+          "path": "registry/zen/kbd.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kbd-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/kbd"],
+      "files": [
+        {
+          "path": "registry/zen/kbd-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
           "path": "registry/zen/label.tsx",
@@ -107,10 +640,160 @@
     {
       "name": "label-example",
       "type": "registry:example",
-      "registryDependencies": ["@kosori/label"],
+      "registryDependencies": ["@kosori/input", "@kosori/label"],
       "files": [
         {
           "path": "registry/zen/label-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/button"],
+      "files": [
+        {
+          "path": "registry/zen/pagination.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pagination-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/pagination"],
+      "files": [
+        {
+          "path": "registry/zen/pagination-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/popover.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "popover-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/button", "@kosori/popover"],
+      "files": [
+        {
+          "path": "registry/zen/popover-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "progress-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/progress"],
+      "files": [
+        {
+          "path": "registry/zen/progress-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/radio-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "radio-group-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/label", "@kosori/radio-group"],
+      "files": [
+        {
+          "path": "registry/zen/radio-group-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/scroll-area"],
+      "files": [
+        {
+          "path": "registry/zen/scroll-area-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "segmented-control",
+      "type": "registry:lib",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "lib/segmented-control.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "@tabler/icons-react",
+        "class-variance-authority",
+        "cn"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/select"],
+      "files": [
+        {
+          "path": "registry/zen/select-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -134,6 +817,321 @@
         {
           "path": "registry/zen/separator-example.tsx",
           "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/button", "@kosori/scroll-area"],
+      "files": [
+        {
+          "path": "registry/zen/sheet.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sheet-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button", "@kosori/sheet"],
+      "files": [
+        {
+          "path": "registry/zen/sheet-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "@tabler/icons-react",
+        "class-variance-authority",
+        "cn"
+      ],
+      "registryDependencies": [
+        "@kosori/button",
+        "@kosori/input",
+        "@kosori/scroll-area",
+        "@kosori/separator",
+        "@kosori/sheet",
+        "@kosori/skeleton",
+        "@kosori/tooltip",
+        "@kosori/use-media-query"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/sidebar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sidebar-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/sidebar"],
+      "files": [
+        {
+          "path": "registry/zen/sidebar-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "dependencies": ["cn"],
+      "files": [
+        {
+          "path": "registry/zen/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/skeleton"],
+      "files": [
+        {
+          "path": "registry/zen/skeleton-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/slider.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "slider-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/field", "@kosori/slider"],
+      "files": [
+        {
+          "path": "registry/zen/slider-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "dependencies": ["@tabler/icons-react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spinner-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/spinner"],
+      "files": [
+        {
+          "path": "registry/zen/spinner-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "switch-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/label", "@kosori/switch"],
+      "files": [
+        {
+          "path": "registry/zen/switch-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "table-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/badge", "@kosori/table"],
+      "files": [
+        {
+          "path": "registry/zen/table-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "registryDependencies": ["@kosori/segmented-control"],
+      "files": [
+        {
+          "path": "registry/zen/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/tabs"],
+      "files": [
+        {
+          "path": "registry/zen/tabs-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "textarea-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/textarea"],
+      "files": [
+        {
+          "path": "registry/zen/textarea-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/button"],
+      "files": [
+        {
+          "path": "registry/zen/toast.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toast-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button", "@kosori/toast"],
+      "files": [
+        {
+          "path": "registry/zen/toast-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/toggle"],
+      "files": [
+        {
+          "path": "registry/zen/toggle-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
+      "registryDependencies": ["@kosori/separator", "@kosori/toggle"],
+      "files": [
+        {
+          "path": "registry/zen/toggle-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/toggle-group"],
+      "files": [
+        {
+          "path": "registry/zen/toggle-group-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/button", "@kosori/tooltip"],
+      "files": [
+        {
+          "path": "registry/zen/tooltip-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "use-media-query",
+      "type": "registry:hook",
+      "files": [
+        {
+          "path": "registry/zen/use-media-query.ts",
+          "type": "registry:hook"
         }
       ]
     }

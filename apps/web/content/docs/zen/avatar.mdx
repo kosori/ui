@@ -1,0 +1,32 @@
+---
+title: Avatar
+description: An image element with a fallback for representing the user.
+---
+
+Avatar wraps the [Base UI
+Avatar](https://base-ui.com/react/components/avatar) primitive, derives its box,
+type and group geometry from `--avatar-size`, and marks each part with
+`data-slot`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/avatar
+```
+
+## Example
+
+<ComponentPreview name='avatar' />
+
+## Usage
+
+```tsx
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
+const AvatarDemo = () => (
+  <Avatar>
+    <AvatarImage alt='Kosori' src='https://github.com/kosori.png' />
+    <AvatarFallback>KO</AvatarFallback>
+  </Avatar>
+);
+```

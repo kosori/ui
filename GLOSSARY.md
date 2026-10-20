@@ -25,15 +25,19 @@ A short handle (`@kosori`) that a consumer maps to a registry URL template, lett
 _Avoid_: Scope, alias, channel
 
 **Style**:
-A complete presentation of the library: the component source plus the default token values that source assumes. A consumer settles on one Style per project.
+A presentation of the library: the component source plus the default token values that source assumes. A consumer settles on one Style per project.
 _Avoid_: Preset, variant, skin, theme, flavor
+
+**Incomplete Style**:
+A Style that declares in its definition that it serves only part of the catalog. It may omit items another Style serves, but any item it does serve keeps the same Registry type as everywhere else.
+_Avoid_: Partial style, beta style, unfinished style
 
 **Base**:
 The primitive library kosori's components wrap. kosori has exactly one, Base UI; a project has no way to pick a different one.
 _Avoid_: Headless library, primitives, foundation
 
 **Base color**:
-The named palette (`neutral`, `zinc`, …) that supplies the value of every colour token. It is independent of Style, and a Style only proposes a default.
+The named palette (`neutral`, `zinc`, …) that supplies the palette-specific colour Token values. State Tokens (`success`, `warning`, `info` and their foregrounds) are identical in every Base color. It is independent of Style, and a Style only proposes a default.
 _Avoid_: Palette, accent, brand colour
 
 **Token**:
@@ -43,3 +47,15 @@ _Avoid_: CSS variable, custom property, design token
 **Example**:
 A demonstration of a Component in use, distributed as a registry item so that documentation and installation resolve it by the same name and the same path.
 _Avoid_: Demo, preview, story, sample, playground
+
+**Port**:
+A component taken from an upstream registry into a Style, copied verbatim except for the renames an install requires: imports, registry dependencies and item names. A Port diverges from its upstream through Tokens alone.
+_Avoid_: Fork, rewrite, adaptation
+
+**Pending**:
+A name a Style publishes as part of its catalog scope but does not yet serve. Pending names appear in documentation without a page and never appear in the registry catalog.
+_Avoid_: Missing, TODO, unimplemented
+
+**Internal item**:
+A Registry item a Style ships only to satisfy another item's dependency. It installs and byte-matches like any other item but is never documented, never Pending, and has no Example, page or menu entry.
+_Avoid_: Hidden component, private item

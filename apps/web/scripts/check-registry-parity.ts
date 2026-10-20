@@ -1,18 +1,9 @@
-import { readdir, readFile } from 'node:fs/promises';
+import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
+import { readCatalog } from '../lib/registry/catalog';
 import { STYLES } from '../registry/preset';
 
-type Item = {
-  name: string;
-  type: string;
-};
-
-type Catalog = {
-  items: Item[];
-};
-
 const webDir = join(import.meta.dirname, '..');
-const registryDir = join(webDir, 'registry');
 const docsDir = join(webDir, 'content/docs');
 
 /** Registry folders shared by every Style rather than owned by one. */
@@ -27,16 +18,7 @@ const directoryNames = async (dir: string) => {
   );
 };
 
-/** Read the items a published Style's catalog serves, keyed by name. */
-const readCatalog = async (style: string) => {
-  const catalog: Catalog = JSON.parse(
-    await readFile(join(registryDir, style, 'registry.json'), 'utf8')
-  );
-
-  return new Map(catalog.items.map((item) => [item.name, item.type]));
-};
-
-const registryStyles = await directoryNames(registryDir);
+const registryStyles = await directoryNames(join(webDir, 'registry'));
 for (const shared of SHARED_REGISTRY_DIRS) {
   registryStyles.delete(shared);
 }
@@ -64,30 +46,38 @@ if (missing.length > 0) {
 
 const catalogs = new Map(
   await Promise.all(
-    STYLES.map(
-      async (style) => [style.name, await readCatalog(style.name)] as const
-    )
+    STYLES.map(async (style) => {
+      const items = await readCatalog(style.name);
+
+      return [
+        style.name,
+        new Map(items.map((item) => [item.name, item.type])),
+      ] as const;
+    })
   )
 );
 
 const published = [...catalogs.keys()];
-const union = new Set(
-  [...catalogs.values()].flatMap((items) => [...items.keys()])
+const stylesByName = new Map(STYLES.map((style) => [style.name, style]));
+const complete = published.filter(
+  (style) => !stylesByName.get(style)?.incomplete
+);
+const coverage = new Set(
+  complete.flatMap((style) => [...(catalogs.get(style)?.keys() ?? [])])
+);
+const served = new Set(
+  published.flatMap((style) => [...(catalogs.get(style)?.keys() ?? [])])
 );
 
-const problems = published.flatMap((style) => {
+const problems = complete.flatMap((style) => {
   const items = catalogs.get(style);
 
-  return [...union].flatMap((name) => {
-    const type = items?.get(name);
-
-    if (type) {
+  return [...coverage].flatMap((name) => {
+    if (items?.has(name)) {
       return [];
     }
 
-    const servedBy = published.filter((other) =>
-      catalogs.get(other)?.has(name)
-    );
+    const servedBy = complete.filter((other) => catalogs.get(other)?.has(name));
 
     return [
       `${style} does not serve "${name}" (served by ${servedBy.join(', ')})`,
@@ -98,7 +88,7 @@ const problems = published.flatMap((style) => {
 const mismatched = published.flatMap((style) => {
   const items = catalogs.get(style);
 
-  return [...union].flatMap((name) => {
+  return [...served].flatMap((name) => {
     const type = items?.get(name);
     const expected = [...catalogs.values()]
       .find((other) => other.has(name))
@@ -116,6 +106,6 @@ const failures = [...problems, ...mismatched];
 
 if (failures.length > 0) {
   throw new Error(
-    `Registry parity failed. Every published Style must serve every item.\n${failures.join('\n')}`
+    `Registry parity failed. Every complete published Style must serve every item another complete Style serves, and every Style must agree on an item's type.\n${failures.join('\n')}`
   );
 }

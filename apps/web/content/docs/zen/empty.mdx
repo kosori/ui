@@ -1,0 +1,44 @@
+---
+title: Empty
+description: A container for displaying empty state information.
+---
+
+Empty composes a header, optional icon media, title and description with an
+action area. `EmptyMedia` stacks two scaled copies behind its icon variant, and
+every part marks itself with `data-slot`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/empty
+```
+
+## Example
+
+<ComponentPreview name='empty' />
+
+## Usage
+
+```tsx
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from '@/components/ui/empty';
+
+const EmptyDemo = () => (
+  <Empty>
+    <EmptyHeader>
+      <EmptyTitle>No upcoming meetings</EmptyTitle>
+      <EmptyDescription>Create a meeting to get started.</EmptyDescription>
+    </EmptyHeader>
+  </Empty>
+);
+```
+
+## Variants
+
+| Part | Prop | Values |
+| --- | --- | --- |
+| `EmptyMedia` | `variant` | `default`, `icon` |

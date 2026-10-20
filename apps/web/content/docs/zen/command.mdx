@@ -1,0 +1,49 @@
+---
+title: Command
+description: A keyboard-driven palette for searching and running actions.
+---
+
+Command composes Base UI's Autocomplete and Dialog primitives, so filtering,
+keyboard navigation and grouping share one model. Every part carries a
+`data-slot` for styling.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/command
+```
+
+## Example
+
+The Example below is a `registry:example` item, built and validated by the same
+pipeline as Command. Its source is the file `@kosori/command-example` installs,
+so the preview and the install cannot drift.
+
+<ComponentPreview name='command' />
+
+## Usage
+
+```tsx
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandGroupLabel,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
+
+const CommandDemo = () => (
+  <Command>
+    <CommandInput placeholder='Search commands' />
+    <CommandList>
+      <CommandEmpty>No results found.</CommandEmpty>
+      <CommandGroup>
+        <CommandGroupLabel>Suggestions</CommandGroupLabel>
+        <CommandItem>Calendar</CommandItem>
+      </CommandGroup>
+    </CommandList>
+  </Command>
+);
+```

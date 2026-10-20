@@ -1,0 +1,32 @@
+---
+title: Badge
+description: A badge or a component that looks like a badge.
+---
+
+Badge composes Base UI's `useRender` and `mergeProps` with `cva` variants, so it
+can render as a `span`, a link or a button, and marks itself with `data-slot`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/badge
+```
+
+## Example
+
+<ComponentPreview name='badge' />
+
+## Usage
+
+```tsx
+import { Badge } from '@/components/ui/badge';
+
+const BadgeDemo = () => <Badge>Badge</Badge>;
+```
+
+## Variants
+
+| Part | Prop | Values |
+| --- | --- | --- |
+| `Badge` | `size` | `default`, `lg`, `sm` |
+| `Badge` | `variant` | `default`, `destructive`, `error`, `info`, `outline`, `secondary`, `success`, `warning` |

@@ -1,12 +1,13 @@
 ---
 title: Field
-description: A field groups a label, a control and a message.
+description: A component that provides labelling and validation for form controls.
 ---
 
-Field composes [Label](/docs/zen/label) and
-[Separator](/docs/zen/separator), and each part marks itself with `data-slot`.
-The composition is shipped as two namespaced dependencies, so installing Field
-installs the parts it needs.
+Field wraps the [Base UI
+Field](https://base-ui.com/react/components/field) primitive and ships the
+Fieldset composition in the same item, so a form groups its labels, descriptions
+and validation messages without a second install. Each part marks itself with
+`data-slot`.
 
 ## Installation
 
@@ -17,3 +18,22 @@ npx shadcn@latest add @kosori/field
 ## Example
 
 <ComponentPreview name='field' />
+
+## Usage
+
+```tsx
+import {
+  Field,
+  FieldDescription,
+  FieldLabel,
+} from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+
+const FieldDemo = () => (
+  <Field>
+    <FieldLabel htmlFor='kosori-email'>Email</FieldLabel>
+    <Input id='kosori-email' placeholder='you@example.com' type='email' />
+    <FieldDescription>Shown on your public profile.</FieldDescription>
+  </Field>
+);
+```

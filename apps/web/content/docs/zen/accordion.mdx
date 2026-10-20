@@ -1,0 +1,40 @@
+---
+title: Accordion
+description: A set of collapsible panels with headings and content.
+---
+
+Accordion wraps the
+[Base UI Accordion](https://base-ui.com/react/components/accordion) primitive,
+animates its panel height, and rotates a Tabler chevron as each item expands. It
+is a client component: it manages open state and exposes `AccordionPanel` as
+`AccordionContent`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/accordion
+```
+
+## Example
+
+<ComponentPreview name='accordion' />
+
+## Usage
+
+```tsx
+import {
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+
+const AccordionDemo = () => (
+  <Accordion>
+    <AccordionItem>
+      <AccordionTrigger>What is kosori?</AccordionTrigger>
+      <AccordionPanel>Components you can copy and own.</AccordionPanel>
+    </AccordionItem>
+  </Accordion>
+);
+```

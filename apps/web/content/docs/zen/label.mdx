@@ -1,9 +1,10 @@
 ---
 title: Label
-description: A label names a form control.
+description: Renders an accessible label associated with controls.
 ---
 
-Label renders a `<label>` and marks it with `data-slot`.
+Label composes Base UI's `useRender` and `mergeProps`, renders a `<label>` by
+default and marks itself with `data-slot`.
 
 ## Installation
 
@@ -14,3 +15,17 @@ npx shadcn@latest add @kosori/label
 ## Example
 
 <ComponentPreview name='label' />
+
+## Usage
+
+```tsx
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+
+const LabelDemo = () => (
+  <div className='flex flex-col items-start gap-2'>
+    <Label htmlFor='kosori-email'>Email</Label>
+    <Input id='kosori-email' placeholder='you@example.com' type='email' />
+  </div>
+);
+```

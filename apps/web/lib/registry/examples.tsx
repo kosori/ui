@@ -8,12 +8,53 @@ import { InputExample as KazeInputExample } from '@/lib/registry/previews/kaze/i
 import { LabelExample as KazeLabelExample } from '@/lib/registry/previews/kaze/label-example';
 import { SeparatorExample as KazeSeparatorExample } from '@/lib/registry/previews/kaze/separator-example';
 import type { StyleName } from '@/registry/preset';
+import AccordionExample from '@/registry/zen/accordion-example';
+import AlertDialogExample from '@/registry/zen/alert-dialog-example';
+import AlertExample from '@/registry/zen/alert-example';
+import AvatarExample from '@/registry/zen/avatar-example';
+import BadgeExample from '@/registry/zen/badge-example';
+import BreadcrumbExample from '@/registry/zen/breadcrumb-example';
 import ButtonExample from '@/registry/zen/button-example';
+import ButtonGroupExample from '@/registry/zen/button-group-example';
+import CalendarExample from '@/registry/zen/calendar-example';
+import CardExample from '@/registry/zen/card-example';
+import CheckboxExample from '@/registry/zen/checkbox-example';
+import CollapsibleExample from '@/registry/zen/collapsible-example';
+import ComboboxExample from '@/registry/zen/combobox-example';
+import CommandExample from '@/registry/zen/command-example';
+import ContextMenuExample from '@/registry/zen/context-menu-example';
 import DialogExample from '@/registry/zen/dialog-example';
+import DrawerExample from '@/registry/zen/drawer-example';
+import DropdownMenuExample from '@/registry/zen/dropdown-menu-example';
+import EmptyExample from '@/registry/zen/empty-example';
 import FieldExample from '@/registry/zen/field-example';
+import FormExample from '@/registry/zen/form-example';
+import HoverCardExample from '@/registry/zen/hover-card-example';
 import InputExample from '@/registry/zen/input-example';
+import InputGroupExample from '@/registry/zen/input-group-example';
+import InputOtpExample from '@/registry/zen/input-otp-example';
+import KbdExample from '@/registry/zen/kbd-example';
 import LabelExample from '@/registry/zen/label-example';
+import PaginationExample from '@/registry/zen/pagination-example';
+import PopoverExample from '@/registry/zen/popover-example';
+import ProgressExample from '@/registry/zen/progress-example';
+import RadioGroupExample from '@/registry/zen/radio-group-example';
+import ScrollAreaExample from '@/registry/zen/scroll-area-example';
+import SelectExample from '@/registry/zen/select-example';
 import SeparatorExample from '@/registry/zen/separator-example';
+import SheetExample from '@/registry/zen/sheet-example';
+import SidebarExample from '@/registry/zen/sidebar-example';
+import SkeletonExample from '@/registry/zen/skeleton-example';
+import SliderExample from '@/registry/zen/slider-example';
+import SpinnerExample from '@/registry/zen/spinner-example';
+import SwitchExample from '@/registry/zen/switch-example';
+import TableExample from '@/registry/zen/table-example';
+import TabsExample from '@/registry/zen/tabs-example';
+import TextareaExample from '@/registry/zen/textarea-example';
+import ToastExample from '@/registry/zen/toast-example';
+import ToggleExample from '@/registry/zen/toggle-example';
+import ToggleGroupExample from '@/registry/zen/toggle-group-example';
+import TooltipExample from '@/registry/zen/tooltip-example';
 
 const REGISTRY_DIR = join(process.cwd(), 'registry');
 
@@ -22,12 +63,53 @@ const REGISTRY_DIR = join(process.cwd(), 'registry');
  * the catalog contract, so they are shared rather than restated per Style.
  */
 const exampleItems = {
+  accordion: 'accordion-example',
+  alert: 'alert-example',
+  'alert-dialog': 'alert-dialog-example',
+  avatar: 'avatar-example',
+  badge: 'badge-example',
+  breadcrumb: 'breadcrumb-example',
   button: 'button-example',
+  'button-group': 'button-group-example',
+  calendar: 'calendar-example',
+  card: 'card-example',
+  checkbox: 'checkbox-example',
+  collapsible: 'collapsible-example',
+  combobox: 'combobox-example',
+  command: 'command-example',
+  'context-menu': 'context-menu-example',
   dialog: 'dialog-example',
+  drawer: 'drawer-example',
+  'dropdown-menu': 'dropdown-menu-example',
+  empty: 'empty-example',
   field: 'field-example',
+  form: 'form-example',
+  'hover-card': 'hover-card-example',
   input: 'input-example',
+  'input-group': 'input-group-example',
+  'input-otp': 'input-otp-example',
+  kbd: 'kbd-example',
   label: 'label-example',
+  pagination: 'pagination-example',
+  popover: 'popover-example',
+  progress: 'progress-example',
+  'radio-group': 'radio-group-example',
+  'scroll-area': 'scroll-area-example',
+  select: 'select-example',
   separator: 'separator-example',
+  sheet: 'sheet-example',
+  sidebar: 'sidebar-example',
+  skeleton: 'skeleton-example',
+  slider: 'slider-example',
+  spinner: 'spinner-example',
+  switch: 'switch-example',
+  table: 'table-example',
+  tabs: 'tabs-example',
+  textarea: 'textarea-example',
+  toast: 'toast-example',
+  toggle: 'toggle-example',
+  'toggle-group': 'toggle-group-example',
+  tooltip: 'tooltip-example',
 } as const;
 
 /** The component names the documentation can render an Example for. */
@@ -48,14 +130,55 @@ const exampleComponents = {
     separator: KazeSeparatorExample,
   },
   zen: {
+    accordion: AccordionExample,
+    alert: AlertExample,
+    'alert-dialog': AlertDialogExample,
+    avatar: AvatarExample,
+    badge: BadgeExample,
+    breadcrumb: BreadcrumbExample,
     button: ButtonExample,
+    'button-group': ButtonGroupExample,
+    calendar: CalendarExample,
+    card: CardExample,
+    checkbox: CheckboxExample,
+    collapsible: CollapsibleExample,
+    combobox: ComboboxExample,
+    command: CommandExample,
+    'context-menu': ContextMenuExample,
     dialog: DialogExample,
+    drawer: DrawerExample,
+    'dropdown-menu': DropdownMenuExample,
+    empty: EmptyExample,
     field: FieldExample,
+    form: FormExample,
+    'hover-card': HoverCardExample,
     input: InputExample,
+    'input-group': InputGroupExample,
+    'input-otp': InputOtpExample,
+    kbd: KbdExample,
     label: LabelExample,
+    pagination: PaginationExample,
+    popover: PopoverExample,
+    progress: ProgressExample,
+    'radio-group': RadioGroupExample,
+    'scroll-area': ScrollAreaExample,
+    select: SelectExample,
     separator: SeparatorExample,
+    sheet: SheetExample,
+    sidebar: SidebarExample,
+    skeleton: SkeletonExample,
+    slider: SliderExample,
+    spinner: SpinnerExample,
+    switch: SwitchExample,
+    table: TableExample,
+    tabs: TabsExample,
+    textarea: TextareaExample,
+    toast: ToastExample,
+    toggle: ToggleExample,
+    'toggle-group': ToggleGroupExample,
+    tooltip: TooltipExample,
   },
-} satisfies Record<StyleName, Record<ExampleName, ComponentType>>;
+} satisfies Record<StyleName, Partial<Record<ExampleName, ComponentType>>>;
 
 /** The Registry item a Consumer installs for an Example. */
 export const exampleItemName = (name: ExampleName) => exampleItems[name];
@@ -75,7 +198,13 @@ type Props = {
 
 /** Render a Registry Example live for the Style a page documents. */
 export const ExamplePreview = ({ name, style }: Props) => {
-  const Example = exampleComponents[style][name];
+  const StyleExamples: Partial<Record<ExampleName, ComponentType>> =
+    exampleComponents[style];
+  const Example = StyleExamples[name];
+
+  if (!Example) {
+    throw new Error(`No ${name} Example is registered for ${style}`);
+  }
 
   return <Example />;
 };

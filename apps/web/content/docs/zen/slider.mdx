@@ -1,0 +1,25 @@
+---
+title: Slider
+description: An input where the user selects a value from within a given range.
+---
+
+Slider wraps Base UI's `Slider.Root` with default `min` and `max` values and
+edge-aligned thumbs; SliderValue displays the current value.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/slider
+```
+
+## Example
+
+<ComponentPreview name='slider' />
+
+## Usage
+
+```tsx
+import { Slider } from '@/components/ui/slider';
+
+const SliderDemo = () => <Slider defaultValue={50} />;
+```

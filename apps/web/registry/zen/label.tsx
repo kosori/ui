@@ -1,20 +1,26 @@
 'use client';
 
+import { mergeProps } from '@base-ui/react/merge-props';
+import { useRender } from '@base-ui/react/use-render';
 import { cn } from 'cn';
-import type * as React from 'react';
+import type React from 'react';
 
-function Label({ className, ...props }: React.ComponentProps<'label'>) {
-  return (
-    // biome-ignore lint/a11y/noLabelWithoutControl: a generic label; the caller associates its control via htmlFor
-    <label
-      className={cn(
-        'flex select-none items-center gap-2 font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50',
-        className
-      )}
-      data-slot='label'
-      {...props}
-    />
-  );
+export function Label({
+  className,
+  render,
+  ...props
+}: useRender.ComponentProps<'label'>): React.ReactElement {
+  const defaultProps = {
+    className: cn(
+      'inline-flex items-center gap-2 font-medium text-base/4.5 text-foreground sm:text-sm/4',
+      className
+    ),
+    'data-slot': 'label',
+  };
+
+  return useRender({
+    defaultTagName: 'label',
+    props: mergeProps<'label'>(defaultProps, props),
+    render,
+  });
 }
-
-export { Label };

@@ -1,0 +1,37 @@
+---
+title: Collapsible
+description: A collapsible panel controlled by a button trigger.
+---
+
+Collapsible wraps the
+[Base UI Collapsible](https://base-ui.com/react/components/collapsible)
+primitive, animates its panel height, and exposes `CollapsiblePanel` as
+`CollapsibleContent`. It is a client component: it manages open state and marks
+each part with `data-slot`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/collapsible
+```
+
+## Example
+
+<ComponentPreview name='collapsible' />
+
+## Usage
+
+```tsx
+import {
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
+
+const CollapsibleDemo = () => (
+  <Collapsible>
+    <CollapsibleTrigger>Show recovery keys</CollapsibleTrigger>
+    <CollapsiblePanel>4829-1735-6621</CollapsiblePanel>
+  </Collapsible>
+);
+```
