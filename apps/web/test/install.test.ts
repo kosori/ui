@@ -3,6 +3,7 @@ import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import {
   cp,
+  mkdir,
   mkdtemp,
   readdir,
   readFile,
@@ -291,6 +292,18 @@ test('installing a preset and every item of every Style leaves Consumer projects
           join(scratch, 'node_modules')
         );
 
+        const items = await readCatalog(style.name);
+
+        // A Consumer pastes shadcn/ui documentation verbatim. The fixture
+        // compiles the pasted snippet against whatever the Style installs.
+        if (items.some((item) => item.name === 'input-otp')) {
+          await mkdir(join(scratch, 'app/input-otp'), { recursive: true });
+          await cp(
+            join(webDir, 'test/fixtures/snippets/input-otp.tsx'),
+            join(scratch, 'app/input-otp/page.tsx')
+          );
+        }
+
         // ADR-0003: an install writes only the component directory, the CSS
         // entry and the dependency manifests. Record the tree before it runs.
         const before = await readTree(scratch);
@@ -325,7 +338,6 @@ test('installing a preset and every item of every Style leaves Consumer projects
           `${JSON.stringify(config, null, 2)}\n`
         );
 
-        const items = await readCatalog(style.name);
         const components = items.filter((item) => item.type === 'registry:ui');
         const documented = components.filter(
           (component) => !isInternalItem(component.name)
