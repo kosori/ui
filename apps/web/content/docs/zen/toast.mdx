@@ -4,10 +4,11 @@ description: A temporary notification that appears on screen to inform users.
 ---
 
 Toast wraps the [Base UI Toast](https://base-ui.com/react/components/toast)
-primitive with a stacked viewport and an anchored variant. Mount
-`ToastProvider` and `AnchoredToastProvider` once in your app, then call
-`toastManager.add` or `anchoredToastManager.add`. `success`, `warning` and
-`info` read their colour from the preset's semantic Tokens.
+primitive with a stacked viewport and an anchored variant. Mount `Toaster` once
+in your app, then call `toast.add` from anywhere. `ToastProvider`,
+`toastManager`, `AnchoredToastProvider` and `anchoredToastManager` stay available
+for the anchored surface. `success`, `warning` and `info` read their colour from
+the preset's semantic Tokens.
 
 ## Installation
 
@@ -21,26 +22,33 @@ npx shadcn@latest add @kosori/toast
 
 ## Usage
 
+Mount `Toaster` once, in your layout:
+
+```tsx
+import { Toaster } from '@/components/ui/toast';
+
+const Layout = ({ children }: { children: React.ReactNode }) => (
+  <Toaster>{children}</Toaster>
+);
+```
+
+Then call `toast.add` from a client component:
+
 ```tsx
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { ToastProvider, toastManager } from '@/components/ui/toast';
+import { toast } from '@/components/ui/toast';
 
 const Notify = () => (
   <Button
-    onClick={() =>
-      toastManager.add({ title: 'Saved', type: 'success' })
-    }
+    onClick={() => toast.add({ title: 'Saved', type: 'success' })}
     variant='outline'
   >
     Show toast
   </Button>
 );
-
-const ToastDemo = () => (
-  <ToastProvider>
-    <Notify />
-  </ToastProvider>
-);
 ```
+
+Compose `Toast`, `ToastContent`, `ToastTitle`, `ToastDescription`,
+`ToastAction` and `ToastClose` when a notification needs a custom layout.
