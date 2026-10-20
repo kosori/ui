@@ -1,10 +1,10 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { toastManager } from '@/components/ui/toast';
+import { toast } from '@/components/ui/toast';
 
 const addSuccessToast = () => {
-  toastManager.add({
+  toast.add({
     description: 'Your changes have been saved.',
     title: 'Success!',
     type: 'success',
@@ -12,7 +12,7 @@ const addSuccessToast = () => {
 };
 
 const addErrorToast = () => {
-  toastManager.add({
+  toast.add({
     description: 'There was a problem with your request.',
     title: 'Uh oh! Something went wrong.',
     type: 'error',
@@ -20,7 +20,7 @@ const addErrorToast = () => {
 };
 
 const addInfoToast = () => {
-  toastManager.add({
+  toast.add({
     description: 'You can add components to your app using the cli.',
     title: 'Heads up!',
     type: 'info',
@@ -28,7 +28,7 @@ const addInfoToast = () => {
 };
 
 const addWarningToast = () => {
-  toastManager.add({
+  toast.add({
     description: 'Your session is about to expire.',
     title: 'Warning!',
     type: 'warning',
