@@ -40,6 +40,7 @@
       "name": "alert-dialog",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
+      "registryDependencies": ["@kosori/button"],
       "files": [
         {
           "path": "registry/zen/ui/alert-dialog.tsx",
@@ -66,6 +67,28 @@
       "files": [
         {
           "path": "registry/zen/examples/alert-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "registry:ui",
+      "dependencies": ["cn"],
+      "files": [
+        {
+          "path": "registry/zen/ui/aspect-ratio.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "aspect-ratio-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/aspect-ratio"],
+      "files": [
+        {
+          "path": "registry/zen/examples/aspect-ratio-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -391,6 +414,28 @@
       "files": [
         {
           "path": "registry/zen/examples/dialog-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "direction",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "registry/zen/ui/direction.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "direction-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/direction"],
+      "files": [
+        {
+          "path": "registry/zen/examples/direction-example.tsx",
           "type": "registry:example"
         }
       ]

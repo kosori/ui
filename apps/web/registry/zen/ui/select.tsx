@@ -104,6 +104,48 @@ export function SelectValue({
   );
 }
 
+/** Render the scroll affordance at the top of a Select list. */
+export function SelectScrollUpButton({
+  className,
+  ...props
+}: React.ComponentProps<
+  typeof SelectPrimitive.ScrollUpArrow
+>): React.ReactElement {
+  return (
+    <SelectPrimitive.ScrollUpArrow
+      className={cn(
+        'top-0 z-50 flex h-6 w-full cursor-default items-center justify-center before:pointer-events-none before:absolute before:inset-x-px before:top-px before:h-[200%] before:rounded-t-[calc(var(--radius-lg)-1px)] before:bg-linear-to-b before:from-50% before:from-popover',
+        className
+      )}
+      data-slot='select-scroll-up-arrow'
+      {...props}
+    >
+      <IconChevronUp className='relative size-4.5 sm:size-4' />
+    </SelectPrimitive.ScrollUpArrow>
+  );
+}
+
+/** Render the scroll affordance at the bottom of a Select list. */
+export function SelectScrollDownButton({
+  className,
+  ...props
+}: React.ComponentProps<
+  typeof SelectPrimitive.ScrollDownArrow
+>): React.ReactElement {
+  return (
+    <SelectPrimitive.ScrollDownArrow
+      className={cn(
+        'bottom-0 z-50 flex h-6 w-full cursor-default items-center justify-center before:pointer-events-none before:absolute before:inset-x-px before:bottom-px before:h-[200%] before:rounded-b-[calc(var(--radius-lg)-1px)] before:bg-linear-to-t before:from-50% before:from-popover',
+        className
+      )}
+      data-slot='select-scroll-down-arrow'
+      {...props}
+    >
+      <IconChevronDown className='relative size-4.5 sm:size-4' />
+    </SelectPrimitive.ScrollDownArrow>
+  );
+}
+
 export function SelectPopup({
   className,
   children,
@@ -141,12 +183,7 @@ export function SelectPopup({
           data-slot='select-popup'
           {...props}
         >
-          <SelectPrimitive.ScrollUpArrow
-            className='top-0 z-50 flex h-6 w-full cursor-default items-center justify-center before:pointer-events-none before:absolute before:inset-x-px before:top-px before:h-[200%] before:rounded-t-[calc(var(--radius-lg)-1px)] before:bg-linear-to-b before:from-50% before:from-popover'
-            data-slot='select-scroll-up-arrow'
-          >
-            <IconChevronUp className='relative size-4.5 sm:size-4' />
-          </SelectPrimitive.ScrollUpArrow>
+          <SelectScrollUpButton />
           <div className='relative h-full min-w-(--anchor-width) rounded-lg border bg-popover not-dark:bg-clip-padding shadow-lg/5 before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]'>
             <SelectPrimitive.List
               className={cn(
@@ -158,12 +195,7 @@ export function SelectPopup({
               {children}
             </SelectPrimitive.List>
           </div>
-          <SelectPrimitive.ScrollDownArrow
-            className='bottom-0 z-50 flex h-6 w-full cursor-default items-center justify-center before:pointer-events-none before:absolute before:inset-x-px before:bottom-px before:h-[200%] before:rounded-b-[calc(var(--radius-lg)-1px)] before:bg-linear-to-t before:from-50% before:from-popover'
-            data-slot='select-scroll-down-arrow'
-          >
-            <IconChevronDown className='relative size-4.5 sm:size-4' />
-          </SelectPrimitive.ScrollDownArrow>
+          <SelectScrollDownButton />
         </SelectPrimitive.Popup>
       </SelectPrimitive.Positioner>
     </SelectPrimitive.Portal>

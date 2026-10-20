@@ -342,4 +342,9 @@ export function ContextMenuSubPopup({
 
 const Primitive = ContextMenuPrimitive;
 
-export { Primitive as ContextMenuPrimitive };
+export {
+  ContextMenuGroupLabel as ContextMenuLabel,
+  ContextMenuPopup as ContextMenuContent,
+  ContextMenuSubPopup as ContextMenuSubContent,
+  Primitive as ContextMenuPrimitive,
+};

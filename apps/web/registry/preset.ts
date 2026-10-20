@@ -1,4 +1,6 @@
 import type { RegistryBaseItem, RegistryItem } from 'shadcn/schema';
+import { COMPOSITIONS } from '../lib/registry/compositions';
+import { PENDING_COMPONENTS } from '../lib/registry/pending';
 import { BASE_COLORS, type BaseColor, DEFAULT_BASE_COLOR } from './base-colors';
 
 /** The Namespace a Consumer project maps to the Registry. */
@@ -36,11 +38,13 @@ type StyleTokens = {
  */
 export type Style<Name extends string = string> = {
   css: NonNullable<RegistryBaseItem['css']>;
+  compositions?: readonly string[];
   config: StyleConfig;
   dependencies: string[];
   devDependencies: string[];
   incomplete?: true;
   name: Name;
+  pending?: readonly string[];
   tokens?: StyleTokens;
 };
 
@@ -81,11 +85,13 @@ const defineStyle = <const Name extends string>(style: Style<Name>) => style;
 
 /** Tight and neutral: the `base-nova` port a Consumer project starts from. */
 export const zen = defineStyle({
+  compositions: COMPOSITIONS,
   config: STYLE_CONFIG,
   css: STYLE_CSS,
   dependencies: STYLE_DEPENDENCIES,
   devDependencies: STYLE_DEV_DEPENDENCIES,
   name: 'zen',
+  pending: PENDING_COMPONENTS,
 });
 
 /** Airier than `zen`: a larger radius, taller controls and softer focus. */

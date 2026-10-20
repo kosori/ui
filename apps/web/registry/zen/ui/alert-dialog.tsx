@@ -3,6 +3,7 @@
 import { AlertDialog as AlertDialogPrimitive } from '@base-ui/react/alert-dialog';
 import { cn } from 'cn';
 import type React from 'react';
+import { Button } from '@/components/ui/button';
 
 export const AlertDialogCreateHandle: typeof AlertDialogPrimitive.createHandle =
   AlertDialogPrimitive.createHandle;
@@ -123,6 +124,22 @@ export function AlertDialogFooter({
   );
 }
 
+export function AlertDialogMedia({
+  className,
+  ...props
+}: React.ComponentProps<'div'>): React.ReactElement {
+  return (
+    <div
+      className={cn(
+        "mb-2 inline-flex size-10 items-center justify-center rounded-lg bg-muted text-muted-foreground [&_svg:not([class*='size-'])]:size-6",
+        className
+      )}
+      data-slot='alert-dialog-media'
+      {...props}
+    />
+  );
+}
+
 export function AlertDialogTitle({
   className,
   ...props
@@ -154,6 +171,44 @@ export function AlertDialogClose(
 ): React.ReactElement {
   return (
     <AlertDialogPrimitive.Close data-slot='alert-dialog-close' {...props} />
+  );
+}
+
+export function AlertDialogAction({
+  loading,
+  size,
+  variant,
+  ...props
+}: AlertDialogPrimitive.Close.Props &
+  Pick<
+    React.ComponentProps<typeof Button>,
+    'loading' | 'size' | 'variant'
+  >): React.ReactElement {
+  return (
+    <AlertDialogPrimitive.Close
+      data-slot='alert-dialog-action'
+      render={<Button loading={loading} size={size} variant={variant} />}
+      {...props}
+    />
+  );
+}
+
+export function AlertDialogCancel({
+  loading,
+  size,
+  variant = 'outline',
+  ...props
+}: AlertDialogPrimitive.Close.Props &
+  Pick<
+    React.ComponentProps<typeof Button>,
+    'loading' | 'size' | 'variant'
+  >): React.ReactElement {
+  return (
+    <AlertDialogPrimitive.Close
+      data-slot='alert-dialog-cancel'
+      render={<Button loading={loading} size={size} variant={variant} />}
+      {...props}
+    />
   );
 }
 

@@ -16,6 +16,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+/** Return a ref that anchors a combobox popup to an element of the caller's choosing. */
+export function useComboboxAnchor(): RefObject<HTMLDivElement | null> {
+  return useRef<HTMLDivElement | null>(null);
+}
+
 export const ComboboxContext: Context<{
   chipsRef: RefObject<Element | null> | null;
   multiple: boolean;
@@ -122,7 +127,6 @@ export function ComboboxInput({
       {/* biome-ignore lint/suspicious/noLeakedRender: showTrigger is a boolean */}
       {showTrigger && (
         <ComboboxTrigger
-          aria-label='Show options'
           className={cn(
             "absolute top-1/2 inline-flex size-8 shrink-0 -translate-y-1/2 cursor-pointer items-center justify-center rounded-md border border-transparent opacity-80 outline-none transition-opacity pointer-coarse:after:absolute pointer-coarse:after:min-h-11 pointer-coarse:after:min-w-11 hover:opacity-100 has-[+[data-slot=combobox-clear]]:hidden sm:size-7 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
             sizeValue === 'sm' ? 'end-0' : 'end-0.5'
@@ -137,7 +141,6 @@ export function ComboboxInput({
       {/* biome-ignore lint/suspicious/noLeakedRender: showClear is a boolean */}
       {showClear && (
         <ComboboxClear
-          aria-label='Clear selection'
           className={cn(
             "absolute top-1/2 inline-flex size-8 shrink-0 -translate-y-1/2 cursor-pointer items-center justify-center rounded-md border border-transparent opacity-80 outline-none transition-opacity pointer-coarse:after:absolute pointer-coarse:after:min-h-11 pointer-coarse:after:min-w-11 hover:opacity-100 has-[+[data-slot=combobox-clear]]:hidden sm:size-7 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
             sizeValue === 'sm' ? 'end-0' : 'end-0.5'
@@ -436,7 +439,6 @@ export function ComboboxChipRemove(
 ): ReactElement {
   return (
     <ComboboxPrimitive.ChipRemove
-      aria-label='Remove'
       className="h-full shrink-0 cursor-pointer px-1.5 opacity-80 hover:opacity-100 [&_svg:not([class*='size-'])]:size-4 sm:[&_svg:not([class*='size-'])]:size-3.5"
       data-slot='combobox-chip-remove'
       {...props}
@@ -454,4 +456,8 @@ export const useComboboxFilter: typeof ComboboxPrimitive.useFilter =
 
 const Primitive = ComboboxPrimitive;
 
-export { Primitive as ComboboxPrimitive };
+export {
+  ComboboxGroupLabel as ComboboxLabel,
+  ComboboxPopup as ComboboxContent,
+  Primitive as ComboboxPrimitive,
+};

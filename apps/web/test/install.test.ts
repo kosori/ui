@@ -3,6 +3,7 @@ import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import {
   cp,
+  mkdir,
   mkdtemp,
   readdir,
   readFile,
@@ -15,6 +16,7 @@ import { extname, join, relative } from 'node:path';
 import type { RegistryItem } from 'shadcn/schema';
 import { GET } from '../app/init/[style]/[baseColor]/route';
 import { readCatalog } from '../lib/registry/catalog';
+import { COMPOSITIONS } from '../lib/registry/compositions';
 import { INTERNAL_ITEMS, isInternalItem } from '../lib/registry/internal';
 import { PENDING_COMPONENTS } from '../lib/registry/pending';
 import { BASE_COLORS } from '../registry/base-colors';
@@ -32,13 +34,7 @@ const productionNamespace =
  * Style's directory must belong to a `registry:ui` item, so a renamed or
  * deleted component cannot leave a page behind.
  */
-const NON_COMPONENT_PAGES = [
-  'components',
-  'date-picker',
-  'index',
-  'installation',
-  'theming',
-];
+const NON_COMPONENT_PAGES = ['components', 'index', 'installation', 'theming'];
 
 /**
  * The semantic state Tokens coss ships. State colour is independent of Base
@@ -62,6 +58,242 @@ const STATE_TOKENS = {
     'warning-foreground': 'var(--color-amber-700)',
   },
 } as const;
+
+/**
+ * A Consumer file that pastes the shadcn/ui snippets for the components whose
+ * export names differ from kosori's. Installing the catalog and typechecking it
+ * proves the pasted snippets compile without edits.
+ */
+const SHADCN_ALIAS_SNIPPET = `'use client';
+
+import * as React from 'react';
+
+import {
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarImage,
+} from '@/components/ui/avatar';
+import { ButtonGroup, buttonGroupVariants } from '@/components/ui/button-group';
+import { Calendar, CalendarDayButton } from '@/components/ui/calendar';
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChips,
+  ComboboxChipsInput,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxGroup,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxLabel,
+  ComboboxList,
+  ComboboxSeparator,
+  ComboboxValue,
+  useComboboxAnchor,
+} from '@/components/ui/combobox';
+import {
+  ContextMenu,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuGroup,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuTrigger,
+} from '@/components/ui/context-menu';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerPortal,
+  DrawerSwipeHandle,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
+import {
+  InputGroup,
+  InputGroupButton,
+  InputGroupInput,
+} from '@/components/ui/input-group';
+import {
+  Popover,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectScrollDownButton,
+  SelectScrollUpButton,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  tabsListVariants,
+} from '@/components/ui/tabs';
+
+export const ContextMenuSnippet = () => (
+  <ContextMenu>
+    <ContextMenuTrigger>Open</ContextMenuTrigger>
+    <ContextMenuContent>
+      <ContextMenuLabel inset>People</ContextMenuLabel>
+      <ContextMenuGroup>
+        <ContextMenuItem inset>Profile</ContextMenuItem>
+        <ContextMenuCheckboxItem checked>Notifications</ContextMenuCheckboxItem>
+        <ContextMenuRadioGroup value='top'>
+          <ContextMenuRadioItem value='top'>Top</ContextMenuRadioItem>
+        </ContextMenuRadioGroup>
+        <ContextMenuSub>
+          <ContextMenuSubTrigger inset>More</ContextMenuSubTrigger>
+          <ContextMenuSubContent>
+            <ContextMenuItem>Nested</ContextMenuItem>
+          </ContextMenuSubContent>
+        </ContextMenuSub>
+        <ContextMenuSeparator />
+        <ContextMenuShortcut>Cmd K</ContextMenuShortcut>
+      </ContextMenuGroup>
+    </ContextMenuContent>
+  </ContextMenu>
+);
+
+const frameworks = ['Next.js', 'Remix'];
+
+export const ComboboxSnippet = () => {
+  const anchor = useComboboxAnchor();
+
+  return (
+    <Combobox items={frameworks} multiple>
+      <ComboboxChips>
+        <ComboboxValue>
+          {frameworks.map((item) => (
+            <ComboboxChip key={item}>{item}</ComboboxChip>
+          ))}
+        </ComboboxValue>
+        <ComboboxChipsInput placeholder='Add framework' />
+      </ComboboxChips>
+      <ComboboxContent anchor={anchor}>
+        <ComboboxEmpty>No items found.</ComboboxEmpty>
+        <ComboboxList>
+          <ComboboxGroup>
+            <ComboboxLabel>Frameworks</ComboboxLabel>
+            {frameworks.map((item) => (
+              <ComboboxItem key={item} value={item}>
+                {item}
+              </ComboboxItem>
+            ))}
+          </ComboboxGroup>
+        </ComboboxList>
+        <ComboboxSeparator />
+      </ComboboxContent>
+    </Combobox>
+  );
+};
+
+export const AvatarSnippet = () => (
+  <Avatar>
+    <AvatarImage alt='Ada Lovelace' src='/ada.png' />
+    <AvatarFallback>AL</AvatarFallback>
+    <AvatarBadge />
+  </Avatar>
+);
+
+const DayButton = (props: React.ComponentProps<typeof CalendarDayButton>) => (
+  <CalendarDayButton {...props} />
+);
+
+export const CalendarSnippet = () => (
+  <Calendar components={{ DayButton }} />
+);
+
+export const DrawerSnippet = () => (
+  <Drawer>
+    <DrawerTrigger>Open</DrawerTrigger>
+    <DrawerPortal>
+      <DrawerOverlay />
+      <DrawerContent>
+        <DrawerSwipeHandle />
+        <DrawerHeader>
+          <DrawerTitle>Edit profile</DrawerTitle>
+          <DrawerDescription>Make changes here.</DrawerDescription>
+        </DrawerHeader>
+        <DrawerFooter>
+          <DrawerClose>Close</DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </DrawerPortal>
+  </Drawer>
+);
+
+export const InputGroupSnippet = () => (
+  <InputGroup>
+    <InputGroupInput placeholder='Search' />
+    <InputGroupButton size='icon-xs'>Go</InputGroupButton>
+  </InputGroup>
+);
+
+export const PopoverSnippet = () => (
+  <Popover>
+    <PopoverTrigger>Open</PopoverTrigger>
+    <PopoverContent>
+      <PopoverHeader>
+        <PopoverTitle>Dimensions</PopoverTitle>
+      </PopoverHeader>
+    </PopoverContent>
+  </Popover>
+);
+
+const selectItems = [{ label: 'Next.js', value: 'next' }];
+
+export const SelectSnippet = () => (
+  <Select defaultValue='next' items={selectItems}>
+    <SelectTrigger>
+      <SelectValue />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectScrollUpButton />
+      <SelectItem value='next'>Next.js</SelectItem>
+      <SelectScrollDownButton />
+    </SelectContent>
+  </Select>
+);
+
+export const ButtonGroupSnippet = () => (
+  <ButtonGroup className={buttonGroupVariants({ orientation: 'horizontal' })}>
+    <button type='button'>Left</button>
+    <button type='button'>Right</button>
+  </ButtonGroup>
+);
+
+export const TabsSnippet = () => (
+  <Tabs defaultValue='account'>
+    <TabsList
+      className={tabsListVariants({ variant: 'line' })}
+      variant='line'
+    >
+      <TabsTrigger value='account'>Account</TabsTrigger>
+    </TabsList>
+    <TabsContent value='account'>Make changes to your account here.</TabsContent>
+  </Tabs>
+);
+`;
 
 /** The directory shadcn installs a Registry item type into. */
 const installedDirs: Record<string, string> = {
@@ -291,6 +523,18 @@ test('installing a preset and every item of every Style leaves Consumer projects
           join(scratch, 'node_modules')
         );
 
+        const items = await readCatalog(style.name);
+
+        // A Consumer pastes shadcn/ui documentation verbatim. The fixture
+        // compiles the pasted snippet against whatever the Style installs.
+        if (items.some((item) => item.name === 'input-otp')) {
+          await mkdir(join(scratch, 'app/input-otp'), { recursive: true });
+          await cp(
+            join(webDir, 'test/fixtures/snippets/input-otp.tsx'),
+            join(scratch, 'app/input-otp/page.tsx')
+          );
+        }
+
         // ADR-0003: an install writes only the component directory, the CSS
         // entry and the dependency manifests. Record the tree before it runs.
         const before = await readTree(scratch);
@@ -325,7 +569,6 @@ test('installing a preset and every item of every Style leaves Consumer projects
           `${JSON.stringify(config, null, 2)}\n`
         );
 
-        const items = await readCatalog(style.name);
         const components = items.filter((item) => item.type === 'registry:ui');
         const documented = components.filter(
           (component) => !isInternalItem(component.name)
@@ -412,6 +655,7 @@ test('installing a preset and every item of every Style leaves Consumer projects
           .map((file) => file.replace(/\.mdx$/, ''));
         const knownPages = new Set([
           ...documented.map((component) => component.name),
+          ...COMPOSITIONS,
           ...NON_COMPONENT_PAGES,
         ]);
         expect(
@@ -428,6 +672,16 @@ test('installing a preset and every item of every Style leaves Consumer projects
           cliEnv
         );
         expect(add.exitCode, add.stdout + add.stderr).toBe(0);
+
+        // The snippets a Consumer arrives with must compile against the Port.
+        // kaze serves only a subset of the catalog, so its own snippet is out
+        // of scope until the Style is complete.
+        if (style.name === 'zen') {
+          await writeFile(
+            join(scratch, 'components/ui-shadcn-aliases.tsx'),
+            SHADCN_ALIAS_SNIPPET
+          );
+        }
 
         // Every catalog item installs. The file an install writes and the file
         // the docs read must be the same bytes for every item, so a transform
@@ -454,6 +708,20 @@ test('installing a preset and every item of every Style leaves Consumer projects
           outsideSurface,
           'install wrote outside the component directory, CSS entry and manifests'
         ).toEqual([]);
+
+        // A Consumer installs a Style's catalog, not the whole catalog: the
+        // polymorphic fixture only makes sense where every component it renders
+        // is served. It lives outside the install surface, so write it after the
+        // ADR-0003 comparison and let `tsc` cover it through the fixture include.
+        const polymorphicItems = ['card', 'dialog', 'table'];
+        if (
+          polymorphicItems.every((name) => catalogComponentNames.includes(name))
+        ) {
+          await cp(
+            join(import.meta.dirname, 'fixtures/consumer-render.tsx'),
+            join(scratch, 'app/render-fixture.tsx')
+          );
+        }
 
         const css = await readFile(join(scratch, 'app/globals.css'), 'utf8');
         expect(declarations(css, ':root')).toContain(
