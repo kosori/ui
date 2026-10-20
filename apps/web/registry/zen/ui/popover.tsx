@@ -89,6 +89,20 @@ export function PopoverClose({
   return <PopoverPrimitive.Close data-slot='popover-close' {...props} />;
 }
 
+/** Group a popover's title and description. */
+export function PopoverHeader({
+  className,
+  ...props
+}: React.ComponentProps<'div'>): React.ReactElement {
+  return (
+    <div
+      className={cn('flex flex-col gap-2', className)}
+      data-slot='popover-header'
+      {...props}
+    />
+  );
+}
+
 export function PopoverTitle({
   className,
   ...props

@@ -59,6 +59,242 @@ const STATE_TOKENS = {
   },
 } as const;
 
+/**
+ * A Consumer file that pastes the shadcn/ui snippets for the components whose
+ * export names differ from kosori's. Installing the catalog and typechecking it
+ * proves the pasted snippets compile without edits.
+ */
+const SHADCN_ALIAS_SNIPPET = `'use client';
+
+import * as React from 'react';
+
+import {
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarImage,
+} from '@/components/ui/avatar';
+import { ButtonGroup, buttonGroupVariants } from '@/components/ui/button-group';
+import { Calendar, CalendarDayButton } from '@/components/ui/calendar';
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChips,
+  ComboboxChipsInput,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxGroup,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxLabel,
+  ComboboxList,
+  ComboboxSeparator,
+  ComboboxValue,
+  useComboboxAnchor,
+} from '@/components/ui/combobox';
+import {
+  ContextMenu,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuGroup,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuTrigger,
+} from '@/components/ui/context-menu';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerPortal,
+  DrawerSwipeHandle,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
+import {
+  InputGroup,
+  InputGroupButton,
+  InputGroupInput,
+} from '@/components/ui/input-group';
+import {
+  Popover,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectScrollDownButton,
+  SelectScrollUpButton,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  tabsListVariants,
+} from '@/components/ui/tabs';
+
+export const ContextMenuSnippet = () => (
+  <ContextMenu>
+    <ContextMenuTrigger>Open</ContextMenuTrigger>
+    <ContextMenuContent>
+      <ContextMenuLabel inset>People</ContextMenuLabel>
+      <ContextMenuGroup>
+        <ContextMenuItem inset>Profile</ContextMenuItem>
+        <ContextMenuCheckboxItem checked>Notifications</ContextMenuCheckboxItem>
+        <ContextMenuRadioGroup value='top'>
+          <ContextMenuRadioItem value='top'>Top</ContextMenuRadioItem>
+        </ContextMenuRadioGroup>
+        <ContextMenuSub>
+          <ContextMenuSubTrigger inset>More</ContextMenuSubTrigger>
+          <ContextMenuSubContent>
+            <ContextMenuItem>Nested</ContextMenuItem>
+          </ContextMenuSubContent>
+        </ContextMenuSub>
+        <ContextMenuSeparator />
+        <ContextMenuShortcut>Cmd K</ContextMenuShortcut>
+      </ContextMenuGroup>
+    </ContextMenuContent>
+  </ContextMenu>
+);
+
+const frameworks = ['Next.js', 'Remix'];
+
+export const ComboboxSnippet = () => {
+  const anchor = useComboboxAnchor();
+
+  return (
+    <Combobox items={frameworks} multiple>
+      <ComboboxChips>
+        <ComboboxValue>
+          {frameworks.map((item) => (
+            <ComboboxChip key={item}>{item}</ComboboxChip>
+          ))}
+        </ComboboxValue>
+        <ComboboxChipsInput placeholder='Add framework' />
+      </ComboboxChips>
+      <ComboboxContent anchor={anchor}>
+        <ComboboxEmpty>No items found.</ComboboxEmpty>
+        <ComboboxList>
+          <ComboboxGroup>
+            <ComboboxLabel>Frameworks</ComboboxLabel>
+            {frameworks.map((item) => (
+              <ComboboxItem key={item} value={item}>
+                {item}
+              </ComboboxItem>
+            ))}
+          </ComboboxGroup>
+        </ComboboxList>
+        <ComboboxSeparator />
+      </ComboboxContent>
+    </Combobox>
+  );
+};
+
+export const AvatarSnippet = () => (
+  <Avatar>
+    <AvatarImage alt='Ada Lovelace' src='/ada.png' />
+    <AvatarFallback>AL</AvatarFallback>
+    <AvatarBadge />
+  </Avatar>
+);
+
+const DayButton = (props: React.ComponentProps<typeof CalendarDayButton>) => (
+  <CalendarDayButton {...props} />
+);
+
+export const CalendarSnippet = () => (
+  <Calendar components={{ DayButton }} />
+);
+
+export const DrawerSnippet = () => (
+  <Drawer>
+    <DrawerTrigger>Open</DrawerTrigger>
+    <DrawerPortal>
+      <DrawerOverlay />
+      <DrawerContent>
+        <DrawerSwipeHandle />
+        <DrawerHeader>
+          <DrawerTitle>Edit profile</DrawerTitle>
+          <DrawerDescription>Make changes here.</DrawerDescription>
+        </DrawerHeader>
+        <DrawerFooter>
+          <DrawerClose>Close</DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </DrawerPortal>
+  </Drawer>
+);
+
+export const InputGroupSnippet = () => (
+  <InputGroup>
+    <InputGroupInput placeholder='Search' />
+    <InputGroupButton size='icon-xs'>Go</InputGroupButton>
+  </InputGroup>
+);
+
+export const PopoverSnippet = () => (
+  <Popover>
+    <PopoverTrigger>Open</PopoverTrigger>
+    <PopoverContent>
+      <PopoverHeader>
+        <PopoverTitle>Dimensions</PopoverTitle>
+      </PopoverHeader>
+    </PopoverContent>
+  </Popover>
+);
+
+const selectItems = [{ label: 'Next.js', value: 'next' }];
+
+export const SelectSnippet = () => (
+  <Select defaultValue='next' items={selectItems}>
+    <SelectTrigger>
+      <SelectValue />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectScrollUpButton />
+      <SelectItem value='next'>Next.js</SelectItem>
+      <SelectScrollDownButton />
+    </SelectContent>
+  </Select>
+);
+
+export const ButtonGroupSnippet = () => (
+  <ButtonGroup className={buttonGroupVariants({ orientation: 'horizontal' })}>
+    <button type='button'>Left</button>
+    <button type='button'>Right</button>
+  </ButtonGroup>
+);
+
+export const TabsSnippet = () => (
+  <Tabs defaultValue='account'>
+    <TabsList
+      className={tabsListVariants({ variant: 'line' })}
+      variant='line'
+    >
+      <TabsTrigger value='account'>Account</TabsTrigger>
+    </TabsList>
+    <TabsContent value='account'>Make changes to your account here.</TabsContent>
+  </Tabs>
+);
+`;
+
 /** The directory shadcn installs a Registry item type into. */
 const installedDirs: Record<string, string> = {
   'registry:example': 'components',
@@ -436,6 +672,16 @@ test('installing a preset and every item of every Style leaves Consumer projects
           cliEnv
         );
         expect(add.exitCode, add.stdout + add.stderr).toBe(0);
+
+        // The snippets a Consumer arrives with must compile against the Port.
+        // kaze serves only a subset of the catalog, so its own snippet is out
+        // of scope until the Style is complete.
+        if (style.name === 'zen') {
+          await writeFile(
+            join(scratch, 'components/ui-shadcn-aliases.tsx'),
+            SHADCN_ALIAS_SNIPPET
+          );
+        }
 
         // Every catalog item installs. The file an install writes and the file
         // the docs read must be the same bytes for every item, so a transform

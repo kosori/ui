@@ -642,4 +642,8 @@ export function DrawerMenuRadioItem({
 
 const Primitive = DrawerPrimitive;
 
-export { Primitive as DrawerPrimitive };
+export {
+  DrawerBackdrop as DrawerOverlay,
+  DrawerBar as DrawerSwipeHandle,
+  Primitive as DrawerPrimitive,
+};
