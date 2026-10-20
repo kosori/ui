@@ -8,8 +8,9 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@/components/ui/*": ["./registry/zen/*"],
-      "@/hooks/*": ["./registry/zen/*"]
+      "@/components/ui/*": ["./registry/zen/ui/*"],
+      "@/hooks/*": ["./registry/zen/hooks/*"],
+      "@/lib/segmented-control": ["./registry/zen/lib/segmented-control"]
     },
     "strictNullChecks": true
   },

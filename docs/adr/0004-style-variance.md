@@ -35,8 +35,8 @@ Two preview-only limitations are part of that cost:
 
 - A non-default Style's preview of a component that pulls another item renders
   the default Style's dependency. `kaze`'s Dialog source imports
-  `@/components/ui/button`, and the docs app binds that alias to `registry/zen/*`,
-  so the `kaze` Dialog preview shows `zen`'s Button. Installation is correct:
+  `@/components/ui/button`, and the docs app binds that alias to
+  `registry/zen/ui/*`, so the `kaze` Dialog preview shows `zen`'s Button. Installation is correct:
   `registryDependencies` resolves the same item to the Consumer's own Style.
   Only the preview is wrong.
 - A portal escapes the preview's inline radius Token block. The `kaze` Dialog

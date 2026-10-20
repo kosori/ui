@@ -39,10 +39,10 @@ Components arrive as editable source at a Consumer project's own aliases:
 bunx --bun shadcn@latest add @kosori/button
 ```
 
-Inside this app the consumer's `@/components/ui/*` alias resolves to `registry/zen/*`
-(see `tsconfig.json`), so zen documentation renders the same file an install
-writes. Previews for another Style bind the same Example markup to that Style's
-components under `lib/registry/previews`.
+Inside this app the consumer's `@/components/ui/*` alias resolves to
+`registry/zen/ui/*` (see `tsconfig.json`), so zen documentation renders the same
+file an install writes. Previews for another Style bind the same Example markup
+to that Style's components under `lib/registry/previews`.
 
 Icons come from [`@tabler/icons-react`](https://tabler.io/icons) (`iconLibrary: "tabler"` in `components.json`).
 

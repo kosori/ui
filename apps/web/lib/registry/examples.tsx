@@ -8,55 +8,64 @@ import { InputExample as KazeInputExample } from '@/lib/registry/previews/kaze/i
 import { LabelExample as KazeLabelExample } from '@/lib/registry/previews/kaze/label-example';
 import { SeparatorExample as KazeSeparatorExample } from '@/lib/registry/previews/kaze/separator-example';
 import type { StyleName } from '@/registry/preset';
-import AccordionExample from '@/registry/zen/accordion-example';
-import AlertDialogExample from '@/registry/zen/alert-dialog-example';
-import AlertExample from '@/registry/zen/alert-example';
-import AvatarExample from '@/registry/zen/avatar-example';
-import BadgeExample from '@/registry/zen/badge-example';
-import BreadcrumbExample from '@/registry/zen/breadcrumb-example';
-import ButtonExample from '@/registry/zen/button-example';
-import ButtonGroupExample from '@/registry/zen/button-group-example';
-import CalendarExample from '@/registry/zen/calendar-example';
-import CardExample from '@/registry/zen/card-example';
-import CheckboxExample from '@/registry/zen/checkbox-example';
-import CollapsibleExample from '@/registry/zen/collapsible-example';
-import ComboboxExample from '@/registry/zen/combobox-example';
-import CommandExample from '@/registry/zen/command-example';
-import ContextMenuExample from '@/registry/zen/context-menu-example';
-import DialogExample from '@/registry/zen/dialog-example';
-import DrawerExample from '@/registry/zen/drawer-example';
-import DropdownMenuExample from '@/registry/zen/dropdown-menu-example';
-import EmptyExample from '@/registry/zen/empty-example';
-import FieldExample from '@/registry/zen/field-example';
-import FormExample from '@/registry/zen/form-example';
-import HoverCardExample from '@/registry/zen/hover-card-example';
-import InputExample from '@/registry/zen/input-example';
-import InputGroupExample from '@/registry/zen/input-group-example';
-import InputOtpExample from '@/registry/zen/input-otp-example';
-import KbdExample from '@/registry/zen/kbd-example';
-import LabelExample from '@/registry/zen/label-example';
-import PaginationExample from '@/registry/zen/pagination-example';
-import PopoverExample from '@/registry/zen/popover-example';
-import ProgressExample from '@/registry/zen/progress-example';
-import RadioGroupExample from '@/registry/zen/radio-group-example';
-import ScrollAreaExample from '@/registry/zen/scroll-area-example';
-import SelectExample from '@/registry/zen/select-example';
-import SeparatorExample from '@/registry/zen/separator-example';
-import SheetExample from '@/registry/zen/sheet-example';
-import SidebarExample from '@/registry/zen/sidebar-example';
-import SkeletonExample from '@/registry/zen/skeleton-example';
-import SliderExample from '@/registry/zen/slider-example';
-import SpinnerExample from '@/registry/zen/spinner-example';
-import SwitchExample from '@/registry/zen/switch-example';
-import TableExample from '@/registry/zen/table-example';
-import TabsExample from '@/registry/zen/tabs-example';
-import TextareaExample from '@/registry/zen/textarea-example';
-import ToastExample from '@/registry/zen/toast-example';
-import ToggleExample from '@/registry/zen/toggle-example';
-import ToggleGroupExample from '@/registry/zen/toggle-group-example';
-import TooltipExample from '@/registry/zen/tooltip-example';
+import AccordionExample from '@/registry/zen/examples/accordion-example';
+import AlertDialogExample from '@/registry/zen/examples/alert-dialog-example';
+import AlertExample from '@/registry/zen/examples/alert-example';
+import AvatarExample from '@/registry/zen/examples/avatar-example';
+import BadgeExample from '@/registry/zen/examples/badge-example';
+import BreadcrumbExample from '@/registry/zen/examples/breadcrumb-example';
+import ButtonExample from '@/registry/zen/examples/button-example';
+import ButtonGroupExample from '@/registry/zen/examples/button-group-example';
+import CalendarExample from '@/registry/zen/examples/calendar-example';
+import CardExample from '@/registry/zen/examples/card-example';
+import CheckboxExample from '@/registry/zen/examples/checkbox-example';
+import CollapsibleExample from '@/registry/zen/examples/collapsible-example';
+import ComboboxExample from '@/registry/zen/examples/combobox-example';
+import CommandExample from '@/registry/zen/examples/command-example';
+import ContextMenuExample from '@/registry/zen/examples/context-menu-example';
+import DialogExample from '@/registry/zen/examples/dialog-example';
+import DrawerExample from '@/registry/zen/examples/drawer-example';
+import DropdownMenuExample from '@/registry/zen/examples/dropdown-menu-example';
+import EmptyExample from '@/registry/zen/examples/empty-example';
+import FieldExample from '@/registry/zen/examples/field-example';
+import FormExample from '@/registry/zen/examples/form-example';
+import HoverCardExample from '@/registry/zen/examples/hover-card-example';
+import InputExample from '@/registry/zen/examples/input-example';
+import InputGroupExample from '@/registry/zen/examples/input-group-example';
+import InputOtpExample from '@/registry/zen/examples/input-otp-example';
+import KbdExample from '@/registry/zen/examples/kbd-example';
+import LabelExample from '@/registry/zen/examples/label-example';
+import PaginationExample from '@/registry/zen/examples/pagination-example';
+import PopoverExample from '@/registry/zen/examples/popover-example';
+import ProgressExample from '@/registry/zen/examples/progress-example';
+import RadioGroupExample from '@/registry/zen/examples/radio-group-example';
+import ScrollAreaExample from '@/registry/zen/examples/scroll-area-example';
+import SelectExample from '@/registry/zen/examples/select-example';
+import SeparatorExample from '@/registry/zen/examples/separator-example';
+import SheetExample from '@/registry/zen/examples/sheet-example';
+import SidebarExample from '@/registry/zen/examples/sidebar-example';
+import SkeletonExample from '@/registry/zen/examples/skeleton-example';
+import SliderExample from '@/registry/zen/examples/slider-example';
+import SpinnerExample from '@/registry/zen/examples/spinner-example';
+import SwitchExample from '@/registry/zen/examples/switch-example';
+import TableExample from '@/registry/zen/examples/table-example';
+import TabsExample from '@/registry/zen/examples/tabs-example';
+import TextareaExample from '@/registry/zen/examples/textarea-example';
+import ToastExample from '@/registry/zen/examples/toast-example';
+import ToggleExample from '@/registry/zen/examples/toggle-example';
+import ToggleGroupExample from '@/registry/zen/examples/toggle-group-example';
+import TooltipExample from '@/registry/zen/examples/tooltip-example';
 
 const REGISTRY_DIR = join(process.cwd(), 'registry');
+
+/**
+ * The directory a Style keeps its Example sources in. `kaze` predates the
+ * registry split, so it keeps the flat layout it ships today.
+ */
+const EXAMPLE_DIRS: Record<StyleName, string> = {
+  kaze: '',
+  zen: 'examples',
+};
 
 /**
  * The Registry item every Style serves for a Component. Item names are part of
@@ -189,7 +198,10 @@ export const exampleFileName = (name: ExampleName) =>
 
 /** Read the source a Consumer project receives, verbatim from the Registry. */
 export const readExampleSource = (style: StyleName, name: ExampleName) =>
-  readFile(join(REGISTRY_DIR, style, exampleFileName(name)), 'utf8');
+  readFile(
+    join(REGISTRY_DIR, style, EXAMPLE_DIRS[style], exampleFileName(name)),
+    'utf8'
+  );
 
 type Props = {
   name: ExampleName;
