@@ -12,7 +12,9 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { extname, join, relative } from 'node:path';
+import postcss from 'postcss';
 import type { RegistryItem } from 'shadcn/schema';
+import tailwindcss from '@tailwindcss/postcss';
 import { GET } from '../app/init/[style]/[baseColor]/route';
 import { readCatalog } from '../lib/registry/catalog';
 import { INTERNAL_ITEMS, isInternalItem } from '../lib/registry/internal';
@@ -70,6 +72,35 @@ const STATE_TOKENS = {
     'warning-foreground': 'var(--color-amber-700)',
   },
 } as const;
+
+/** The utilities the state Tokens must compile for a state-coloured install. */
+const STATE_UTILITIES = [
+  'bg-success',
+  'bg-success/8',
+  'text-success-foreground',
+  'bg-warning/8',
+  'text-warning-foreground',
+  'bg-info/8',
+  'text-info-foreground',
+  'text-destructive-foreground',
+  'border-info/32',
+  'dark:bg-success/16',
+  'dark:bg-info/16',
+];
+
+/** The declarations the compiled state utilities must reach. */
+const COMPILED_STATE_DECLARATIONS = [
+  'background-color: var(--success);',
+  'color: var(--success-foreground);',
+  'color: var(--warning-foreground);',
+  'color: var(--info-foreground);',
+  'color: var(--destructive-foreground);',
+  'border-color: var(--info);',
+];
+
+/** The escaped class selector Tailwind emits for a utility. */
+const utilitySelector = (utility: string) =>
+  `.${utility.replace(/:/g, '\\:').replace(/\//g, '\\/')}`;
 
 /** The directory shadcn installs a Registry item type into. */
 const installedDirs: Record<string, string> = {
@@ -243,6 +274,24 @@ const radiusDeclarations = (css: string, scheme: 'dark' | 'light') => {
   return scheme === 'dark' && dark.includes('--radius:')
     ? dark
     : declarations(css, ':root');
+};
+
+/**
+ * Compile a Consumer project's installed stylesheet with Tailwind so a Token
+ * that is declared but unmapped, or a utility that does not compile, fails the
+ * suite instead of disappearing at runtime.
+ */
+const compileUtilities = async (cssPath: string, utilities: string[]) => {
+  const css = (await readFile(cssPath, 'utf8')).replace(
+    /@import\s+['"]tailwindcss['"];/,
+    "@import 'tailwindcss' source(none);"
+  );
+  const result = await postcss([tailwindcss()]).process(
+    `${css}\n@source inline("${utilities.join(' ')}");`,
+    { from: cssPath }
+  );
+
+  return result.css;
 };
 
 test('date-picker is documented as a composition with no registry item', async () => {
@@ -682,6 +731,80 @@ test('the documentation stylesheet is generated from the neutral preset', async 
   }
 });
 
+test('installing state-coloured items without the preset compiles their utilities', async () => {
+  const build = await buildRegistry('zen');
+  expect(build.exitCode, build.stdout + build.stderr).toBe(0);
+
+  const server = serveInterop();
+  const origin = `http://127.0.0.1:${server.port}`;
+  const cliEnv = { ...process.env, REGISTRY_URL: `${origin}/r` };
+  const scratch = await mkdtemp(join(tmpdir(), 'kosori-partial-'));
+
+  try {
+    await cp(fixtureDir, scratch, { recursive: true });
+    await symlink(join(webDir, 'node_modules'), join(scratch, 'node_modules'));
+
+    const config = JSON.parse(
+      await readFile(join(scratch, 'components.json'), 'utf8')
+    );
+    config.registries['@kosori'] = `${origin}/r/{style}/{name}.json`;
+    config.style = 'zen';
+    await writeFile(
+      join(scratch, 'components.json'),
+      `${JSON.stringify(config, null, 2)}\n`
+    );
+
+    const add = await run(
+      shadcn,
+      [
+        'add',
+        '@kosori/badge',
+        '@kosori/alert',
+        '@kosori/toast',
+        '@kosori/button',
+        '-y',
+        '-s',
+      ],
+      scratch,
+      cliEnv
+    );
+    expect(add.exitCode, add.stdout + add.stderr).toBe(0);
+
+    const cssPath = join(scratch, CSS_ENTRY);
+    const css = await readFile(cssPath, 'utf8');
+    const theme = declarations(css, '@theme inline');
+    for (const [token, value] of Object.entries(STATE_TOKENS.light)) {
+      expect(declarations(css, ':root'), `partial light ${token}`).toContain(
+        `--${token}: ${value}`
+      );
+      expect(theme, `partial @theme ${token}`).toContain(
+        `--color-${token}: var(--${token})`
+      );
+    }
+    for (const [token, value] of Object.entries(STATE_TOKENS.dark)) {
+      expect(declarations(css, '.dark'), `partial dark ${token}`).toContain(
+        `--${token}: ${value}`
+      );
+    }
+
+    const compiled = await compileUtilities(cssPath, STATE_UTILITIES);
+
+    for (const utility of STATE_UTILITIES) {
+      expect(compiled, `${utility} did not compile`).toContain(
+        utilitySelector(utility)
+      );
+    }
+    for (const declaration of COMPILED_STATE_DECLARATIONS) {
+      expect(compiled, `compiled CSS omits ${declaration}`).toContain(
+        declaration
+      );
+    }
+  } finally {
+    await rm(scratch, { force: true, recursive: true });
+    server.stop(true);
+  }
+}, 240_000);
+
 test('init writes the semantic state Tokens for every Base color in both schemes', async () => {
   const server = serveInterop();
   const origin = `http://127.0.0.1:${server.port}`;
@@ -747,6 +870,64 @@ test('init writes the semantic state Tokens for every Base color in both schemes
         } finally {
           await rm(scratch, { force: true, recursive: true });
         }
+      }
+    }
+  } finally {
+    server.stop(true);
+  }
+}, 600_000);
+
+test('state utilities compile for every Base color', async () => {
+  const server = serveInterop();
+  const origin = `http://127.0.0.1:${server.port}`;
+  const cliEnv = { ...process.env, REGISTRY_URL: `${origin}/r` };
+
+  try {
+    for (const baseColor of Object.keys(BASE_COLORS)) {
+      // biome-ignore lint/performance/noAwaitInLoops: each Base color owns a scratch project and a CLI run
+      const scratch = await mkdtemp(
+        join(tmpdir(), `kosori-compile-${baseColor}-`)
+      );
+
+      try {
+        await cp(fixtureDir, scratch, { recursive: true });
+        await symlink(
+          join(webDir, 'node_modules'),
+          join(scratch, 'node_modules')
+        );
+
+        const init = await run(
+          shadcn,
+          [
+            'init',
+            `${origin}/init/zen/${baseColor}`,
+            '-f',
+            '-s',
+            '--no-reinstall',
+          ],
+          scratch,
+          cliEnv
+        );
+        expect(init.exitCode, init.stdout + init.stderr).toBe(0);
+
+        const compiled = await compileUtilities(
+          join(scratch, CSS_ENTRY),
+          STATE_UTILITIES
+        );
+        for (const utility of STATE_UTILITIES) {
+          expect(
+            compiled,
+            `${baseColor} ${utility} did not compile`
+          ).toContain(utilitySelector(utility));
+        }
+        for (const declaration of COMPILED_STATE_DECLARATIONS) {
+          expect(
+            compiled,
+            `${baseColor} compiled CSS omits ${declaration}`
+          ).toContain(declaration);
+        }
+      } finally {
+        await rm(scratch, { force: true, recursive: true });
       }
     }
   } finally {
