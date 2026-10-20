@@ -16,6 +16,9 @@
 # registry build output
 /public/r
 
+# visual proof captures
+/.visual-proof/
+
 # production
 /build
 

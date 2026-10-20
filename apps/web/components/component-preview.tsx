@@ -34,7 +34,10 @@ const ComponentPreview = async ({ name, style = 'zen' }: Props) => {
   const source = await readExampleSource(style, name);
 
   return (
-    <div className='not-prose my-6 overflow-hidden rounded-xl border'>
+    <div
+      className='not-prose my-6 overflow-hidden rounded-xl border'
+      data-example={name}
+    >
       <div className='border-b bg-muted/50 px-4 py-2'>
         <span className='font-mono text-muted-foreground text-xs'>
           {exampleFileName(name)}
