@@ -17,6 +17,63 @@ const SANS_STACK =
 const MONO_STACK =
   'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
 
+const FONT_THEME = {
+  '--font-heading': 'var(--font-sans)',
+  '--font-mono': MONO_STACK,
+  '--font-sans': SANS_STACK,
+} as const;
+
+/**
+ * The state Tokens coss's classes reference. Their values are identical in
+ * every Base color because state colour does not depend on the palette.
+ */
+export const STATE_TOKEN_NAMES = [
+  'success',
+  'success-foreground',
+  'warning',
+  'warning-foreground',
+  'info',
+  'info-foreground',
+  'destructive-foreground',
+] as const;
+
+export type StateTokenName = (typeof STATE_TOKEN_NAMES)[number];
+
+/** Token keys in a Base color block that do not produce a colour utility. */
+const NON_COLOR_TOKEN_KEYS = new Set(['radius']);
+
+/**
+ * Derive the `@theme inline` colour mappings a scheme's Token declarations
+ * need. A mapping is what makes Tailwind compile a utility such as
+ * `bg-success`; the declaration alone only names the property.
+ */
+export const colorThemeTokens = (tokens: Record<string, string>) =>
+  Object.fromEntries(
+    Object.keys(tokens)
+      .filter((token) => !NON_COLOR_TOKEN_KEYS.has(token))
+      .map((token) => [`--color-${token}`, `var(--${token})`])
+  );
+
+/**
+ * The declarations and `@theme` mappings an item needs when its source
+ * references a state Token. A partial install carries its own state colour.
+ */
+export const stateTokenCssVars = (tokens: readonly StateTokenName[]) => {
+  const base = BASE_COLORS[DEFAULT_BASE_COLOR];
+
+  return {
+    dark: Object.fromEntries(
+      tokens.map((token) => [token, base.dark[token]])
+    ),
+    light: Object.fromEntries(
+      tokens.map((token) => [token, base.light[token]])
+    ),
+    theme: Object.fromEntries(
+      tokens.map((token) => [`--color-${token}`, `var(--${token})`])
+    ),
+  };
+};
+
 type StyleConfig = Omit<
   NonNullable<RegistryBaseItem['config']>,
   'style' | 'tailwind'
@@ -171,9 +228,8 @@ export const composeStyleItem = (
       dark: { ...tokens.dark, ...style.tokens?.dark },
       light: { ...tokens.light, ...style.tokens?.light },
       theme: {
-        '--font-heading': 'var(--font-sans)',
-        '--font-mono': MONO_STACK,
-        '--font-sans': SANS_STACK,
+        ...colorThemeTokens(tokens.light),
+        ...FONT_THEME,
       },
     },
     dependencies: style.dependencies,

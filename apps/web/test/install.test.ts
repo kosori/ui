@@ -18,7 +18,12 @@ import { readCatalog } from '../lib/registry/catalog';
 import { INTERNAL_ITEMS, isInternalItem } from '../lib/registry/internal';
 import { PENDING_COMPONENTS } from '../lib/registry/pending';
 import { BASE_COLORS } from '../registry/base-colors';
-import { STYLES, styleRadius } from '../registry/preset';
+import {
+  composeStyleItem,
+  STATE_TOKEN_NAMES,
+  STYLES,
+  styleRadius,
+} from '../registry/preset';
 
 const webDir = join(import.meta.dirname, '..');
 const fixtureDir = join(import.meta.dirname, 'fixtures/consumer');
@@ -46,6 +51,7 @@ const NON_COMPONENT_PAGES = [
  */
 const STATE_TOKENS = {
   dark: {
+    'destructive-foreground': 'var(--color-red-400)',
     info: 'var(--color-blue-500)',
     'info-foreground': 'var(--color-blue-400)',
     success: 'var(--color-emerald-500)',
@@ -54,6 +60,7 @@ const STATE_TOKENS = {
     'warning-foreground': 'var(--color-amber-400)',
   },
   light: {
+    'destructive-foreground': 'var(--color-red-700)',
     info: 'var(--color-blue-500)',
     'info-foreground': 'var(--color-blue-700)',
     success: 'var(--color-emerald-500)',
@@ -519,6 +526,34 @@ test('every Internal item is installable under its declared type', async () => {
   }
 });
 
+test('the composer derives an @theme colour mapping for every colour Token of every Base color', () => {
+  for (const style of STYLES) {
+    for (const [baseColor, tokens] of Object.entries(BASE_COLORS)) {
+      const item = composeStyleItem(style, baseColor);
+
+      for (const token of Object.keys(tokens.light)) {
+        if (token === 'radius') {
+          continue;
+        }
+
+        expect(
+          item.cssVars?.theme?.[`--color-${token}`],
+          `${style.name}/${baseColor} theme ${token}`
+        ).toBe(`var(--${token})`);
+      }
+
+      expect(
+        item.cssVars?.theme?.['--color-radius'],
+        `${style.name}/${baseColor} derives no colour mapping for radius`
+      ).toBeUndefined();
+      expect(
+        item.cssVars?.theme?.['--font-sans'],
+        `${style.name}/${baseColor} keeps fonts explicit`
+      ).toBeTruthy();
+    }
+  }
+});
+
 test('init writes the semantic state Tokens for every Base color in both schemes', async () => {
   const server = serveInterop();
   const origin = `http://127.0.0.1:${server.port}`;
@@ -566,6 +601,20 @@ test('init writes the semantic state Tokens for every Base color in both schemes
               declarations(css, '.dark'),
               `${style.name}/${baseColor} dark ${token}`
             ).toContain(`--${token}: ${value}`);
+          }
+
+          const theme = declarations(css, '@theme inline');
+          for (const token of Object.keys(
+            BASE_COLORS[baseColor as keyof typeof BASE_COLORS].light
+          )) {
+            if (token === 'radius') {
+              continue;
+            }
+
+            expect(
+              theme,
+              `${style.name}/${baseColor} @theme ${token}`
+            ).toContain(`--color-${token}: var(--${token})`);
           }
         } finally {
           await rm(scratch, { force: true, recursive: true });
