@@ -12,9 +12,9 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { extname, join, relative } from 'node:path';
+import tailwindcss from '@tailwindcss/postcss';
 import postcss from 'postcss';
 import type { RegistryItem } from 'shadcn/schema';
-import tailwindcss from '@tailwindcss/postcss';
 import { GET } from '../app/init/[style]/[baseColor]/route';
 import { readCatalog } from '../lib/registry/catalog';
 import { INTERNAL_ITEMS, isInternalItem } from '../lib/registry/internal';
@@ -654,7 +654,11 @@ const declaredStateTokens = (
     const name = dependency.replace(/^@kosori\//, '');
     const dependencyItem = itemsByName.get(name);
     if (dependencyItem) {
-      for (const token of declaredStateTokens(dependencyItem, itemsByName, seen)) {
+      for (const token of declaredStateTokens(
+        dependencyItem,
+        itemsByName,
+        seen
+      )) {
         declared.add(token);
       }
     }
@@ -667,18 +671,27 @@ test('a partial install declares every state Token its source references', async
   const items = await readCatalog('zen');
   const itemsByName = new Map(items.map((item) => [item.name, item]));
   const expected = BASE_COLORS.neutral;
+  const components = items.filter((entry) => entry.type === 'registry:ui');
 
-  for (const item of items.filter((entry) => entry.type === 'registry:ui')) {
-    const source = (
-      await Promise.all(
-        item.files.map((file) => readFile(join(webDir, file.path), 'utf8'))
-      )
-    ).join('\n');
-    const referenced = STATE_TOKEN_NAMES.filter((token) =>
-      referencesToken(source, token)
-    );
-    const declared = declaredStateTokens(item, itemsByName);
+  const referencedByItem = await Promise.all(
+    components.map(async (item) => {
+      const source = (
+        await Promise.all(
+          item.files.map((file) => readFile(join(webDir, file.path), 'utf8'))
+        )
+      ).join('\n');
 
+      return {
+        declared: declaredStateTokens(item, itemsByName),
+        item,
+        referenced: STATE_TOKEN_NAMES.filter((token) =>
+          referencesToken(source, token)
+        ),
+      };
+    })
+  );
+
+  for (const { declared, item, referenced } of referencedByItem) {
     for (const token of referenced) {
       expect(
         declared.has(token),
@@ -695,10 +708,9 @@ test('a partial install declares every state Token its source references', async
         item.cssVars?.light?.[token],
         `${item.name} light --${token}`
       ).toBe(expected.light[token]);
-      expect(
-        item.cssVars?.dark?.[token],
-        `${item.name} dark --${token}`
-      ).toBe(expected.dark[token]);
+      expect(item.cssVars?.dark?.[token], `${item.name} dark --${token}`).toBe(
+        expected.dark[token]
+      );
       expect(
         item.cssVars?.theme?.[`--color-${token}`],
         `${item.name} @theme --color-${token}`
@@ -915,10 +927,9 @@ test('state utilities compile for every Base color', async () => {
           STATE_UTILITIES
         );
         for (const utility of STATE_UTILITIES) {
-          expect(
-            compiled,
-            `${baseColor} ${utility} did not compile`
-          ).toContain(utilitySelector(utility));
+          expect(compiled, `${baseColor} ${utility} did not compile`).toContain(
+            utilitySelector(utility)
+          );
         }
         for (const declaration of COMPILED_STATE_DECLARATIONS) {
           expect(

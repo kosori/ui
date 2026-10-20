@@ -54,26 +54,6 @@ export const colorThemeTokens = (tokens: Record<string, string>) =>
       .map((token) => [`--color-${token}`, `var(--${token})`])
   );
 
-/**
- * The declarations and `@theme` mappings an item needs when its source
- * references a state Token. A partial install carries its own state colour.
- */
-export const stateTokenCssVars = (tokens: readonly StateTokenName[]) => {
-  const base = BASE_COLORS[DEFAULT_BASE_COLOR];
-
-  return {
-    dark: Object.fromEntries(
-      tokens.map((token) => [token, base.dark[token]])
-    ),
-    light: Object.fromEntries(
-      tokens.map((token) => [token, base.light[token]])
-    ),
-    theme: Object.fromEntries(
-      tokens.map((token) => [`--color-${token}`, `var(--${token})`])
-    ),
-  };
-};
-
 type StyleConfig = Omit<
   NonNullable<RegistryBaseItem['config']>,
   'style' | 'tailwind'
