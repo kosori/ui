@@ -10,6 +10,8 @@ shadcn/ui owns item names. A Consumer project's existing shadcn knowledge, docum
 
 A Port diverges from upstream through Tokens alone. Class strings are not retuned for `zen`'s taste: the diff against coss must show a rename or an import, never a redesign. This keeps each Port reviewable against the file it came from and leaves motion as a later diff against a verified baseline rather than a second redesign.
 
+> **Superseded in part by [ADR-0007](0007-render-plumbing.md).** A Port now also mirrors shadcn/ui's render and prop-forwarding structure. coss still supplies the class strings, but markup may differ where shadcn's composition requires it; the diff against coss is no longer limited to renames and imports.
+
 ## Semantic Tokens
 
 coss's `alert`, `badge` and `toast` variants use state colours it names `success`, `warning` and `info`, derived from emerald, amber and blue. kosori's Token contract did not define them, and its seven Base colors cannot inherit a single theme's values. kosori therefore adds six Tokens — `success`, `success-foreground`, `warning`, `warning-foreground`, `info` and `info-foreground` — to the preset with identical values across every Base color. The variant API stays identical to coss's; state colour is a kosori addition, not an upstream one.
