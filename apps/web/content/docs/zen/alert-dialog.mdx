@@ -24,11 +24,12 @@ npx shadcn@latest add @kosori/alert-dialog
 ```tsx
 import {
   AlertDialog,
-  AlertDialogClose,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogPopup,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
@@ -37,22 +38,66 @@ import { Button } from '@/components/ui/button';
 const AlertDialogDemo = () => (
   <AlertDialog>
     <AlertDialogTrigger render={<Button variant='outline' />}>
-      Delete account
+      Show Dialog
     </AlertDialogTrigger>
-    <AlertDialogPopup>
+    <AlertDialogContent>
       <AlertDialogHeader>
-        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
         <AlertDialogDescription>
-          This action cannot be undone.
+          This action cannot be undone. This will permanently delete your
+          account from our servers.
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogClose render={<Button variant='outline' />}>
-          Cancel
-        </AlertDialogClose>
-        <Button variant='destructive'>Delete</Button>
+        <AlertDialogCancel>Cancel</AlertDialogCancel>
+        <AlertDialogAction>Continue</AlertDialogAction>
       </AlertDialogFooter>
-    </AlertDialogPopup>
+    </AlertDialogContent>
+  </AlertDialog>
+);
+```
+
+## Media
+
+`AlertDialogMedia` adds an icon or image above the title.
+
+```tsx
+import { IconBluetooth } from '@tabler/icons-react';
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+
+const AlertDialogWithMedia = () => (
+  <AlertDialog>
+    <AlertDialogTrigger render={<Button variant='outline' />}>
+      Share Project
+    </AlertDialogTrigger>
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogMedia>
+          <IconBluetooth />
+        </AlertDialogMedia>
+        <AlertDialogTitle>Share this project?</AlertDialogTitle>
+        <AlertDialogDescription>
+          Anyone with the link can view and comment on it.
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel>Cancel</AlertDialogCancel>
+        <AlertDialogAction>Share</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
   </AlertDialog>
 );
 ```
