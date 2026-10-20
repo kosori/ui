@@ -32,6 +32,7 @@ jobs:
 
       - name: Install Chromium
         run: bunx playwright install --with-deps chromium
+        working-directory: apps/web
 
       - name: Capture every zen Example
         run: bun run visual:capture
