@@ -12,6 +12,12 @@ type Pin = {
   kosori: string;
 };
 
+/**
+ * Components kosori serves without a coss/ui counterpart, so there is no
+ * upstream revision to pin.
+ */
+const NO_UPSTREAM = new Set(['aspect-ratio', 'direction']);
+
 /** Read the pin record's entry rows, ignoring the revision table. */
 const readPins = async (): Promise<Pin[]> => {
   const source = await readFile(versionPath, 'utf8');
@@ -19,19 +25,20 @@ const readPins = async (): Promise<Pin[]> => {
   return source
     .split('\n')
     .map((line) => line.trim())
-    .filter(
-      (line) =>
-        line !== '| kosori | coss | sha256 |' &&
-        /^\|\s*[a-z][a-z-]*\s*\|\s*[a-z][a-z-]*\s*\|/.test(line)
-    )
-    .map((line) => {
-      const [kosori, coss, hash] = line
+    .filter((line) => line.startsWith('|') && line.endsWith('|'))
+    .map((line) =>
+      line
         .slice(1, -1)
         .split('|')
-        .map((cell) => cell.trim());
-
-      return { coss, hash, kosori };
-    });
+        .map((cell) => cell.trim())
+    )
+    .filter(
+      (cells) =>
+        cells.length === 3 &&
+        /^[a-z][a-z-]*$/.test(cells[0]) &&
+        /^[0-9a-f]{64}$/.test(cells[2])
+    )
+    .map(([kosori, coss, hash]) => ({ coss, hash, kosori }));
 };
 
 test('the pin record covers every Port in the catalog', async () => {
@@ -39,7 +46,8 @@ test('the pin record covers every Port in the catalog', async () => {
   const catalog = await readCatalog('zen');
   const ports = catalog
     .filter((item) => item.type !== 'registry:example')
-    .map((item) => item.name);
+    .map((item) => item.name)
+    .filter((name) => !NO_UPSTREAM.has(name));
 
   expect(new Set(pins.map((pin) => pin.kosori))).toEqual(new Set(ports));
 });
