@@ -8,6 +8,76 @@ import { PENDING_COMPONENTS } from '../lib/registry/pending';
 import { findStyle, STYLES } from '../registry/preset';
 
 const docsDir = join(import.meta.dirname, '../content/docs');
+const registryDir = join(import.meta.dirname, '../registry');
+const iconOnlyControlPattern = /(?:Button|Clear|Close|Remove|Trigger)$/;
+const iconElementPattern =
+  /^<([A-Z][\w.]*)(?:\s[^>]*)?\/>$|^<([A-Z][\w.]*)(?:\s[^>]*)?>[\s\S]*<\/\2>$/;
+
+/** The end of a JSX opening tag, allowing expressions and quoted strings. */
+const openingTagEnd = (source: string, start: number) => {
+  let quote: string | null = null;
+  let braces = 0;
+
+  for (let cursor = start; cursor < source.length; cursor += 1) {
+    const char = source[cursor];
+
+    if (quote) {
+      if (char === quote) {
+        quote = null;
+      }
+      continue;
+    }
+
+    if (char === '"' || char === "'" || char === '`') {
+      quote = char;
+    } else if (char === '{') {
+      braces += 1;
+    } else if (char === '}') {
+      braces -= 1;
+    } else if (char === '>' && braces === 0) {
+      return cursor;
+    }
+  }
+
+  return -1;
+};
+
+/** The icon-only controls a component source renders. */
+const iconOnlyControls = (source: string) => {
+  const controls: { name: string; opening: string }[] = [];
+
+  for (const match of source.matchAll(/<([A-Z][\w.]*)/g)) {
+    const name = match[1];
+    const start = match.index ?? 0;
+    const end = openingTagEnd(source, start + match[0].length);
+
+    if (!name || end === -1 || !iconOnlyControlPattern.test(name)) {
+      continue;
+    }
+
+    const opening = source.slice(start, end + 1);
+    if (opening.endsWith('/>')) {
+      continue;
+    }
+
+    const closing = `</${name}>`;
+    const closeIndex = source.indexOf(closing, end + 1);
+    if (closeIndex === -1) {
+      continue;
+    }
+
+    const children = source
+      .slice(end + 1, closeIndex)
+      .replace(/\/\*[\s\S]*?\*\/|\{\/\*[\s\S]*?\*\/\}/g, '')
+      .trim();
+
+    if (iconElementPattern.test(children)) {
+      controls.push({ name, opening });
+    }
+  }
+
+  return controls;
+};
 
 /** The documentation pages a Style publishes in its menu. */
 const readPages = async (style: string) => {
@@ -141,4 +211,23 @@ test('sonner is absent everywhere except the toast explanation', async () => {
   expect(await readFile(join(docsDir, 'zen/toast.mdx'), 'utf8')).toContain(
     'sonner'
   );
+});
+
+test('every icon-only control in autocomplete and combobox has a name', async () => {
+  const missing: string[] = [];
+
+  for (const item of ['autocomplete', 'combobox']) {
+    const source = await readFile(
+      join(registryDir, 'zen/ui', `${item}.tsx`),
+      'utf8'
+    );
+
+    for (const control of iconOnlyControls(source)) {
+      if (!/\baria-label=/.test(control.opening)) {
+        missing.push(`${item}: ${control.name}`);
+      }
+    }
+  }
+
+  expect(missing, 'an icon-only control has no accessible name').toEqual([]);
 });
