@@ -42,7 +42,13 @@ const productionNamespace =
  * Style's directory must belong to a `registry:ui` item, so a renamed or
  * deleted component cannot leave a page behind.
  */
-const NON_COMPONENT_PAGES = ['components', 'index', 'installation', 'theming'];
+const NON_COMPONENT_PAGES = [
+  'compatibility',
+  'components',
+  'index',
+  'installation',
+  'theming',
+];
 
 /**
  * The semantic state Tokens coss ships. State colour is independent of Base
