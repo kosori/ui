@@ -1,7 +1,6 @@
 'use client';
 
-import { mergeProps } from '@base-ui/react/merge-props';
-import { useRender } from '@base-ui/react/use-render';
+import { Button as ButtonPrimitive } from '@base-ui/react/button';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from 'cn';
 import type * as React from 'react';
@@ -49,7 +48,7 @@ export const buttonVariants = cva(
   }
 );
 
-export interface ButtonProps extends useRender.ComponentProps<'button'> {
+export interface ButtonProps extends ButtonPrimitive.Props {
   loading?: boolean;
   size?: VariantProps<typeof buttonVariants>['size'];
   variant?: VariantProps<typeof buttonVariants>['variant'];
@@ -59,40 +58,30 @@ export function Button({
   className,
   variant,
   size,
-  render,
   children,
   loading = false,
   disabled: disabledProp,
   ...props
 }: ButtonProps): React.ReactElement {
   const isDisabled: boolean = Boolean(loading || disabledProp);
-  const typeValue: React.ButtonHTMLAttributes<HTMLButtonElement>['type'] =
-    render ? undefined : 'button';
 
-  const defaultProps = {
-    'aria-disabled': loading || undefined,
-    children: (
-      <>
-        {children}
-        {/* biome-ignore lint/suspicious/noLeakedRender: loading is a boolean */}
-        {loading && (
-          <Spinner
-            className='pointer-events-none absolute'
-            data-slot='button-loading-indicator'
-          />
-        )}
-      </>
-    ),
-    className: cn(buttonVariants({ className, size, variant })),
-    'data-loading': loading ? '' : undefined,
-    'data-slot': 'button',
-    disabled: isDisabled,
-    type: typeValue,
-  };
-
-  return useRender({
-    defaultTagName: 'button',
-    props: mergeProps<'button'>(defaultProps, props),
-    render,
-  });
+  return (
+    <ButtonPrimitive
+      aria-disabled={loading || undefined}
+      className={cn(buttonVariants({ className, size, variant }))}
+      data-loading={loading ? '' : undefined}
+      data-slot='button'
+      disabled={isDisabled}
+      {...props}
+    >
+      {children}
+      {/* biome-ignore lint/suspicious/noLeakedRender: loading is a boolean */}
+      {loading && (
+        <Spinner
+          className='pointer-events-none absolute'
+          data-slot='button-loading-indicator'
+        />
+      )}
+    </ButtonPrimitive>
+  );
 }

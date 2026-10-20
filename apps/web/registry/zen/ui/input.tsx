@@ -5,7 +5,7 @@ import { cn } from 'cn';
 import type * as React from 'react';
 
 export type InputProps = Omit<
-  InputPrimitive.Props & React.RefAttributes<HTMLInputElement>,
+  React.ComponentProps<'input'> & React.RefAttributes<HTMLInputElement>,
   'size'
 > & {
   size?: 'sm' | 'default' | 'lg' | number;
@@ -49,7 +49,7 @@ export function Input({
           className={inputClassName}
           data-slot='input'
           size={typeof size === 'number' ? size : undefined}
-          style={typeof style === 'function' ? undefined : style}
+          style={style}
           {...props}
         />
       ) : (
