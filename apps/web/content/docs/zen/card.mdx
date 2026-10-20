@@ -17,3 +17,25 @@ npx shadcn@latest add @kosori/card
 ## Example
 
 <ComponentPreview name='card' />
+
+## Usage
+
+```tsx
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardPanel,
+  CardTitle,
+} from '@/components/ui/card';
+
+const CardDemo = () => (
+  <Card className='w-full max-w-xs'>
+    <CardHeader>
+      <CardTitle>Create project</CardTitle>
+      <CardDescription>Deploy your project in one click.</CardDescription>
+    </CardHeader>
+    <CardPanel>Card content</CardPanel>
+  </Card>
+);
+```

@@ -17,3 +17,16 @@ npx shadcn@latest add @kosori/avatar
 ## Example
 
 <ComponentPreview name='avatar' />
+
+## Usage
+
+```tsx
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
+const AvatarDemo = () => (
+  <Avatar>
+    <AvatarImage alt='Kosori' src='https://github.com/kosori.png' />
+    <AvatarFallback>KO</AvatarFallback>
+  </Avatar>
+);
+```

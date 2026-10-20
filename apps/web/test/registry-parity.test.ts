@@ -1,6 +1,6 @@
 import { expect, test } from 'bun:test';
 import { spawn } from 'node:child_process';
-import { cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -39,11 +39,16 @@ const runParity = (root: string) =>
 /** Copy the parity task, the catalogs and the documentation into a scratch tree. */
 const createTree = async () => {
   const root = await mkdtemp(join(tmpdir(), 'kosori-parity-'));
+  await mkdir(join(root, 'lib/registry'), { recursive: true });
 
   await Promise.all([
     cp(
       join(webDir, 'scripts/check-registry-parity.ts'),
       join(root, 'scripts/check-registry-parity.ts')
+    ),
+    cp(
+      join(webDir, 'lib/registry/catalog.ts'),
+      join(root, 'lib/registry/catalog.ts')
     ),
     cp(join(webDir, 'registry'), join(root, 'registry'), { recursive: true }),
     cp(join(webDir, 'content/docs'), join(root, 'content/docs'), {

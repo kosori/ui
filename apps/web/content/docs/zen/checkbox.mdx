@@ -15,3 +15,17 @@ npx shadcn@latest add @kosori/checkbox
 ## Example
 
 <ComponentPreview name='checkbox' />
+
+## Usage
+
+```tsx
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+
+const CheckboxDemo = () => (
+  <Label className='flex items-center gap-2'>
+    <Checkbox defaultChecked />
+    Enable notifications
+  </Label>
+);
+```

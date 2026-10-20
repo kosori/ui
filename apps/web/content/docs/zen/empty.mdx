@@ -16,3 +16,29 @@ npx shadcn@latest add @kosori/empty
 ## Example
 
 <ComponentPreview name='empty' />
+
+## Usage
+
+```tsx
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from '@/components/ui/empty';
+
+const EmptyDemo = () => (
+  <Empty>
+    <EmptyHeader>
+      <EmptyTitle>No upcoming meetings</EmptyTitle>
+      <EmptyDescription>Create a meeting to get started.</EmptyDescription>
+    </EmptyHeader>
+  </Empty>
+);
+```
+
+## Variants
+
+| Part | Prop | Values |
+| --- | --- | --- |
+| `EmptyMedia` | `variant` | `default`, `icon` |

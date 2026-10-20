@@ -18,3 +18,37 @@ npx shadcn@latest add @kosori/sheet
 ## Example
 
 <ComponentPreview name='sheet' />
+
+## Usage
+
+```tsx
+import { Button } from '@/components/ui/button';
+import {
+  Sheet,
+  SheetClose,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetPopup,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+
+const SheetDemo = () => (
+  <Sheet>
+    <SheetTrigger render={<Button variant='outline' />}>
+      Open sheet
+    </SheetTrigger>
+    <SheetPopup>
+      <SheetHeader>
+        <SheetTitle>Edit profile</SheetTitle>
+        <SheetDescription>Make changes to your profile.</SheetDescription>
+      </SheetHeader>
+      <SheetFooter>
+        <SheetClose render={<Button variant='outline' />}>Cancel</SheetClose>
+        <Button>Save changes</Button>
+      </SheetFooter>
+    </SheetPopup>
+  </Sheet>
+);
+```

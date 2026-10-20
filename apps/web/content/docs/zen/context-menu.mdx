@@ -16,3 +16,26 @@ npx shadcn@latest add @kosori/context-menu
 ## Example
 
 <ComponentPreview name='context-menu' />
+
+## Usage
+
+```tsx
+import {
+  ContextMenu,
+  ContextMenuItem,
+  ContextMenuPopup,
+  ContextMenuTrigger,
+} from '@/components/ui/context-menu';
+
+const ContextMenuDemo = () => (
+  <ContextMenu>
+    <ContextMenuTrigger className='flex h-32 w-full max-w-sm items-center justify-center rounded-lg border border-dashed'>
+      Right click here
+    </ContextMenuTrigger>
+    <ContextMenuPopup>
+      <ContextMenuItem>Edit</ContextMenuItem>
+      <ContextMenuItem>Delete</ContextMenuItem>
+    </ContextMenuPopup>
+  </ContextMenu>
+);
+```

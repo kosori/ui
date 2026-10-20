@@ -12,7 +12,9 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { extname, join, relative } from 'node:path';
+import type { RegistryItem } from 'shadcn/schema';
 import { GET } from '../app/init/[style]/[baseColor]/route';
+import { readCatalog } from '../lib/registry/catalog';
 import { INTERNAL_ITEMS, isInternalItem } from '../lib/registry/internal';
 import { PENDING_COMPONENTS } from '../lib/registry/pending';
 import { BASE_COLORS } from '../registry/base-colors';
@@ -24,21 +26,6 @@ const shadcn = join(webDir, 'node_modules/.bin/shadcn');
 const tsc = join(webDir, 'node_modules/.bin/tsc');
 const productionNamespace =
   'https://kosori.codingcodax.dev/r/{style}/{name}.json';
-
-/** One Registry item of the Style's catalog, as `shadcn build` validates and serves it. */
-type RegistryItem = {
-  files: { path: string }[];
-  name: string;
-  type: string;
-};
-
-/** Read the catalog a Style's Registry serves. The install runs over all of it. */
-const readRegistry = async (style: string): Promise<RegistryItem[]> => {
-  const catalog: { items: RegistryItem[] } = JSON.parse(
-    await readFile(join(webDir, `registry/${style}/registry.json`), 'utf8')
-  );
-  return catalog.items;
-};
 
 /**
  * Documentation pages that are not a catalog component. Every other page in a
@@ -252,7 +239,7 @@ const radiusDeclarations = (css: string, scheme: 'dark' | 'light') => {
 
 test('date-picker is documented as a composition with no registry item', async () => {
   const docsDir = join(webDir, 'content/docs/zen');
-  const catalog = await readRegistry('zen');
+  const catalog = await readCatalog('zen');
   const meta: { pages: string[] } = JSON.parse(
     await readFile(join(docsDir, 'meta.json'), 'utf8')
   );
@@ -338,16 +325,16 @@ test('installing a preset and every item of every Style leaves Consumer projects
           `${JSON.stringify(config, null, 2)}\n`
         );
 
-        const items = await readRegistry(style.name);
+        const items = await readCatalog(style.name);
         const components = items.filter((item) => item.type === 'registry:ui');
         const documented = components.filter(
           (component) => !isInternalItem(component.name)
         );
-        const componentNames = documented.map((item) => item.name);
+        const catalogComponentNames = components.map((item) => item.name);
 
         for (const pending of PENDING_COMPONENTS) {
           expect(
-            componentNames,
+            catalogComponentNames,
             `${pending} is Pending and also in the catalog`
           ).not.toContain(pending);
         }
@@ -368,21 +355,21 @@ test('installing a preset and every item of every Style leaves Consumer projects
         for (const internal of INTERNAL_ITEMS) {
           expect(
             PENDING_COMPONENTS as readonly string[],
-            `${internal.name} is Internal and also Pending`
+            `${internal.name} is Internal (${internal.reason}) and also Pending`
           ).not.toContain(internal.name);
           expect(
             examples.some(
               (example) => example.name === `${internal.name}-example`
             ),
-            `${internal.name} is Internal and has an Example`
+            `${internal.name} is Internal (${internal.reason}) and has an Example`
           ).toBe(false);
           expect(
             existsSync(join(docsDir, `${internal.name}.mdx`)),
-            `${internal.name} is Internal and has a documentation page`
+            `${internal.name} is Internal (${internal.reason}) and has a documentation page`
           ).toBe(false);
           expect(
             meta.pages,
-            `${internal.name} is Internal and in the docs menu`
+            `${internal.name} is Internal (${internal.reason}) and in the docs menu`
           ).not.toContain(internal.name);
         }
 
@@ -500,7 +487,7 @@ test('installing a preset and every item of every Style leaves Consumer projects
 test('every Internal item is installable under its declared type', async () => {
   const catalogs = await Promise.all(
     STYLES.map(async (style) => ({
-      items: await readRegistry(style.name),
+      items: await readCatalog(style.name),
       name: style.name,
     }))
   );

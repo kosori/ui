@@ -18,8 +18,12 @@ coss's `alert`, `badge` and `toast` variants use state colours it names `success
 
 Keeping the hand-authored `base-nova` sources as the lineage, and redesigning each component in kosori's own style. Rejected: the first leaves two approximations of coss that nobody can diff, and the second makes every Port unreviewable against the upstream the install suite is meant to prove.
 
+## Internal items
+
+Three coss items exist only to satisfy another Port's dependencies: `autocomplete` (`registry:ui`, required by `command`), `segmented-control` (`registry:lib`, required by `tabs`) and `use-media-query` (`registry:hook`, required by `sidebar`). They are installable dependencies of a Style, never documented, never Pending, and exempt from the Example/page/menu rule. They are the exception to the documented corpus.
+
 ## Consequences
 
 - `VERSION.md` pins the upstream bytes of every Port; no coss snapshot is vendored.
-- The corpus is the 47 coss `registry:ui` items that have a shadcn/ui name. coss-only components, the chat family and `sonner` stay out.
+- The documented corpus is the 47 coss `registry:ui` items that have a shadcn/ui name. coss-only components, the chat family and `sonner` stay out. The three Internal items above are installable dependencies outside that corpus.
 - Motion is out of scope for every Port and lands later as its own diff.

@@ -16,3 +16,31 @@ npx shadcn@latest add @kosori/form
 ## Example
 
 <ComponentPreview name='form' />
+
+## Usage
+
+```tsx
+'use client';
+
+import type { FormEvent } from 'react';
+import { Button } from '@/components/ui/button';
+import { Field, FieldLabel } from '@/components/ui/field';
+import { Form } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+
+const FormDemo = () => {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
+  return (
+    <Form className='flex w-full max-w-64 flex-col gap-4' onSubmit={onSubmit}>
+      <Field name='email'>
+        <FieldLabel>Email</FieldLabel>
+        <Input placeholder='you@example.com' type='email' />
+      </Field>
+      <Button type='submit'>Submit</Button>
+    </Form>
+  );
+};
+```

@@ -20,3 +20,18 @@ pipeline as Button. Its source is the file `@kosori/button-example` installs, so
 the preview and the install cannot drift.
 
 <ComponentPreview name='button' />
+
+## Usage
+
+```tsx
+import { Button } from '@/components/ui/button';
+
+const ButtonDemo = () => <Button>Button</Button>;
+```
+
+## Variants
+
+| Part | Prop | Values |
+| --- | --- | --- |
+| `Button` | `size` | `default`, `icon`, `icon-lg`, `icon-sm`, `icon-xl`, `icon-xs`, `lg`, `sm`, `xl`, `xs` |
+| `Button` | `variant` | `default`, `destructive`, `destructive-outline`, `ghost`, `link`, `outline`, `secondary` |

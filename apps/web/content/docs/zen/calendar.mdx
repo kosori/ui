@@ -16,3 +16,18 @@ npx shadcn@latest add @kosori/calendar
 ## Example
 
 <ComponentPreview name='calendar' />
+
+## Usage
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+import { Calendar } from '@/components/ui/calendar';
+
+const CalendarDemo = () => {
+  const [date, setDate] = useState<Date | undefined>();
+
+  return <Calendar mode='single' onSelect={setDate} selected={date} />;
+};
+```

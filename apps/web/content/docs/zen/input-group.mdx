@@ -16,3 +16,29 @@ npx shadcn@latest add @kosori/input-group
 ## Example
 
 <ComponentPreview name='input-group' />
+
+## Usage
+
+```tsx
+import { IconSearch } from '@tabler/icons-react';
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from '@/components/ui/input-group';
+
+const InputGroupDemo = () => (
+  <InputGroup>
+    <InputGroupInput aria-label='Search' placeholder='Search' type='search' />
+    <InputGroupAddon>
+      <IconSearch aria-hidden='true' />
+    </InputGroupAddon>
+  </InputGroup>
+);
+```
+
+## Variants
+
+| Part | Prop | Values |
+| --- | --- | --- |
+| `InputGroupAddon` | `align` | `block-end`, `block-start`, `inline-end`, `inline-start` |

@@ -18,3 +18,41 @@ npx shadcn@latest add @kosori/alert-dialog
 ## Example
 
 <ComponentPreview name='alert-dialog' />
+
+## Usage
+
+```tsx
+import {
+  AlertDialog,
+  AlertDialogClose,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogPopup,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+
+const AlertDialogDemo = () => (
+  <AlertDialog>
+    <AlertDialogTrigger render={<Button variant='outline' />}>
+      Delete account
+    </AlertDialogTrigger>
+    <AlertDialogPopup>
+      <AlertDialogHeader>
+        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+        <AlertDialogDescription>
+          This action cannot be undone.
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogClose render={<Button variant='outline' />}>
+          Cancel
+        </AlertDialogClose>
+        <Button variant='destructive'>Delete</Button>
+      </AlertDialogFooter>
+    </AlertDialogPopup>
+  </AlertDialog>
+);
+```

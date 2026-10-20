@@ -16,3 +16,25 @@ npx shadcn@latest add @kosori/hover-card
 ## Example
 
 <ComponentPreview name='hover-card' />
+
+## Usage
+
+```tsx
+import { Button } from '@/components/ui/button';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
+
+const HoverCardDemo = () => (
+  <HoverCard>
+    <HoverCardTrigger render={<Button variant='ghost' />}>
+      coss.com/ui
+    </HoverCardTrigger>
+    <HoverCardContent>
+      Beautifully designed components you can copy and own.
+    </HoverCardContent>
+  </HoverCard>
+);
+```

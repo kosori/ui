@@ -17,3 +17,23 @@ npx shadcn@latest add @kosori/button-group
 ## Example
 
 <ComponentPreview name='button-group' />
+
+## Usage
+
+```tsx
+import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
+
+const ButtonGroupDemo = () => (
+  <ButtonGroup>
+    <Button variant='outline'>Previous</Button>
+    <Button variant='outline'>Next</Button>
+  </ButtonGroup>
+);
+```
+
+## Variants
+
+| Part | Prop | Values |
+| --- | --- | --- |
+| `ButtonGroup` | `orientation` | `horizontal`, `vertical` |

@@ -21,9 +21,6 @@ export const INTERNAL_ITEMS = [
   },
 ] as const;
 
-/** The name of an Internal Registry item. */
-export type InternalItemName = (typeof INTERNAL_ITEMS)[number]['name'];
-
 /** Whether a catalog item is Internal rather than a documented component. */
 export const isInternalItem = (name: string) =>
   INTERNAL_ITEMS.some((item) => item.name === name);

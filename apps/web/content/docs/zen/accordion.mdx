@@ -18,3 +18,23 @@ npx shadcn@latest add @kosori/accordion
 ## Example
 
 <ComponentPreview name='accordion' />
+
+## Usage
+
+```tsx
+import {
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+
+const AccordionDemo = () => (
+  <Accordion>
+    <AccordionItem>
+      <AccordionTrigger>What is kosori?</AccordionTrigger>
+      <AccordionPanel>Components you can copy and own.</AccordionPanel>
+    </AccordionItem>
+  </Accordion>
+);
+```

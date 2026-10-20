@@ -18,3 +18,41 @@ npx shadcn@latest add @kosori/select
 ## Example
 
 <ComponentPreview name='select' />
+
+## Usage
+
+```tsx
+import {
+  Select,
+  SelectItem,
+  SelectPopup,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
+const frameworks = [
+  { label: 'Next.js', value: 'next' },
+  { label: 'Vite', value: 'vite' },
+];
+
+const SelectDemo = () => (
+  <Select defaultValue='next' items={frameworks}>
+    <SelectTrigger aria-label='Select framework'>
+      <SelectValue />
+    </SelectTrigger>
+    <SelectPopup>
+      {frameworks.map(({ label, value }) => (
+        <SelectItem key={value} value={value}>
+          {label}
+        </SelectItem>
+      ))}
+    </SelectPopup>
+  </Select>
+);
+```
+
+## Variants
+
+| Part | Prop | Values |
+| --- | --- | --- |
+| `SelectTrigger` | `size` | `default`, `lg`, `sm` |

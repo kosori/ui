@@ -20,3 +20,30 @@ pipeline as Command. Its source is the file `@kosori/command-example` installs,
 so the preview and the install cannot drift.
 
 <ComponentPreview name='command' />
+
+## Usage
+
+```tsx
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandGroupLabel,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
+
+const CommandDemo = () => (
+  <Command>
+    <CommandInput placeholder='Search commands' />
+    <CommandList>
+      <CommandEmpty>No results found.</CommandEmpty>
+      <CommandGroup>
+        <CommandGroupLabel>Suggestions</CommandGroupLabel>
+        <CommandItem>Calendar</CommandItem>
+      </CommandGroup>
+    </CommandList>
+  </Command>
+);
+```
