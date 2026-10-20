@@ -23,7 +23,7 @@ const PopoverExample = () => (
         <IconX />
       </PopoverClose>
       <div className='mb-2'>
-        <PopoverTitle className='text-base'>Notifications</PopoverTitle>
+        <PopoverTitle>Notifications</PopoverTitle>
         <PopoverDescription>
           You are all caught up. Good job!
         </PopoverDescription>

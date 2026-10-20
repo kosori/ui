@@ -9,23 +9,19 @@ import {
 const HoverCardExample = () => (
   <HoverCard>
     <HoverCardTrigger render={<Button variant='ghost' />}>
-      coss.com/ui
+      kosori
     </HoverCardTrigger>
     <HoverCardContent>
       <div className='flex flex-col gap-4'>
         <div className='flex flex-col gap-1'>
-          <h4 className='font-medium text-sm'>coss.com/ui</h4>
+          <h4 className='font-medium text-sm'>kosori</h4>
           <p className='text-muted-foreground text-sm'>
-            Beautifully designed components that you can copy and paste into
-            your apps.
+            Components you copy into your project and own from then on.
           </p>
         </div>
         <div className='flex items-center gap-4 text-muted-foreground text-xs'>
           <div className='flex items-center gap-1'>
-            <span
-              aria-hidden='true'
-              className='size-2 rounded-full bg-blue-500'
-            />
+            <span aria-hidden='true' className='size-2 rounded-full bg-info' />
             <span>TypeScript</span>
           </div>
           <div className='flex items-center gap-1'>

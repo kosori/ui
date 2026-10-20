@@ -1,7 +1,9 @@
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
+  SheetClose,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetPanel,
   SheetPopup,
@@ -15,7 +17,7 @@ const SheetExample = () => (
       <SheetTrigger render={<Button variant='outline' />}>
         Open Right
       </SheetTrigger>
-      <SheetPopup showCloseButton={false}>
+      <SheetPopup>
         <SheetHeader>
           <SheetTitle>Right</SheetTitle>
           <SheetDescription>Right side of the screen.</SheetDescription>
@@ -31,13 +33,16 @@ const SheetExample = () => (
             culpa qui officia deserunt mollit anim id est laborum.
           </p>
         </SheetPanel>
+        <SheetFooter>
+          <SheetClose render={<Button variant='ghost' />}>Close</SheetClose>
+        </SheetFooter>
       </SheetPopup>
     </Sheet>
     <Sheet>
       <SheetTrigger render={<Button variant='outline' />}>
         Open Left
       </SheetTrigger>
-      <SheetPopup showCloseButton={false} side='left'>
+      <SheetPopup side='left'>
         <SheetHeader>
           <SheetTitle>Left</SheetTitle>
           <SheetDescription>Left side of the screen.</SheetDescription>
@@ -53,13 +58,16 @@ const SheetExample = () => (
             culpa qui officia deserunt mollit anim id est laborum.
           </p>
         </SheetPanel>
+        <SheetFooter>
+          <SheetClose render={<Button variant='ghost' />}>Close</SheetClose>
+        </SheetFooter>
       </SheetPopup>
     </Sheet>
     <Sheet>
       <SheetTrigger render={<Button variant='outline' />}>
         Open Top
       </SheetTrigger>
-      <SheetPopup showCloseButton={false} side='top'>
+      <SheetPopup side='top'>
         <SheetHeader>
           <SheetTitle>Top</SheetTitle>
           <SheetDescription>Top of the screen.</SheetDescription>
@@ -75,13 +83,16 @@ const SheetExample = () => (
             culpa qui officia deserunt mollit anim id est laborum.
           </p>
         </SheetPanel>
+        <SheetFooter>
+          <SheetClose render={<Button variant='ghost' />}>Close</SheetClose>
+        </SheetFooter>
       </SheetPopup>
     </Sheet>
     <Sheet>
       <SheetTrigger render={<Button variant='outline' />}>
         Open Bottom
       </SheetTrigger>
-      <SheetPopup showCloseButton={false} side='bottom'>
+      <SheetPopup side='bottom'>
         <SheetHeader>
           <SheetTitle>Bottom</SheetTitle>
           <SheetDescription>Bottom of the screen.</SheetDescription>
@@ -97,6 +108,9 @@ const SheetExample = () => (
             culpa qui officia deserunt mollit anim id est laborum.
           </p>
         </SheetPanel>
+        <SheetFooter>
+          <SheetClose render={<Button variant='ghost' />}>Close</SheetClose>
+        </SheetFooter>
       </SheetPopup>
     </Sheet>
   </div>
