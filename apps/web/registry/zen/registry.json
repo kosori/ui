@@ -9,7 +9,7 @@
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
       "files": [
         {
-          "path": "registry/zen/accordion.tsx",
+          "path": "registry/zen/ui/accordion.tsx",
           "type": "registry:ui"
         }
       ]
@@ -20,7 +20,7 @@
       "registryDependencies": ["@kosori/accordion"],
       "files": [
         {
-          "path": "registry/zen/accordion-example.tsx",
+          "path": "registry/zen/examples/accordion-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -31,7 +31,7 @@
       "dependencies": ["class-variance-authority", "cn"],
       "files": [
         {
-          "path": "registry/zen/alert.tsx",
+          "path": "registry/zen/ui/alert.tsx",
           "type": "registry:ui"
         }
       ]
@@ -42,7 +42,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/alert-dialog.tsx",
+          "path": "registry/zen/ui/alert-dialog.tsx",
           "type": "registry:ui"
         }
       ]
@@ -53,7 +53,7 @@
       "registryDependencies": ["@kosori/alert-dialog", "@kosori/button"],
       "files": [
         {
-          "path": "registry/zen/alert-dialog-example.tsx",
+          "path": "registry/zen/examples/alert-dialog-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -65,7 +65,7 @@
       "registryDependencies": ["@kosori/alert"],
       "files": [
         {
-          "path": "registry/zen/alert-example.tsx",
+          "path": "registry/zen/examples/alert-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -77,7 +77,7 @@
       "registryDependencies": ["@kosori/input", "@kosori/scroll-area"],
       "files": [
         {
-          "path": "registry/zen/autocomplete.tsx",
+          "path": "registry/zen/ui/autocomplete.tsx",
           "type": "registry:ui"
         }
       ]
@@ -88,7 +88,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/avatar.tsx",
+          "path": "registry/zen/ui/avatar.tsx",
           "type": "registry:ui"
         }
       ]
@@ -99,7 +99,7 @@
       "registryDependencies": ["@kosori/avatar"],
       "files": [
         {
-          "path": "registry/zen/avatar-example.tsx",
+          "path": "registry/zen/examples/avatar-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -110,7 +110,7 @@
       "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
       "files": [
         {
-          "path": "registry/zen/badge.tsx",
+          "path": "registry/zen/ui/badge.tsx",
           "type": "registry:ui"
         }
       ]
@@ -121,7 +121,7 @@
       "registryDependencies": ["@kosori/badge"],
       "files": [
         {
-          "path": "registry/zen/badge-example.tsx",
+          "path": "registry/zen/examples/badge-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -132,7 +132,7 @@
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
       "files": [
         {
-          "path": "registry/zen/breadcrumb.tsx",
+          "path": "registry/zen/ui/breadcrumb.tsx",
           "type": "registry:ui"
         }
       ]
@@ -147,7 +147,7 @@
       ],
       "files": [
         {
-          "path": "registry/zen/breadcrumb-example.tsx",
+          "path": "registry/zen/examples/breadcrumb-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -159,7 +159,7 @@
       "registryDependencies": ["@kosori/spinner"],
       "files": [
         {
-          "path": "registry/zen/button.tsx",
+          "path": "registry/zen/ui/button.tsx",
           "type": "registry:ui"
         }
       ]
@@ -170,7 +170,7 @@
       "registryDependencies": ["@kosori/button"],
       "files": [
         {
-          "path": "registry/zen/button-example.tsx",
+          "path": "registry/zen/examples/button-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -182,7 +182,7 @@
       "registryDependencies": ["@kosori/separator"],
       "files": [
         {
-          "path": "registry/zen/button-group.tsx",
+          "path": "registry/zen/ui/button-group.tsx",
           "type": "registry:ui"
         }
       ]
@@ -193,7 +193,7 @@
       "registryDependencies": ["@kosori/button", "@kosori/button-group"],
       "files": [
         {
-          "path": "registry/zen/button-group-example.tsx",
+          "path": "registry/zen/examples/button-group-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -204,7 +204,7 @@
       "dependencies": ["@daypicker/react", "@tabler/icons-react", "cn"],
       "files": [
         {
-          "path": "registry/zen/calendar.tsx",
+          "path": "registry/zen/ui/calendar.tsx",
           "type": "registry:ui"
         }
       ]
@@ -215,7 +215,7 @@
       "registryDependencies": ["@kosori/calendar"],
       "files": [
         {
-          "path": "registry/zen/calendar-example.tsx",
+          "path": "registry/zen/examples/calendar-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -226,7 +226,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/card.tsx",
+          "path": "registry/zen/ui/card.tsx",
           "type": "registry:ui"
         }
       ]
@@ -245,7 +245,7 @@
       ],
       "files": [
         {
-          "path": "registry/zen/card-example.tsx",
+          "path": "registry/zen/examples/card-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -256,7 +256,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/checkbox.tsx",
+          "path": "registry/zen/ui/checkbox.tsx",
           "type": "registry:ui"
         }
       ]
@@ -267,7 +267,7 @@
       "registryDependencies": ["@kosori/checkbox", "@kosori/label"],
       "files": [
         {
-          "path": "registry/zen/checkbox-example.tsx",
+          "path": "registry/zen/examples/checkbox-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -278,7 +278,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/collapsible.tsx",
+          "path": "registry/zen/ui/collapsible.tsx",
           "type": "registry:ui"
         }
       ]
@@ -289,7 +289,7 @@
       "registryDependencies": ["@kosori/collapsible"],
       "files": [
         {
-          "path": "registry/zen/collapsible-example.tsx",
+          "path": "registry/zen/examples/collapsible-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -301,7 +301,7 @@
       "registryDependencies": ["@kosori/input", "@kosori/scroll-area"],
       "files": [
         {
-          "path": "registry/zen/combobox.tsx",
+          "path": "registry/zen/ui/combobox.tsx",
           "type": "registry:ui"
         }
       ]
@@ -312,7 +312,7 @@
       "registryDependencies": ["@kosori/combobox"],
       "files": [
         {
-          "path": "registry/zen/combobox-example.tsx",
+          "path": "registry/zen/examples/combobox-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -324,7 +324,7 @@
       "registryDependencies": ["@kosori/autocomplete"],
       "files": [
         {
-          "path": "registry/zen/command.tsx",
+          "path": "registry/zen/ui/command.tsx",
           "type": "registry:ui"
         }
       ]
@@ -339,7 +339,7 @@
       ],
       "files": [
         {
-          "path": "registry/zen/command-example.tsx",
+          "path": "registry/zen/examples/command-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -350,7 +350,7 @@
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
       "files": [
         {
-          "path": "registry/zen/context-menu.tsx",
+          "path": "registry/zen/ui/context-menu.tsx",
           "type": "registry:ui"
         }
       ]
@@ -362,7 +362,7 @@
       "registryDependencies": ["@kosori/context-menu"],
       "files": [
         {
-          "path": "registry/zen/context-menu-example.tsx",
+          "path": "registry/zen/examples/context-menu-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -374,7 +374,7 @@
       "registryDependencies": ["@kosori/button", "@kosori/scroll-area"],
       "files": [
         {
-          "path": "registry/zen/dialog.tsx",
+          "path": "registry/zen/ui/dialog.tsx",
           "type": "registry:ui"
         }
       ]
@@ -390,7 +390,7 @@
       ],
       "files": [
         {
-          "path": "registry/zen/dialog-example.tsx",
+          "path": "registry/zen/examples/dialog-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -402,7 +402,7 @@
       "registryDependencies": ["@kosori/button", "@kosori/scroll-area"],
       "files": [
         {
-          "path": "registry/zen/drawer.tsx",
+          "path": "registry/zen/ui/drawer.tsx",
           "type": "registry:ui"
         }
       ]
@@ -413,7 +413,7 @@
       "registryDependencies": ["@kosori/button", "@kosori/drawer"],
       "files": [
         {
-          "path": "registry/zen/drawer-example.tsx",
+          "path": "registry/zen/examples/drawer-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -424,7 +424,7 @@
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
       "files": [
         {
-          "path": "registry/zen/dropdown-menu.tsx",
+          "path": "registry/zen/ui/dropdown-menu.tsx",
           "type": "registry:ui"
         }
       ]
@@ -436,7 +436,7 @@
       "registryDependencies": ["@kosori/button", "@kosori/dropdown-menu"],
       "files": [
         {
-          "path": "registry/zen/dropdown-menu-example.tsx",
+          "path": "registry/zen/examples/dropdown-menu-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -447,7 +447,7 @@
       "dependencies": ["class-variance-authority", "cn"],
       "files": [
         {
-          "path": "registry/zen/empty.tsx",
+          "path": "registry/zen/ui/empty.tsx",
           "type": "registry:ui"
         }
       ]
@@ -459,7 +459,7 @@
       "registryDependencies": ["@kosori/button", "@kosori/empty"],
       "files": [
         {
-          "path": "registry/zen/empty-example.tsx",
+          "path": "registry/zen/examples/empty-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -470,7 +470,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/field.tsx",
+          "path": "registry/zen/ui/field.tsx",
           "type": "registry:ui"
         }
       ]
@@ -481,7 +481,7 @@
       "registryDependencies": ["@kosori/field", "@kosori/input"],
       "files": [
         {
-          "path": "registry/zen/field-example.tsx",
+          "path": "registry/zen/examples/field-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -492,7 +492,7 @@
       "dependencies": ["@base-ui/react"],
       "files": [
         {
-          "path": "registry/zen/form.tsx",
+          "path": "registry/zen/ui/form.tsx",
           "type": "registry:ui"
         }
       ]
@@ -508,7 +508,7 @@
       ],
       "files": [
         {
-          "path": "registry/zen/form-example.tsx",
+          "path": "registry/zen/examples/form-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -519,7 +519,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/hover-card.tsx",
+          "path": "registry/zen/ui/hover-card.tsx",
           "type": "registry:ui"
         }
       ]
@@ -531,7 +531,7 @@
       "registryDependencies": ["@kosori/button", "@kosori/hover-card"],
       "files": [
         {
-          "path": "registry/zen/hover-card-example.tsx",
+          "path": "registry/zen/examples/hover-card-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -542,7 +542,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/input.tsx",
+          "path": "registry/zen/ui/input.tsx",
           "type": "registry:ui"
         }
       ]
@@ -553,7 +553,7 @@
       "registryDependencies": ["@kosori/input"],
       "files": [
         {
-          "path": "registry/zen/input-example.tsx",
+          "path": "registry/zen/examples/input-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -564,7 +564,7 @@
       "registryDependencies": ["@kosori/input", "@kosori/textarea"],
       "files": [
         {
-          "path": "registry/zen/input-group.tsx",
+          "path": "registry/zen/ui/input-group.tsx",
           "type": "registry:ui"
         }
       ],
@@ -576,7 +576,7 @@
       "registryDependencies": ["@kosori/input-group"],
       "files": [
         {
-          "path": "registry/zen/input-group-example.tsx",
+          "path": "registry/zen/examples/input-group-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -588,7 +588,7 @@
       "registryDependencies": ["@kosori/separator"],
       "files": [
         {
-          "path": "registry/zen/input-otp.tsx",
+          "path": "registry/zen/ui/input-otp.tsx",
           "type": "registry:ui"
         }
       ]
@@ -599,7 +599,7 @@
       "registryDependencies": ["@kosori/field", "@kosori/input-otp"],
       "files": [
         {
-          "path": "registry/zen/input-otp-example.tsx",
+          "path": "registry/zen/examples/input-otp-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -610,7 +610,7 @@
       "dependencies": ["cn"],
       "files": [
         {
-          "path": "registry/zen/kbd.tsx",
+          "path": "registry/zen/ui/kbd.tsx",
           "type": "registry:ui"
         }
       ]
@@ -621,7 +621,7 @@
       "registryDependencies": ["@kosori/kbd"],
       "files": [
         {
-          "path": "registry/zen/kbd-example.tsx",
+          "path": "registry/zen/examples/kbd-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -632,7 +632,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/label.tsx",
+          "path": "registry/zen/ui/label.tsx",
           "type": "registry:ui"
         }
       ]
@@ -643,7 +643,7 @@
       "registryDependencies": ["@kosori/input", "@kosori/label"],
       "files": [
         {
-          "path": "registry/zen/label-example.tsx",
+          "path": "registry/zen/examples/label-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -655,7 +655,7 @@
       "registryDependencies": ["@kosori/button"],
       "files": [
         {
-          "path": "registry/zen/pagination.tsx",
+          "path": "registry/zen/ui/pagination.tsx",
           "type": "registry:ui"
         }
       ]
@@ -666,7 +666,7 @@
       "registryDependencies": ["@kosori/pagination"],
       "files": [
         {
-          "path": "registry/zen/pagination-example.tsx",
+          "path": "registry/zen/examples/pagination-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -677,7 +677,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/popover.tsx",
+          "path": "registry/zen/ui/popover.tsx",
           "type": "registry:ui"
         }
       ]
@@ -689,7 +689,7 @@
       "registryDependencies": ["@kosori/button", "@kosori/popover"],
       "files": [
         {
-          "path": "registry/zen/popover-example.tsx",
+          "path": "registry/zen/examples/popover-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -700,7 +700,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/progress.tsx",
+          "path": "registry/zen/ui/progress.tsx",
           "type": "registry:ui"
         }
       ]
@@ -711,7 +711,7 @@
       "registryDependencies": ["@kosori/progress"],
       "files": [
         {
-          "path": "registry/zen/progress-example.tsx",
+          "path": "registry/zen/examples/progress-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -722,7 +722,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/radio-group.tsx",
+          "path": "registry/zen/ui/radio-group.tsx",
           "type": "registry:ui"
         }
       ]
@@ -733,7 +733,7 @@
       "registryDependencies": ["@kosori/label", "@kosori/radio-group"],
       "files": [
         {
-          "path": "registry/zen/radio-group-example.tsx",
+          "path": "registry/zen/examples/radio-group-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -744,7 +744,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/scroll-area.tsx",
+          "path": "registry/zen/ui/scroll-area.tsx",
           "type": "registry:ui"
         }
       ]
@@ -755,7 +755,7 @@
       "registryDependencies": ["@kosori/scroll-area"],
       "files": [
         {
-          "path": "registry/zen/scroll-area-example.tsx",
+          "path": "registry/zen/examples/scroll-area-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -766,7 +766,7 @@
       "dependencies": ["class-variance-authority"],
       "files": [
         {
-          "path": "lib/segmented-control.ts",
+          "path": "registry/zen/lib/segmented-control.ts",
           "type": "registry:lib"
         }
       ]
@@ -782,7 +782,7 @@
       ],
       "files": [
         {
-          "path": "registry/zen/select.tsx",
+          "path": "registry/zen/ui/select.tsx",
           "type": "registry:ui"
         }
       ]
@@ -793,7 +793,7 @@
       "registryDependencies": ["@kosori/select"],
       "files": [
         {
-          "path": "registry/zen/select-example.tsx",
+          "path": "registry/zen/examples/select-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -804,7 +804,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/separator.tsx",
+          "path": "registry/zen/ui/separator.tsx",
           "type": "registry:ui"
         }
       ]
@@ -815,7 +815,7 @@
       "registryDependencies": ["@kosori/separator"],
       "files": [
         {
-          "path": "registry/zen/separator-example.tsx",
+          "path": "registry/zen/examples/separator-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -827,7 +827,7 @@
       "registryDependencies": ["@kosori/button", "@kosori/scroll-area"],
       "files": [
         {
-          "path": "registry/zen/sheet.tsx",
+          "path": "registry/zen/ui/sheet.tsx",
           "type": "registry:ui"
         }
       ]
@@ -838,7 +838,7 @@
       "registryDependencies": ["@kosori/button", "@kosori/sheet"],
       "files": [
         {
-          "path": "registry/zen/sheet-example.tsx",
+          "path": "registry/zen/examples/sheet-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -864,7 +864,7 @@
       ],
       "files": [
         {
-          "path": "registry/zen/sidebar.tsx",
+          "path": "registry/zen/ui/sidebar.tsx",
           "type": "registry:ui"
         }
       ]
@@ -875,7 +875,7 @@
       "registryDependencies": ["@kosori/sidebar"],
       "files": [
         {
-          "path": "registry/zen/sidebar-example.tsx",
+          "path": "registry/zen/examples/sidebar-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -886,7 +886,7 @@
       "dependencies": ["cn"],
       "files": [
         {
-          "path": "registry/zen/skeleton.tsx",
+          "path": "registry/zen/ui/skeleton.tsx",
           "type": "registry:ui"
         }
       ]
@@ -897,7 +897,7 @@
       "registryDependencies": ["@kosori/skeleton"],
       "files": [
         {
-          "path": "registry/zen/skeleton-example.tsx",
+          "path": "registry/zen/examples/skeleton-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -908,7 +908,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/slider.tsx",
+          "path": "registry/zen/ui/slider.tsx",
           "type": "registry:ui"
         }
       ]
@@ -919,7 +919,7 @@
       "registryDependencies": ["@kosori/field", "@kosori/slider"],
       "files": [
         {
-          "path": "registry/zen/slider-example.tsx",
+          "path": "registry/zen/examples/slider-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -930,7 +930,7 @@
       "dependencies": ["@tabler/icons-react", "cn"],
       "files": [
         {
-          "path": "registry/zen/spinner.tsx",
+          "path": "registry/zen/ui/spinner.tsx",
           "type": "registry:ui"
         }
       ]
@@ -941,7 +941,7 @@
       "registryDependencies": ["@kosori/spinner"],
       "files": [
         {
-          "path": "registry/zen/spinner-example.tsx",
+          "path": "registry/zen/examples/spinner-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -952,7 +952,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/switch.tsx",
+          "path": "registry/zen/ui/switch.tsx",
           "type": "registry:ui"
         }
       ]
@@ -963,7 +963,7 @@
       "registryDependencies": ["@kosori/label", "@kosori/switch"],
       "files": [
         {
-          "path": "registry/zen/switch-example.tsx",
+          "path": "registry/zen/examples/switch-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -974,7 +974,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/table.tsx",
+          "path": "registry/zen/ui/table.tsx",
           "type": "registry:ui"
         }
       ]
@@ -985,7 +985,7 @@
       "registryDependencies": ["@kosori/badge", "@kosori/table"],
       "files": [
         {
-          "path": "registry/zen/table-example.tsx",
+          "path": "registry/zen/examples/table-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -997,7 +997,7 @@
       "registryDependencies": ["@kosori/segmented-control"],
       "files": [
         {
-          "path": "registry/zen/tabs.tsx",
+          "path": "registry/zen/ui/tabs.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1008,7 +1008,7 @@
       "registryDependencies": ["@kosori/tabs"],
       "files": [
         {
-          "path": "registry/zen/tabs-example.tsx",
+          "path": "registry/zen/examples/tabs-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -1019,7 +1019,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/textarea.tsx",
+          "path": "registry/zen/ui/textarea.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1030,7 +1030,7 @@
       "registryDependencies": ["@kosori/textarea"],
       "files": [
         {
-          "path": "registry/zen/textarea-example.tsx",
+          "path": "registry/zen/examples/textarea-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -1042,7 +1042,7 @@
       "registryDependencies": ["@kosori/button"],
       "files": [
         {
-          "path": "registry/zen/toast.tsx",
+          "path": "registry/zen/ui/toast.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1053,7 +1053,7 @@
       "registryDependencies": ["@kosori/button", "@kosori/toast"],
       "files": [
         {
-          "path": "registry/zen/toast-example.tsx",
+          "path": "registry/zen/examples/toast-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -1064,7 +1064,7 @@
       "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
       "files": [
         {
-          "path": "registry/zen/toggle.tsx",
+          "path": "registry/zen/ui/toggle.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1075,7 +1075,7 @@
       "registryDependencies": ["@kosori/toggle"],
       "files": [
         {
-          "path": "registry/zen/toggle-example.tsx",
+          "path": "registry/zen/examples/toggle-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -1087,7 +1087,7 @@
       "registryDependencies": ["@kosori/separator", "@kosori/toggle"],
       "files": [
         {
-          "path": "registry/zen/toggle-group.tsx",
+          "path": "registry/zen/ui/toggle-group.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1098,7 +1098,7 @@
       "registryDependencies": ["@kosori/toggle-group"],
       "files": [
         {
-          "path": "registry/zen/toggle-group-example.tsx",
+          "path": "registry/zen/examples/toggle-group-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -1109,7 +1109,7 @@
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
-          "path": "registry/zen/tooltip.tsx",
+          "path": "registry/zen/ui/tooltip.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1120,7 +1120,7 @@
       "registryDependencies": ["@kosori/button", "@kosori/tooltip"],
       "files": [
         {
-          "path": "registry/zen/tooltip-example.tsx",
+          "path": "registry/zen/examples/tooltip-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -1130,7 +1130,7 @@
       "type": "registry:hook",
       "files": [
         {
-          "path": "registry/zen/use-media-query.ts",
+          "path": "registry/zen/hooks/use-media-query.ts",
           "type": "registry:hook"
         }
       ]
