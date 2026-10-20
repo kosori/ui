@@ -368,6 +368,17 @@ export const getCompatibilityFacts = async (
   const field = servedSet.has('field')
     ? await readStyleExports(style, 'field')
     : undefined;
+  const aliasClaims = await Promise.all(
+    ALIASES.filter(({ item }) => servedSet.has(item)).map(async (claim) => ({
+      claim,
+      module: await readStyleExports(style, claim.item),
+    }))
+  );
+  const aliases = aliasClaims
+    .filter(
+      ({ claim, module }) => module.aliases.get(claim.name) === claim.local
+    )
+    .map(({ claim }) => claim);
   const divergences: Divergence[] = [];
 
   if (field && !field.names.has('FieldGroup')) {
@@ -391,7 +402,7 @@ export const getCompatibilityFacts = async (
   divergences.push(TOKEN_DIVERGENCE);
 
   return {
-    aliases: ALIASES.filter(({ item }) => servedSet.has(item)),
+    aliases,
     compositions: definition?.compositions ?? [],
     divergences,
     incomplete: definition?.incomplete ?? false,

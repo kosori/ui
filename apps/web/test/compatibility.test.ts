@@ -60,6 +60,36 @@ test('every alias the page claims exists in its component module', async () => {
   }
 });
 
+test('a Style reports exactly the aliases its own modules export', async () => {
+  const styles = await Promise.all(
+    STYLES.map(async ({ name }) => {
+      const facts = await getCompatibilityFacts(name);
+      const modules = await Promise.all(
+        facts.served.map(async (item) => ({
+          item,
+          module: await readStyleExports(name, item),
+        }))
+      );
+      const derived = modules.flatMap(({ item, module }) =>
+        [...module.aliases]
+          .filter(([aliasName]) => !aliasName.endsWith('Primitive'))
+          .map(([aliasName, local]) => `${item}/${aliasName}/${local}`)
+      );
+
+      return { derived, facts, name };
+    })
+  );
+
+  for (const { derived, facts, name } of styles) {
+    expect(
+      facts.aliases.map(
+        ({ item, local, name: aliasName }) => `${item}/${aliasName}/${local}`
+      ),
+      `${name} does not report the aliases its modules export`
+    ).toEqual(derived);
+  }
+});
+
 test('every synthesized shadcn/ui name the page claims is exported', async () => {
   const claims = await Promise.all(
     SYNTHESIZED_EXPORTS.map(async (claim) => ({
