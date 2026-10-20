@@ -50,6 +50,14 @@ const createTree = async () => {
       join(webDir, 'lib/registry/catalog.ts'),
       join(root, 'lib/registry/catalog.ts')
     ),
+    cp(
+      join(webDir, 'lib/registry/compositions.ts'),
+      join(root, 'lib/registry/compositions.ts')
+    ),
+    cp(
+      join(webDir, 'lib/registry/pending.ts'),
+      join(root, 'lib/registry/pending.ts')
+    ),
     cp(join(webDir, 'registry'), join(root, 'registry'), { recursive: true }),
     cp(join(webDir, 'content/docs'), join(root, 'content/docs'), {
       recursive: true,

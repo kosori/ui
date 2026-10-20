@@ -1,0 +1,42 @@
+---
+title: Direction
+description: Sets the reading direction for the components inside it.
+---
+
+Direction wraps the [Base UI Direction
+Provider](https://base-ui.com/react/utils/direction-provider) primitive. It
+accepts shadcn/ui's `dir` spelling alongside Base UI's `direction`, and
+re-exports `useDirection` so a component can read the active direction. It is
+not a Port: coss/ui has no counterpart.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/direction
+```
+
+## Example
+
+<ComponentPreview name='direction' />
+
+## Usage
+
+```tsx
+'use client';
+
+import { DirectionProvider, useDirection } from '@/components/ui/direction';
+
+const DirectionLabel = () => {
+  const direction = useDirection();
+
+  return <span>Reading direction: {direction}</span>;
+};
+
+const DirectionDemo = () => (
+  <DirectionProvider direction='rtl'>
+    <div dir='rtl'>
+      <DirectionLabel />
+    </div>
+  </DirectionProvider>
+);
+```

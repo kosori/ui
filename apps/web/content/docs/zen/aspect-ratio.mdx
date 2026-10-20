@@ -1,0 +1,32 @@
+---
+title: Aspect Ratio
+description: Displays content within a desired width-to-height ratio.
+---
+
+Aspect Ratio keeps a box at a fixed width-to-height ratio. It is not a Port:
+coss/ui has no counterpart, and Base UI ships no Aspect Ratio primitive, so the
+component is a plain element that follows kosori's class conventions.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/aspect-ratio
+```
+
+## Example
+
+<ComponentPreview name='aspect-ratio' />
+
+## Usage
+
+```tsx
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+
+const AspectRatioDemo = () => (
+  <div className='w-full max-w-sm'>
+    <AspectRatio className='overflow-hidden rounded-lg bg-muted' ratio={16 / 9}>
+      <div className='flex size-full items-center justify-center'>16 : 9</div>
+    </AspectRatio>
+  </div>
+);
+```

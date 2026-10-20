@@ -11,6 +11,7 @@ import type { StyleName } from '@/registry/preset';
 import AccordionExample from '@/registry/zen/examples/accordion-example';
 import AlertDialogExample from '@/registry/zen/examples/alert-dialog-example';
 import AlertExample from '@/registry/zen/examples/alert-example';
+import AspectRatioExample from '@/registry/zen/examples/aspect-ratio-example';
 import AvatarExample from '@/registry/zen/examples/avatar-example';
 import BadgeExample from '@/registry/zen/examples/badge-example';
 import BreadcrumbExample from '@/registry/zen/examples/breadcrumb-example';
@@ -24,6 +25,7 @@ import ComboboxExample from '@/registry/zen/examples/combobox-example';
 import CommandExample from '@/registry/zen/examples/command-example';
 import ContextMenuExample from '@/registry/zen/examples/context-menu-example';
 import DialogExample from '@/registry/zen/examples/dialog-example';
+import DirectionExample from '@/registry/zen/examples/direction-example';
 import DrawerExample from '@/registry/zen/examples/drawer-example';
 import DropdownMenuExample from '@/registry/zen/examples/dropdown-menu-example';
 import EmptyExample from '@/registry/zen/examples/empty-example';
@@ -75,6 +77,7 @@ const exampleItems = {
   accordion: 'accordion-example',
   alert: 'alert-example',
   'alert-dialog': 'alert-dialog-example',
+  'aspect-ratio': 'aspect-ratio-example',
   avatar: 'avatar-example',
   badge: 'badge-example',
   breadcrumb: 'breadcrumb-example',
@@ -88,6 +91,7 @@ const exampleItems = {
   command: 'command-example',
   'context-menu': 'context-menu-example',
   dialog: 'dialog-example',
+  direction: 'direction-example',
   drawer: 'drawer-example',
   'dropdown-menu': 'dropdown-menu-example',
   empty: 'empty-example',
@@ -142,6 +146,7 @@ const exampleComponents = {
     accordion: AccordionExample,
     alert: AlertExample,
     'alert-dialog': AlertDialogExample,
+    'aspect-ratio': AspectRatioExample,
     avatar: AvatarExample,
     badge: BadgeExample,
     breadcrumb: BreadcrumbExample,
@@ -155,6 +160,7 @@ const exampleComponents = {
     command: CommandExample,
     'context-menu': ContextMenuExample,
     dialog: DialogExample,
+    direction: DirectionExample,
     drawer: DrawerExample,
     'dropdown-menu': DropdownMenuExample,
     empty: EmptyExample,

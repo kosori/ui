@@ -1,0 +1,36 @@
+---
+title: Typography
+description: Styles for headings, paragraphs, lists and other text content.
+---
+
+Typography is a Composition, not a Registry item: shadcn/ui publishes it only as
+documentation, so there is no `@kosori/typography` to install. The Styles apply
+the preset's Tokens to semantic HTML, with no component to add.
+
+## Usage
+
+```tsx
+const Typography = () => (
+  <div>
+    <h1 className='scroll-m-20 font-extrabold text-4xl tracking-tight'>
+      Taxing Laughter: The Joke Tax Chronicles
+    </h1>
+    <p className='leading-7 [&:not(:first-child)]:mt-6'>
+      Once upon a time, in a far-off land, there was a very lazy king.
+    </p>
+    <h2 className='mt-10 scroll-m-20 border-b pb-2 font-semibold text-2xl tracking-tight'>
+      The King&apos;s Plan
+    </h2>
+    <blockquote className='mt-6 border-l-2 pl-6 italic'>
+      After a long day of doing nothing, the king had a brilliant idea.
+    </blockquote>
+    <ul className='my-6 ml-6 list-disc [&>li]:mt-2'>
+      <li>He asked the court jester to tell him a joke.</li>
+      <li>The jester told the king a joke about taxes.</li>
+    </ul>
+    <p className='text-muted-foreground text-sm leading-7'>
+      The king was not amused.
+    </p>
+  </div>
+);
+```

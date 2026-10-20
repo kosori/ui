@@ -13,7 +13,7 @@ export const IncompleteStyleBanner = ({ name }: Props) => (
     <p>
       <strong>{name} is an Incomplete Style.</strong> It serves a subset of the
       kosori catalog; components without a page here are not served by this
-      Style. Pending names are listed on the Components page.
+      Style. The Components page lists what this Style serves.
     </p>
   </div>
 );

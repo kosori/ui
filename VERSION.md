@@ -41,8 +41,7 @@ One row per Port, ordered alphabetically by kosori name.
 | drawer | drawer | 5853db0687904d22f40ec8ad641a99df5bff4aa8049bbd82503a82aa556ded4e |
 | dropdown-menu | menu | 19ed2b219a4a3606488d6bf66d13055bce7b6d5d438f77a1caea5648e4c44aae |
 | empty | empty | c1d099ad14211cfd92dbf10c169c9e178e85ec82d0160d4f814ac73be3df257b |
-| field | field | 02ffda39f73f04638f580fd1fbb76e783cb252f9a87ecebdd62fb4bd0d1393ff |
-| field | fieldset | 1ec36d2a2c60fd1ba229682a876f8d672ade66019513bac1a6747885d369f2a6 |
+| field | field (absorbs fieldset) | 02ffda39f73f04638f580fd1fbb76e783cb252f9a87ecebdd62fb4bd0d1393ff |
 | form | form | c08b75b48a90dd349763720e4ffb5423ae348ec0ef43c8c96110695d6fcf7404 |
 | hover-card | preview-card | 44741ce4217d89c19a485d6973c22c821ed9cf86b15dc03c7094308ae7faa6ba |
 | input | input | 3d488d491eb4e63642adc8b9354b0b0cc5b8ec4e284bbc26da7e2516f24980a4 |
