@@ -355,20 +355,11 @@ export const BatchB = () => (
     <DialogViewport render={<div />} />
     <DialogPopup render={<div />} />
     <DialogContent render={<div />} />
-    <DialogHeader
-      // @ts-expect-error the dialog header is a plain div; no render prop
-      render={<div />}
-    />
-    <DialogFooter
-      // @ts-expect-error the dialog footer is a plain div; no render prop
-      render={<div />}
-    />
+    <DialogHeader render={<header />} />
+    <DialogFooter render={<footer />} />
     <DialogTitle render={<div />} />
     <DialogDescription render={<p />} />
-    <DialogPanel
-      // @ts-expect-error the dialog panel is a plain div; no render prop
-      render={<div />}
-    />
+    <DialogPanel render={<div />} />
 
     <Drawer
       // @ts-expect-error the drawer root renders no element; no render prop
@@ -381,45 +372,18 @@ export const BatchB = () => (
     <DrawerBackdrop render={<div />} />
     <DrawerViewport render={<div />} />
     <DrawerPopup render={<div />} />
-    <DrawerHeader
-      // @ts-expect-error the drawer header is a plain div; no render prop
-      render={<div />}
-    />
-    <DrawerFooter
-      // @ts-expect-error the drawer footer is a plain div; no render prop
-      render={<div />}
-    />
+    <DrawerHeader render={<header />} />
+    <DrawerFooter render={<footer />} />
     <DrawerTitle render={<div />} />
     <DrawerDescription render={<p />} />
-    <DrawerPanel
-      // @ts-expect-error the drawer panel is a plain div; no render prop
-      render={<div />}
-    />
-    <DrawerBar
-      // @ts-expect-error the drawer bar is a plain div; no render prop
-      render={<div />}
-    />
+    <DrawerPanel render={<div />} />
+    <DrawerBar render={<div />} />
     <DrawerContent render={<div />} />
-    <DrawerMenu
-      // @ts-expect-error the drawer menu is a plain nav; no render prop
-      render={<nav />}
-    />
-    <DrawerMenuItem
-      // @ts-expect-error the drawer menu item is a plain button; no render prop
-      render={<button type='button' />}
-    />
-    <DrawerMenuSeparator
-      // @ts-expect-error the drawer menu separator is a plain div; no render prop
-      render={<div />}
-    />
-    <DrawerMenuGroup
-      // @ts-expect-error the drawer menu group is a plain div; no render prop
-      render={<div />}
-    />
-    <DrawerMenuGroupLabel
-      // @ts-expect-error the drawer menu group label is a plain div; no render prop
-      render={<div />}
-    />
+    <DrawerMenu render={<nav />} />
+    <DrawerMenuItem render={<button type='button' />} />
+    <DrawerMenuSeparator render={<div />} />
+    <DrawerMenuGroup render={<div />} />
+    <DrawerMenuGroupLabel render={<div />} />
     <DrawerMenuTrigger render={<button type='button' />} />
     <DrawerMenuCheckboxItem render={<div />} />
     <DrawerMenuRadioGroup render={<div />} />
@@ -496,20 +460,11 @@ export const BatchB = () => (
     <SheetViewport render={<div />} />
     <SheetPopup render={<div />} />
     <SheetContent render={<div />} />
-    <SheetHeader
-      // @ts-expect-error the sheet header is a plain div; no render prop
-      render={<div />}
-    />
-    <SheetFooter
-      // @ts-expect-error the sheet footer is a plain div; no render prop
-      render={<div />}
-    />
+    <SheetHeader render={<header />} />
+    <SheetFooter render={<footer />} />
     <SheetTitle render={<div />} />
     <SheetDescription render={<p />} />
-    <SheetPanel
-      // @ts-expect-error the sheet panel is a plain div; no render prop
-      render={<div />}
-    />
+    <SheetPanel render={<div />} />
 
     <SidebarProvider
       // @ts-expect-error the sidebar provider is a plain div; no render prop
