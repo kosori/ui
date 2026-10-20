@@ -14,7 +14,24 @@ A Port diverges from upstream through Tokens alone. Class strings are not retune
 
 ## Semantic Tokens
 
-coss's `alert`, `badge` and `toast` variants use state colours it names `success`, `warning` and `info`, derived from emerald, amber and blue. kosori's Token contract did not define them, and its seven Base colors cannot inherit a single theme's values. kosori therefore adds six Tokens — `success`, `success-foreground`, `warning`, `warning-foreground`, `info` and `info-foreground` — to the preset with identical values across every Base color. The variant API stays identical to coss's; state colour is a kosori addition, not an upstream one.
+coss's `alert`, `badge` and `toast` variants use state colours it names `success`, `warning` and `info`, derived from emerald, amber and blue. kosori's Token contract did not define them, and its seven Base colors cannot inherit a single theme's values. kosori therefore adds seven Tokens — `success`, `success-foreground`, `warning`, `warning-foreground`, `info`, `info-foreground` and `destructive-foreground` — to the preset with identical values across every Base color. The variant API stays identical to coss's; state colour is a kosori addition, not an upstream one.
+
+`destructive-foreground` completes the state set. coss's Badge, `destructive-outline` Button, Field error, destructive menu item and Drawer classes already reference it, so deriving it from the red palette (`700` light, `400` dark) keeps those class strings byte-verbatim instead of retuning them to the interface foreground.
+
+## Token sources and the theme bridge
+
+A Base color definition is the only place a Token value lives. One composer derives everything downstream:
+
+- the light and dark declarations an install writes;
+- the `@theme` colour mappings that make utilities such as `bg-success` and `text-destructive-foreground` compile;
+- the committed documentation stylesheet, generated from the neutral Base color;
+- the per-item declarations that let a Consumer install one component whose source references a state Token without installing the preset.
+
+Fonts and the radius scale stay explicit, non-derived inputs. A colour mapping is derived for every other Token so a declaration cannot exist without its utility. Registry items declare the state Tokens their own source references; an install is additive to the preset, never a replacement for it. Tests exercise the composition seam and fail when a source references an undeclared state Token or the documentation stylesheet drifts from the composer.
+
+## Design and Structure
+
+A Port takes Design from coss/ui and Structure from shadcn/ui. Design — class strings, default variant values, dividers, spacing, composition — is never retuned. Structure — export names, prop names and render plumbing — never omits an export shadcn/ui publishes. [ADR-0007](0007-render-plumbing.md) supersedes this ADR's earlier clause that a Port differs from coss only through Tokens; the naming, semantic Tokens and Internal items decisions here still stand.
 
 ## Considered options
 
