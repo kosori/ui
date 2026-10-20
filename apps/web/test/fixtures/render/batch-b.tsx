@@ -528,7 +528,10 @@ export const BatchB = () => (
       // @ts-expect-error the sidebar inset is a plain main; no render prop
       render={<main />}
     />
-    <SidebarInput render={<input />} />
+    <SidebarInput
+      // @ts-expect-error input no longer accepts render
+      render={<input />}
+    />
     <SidebarHeader
       // @ts-expect-error the sidebar header is a plain div; no render prop
       render={<div />}
