@@ -1,7 +1,5 @@
 'use client';
 
-import { mergeProps } from '@base-ui/react/merge-props';
-import { useRender } from '@base-ui/react/use-render';
 import { cn } from 'cn';
 import type React from 'react';
 
@@ -9,17 +7,19 @@ export type TableVariant = 'default' | 'card';
 
 export type TableProps = React.ComponentProps<'table'> & {
   variant?: TableVariant;
-  render?: useRender.ComponentProps<'div'>['render'];
 };
 
 export function Table({
   className,
   variant = 'default',
-  render,
   ...props
 }: TableProps): React.ReactElement {
-  const defaultProps = {
-    children: (
+  return (
+    <div
+      className='relative w-full overflow-x-auto'
+      data-slot='table-container'
+      data-variant={variant}
+    >
       <table
         className={cn(
           'w-full caption-bottom in-data-[variant=card]:border-separate in-data-[variant=card]:border-spacing-0 text-sm',
@@ -28,17 +28,8 @@ export function Table({
         data-slot='table'
         {...props}
       />
-    ),
-    className: 'relative w-full overflow-x-auto',
-    'data-slot': 'table-container',
-    'data-variant': variant,
-  };
-
-  return useRender({
-    defaultTagName: 'div',
-    props: mergeProps<'div'>(defaultProps, {}),
-    render,
-  });
+    </div>
+  );
 }
 
 export function TableHeader({

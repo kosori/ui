@@ -1,8 +1,6 @@
 'use client';
 
 import { Dialog as DialogPrimitive } from '@base-ui/react/dialog';
-import { mergeProps } from '@base-ui/react/merge-props';
-import { useRender } from '@base-ui/react/use-render';
 import { IconX } from '@tabler/icons-react';
 import { cn } from 'cn';
 import type React from 'react';
@@ -114,48 +112,40 @@ export function DialogPopup({
 
 export function DialogHeader({
   className,
-  render,
   ...props
-}: useRender.ComponentProps<'div'>): React.ReactElement {
-  const defaultProps = {
-    className: cn(
-      'flex flex-col gap-2 p-6 in-[[data-slot=dialog-popup]:has([data-slot=dialog-panel])]:pb-3 max-sm:pb-4',
-      className
-    ),
-    'data-slot': 'dialog-header',
-  };
-
-  return useRender({
-    defaultTagName: 'div',
-    props: mergeProps<'div'>(defaultProps, props),
-    render,
-  });
+}: React.ComponentProps<'div'>): React.ReactElement {
+  return (
+    <div
+      className={cn(
+        'flex flex-col gap-2 p-6 in-[[data-slot=dialog-popup]:has([data-slot=dialog-panel])]:pb-3 max-sm:pb-4',
+        className
+      )}
+      data-slot='dialog-header'
+      {...props}
+    />
+  );
 }
 
 export function DialogFooter({
   className,
   variant = 'default',
-  render,
   ...props
-}: useRender.ComponentProps<'div'> & {
+}: React.ComponentProps<'div'> & {
   variant?: 'default' | 'bare';
 }): React.ReactElement {
-  const defaultProps = {
-    className: cn(
-      'flex flex-col-reverse gap-2 px-6 sm:flex-row sm:justify-end sm:rounded-b-[calc(var(--radius-2xl)-1px)]',
-      variant === 'default' && 'border-t bg-muted/72 py-4',
-      variant === 'bare' &&
-        'in-[[data-slot=dialog-popup]:has([data-slot=dialog-panel])]:pt-3 pt-4 pb-6',
-      className
-    ),
-    'data-slot': 'dialog-footer',
-  };
-
-  return useRender({
-    defaultTagName: 'div',
-    props: mergeProps<'div'>(defaultProps, props),
-    render,
-  });
+  return (
+    <div
+      className={cn(
+        'flex flex-col-reverse gap-2 px-6 sm:flex-row sm:justify-end sm:rounded-b-[calc(var(--radius-2xl)-1px)]',
+        variant === 'default' && 'border-t bg-muted/72 py-4',
+        variant === 'bare' &&
+          'in-[[data-slot=dialog-popup]:has([data-slot=dialog-panel])]:pt-3 pt-4 pb-6',
+        className
+      )}
+      data-slot='dialog-footer'
+      {...props}
+    />
+  );
 }
 
 export function DialogTitle({
@@ -187,26 +177,20 @@ export function DialogDescription({
 export function DialogPanel({
   className,
   scrollFade = true,
-  render,
   ...props
-}: useRender.ComponentProps<'div'> & {
+}: React.ComponentProps<'div'> & {
   scrollFade?: boolean;
 }): React.ReactElement {
-  const defaultProps = {
-    className: cn(
-      'p-6 in-[[data-slot=dialog-popup]:has([data-slot=dialog-header])]:pt-1 in-[[data-slot=dialog-popup]:has([data-slot=dialog-footer]:not(.border-t))]:pb-1',
-      className
-    ),
-    'data-slot': 'dialog-panel',
-  };
-
   return (
     <ScrollArea overscrollContain scrollFade={scrollFade}>
-      {useRender({
-        defaultTagName: 'div',
-        props: mergeProps<'div'>(defaultProps, props),
-        render,
-      })}
+      <div
+        className={cn(
+          'p-6 in-[[data-slot=dialog-popup]:has([data-slot=dialog-header])]:pt-1 in-[[data-slot=dialog-popup]:has([data-slot=dialog-footer]:not(.border-t))]:pb-1',
+          className
+        )}
+        data-slot='dialog-panel'
+        {...props}
+      />
     </ScrollArea>
   );
 }

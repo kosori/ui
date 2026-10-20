@@ -2,7 +2,7 @@
 
 kosori ports `zen` from [coss/ui](https://coss.com/ui). This file records the upstream revision a Port was taken from and the SHA-256 of every upstream item, so a future re-sync has a starting point. No upstream snapshot is vendored in this repository.
 
-The hash pins the upstream bytes, not the local source. A Port is formatted, renamed and adapted to kosori imports, so its local file is not byte-identical to upstream. What the install suite byte-matches is the local source file to the file an install writes.
+The hash pins the upstream bytes used for styling, not a diffable local copy. A Port is formatted, renamed, adapted to kosori imports and mirrors shadcn/ui's render and prop-forwarding structure, so its local source is not byte-identical to upstream and a diff against coss is expected to show structural changes. What the install suite byte-matches is the local source file to the file an install writes.
 
 ## Revision
 

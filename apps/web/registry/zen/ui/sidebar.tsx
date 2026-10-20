@@ -10,7 +10,6 @@ import {
   type Context,
   type CSSProperties,
   createContext,
-  type MouseEvent,
   type ReactElement,
   useCallback,
   useContext,
@@ -302,7 +301,7 @@ export function SidebarTrigger({
       data-sidebar='trigger'
       data-slot='sidebar-trigger'
       // biome-ignore lint/performance/noJsxPropsBind: the handler is part of the upstream component API
-      onClick={(event: MouseEvent<HTMLButtonElement>) => {
+      onClick={(event) => {
         onClick?.(event);
         toggleSidebar();
       }}

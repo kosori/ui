@@ -1,8 +1,6 @@
 'use client';
 
 import { Dialog as SheetPrimitive } from '@base-ui/react/dialog';
-import { mergeProps } from '@base-ui/react/merge-props';
-import { useRender } from '@base-ui/react/use-render';
 import { IconX } from '@tabler/icons-react';
 import { cn } from 'cn';
 import type React from 'react';
@@ -125,48 +123,40 @@ export function SheetPopup({
 
 export function SheetHeader({
   className,
-  render,
   ...props
-}: useRender.ComponentProps<'div'>): React.ReactElement {
-  const defaultProps = {
-    className: cn(
-      'flex flex-col gap-2 p-6 in-[[data-slot=sheet-popup]:has([data-slot=sheet-panel])]:pb-3 max-sm:pb-4',
-      className
-    ),
-    'data-slot': 'sheet-header',
-  };
-
-  return useRender({
-    defaultTagName: 'div',
-    props: mergeProps<'div'>(defaultProps, props),
-    render,
-  });
+}: React.ComponentProps<'div'>): React.ReactElement {
+  return (
+    <div
+      className={cn(
+        'flex flex-col gap-2 p-6 in-[[data-slot=sheet-popup]:has([data-slot=sheet-panel])]:pb-3 max-sm:pb-4',
+        className
+      )}
+      data-slot='sheet-header'
+      {...props}
+    />
+  );
 }
 
 export function SheetFooter({
   className,
   variant = 'default',
-  render,
   ...props
-}: useRender.ComponentProps<'div'> & {
+}: React.ComponentProps<'div'> & {
   variant?: 'default' | 'bare';
 }): React.ReactElement {
-  const defaultProps = {
-    className: cn(
-      'flex flex-col-reverse gap-2 px-6 sm:flex-row sm:justify-end',
-      variant === 'default' && 'border-t bg-muted/72 py-4',
-      variant === 'bare' &&
-        'in-[[data-slot=sheet-popup]:has([data-slot=sheet-panel])]:pt-3 pt-4 pb-6',
-      className
-    ),
-    'data-slot': 'sheet-footer',
-  };
-
-  return useRender({
-    defaultTagName: 'div',
-    props: mergeProps<'div'>(defaultProps, props),
-    render,
-  });
+  return (
+    <div
+      className={cn(
+        'flex flex-col-reverse gap-2 px-6 sm:flex-row sm:justify-end',
+        variant === 'default' && 'border-t bg-muted/72 py-4',
+        variant === 'bare' &&
+          'in-[[data-slot=sheet-popup]:has([data-slot=sheet-panel])]:pt-3 pt-4 pb-6',
+        className
+      )}
+      data-slot='sheet-footer'
+      {...props}
+    />
+  );
 }
 
 export function SheetTitle({
@@ -198,26 +188,20 @@ export function SheetDescription({
 export function SheetPanel({
   className,
   scrollFade = true,
-  render,
   ...props
-}: useRender.ComponentProps<'div'> & {
+}: React.ComponentProps<'div'> & {
   scrollFade?: boolean;
 }): React.ReactElement {
-  const defaultProps = {
-    className: cn(
-      'p-6 in-[[data-slot=sheet-popup]:has([data-slot=sheet-header])]:pt-1 in-[[data-slot=sheet-popup]:has([data-slot=sheet-footer]:not(.border-t))]:pb-1',
-      className
-    ),
-    'data-slot': 'sheet-panel',
-  };
-
   return (
     <ScrollArea overscrollContain scrollFade={scrollFade}>
-      {useRender({
-        defaultTagName: 'div',
-        props: mergeProps<'div'>(defaultProps, props),
-        render,
-      })}
+      <div
+        className={cn(
+          'p-6 in-[[data-slot=sheet-popup]:has([data-slot=sheet-header])]:pt-1 in-[[data-slot=sheet-popup]:has([data-slot=sheet-footer]:not(.border-t))]:pb-1',
+          className
+        )}
+        data-slot='sheet-panel'
+        {...props}
+      />
     </ScrollArea>
   );
 }
