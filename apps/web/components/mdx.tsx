@@ -1,5 +1,6 @@
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { MDXComponents } from 'mdx/types';
+import { createCompatibility } from '@/components/compatibility';
 import { createComponentsStatus } from '@/components/components-status';
 import { DatePickerPreview } from '@/components/date-picker-preview';
 import { createStylePreview } from '@/components/style-preview';
@@ -15,6 +16,7 @@ export const getMDXComponents = (
 ) =>
   ({
     ...defaultMdxComponents,
+    Compatibility: createCompatibility(style),
     ComponentPreview: createStylePreview(style),
     ComponentsStatus: createComponentsStatus(style),
     DatePickerPreview,
