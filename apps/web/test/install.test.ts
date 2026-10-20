@@ -19,6 +19,7 @@ import { INTERNAL_ITEMS, isInternalItem } from '../lib/registry/internal';
 import { PENDING_COMPONENTS } from '../lib/registry/pending';
 import { BASE_COLORS } from '../registry/base-colors';
 import {
+  composeDocsStylesheet,
   composeStyleItem,
   STATE_TOKEN_NAMES,
   STYLES,
@@ -654,6 +655,30 @@ test('a partial install declares every state Token its source references', async
         `${item.name} @theme --color-${token}`
       ).toBe(`var(--${token})`);
     }
+  }
+});
+
+test('the documentation stylesheet is generated from the neutral preset', async () => {
+  const committed = await readFile(join(webDir, 'app/tokens.css'), 'utf8');
+  const globals = await readFile(join(webDir, 'app/globals.css'), 'utf8');
+
+  expect(
+    committed,
+    'app/tokens.css is hand-edited; run bun run registry:build'
+  ).toBe(composeDocsStylesheet());
+  expect(
+    globals,
+    'app/globals.css does not import the generated documentation stylesheet'
+  ).toContain("@import './tokens.css';");
+
+  for (const token of STATE_TOKEN_NAMES) {
+    expect(committed, `the docs stylesheet omits --${token}`).toContain(
+      `--${token}:`
+    );
+    expect(
+      committed,
+      `the docs stylesheet omits the --color-${token} mapping`
+    ).toContain(`--color-${token}: var(--${token});`);
   }
 });
 
