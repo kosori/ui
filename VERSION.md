@@ -11,7 +11,7 @@ The hash pins the upstream bytes used for styling, not a diffable local copy. A 
 | Research date | 2026-10-19 |
 | Registry | `coss ui`, `https://coss.com/ui/r` |
 | Registry version | Not published; the fetch date identifies the revision |
-| Fetched | 2026-10-19 |
+| Fetched | 2026-10-20 |
 
 The registry index carries no `version` field. When it does, record that value instead of the fetch date. Until then the fetch date is the revision: a later fetch that returns different bytes invalidates the pins below.
 
@@ -24,7 +24,7 @@ One row per Port, ordered alphabetically by kosori name.
 | accordion | accordion | b975e2a75b37fb44bca277dd85bf0825e98c3531036ca8d1543f6f4556cf56a5 |
 | alert | alert | 340fc98fae7b30d038e1b7bcbb632f551360cfd8e0803b62a8ddfc04c002119f |
 | alert-dialog | alert-dialog | d44513e3a157229eea1a9190aadbc479e356b47eb13c98e1a91ce4366fa11cf6 |
-| autocomplete | autocomplete | 31501bddfd630d1145fb5390acaf3f024c86e9aecfefc90a96422c43ed247ad9 |
+| autocomplete | autocomplete | 1298734859a47189abc821795ed082bc56b7dbe6de14859d539afc1adefc17d1 |
 | avatar | avatar | 2fe6b7b5551b8867a42f764d7616d8a271409432ce696d32611d0d4b74341e9b |
 | badge | badge | 60f73554b462ec5e2929ccc58c0522b069c07e1268dbfb67749c2837347b788b |
 | breadcrumb | breadcrumb | e420178801b8d72238f1274c722a7ca4e9f9834bd58c7a45ba8d71a645f83c79 |
@@ -34,7 +34,7 @@ One row per Port, ordered alphabetically by kosori name.
 | card | card | b59dbc0bd5d61694fcf1948fb8134795b0f5a1bf0a28d8d6bc817297c73a006e |
 | checkbox | checkbox | a1b8b4180a39a47c47bd2b50e432d0911da6efe3b963b065b3b5cb8893760047 |
 | collapsible | collapsible | f70e7b9fde220ce5f039c93176a545a46a9b553ecdb23595a320e5163a95a1e8 |
-| combobox | combobox | 2cca986d7883560337fbd35009ee13648c9600a6633bb08c79de635c6dd15692 |
+| combobox | combobox | dd8d7cfaa60c0e9b9a0ffa3f2334d43fbed05aaa67d0259fd4d89f2814c4689b |
 | command | command | 26f77d2322179cd7a5694d865e85362d492db053a91cb0ef7c51b573e45076a4 |
 | context-menu | context-menu | c7dd4deefe1b4180ea242c0a97c3cca9a5112bc6113e212413f11be4738432fc |
 | dialog | dialog | 29e99f5d39307acd3781ee0c8f78aabe6d637f667fb3b7893820e4621ddcce7b |
@@ -55,7 +55,7 @@ One row per Port, ordered alphabetically by kosori name.
 | progress | progress | 605ea95436094735fc94d2ae38fd50df2dcce1617b2a67c504114bd0e55cc2b2 |
 | radio-group | radio-group | b2479e9967f0ba48d1acbb58a4fff7b919aa746bb8a61cbbff389baac02abbb7 |
 | scroll-area | scroll-area | 6274eace4599cba26e731b0f02cd2307d2207947162ccc575e45984e87aa269f |
-| segmented-control | segmented-control | c1cb84d02ac5b75aa08a70c205feb9cc8668ffbc19751e013364f547ae41a8a8 |
+| segmented-control | segmented-control | 06ad593780a799474b4db3bf3aecf116187f188dd147ced4340f9bd80dc485c5 |
 | select | select | aa8821bbb4bd6b8b52a6cbaaf8d995f48b1001ad93d4bfa4e5b91b5e6d5f66a0 |
 | separator | separator | 48393a9f365097e350bb33f0e84d2df25efd6b374868aa075f8d6011378c1d6e |
 | sheet | sheet | f1d3361a490c9d9a49a4289604aaf6995cb0b138728c3068ba94ee6c9337978a |
@@ -65,7 +65,7 @@ One row per Port, ordered alphabetically by kosori name.
 | spinner | spinner | 5116d0ec549bf70d20d5359a485e6792b6c87d89a389102ad6c3f44312c23972 |
 | switch | switch | 713321db777570c883348696495f9b12f47f63f1d567b8eab42c27a8d0625c36 |
 | table | table | b21f811291d6a1706874cb37dd568b922fb5d8b053e6636b7b0e9e9c6320c98d |
-| tabs | tabs | cbfe21ce54efe39cc02eb073a8327a4ab81b918d5745d986fdfae07d32204a7a |
+| tabs | tabs | c2c91ae0e3da5d2e2c0f780aa7729ced8f9075b1e73efb766a5b77740f52b889 |
 | textarea | textarea | 3e30e41c099d7343cb0a603557acd4e8b7c94b43139a7a489df322c04c5f601c |
 | toast | toast | 3be7bcee60026cdc2a2177026598bf51cf8a739f5553466c8fbc9b5bd994d3e1 |
 | toggle | toggle | a32372d0eaa291bc81f61f4ddb1f5bb827c507fd53de03c6f709adc242ee5bfb |
