@@ -39,15 +39,17 @@ const BreadcrumbExample = () => (
             <DropdownMenuItem render={<a href='/docs' />}>
               Docs
             </DropdownMenuItem>
-            <DropdownMenuItem render={<a href='/particles' />}>
-              Particles
+            <DropdownMenuItem render={<a href='/docs/zen/components' />}>
+              Components
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </BreadcrumbItem>
       <BreadcrumbSeparator />
       <BreadcrumbItem>
-        <BreadcrumbLink render={<a href='/docs/' />}>Components</BreadcrumbLink>
+        <BreadcrumbLink render={<a href='/docs/zen/components' />}>
+          Components
+        </BreadcrumbLink>
       </BreadcrumbItem>
       <BreadcrumbSeparator />
       <BreadcrumbItem>

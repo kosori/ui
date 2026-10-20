@@ -28,7 +28,7 @@ const TableExample = () => (
           <Badge variant='outline'>
             <span
               aria-hidden='true'
-              className='size-1.5 rounded-full bg-emerald-500'
+              className='size-1.5 rounded-full bg-success'
             />
             Paid
           </Badge>
@@ -56,7 +56,7 @@ const TableExample = () => (
           <Badge variant='outline'>
             <span
               aria-hidden='true'
-              className='size-1.5 rounded-full bg-amber-500'
+              className='size-1.5 rounded-full bg-warning'
             />
             Pending
           </Badge>
@@ -70,7 +70,7 @@ const TableExample = () => (
           <Badge variant='outline'>
             <span
               aria-hidden='true'
-              className='size-1.5 rounded-full bg-emerald-500'
+              className='size-1.5 rounded-full bg-success'
             />
             Paid
           </Badge>
@@ -84,7 +84,7 @@ const TableExample = () => (
           <Badge variant='outline'>
             <span
               aria-hidden='true'
-              className='size-1.5 rounded-full bg-emerald-500'
+              className='size-1.5 rounded-full bg-success'
             />
             Paid
           </Badge>
@@ -98,7 +98,7 @@ const TableExample = () => (
           <Badge variant='outline'>
             <span
               aria-hidden='true'
-              className='size-1.5 rounded-full bg-red-500'
+              className='size-1.5 rounded-full bg-destructive'
             />
             Failed
           </Badge>

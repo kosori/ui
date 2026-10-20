@@ -3,6 +3,13 @@
 import { Button } from '@/components/ui/button';
 import { toastManager } from '@/components/ui/toast';
 
+const addDefaultToast = () => {
+  toastManager.add({
+    description: 'Monday, January 3rd at 6:00pm',
+    title: 'Event has been created',
+  });
+};
+
 const addSuccessToast = () => {
   toastManager.add({
     description: 'Your changes have been saved.',
@@ -37,6 +44,9 @@ const addWarningToast = () => {
 
 const ToastExample = () => (
   <div className='flex flex-wrap gap-2'>
+    <Button onClick={addDefaultToast} variant='outline'>
+      Default Toast
+    </Button>
     <Button onClick={addSuccessToast} variant='outline'>
       Success Toast
     </Button>
