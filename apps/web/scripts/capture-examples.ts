@@ -85,7 +85,13 @@ const startServer = async (): Promise<Server> => {
  * compared: the run fails only when a page or its preview cannot be captured.
  */
 const main = async () => {
-  const captures = await captureManifest(webDir);
+  const manifest = await captureManifest(webDir);
+  const requested = process.env.VISUAL_EXAMPLES?.split(',')
+    .map((example) => example.trim())
+    .filter(Boolean);
+  const captures = requested?.length
+    ? manifest.filter(({ example }) => requested.includes(example))
+    : manifest;
   const expected = captures.length * CAPTURE_SCHEMES.length;
 
   await rm(outputDir, { force: true, recursive: true });

@@ -60,7 +60,8 @@ bun run visual:capture
 The command starts the docs app on port `3210` unless `VISUAL_BASE_URL` points
 at one already running, then writes one PNG per Example per scheme to
 `.visual-proof/<scheme>/<example>.png` — 49 Examples, 98 captures today. Set
-`VISUAL_PORT` to move the dev server.
+`VISUAL_PORT` to move the dev server, `VISUAL_EXAMPLES=button,card` to capture a
+subset, or `VISUAL_BASE_URL` to reuse a running docs app.
 
 A capture fails the command only when a page or its preview cannot be
 screenshotted. Nothing compares pixels, so font anti-aliasing cannot fail the

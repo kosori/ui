@@ -34,10 +34,7 @@ const ComponentPreview = async ({ name, style = 'zen' }: Props) => {
   const source = await readExampleSource(style, name);
 
   return (
-    <div
-      className='not-prose my-6 overflow-hidden rounded-xl border'
-      data-example={name}
-    >
+    <div className='not-prose my-6 overflow-hidden rounded-xl border'>
       <div className='border-b bg-muted/50 px-4 py-2'>
         <span className='font-mono text-muted-foreground text-xs'>
           {exampleFileName(name)}
@@ -45,6 +42,7 @@ const ComponentPreview = async ({ name, style = 'zen' }: Props) => {
       </div>
       <div
         className='flex min-h-40 flex-wrap items-center gap-4 p-6'
+        data-example={name}
         style={previewRadiusTokens(style)}
       >
         <ExamplePreview name={name} style={style} />
