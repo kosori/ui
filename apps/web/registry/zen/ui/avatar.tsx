@@ -55,6 +55,23 @@ export function AvatarFallback({
   );
 }
 
+/** Render a status marker over an avatar's bottom trailing corner. */
+export function AvatarBadge({
+  className,
+  ...props
+}: React.ComponentProps<'span'>): React.ReactElement {
+  return (
+    <span
+      className={cn(
+        'absolute end-0 bottom-0 z-10 inline-flex size-2.5 select-none items-center justify-center rounded-full bg-primary text-primary-foreground ring-2 ring-background [&_svg:not([class*="size-"])]:size-2 [&_svg]:pointer-events-none',
+        className
+      )}
+      data-slot='avatar-badge'
+      {...props}
+    />
+  );
+}
+
 export interface AvatarGroupProps extends React.ComponentProps<'div'> {
   topmost?: 'first' | 'last';
 }

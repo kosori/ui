@@ -91,4 +91,5 @@ export {
   Group as ButtonGroup,
   GroupSeparator as ButtonGroupSeparator,
   GroupText as ButtonGroupText,
+  groupVariants as buttonGroupVariants,
 };

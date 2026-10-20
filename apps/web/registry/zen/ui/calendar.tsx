@@ -1,6 +1,11 @@
 'use client';
 
-import { type DateLib, DayPicker } from '@daypicker/react';
+import {
+  type DateLib,
+  DayButton,
+  type DayButtonProps,
+  DayPicker,
+} from '@daypicker/react';
 import {
   IconChevronLeft,
   IconChevronRight,
@@ -104,6 +109,7 @@ export function Calendar({
         <IconSelector className={className} {...props} aria-hidden='true' />
       );
     },
+    DayButton: CalendarDayButton,
   };
 
   const mergedComponents = {
@@ -133,4 +139,12 @@ export function Calendar({
       {...(dayPickerProps as React.ComponentProps<typeof DayPicker>)}
     />
   );
+}
+
+/** Render a day cell's button; Calendar uses it as its default DayButton. */
+export function CalendarDayButton({
+  className,
+  ...props
+}: DayButtonProps): React.ReactElement {
+  return <DayButton className={className} {...props} />;
 }
