@@ -1,5 +1,7 @@
 'use client';
 
+import { mergeProps } from '@base-ui/react/merge-props';
+import { useRender } from '@base-ui/react/use-render';
 import {
   IconChevronLeft,
   IconChevronRight,
@@ -7,7 +9,7 @@ import {
 } from '@tabler/icons-react';
 import { cn } from 'cn';
 import type * as React from 'react';
-import { Button } from '@/components/ui/button';
+import { type Button, buttonVariants } from '@/components/ui/button';
 
 export function Pagination({
   className,
@@ -45,29 +47,35 @@ export function PaginationItem({
 export type PaginationLinkProps = {
   isActive?: boolean;
   size?: React.ComponentProps<typeof Button>['size'];
-} & React.ComponentProps<'a'>;
+} & useRender.ComponentProps<'a'>;
 
 export function PaginationLink({
   className,
   isActive,
   size = 'icon',
+  render,
   ...props
 }: PaginationLinkProps): React.ReactElement {
-  return (
-    <Button
-      className={className}
-      render={
-        <a
-          aria-current={isActive ? 'page' : undefined}
-          data-active={isActive}
-          data-slot='pagination-link'
-          {...props}
-        />
-      }
-      size={size}
-      variant={isActive ? 'outline' : 'ghost'}
-    />
-  );
+  const defaultProps = {
+    'aria-current': isActive ? ('page' as const) : undefined,
+    className: render
+      ? className
+      : cn(
+          buttonVariants({
+            size,
+            variant: isActive ? 'outline' : 'ghost',
+          }),
+          className
+        ),
+    'data-active': isActive,
+    'data-slot': 'pagination-link',
+  };
+
+  return useRender({
+    defaultTagName: 'a',
+    props: mergeProps<'a'>(defaultProps, props),
+    render,
+  });
 }
 
 export function PaginationPrevious({

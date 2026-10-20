@@ -455,6 +455,20 @@ test('installing a preset and every item of every Style leaves Consumer projects
           'install wrote outside the component directory, CSS entry and manifests'
         ).toEqual([]);
 
+        // A Consumer installs a Style's catalog, not the whole catalog: the
+        // polymorphic fixture only makes sense where every component it renders
+        // is served. It lives outside the install surface, so write it after the
+        // ADR-0003 comparison and let `tsc` cover it through the fixture include.
+        const polymorphicItems = ['card', 'dialog', 'table'];
+        if (
+          polymorphicItems.every((name) => catalogComponentNames.includes(name))
+        ) {
+          await cp(
+            join(import.meta.dirname, 'fixtures/consumer-render.tsx'),
+            join(scratch, 'app/render-fixture.tsx')
+          );
+        }
+
         const css = await readFile(join(scratch, 'app/globals.css'), 'utf8');
         expect(declarations(css, ':root')).toContain(
           '--background: oklch(1 0 0)'
