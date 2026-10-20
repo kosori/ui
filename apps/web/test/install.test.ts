@@ -3,6 +3,7 @@ import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import {
   cp,
+  mkdir,
   mkdtemp,
   readdir,
   readFile,
@@ -527,6 +528,18 @@ test('installing a preset and every item of every Style leaves Consumer projects
           join(scratch, 'node_modules')
         );
 
+        const items = await readCatalog(style.name);
+
+        // A Consumer pastes shadcn/ui documentation verbatim. The fixture
+        // compiles the pasted snippet against whatever the Style installs.
+        if (items.some((item) => item.name === 'input-otp')) {
+          await mkdir(join(scratch, 'app/input-otp'), { recursive: true });
+          await cp(
+            join(webDir, 'test/fixtures/snippets/input-otp.tsx'),
+            join(scratch, 'app/input-otp/page.tsx')
+          );
+        }
+
         // ADR-0003: an install writes only the component directory, the CSS
         // entry and the dependency manifests. Record the tree before it runs.
         const before = await readTree(scratch);
@@ -561,7 +574,6 @@ test('installing a preset and every item of every Style leaves Consumer projects
           `${JSON.stringify(config, null, 2)}\n`
         );
 
-        const items = await readCatalog(style.name);
         const components = items.filter((item) => item.type === 'registry:ui');
         const documented = components.filter(
           (component) => !isInternalItem(component.name)
@@ -700,6 +712,20 @@ test('installing a preset and every item of every Style leaves Consumer projects
           outsideSurface,
           'install wrote outside the component directory, CSS entry and manifests'
         ).toEqual([]);
+
+        // A Consumer installs a Style's catalog, not the whole catalog: the
+        // polymorphic fixture only makes sense where every component it renders
+        // is served. It lives outside the install surface, so write it after the
+        // ADR-0003 comparison and let `tsc` cover it through the fixture include.
+        const polymorphicItems = ['card', 'dialog', 'table'];
+        if (
+          polymorphicItems.every((name) => catalogComponentNames.includes(name))
+        ) {
+          await cp(
+            join(import.meta.dirname, 'fixtures/consumer-render.tsx'),
+            join(scratch, 'app/render-fixture.tsx')
+          );
+        }
 
         const css = await readFile(join(scratch, 'app/globals.css'), 'utf8');
         expect(declarations(css, ':root')).toContain(

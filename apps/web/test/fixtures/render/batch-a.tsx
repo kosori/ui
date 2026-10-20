@@ -59,6 +59,7 @@ import {
   CardFrameHeader,
   CardFrameTitle,
   CardHeader,
+  CardPanel,
   CardTitle,
 } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -131,6 +132,20 @@ export const accepted = (
     <Badge render={<a href='/' />} />
     <BreadcrumbLink render={<a href='/' />} />
     <Button nativeButton={false} render={<a href='/' />} />
+    <Card render={<article />} />
+    <CardAction render={<div />} />
+    <CardContent render={<div />} />
+    <CardDescription render={<p />} />
+    <CardFooter render={<div />} />
+    <CardFrame render={<section />} />
+    <CardFrameAction render={<div />} />
+    <CardFrameDescription render={<p />} />
+    <CardFrameFooter render={<div />} />
+    <CardFrameHeader render={<header />} />
+    <CardFrameTitle render={<h2>Title</h2>} />
+    <CardHeader render={<a href='/' />} />
+    <CardPanel render={<div />} />
+    <CardTitle render={<h2>Title</h2>} />
     <ButtonGroupText render={<span />} />
     <ButtonGroupSeparator render={<div />} />
     <Checkbox render={<span />} />
@@ -148,6 +163,7 @@ export const accepted = (
     <Form render={<form />} />
     <OTPField length={6} render={<div />} />
     <OTPFieldInput render={<input />} />
+    <Label render={<span />} />
     <Toggle render={<button type='button' />} />
     <ToggleGroup render={<div />} />
     <ToggleGroupItem render={<button type='button' />} />
@@ -183,32 +199,6 @@ export const rejected = (
     <BreadcrumbSeparator render={<li />} />
     {/* @ts-expect-error ButtonGroup renders a plain element */}
     <ButtonGroup render={<div />} />
-    {/* @ts-expect-error Card renders a plain element */}
-    <Card render={<div />} />
-    {/* @ts-expect-error CardAction renders a plain element */}
-    <CardAction render={<div />} />
-    {/* @ts-expect-error CardContent renders a plain element */}
-    <CardContent render={<div />} />
-    {/* @ts-expect-error CardDescription renders a plain element */}
-    <CardDescription render={<div />} />
-    {/* @ts-expect-error CardFooter renders a plain element */}
-    <CardFooter render={<div />} />
-    {/* @ts-expect-error CardFrame renders a plain element */}
-    <CardFrame render={<div />} />
-    {/* @ts-expect-error CardFrameAction renders a plain element */}
-    <CardFrameAction render={<div />} />
-    {/* @ts-expect-error CardFrameDescription renders a plain element */}
-    <CardFrameDescription render={<div />} />
-    {/* @ts-expect-error CardFrameFooter renders a plain element */}
-    <CardFrameFooter render={<div />} />
-    {/* @ts-expect-error CardFrameHeader renders a plain element */}
-    <CardFrameHeader render={<div />} />
-    {/* @ts-expect-error CardFrameTitle renders a plain element */}
-    <CardFrameTitle render={<div />} />
-    {/* @ts-expect-error CardHeader renders a plain element */}
-    <CardHeader render={<div />} />
-    {/* @ts-expect-error CardTitle renders a plain element */}
-    <CardTitle render={<div />} />
     {/* @ts-expect-error Empty renders a plain element */}
     <Empty render={<div />} />
     {/* @ts-expect-error EmptyContent renders a plain element */}
@@ -239,7 +229,5 @@ export const rejected = (
     <Kbd render={<kbd />} />
     {/* @ts-expect-error KbdGroup renders a plain element */}
     <KbdGroup render={<kbd />} />
-    {/* @ts-expect-error Label renders a plain element */}
-    <Label render={<span />} />
   </>
 );
