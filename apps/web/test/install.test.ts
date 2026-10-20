@@ -1212,3 +1212,135 @@ test('state utilities compile for every Base color', async () => {
     server.stop(true);
   }
 }, 240_000);
+
+test('a Consumer project builds the shadcn/ui toast call site on the Base UI manager', async () => {
+  const server = serveInterop();
+  const origin = `http://127.0.0.1:${server.port}`;
+  const cliEnv = { ...process.env, REGISTRY_URL: `${origin}/r` };
+
+  try {
+    const build = await buildRegistry('zen');
+    expect(build.exitCode, build.stdout + build.stderr).toBe(0);
+
+    const scratch = await mkdtemp(join(tmpdir(), 'kosori-toast-zen-'));
+    try {
+      await cp(fixtureDir, scratch, { recursive: true });
+      await symlink(
+        join(webDir, 'node_modules'),
+        join(scratch, 'node_modules')
+      );
+
+      // The surface under test is what a Consumer writes: `<Toaster />` once in
+      // the layout and the two-line call site everywhere else.
+      await Promise.all([
+        writeFile(
+          join(scratch, 'app/layout.tsx'),
+          `import type { ReactNode } from 'react';
+
+import { Toaster } from '@/components/ui/toast';
+
+const Layout = ({ children }: { children: ReactNode }) => (
+  <html lang='en'>
+    <body>
+      <Toaster />
+      {children}
+    </body>
+  </html>
+);
+
+export default Layout;
+`
+        ),
+        writeFile(
+          join(scratch, 'app/page.tsx'),
+          `'use client';
+
+import {
+  createToastManager,
+  toast,
+  useToastManager,
+} from '@/components/ui/toast';
+
+if (typeof useToastManager !== 'function') {
+  throw new Error('useToastManager is not exported');
+}
+
+const manager = createToastManager();
+
+const Page = () => (
+  <main>
+    <button
+      onClick={() =>
+        toast.add({
+          description: 'Your changes have been saved.',
+          title: 'Success!',
+          type: 'success',
+        })
+      }
+      type='button'
+    >
+      Notify
+    </button>
+    <button
+      onClick={() => manager.add({ title: 'From a manager' })}
+      type='button'
+    >
+      Manager
+    </button>
+  </main>
+);
+
+export default Page;
+`
+        ),
+      ]);
+
+      const init = await run(
+        shadcn,
+        ['init', `${origin}/init/zen/neutral`, '-f', '-s', '--no-reinstall'],
+        scratch,
+        cliEnv
+      );
+      expect(init.exitCode, init.stdout + init.stderr).toBe(0);
+
+      const config = JSON.parse(
+        await readFile(join(scratch, 'components.json'), 'utf8')
+      );
+      config.registries['@kosori'] = `${origin}/r/{style}/{name}.json`;
+      await writeFile(
+        join(scratch, 'components.json'),
+        `${JSON.stringify(config, null, 2)}\n`
+      );
+
+      const add = await run(
+        shadcn,
+        ['add', '@kosori/toast', '-y', '-s'],
+        scratch,
+        cliEnv
+      );
+      expect(add.exitCode, add.stdout + add.stderr).toBe(0);
+
+      const manifest = await readFile(join(scratch, 'package.json'), 'utf8');
+      expect(manifest, 'sonner is installed').not.toContain('sonner');
+
+      const typecheck = await run(
+        tsc,
+        ['--noEmit', '-p', 'tsconfig.json'],
+        scratch
+      );
+      expect(typecheck.exitCode, typecheck.stdout + typecheck.stderr).toBe(0);
+
+      const next = await run(
+        join(webDir, 'node_modules/.bin/next'),
+        ['build', '--webpack'],
+        scratch,
+        { ...process.env, NEXT_TELEMETRY_DISABLED: '1' }
+      );
+      expect(next.exitCode, next.stdout + next.stderr).toBe(0);
+    } finally {
+      await rm(scratch, { force: true, recursive: true });
+    }
+  } finally {
+    server.stop(true);
+  }
+}, 420_000);
