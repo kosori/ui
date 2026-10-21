@@ -46,7 +46,8 @@ to that Style's components under `lib/registry/previews`.
 
 Icons come from [`@tabler/icons-react`](https://tabler.io/icons) (`iconLibrary: "tabler"` in `components.json`).
 
-Theming tokens live in `app/globals.css`.
+Theming tokens live in the generated `app/tokens.css`; edit `registry/preset.ts`
+or a Base color and run `bun run registry:build`.
 
 ## Visual proof
 
@@ -59,9 +60,9 @@ bun run visual:capture
 
 The command starts the docs app on port `3210` unless `VISUAL_BASE_URL` points
 at one already running, then writes one PNG per Example per scheme to
-`.visual-proof/<scheme>/<example>.png` — 49 Examples, 98 captures today. Set
-`VISUAL_PORT` to move the dev server, `VISUAL_EXAMPLES=button,card` to capture a
-subset, or `VISUAL_BASE_URL` to reuse a running docs app.
+`.visual-proof/<scheme>/<example>.png`. Set `VISUAL_PORT` to move the dev
+server, `VISUAL_EXAMPLES=button,card` to capture a subset, or
+`VISUAL_BASE_URL` to reuse a running docs app.
 
 A capture fails the command only when a page or its preview cannot be
 screenshotted. Nothing compares pixels, so font anti-aliasing cannot fail the

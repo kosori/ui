@@ -47,7 +47,7 @@ const iconOnlyControls = (source: string) => {
   const controls: { name: string; opening: string }[] = [];
 
   for (const match of source.matchAll(/<([A-Z][\w.]*)/g)) {
-    const name = match[1];
+    const [, name] = match;
     const start = match.index ?? 0;
     const end = openingTagEnd(source, start + match[0].length);
 
@@ -142,7 +142,7 @@ test('a Composition has a page but no installable name', async () => {
         `${name} ships an Example for Composition ${composition}`
       ).toBe(false);
       expect(
-        PENDING_COMPONENTS as readonly string[],
+        PENDING_COMPONENTS,
         `${composition} is a Composition and also Pending`
       ).not.toContain(composition);
     }
@@ -171,14 +171,8 @@ test('the two trivial names are served with an Example and a page', async () => 
       existsSync(join(docsDir, 'zen', `${name}.mdx`)),
       `zen has no ${name} page`
     ).toBe(true);
-    expect(
-      PENDING_COMPONENTS as readonly string[],
-      `${name} is Pending`
-    ).not.toContain(name);
-    expect(
-      COMPOSITIONS as readonly string[],
-      `${name} is a Composition`
-    ).not.toContain(name);
+    expect(PENDING_COMPONENTS, `${name} is Pending`).not.toContain(name);
+    expect(COMPOSITIONS, `${name} is a Composition`).not.toContain(name);
   }
 });
 
@@ -193,8 +187,8 @@ test('an Incomplete Style reports its own scope, not the global Pending list', (
 test('sonner is absent everywhere except the toast explanation', async () => {
   const styles = await readStyleFacts();
 
-  expect(PENDING_COMPONENTS as readonly string[]).not.toContain('sonner');
-  expect(COMPOSITIONS as readonly string[]).not.toContain('sonner');
+  expect(PENDING_COMPONENTS).not.toContain('sonner');
+  expect(COMPOSITIONS).not.toContain('sonner');
 
   for (const { catalog, name, pages } of styles) {
     const names = new Set(catalog.map((item) => item.name));
@@ -214,14 +208,18 @@ test('sonner is absent everywhere except the toast explanation', async () => {
 });
 
 test('every icon-only control in autocomplete and combobox has a name', async () => {
+  const sources = await Promise.all(
+    ['autocomplete', 'combobox'].map(async (item) => ({
+      item,
+      source: await readFile(
+        join(registryDir, 'zen/ui', `${item}.tsx`),
+        'utf8'
+      ),
+    }))
+  );
   const missing: string[] = [];
 
-  for (const item of ['autocomplete', 'combobox']) {
-    const source = await readFile(
-      join(registryDir, 'zen/ui', `${item}.tsx`),
-      'utf8'
-    );
-
+  for (const { item, source } of sources) {
     for (const control of iconOnlyControls(source)) {
       if (!/\baria-label=/.test(control.opening)) {
         missing.push(`${item}: ${control.name}`);
