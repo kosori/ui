@@ -15,6 +15,5 @@ export const PENDING_COMPONENTS = [
   'message-scroller',
   'navigation-menu',
   'questionnaire',
-  'resizable',
   'trace',
 ] as const;

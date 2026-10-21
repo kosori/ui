@@ -43,6 +43,7 @@ import PaginationExample from '@/registry/zen/examples/pagination-example';
 import PopoverExample from '@/registry/zen/examples/popover-example';
 import ProgressExample from '@/registry/zen/examples/progress-example';
 import RadioGroupExample from '@/registry/zen/examples/radio-group-example';
+import ResizableExample from '@/registry/zen/examples/resizable-example';
 import ScrollAreaExample from '@/registry/zen/examples/scroll-area-example';
 import SelectExample from '@/registry/zen/examples/select-example';
 import SeparatorExample from '@/registry/zen/examples/separator-example';
@@ -111,6 +112,7 @@ const zenExampleComponents = {
   popover: PopoverExample,
   progress: ProgressExample,
   'radio-group': RadioGroupExample,
+  resizable: ResizableExample,
   'scroll-area': ScrollAreaExample,
   select: SelectExample,
   separator: SeparatorExample,
