@@ -17,8 +17,10 @@ export const segmentedControlRootClassName =
 export const segmentedControlIndicatorSurfaceClassName =
   'rounded-md bg-background shadow-sm/5 dark:bg-input';
 
+/** The indicator a segmented control moves over its active item. */
 export const segmentedControlIndicatorClassName = `pointer-events-none absolute top-0 left-0 -z-1 h-(--active-item-height) w-(--active-item-width) translate-x-(--active-item-left) translate-y-(--active-item-top) transition-[width,height,translate] duration-200 ease-in-out motion-reduce:transition-none ${segmentedControlIndicatorSurfaceClassName}`;
 
+/** The indicator Tabs moves under its active tab, sharing the same surface. */
 export const tabsIndicatorClassName = `absolute bottom-0 left-0 h-(--active-tab-height) w-(--active-tab-width) translate-x-(--active-tab-left) -translate-y-(--active-tab-bottom) transition-[width,translate] duration-200 ease-in-out motion-reduce:transition-none ${segmentedControlIndicatorSurfaceClassName}`;
 
 export const segmentedControlItemLayoutClassName =
