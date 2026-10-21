@@ -1,0 +1,46 @@
+---
+title: Navigation Menu
+description: A collection of links for navigating websites.
+---
+
+Navigation Menu wraps the
+[Base UI Navigation Menu](https://base-ui.com/react/components/navigation-menu)
+primitive, positions its popup with Base UI's `Positioner` and marks each part
+with `data-slot`. It is an Authored component: coss/ui has no Navigation Menu,
+so its Structure comes from shadcn/ui and its Design from the nearest Port.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/navigation-menu
+```
+
+## Example
+
+<ComponentPreview name='navigation-menu' />
+
+## Usage
+
+```tsx
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '@/components/ui/navigation-menu';
+
+const NavigationMenuDemo = () => (
+  <NavigationMenu>
+    <NavigationMenuList>
+      <NavigationMenuItem>
+        <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
+        <NavigationMenuContent>
+          <NavigationMenuLink href='/docs'>Introduction</NavigationMenuLink>
+        </NavigationMenuContent>
+      </NavigationMenuItem>
+    </NavigationMenuList>
+  </NavigationMenu>
+);
+```

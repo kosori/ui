@@ -10,10 +10,8 @@ export const PENDING_COMPONENTS = [
   'chart',
   'code-block',
   'marker',
-  'menubar',
   'message',
   'message-scroller',
-  'navigation-menu',
   'questionnaire',
   'trace',
 ] as const;

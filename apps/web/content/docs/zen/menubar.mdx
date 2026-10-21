@@ -1,0 +1,44 @@
+---
+title: Menubar
+description: A visually persistent menu common in desktop applications.
+---
+
+Menubar wraps the [Base UI Menubar](https://base-ui.com/react/components/menubar)
+primitive and composes the [Dropdown Menu](/docs/zen/dropdown-menu) parts, so
+its content, items, separators and submenus keep that Port's design. It is an
+Authored component: coss/ui has no Menubar, so its Structure comes from
+shadcn/ui and its Design from the nearest Port.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/menubar
+```
+
+## Example
+
+<ComponentPreview name='menubar' />
+
+## Usage
+
+```tsx
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
+} from '@/components/ui/menubar';
+
+const MenubarDemo = () => (
+  <Menubar>
+    <MenubarMenu>
+      <MenubarTrigger>File</MenubarTrigger>
+      <MenubarContent>
+        <MenubarItem>New tab</MenubarItem>
+        <MenubarItem>New window</MenubarItem>
+      </MenubarContent>
+    </MenubarMenu>
+  </Menubar>
+);
+```
