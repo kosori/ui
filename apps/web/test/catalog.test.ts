@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { readCatalog } from '../lib/registry/catalog';
+import { parseExports } from '../lib/registry/compatibility';
 import { COMPOSITIONS } from '../lib/registry/compositions';
 import { PENDING_COMPONENTS } from '../lib/registry/pending';
 import { findStyle, STYLES } from '../registry/preset';
@@ -174,6 +175,41 @@ test('the two trivial names are served with an Example and a page', async () => 
     expect(PENDING_COMPONENTS, `${name} is Pending`).not.toContain(name);
     expect(COMPOSITIONS, `${name} is a Composition`).not.toContain(name);
   }
+});
+
+test('the authored chart serves the shadcn/ui surface with its runtime deps', async () => {
+  const items = await readCatalog('zen');
+  const chart = items.find((item) => item.name === 'chart');
+  const example = items.find((item) => item.name === 'chart-example');
+
+  expect(chart?.type).toBe('registry:ui');
+  expect(chart?.meta?.authored).toBe(true);
+  expect(chart?.dependencies).toContain('recharts');
+  expect(chart?.dependencies).toContain('react-is');
+  expect(example?.type).toBe('registry:example');
+  expect(example?.registryDependencies).toContain('@kosori/chart');
+
+  const source = await readFile(join(registryDir, 'zen/ui/chart.tsx'), 'utf8');
+  const { names } = parseExports(source);
+
+  for (const name of [
+    'ChartContainer',
+    'ChartLegend',
+    'ChartLegendContent',
+    'ChartStyle',
+    'ChartTooltip',
+    'ChartTooltipContent',
+  ]) {
+    expect(names.has(name), `chart does not export ${name}`).toBe(true);
+  }
+  expect(source).toContain('export type ChartConfig');
+
+  const pages = await readPages('zen');
+  expect(pages).toContain('chart');
+  expect(
+    existsSync(join(docsDir, 'zen/chart.mdx')),
+    'zen has no chart page'
+  ).toBe(true);
 });
 
 test('an Incomplete Style reports its own scope, not the global Pending list', () => {

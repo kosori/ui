@@ -334,6 +334,31 @@
       ]
     },
     {
+      "name": "chart",
+      "type": "registry:ui",
+      "dependencies": ["cn", "react-is", "recharts"],
+      "files": [
+        {
+          "path": "registry/zen/ui/chart.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "authored": true
+      }
+    },
+    {
+      "name": "chart-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/chart"],
+      "files": [
+        {
+          "path": "registry/zen/examples/chart-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "checkbox",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
