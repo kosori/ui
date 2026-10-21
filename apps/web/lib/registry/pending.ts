@@ -17,6 +17,5 @@ export const PENDING_COMPONENTS = [
   'native-select',
   'navigation-menu',
   'questionnaire',
-  'resizable',
   'trace',
 ] as const;

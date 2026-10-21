@@ -885,6 +885,31 @@
       ]
     },
     {
+      "name": "resizable",
+      "type": "registry:ui",
+      "dependencies": ["cn", "react-resizable-panels"],
+      "files": [
+        {
+          "path": "registry/zen/ui/resizable.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "authored": true
+      }
+    },
+    {
+      "name": "resizable-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/resizable"],
+      "files": [
+        {
+          "path": "registry/zen/examples/resizable-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "scroll-area",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
