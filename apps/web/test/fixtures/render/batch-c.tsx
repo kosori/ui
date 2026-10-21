@@ -76,17 +76,14 @@ export const BatchC = () => (
     />
     <PaginationLink
       href='https://kosori.codingcodax.dev'
-      // @ts-expect-error pagination link composes a Button and accepts no render prop
       render={<a href='https://kosori.codingcodax.dev' />}
     />
     <PaginationPrevious
       href='https://kosori.codingcodax.dev'
-      // @ts-expect-error pagination previous composes a Button and accepts no render prop
       render={<a href='https://kosori.codingcodax.dev' />}
     />
     <PaginationNext
       href='https://kosori.codingcodax.dev'
-      // @ts-expect-error pagination next composes a Button and accepts no render prop
       render={<a href='https://kosori.codingcodax.dev' />}
     />
     <PaginationEllipsis
@@ -104,10 +101,7 @@ export const BatchC = () => (
       render={<svg />}
     />
 
-    <Table
-      // @ts-expect-error table is a plain element and accepts no render prop
-      render={<div />}
-    />
+    <Table render={<section />} />
     <TableHeader
       // @ts-expect-error table header is a plain element and accepts no render prop
       render={<thead />}

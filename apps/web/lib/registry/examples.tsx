@@ -11,6 +11,7 @@ import type { StyleName } from '@/registry/preset';
 import AccordionExample from '@/registry/zen/examples/accordion-example';
 import AlertDialogExample from '@/registry/zen/examples/alert-dialog-example';
 import AlertExample from '@/registry/zen/examples/alert-example';
+import AspectRatioExample from '@/registry/zen/examples/aspect-ratio-example';
 import AvatarExample from '@/registry/zen/examples/avatar-example';
 import BadgeExample from '@/registry/zen/examples/badge-example';
 import BreadcrumbExample from '@/registry/zen/examples/breadcrumb-example';
@@ -24,6 +25,7 @@ import ComboboxExample from '@/registry/zen/examples/combobox-example';
 import CommandExample from '@/registry/zen/examples/command-example';
 import ContextMenuExample from '@/registry/zen/examples/context-menu-example';
 import DialogExample from '@/registry/zen/examples/dialog-example';
+import DirectionExample from '@/registry/zen/examples/direction-example';
 import DrawerExample from '@/registry/zen/examples/drawer-example';
 import DropdownMenuExample from '@/registry/zen/examples/dropdown-menu-example';
 import EmptyExample from '@/registry/zen/examples/empty-example';
@@ -68,61 +70,63 @@ const EXAMPLE_DIRS: Record<StyleName, string> = {
 };
 
 /**
- * The Registry item every Style serves for a Component. Item names are part of
- * the catalog contract, so they are shared rather than restated per Style.
+ * The live zen Example for each component. Item names derive from these keys,
+ * so a component and its Example cannot drift apart.
  */
-const exampleItems = {
-  accordion: 'accordion-example',
-  alert: 'alert-example',
-  'alert-dialog': 'alert-dialog-example',
-  avatar: 'avatar-example',
-  badge: 'badge-example',
-  breadcrumb: 'breadcrumb-example',
-  button: 'button-example',
-  'button-group': 'button-group-example',
-  calendar: 'calendar-example',
-  card: 'card-example',
-  checkbox: 'checkbox-example',
-  collapsible: 'collapsible-example',
-  combobox: 'combobox-example',
-  command: 'command-example',
-  'context-menu': 'context-menu-example',
-  dialog: 'dialog-example',
-  drawer: 'drawer-example',
-  'dropdown-menu': 'dropdown-menu-example',
-  empty: 'empty-example',
-  field: 'field-example',
-  form: 'form-example',
-  'hover-card': 'hover-card-example',
-  input: 'input-example',
-  'input-group': 'input-group-example',
-  'input-otp': 'input-otp-example',
-  kbd: 'kbd-example',
-  label: 'label-example',
-  pagination: 'pagination-example',
-  popover: 'popover-example',
-  progress: 'progress-example',
-  'radio-group': 'radio-group-example',
-  'scroll-area': 'scroll-area-example',
-  select: 'select-example',
-  separator: 'separator-example',
-  sheet: 'sheet-example',
-  sidebar: 'sidebar-example',
-  skeleton: 'skeleton-example',
-  slider: 'slider-example',
-  spinner: 'spinner-example',
-  switch: 'switch-example',
-  table: 'table-example',
-  tabs: 'tabs-example',
-  textarea: 'textarea-example',
-  toast: 'toast-example',
-  toggle: 'toggle-example',
-  'toggle-group': 'toggle-group-example',
-  tooltip: 'tooltip-example',
-} as const;
+const zenExampleComponents = {
+  accordion: AccordionExample,
+  alert: AlertExample,
+  'alert-dialog': AlertDialogExample,
+  'aspect-ratio': AspectRatioExample,
+  avatar: AvatarExample,
+  badge: BadgeExample,
+  breadcrumb: BreadcrumbExample,
+  button: ButtonExample,
+  'button-group': ButtonGroupExample,
+  calendar: CalendarExample,
+  card: CardExample,
+  checkbox: CheckboxExample,
+  collapsible: CollapsibleExample,
+  combobox: ComboboxExample,
+  command: CommandExample,
+  'context-menu': ContextMenuExample,
+  dialog: DialogExample,
+  direction: DirectionExample,
+  drawer: DrawerExample,
+  'dropdown-menu': DropdownMenuExample,
+  empty: EmptyExample,
+  field: FieldExample,
+  form: FormExample,
+  'hover-card': HoverCardExample,
+  input: InputExample,
+  'input-group': InputGroupExample,
+  'input-otp': InputOtpExample,
+  kbd: KbdExample,
+  label: LabelExample,
+  pagination: PaginationExample,
+  popover: PopoverExample,
+  progress: ProgressExample,
+  'radio-group': RadioGroupExample,
+  'scroll-area': ScrollAreaExample,
+  select: SelectExample,
+  separator: SeparatorExample,
+  sheet: SheetExample,
+  sidebar: SidebarExample,
+  skeleton: SkeletonExample,
+  slider: SliderExample,
+  spinner: SpinnerExample,
+  switch: SwitchExample,
+  table: TableExample,
+  tabs: TabsExample,
+  textarea: TextareaExample,
+  toast: ToastExample,
+  toggle: ToggleExample,
+  'toggle-group': ToggleGroupExample,
+  tooltip: TooltipExample,
+} satisfies Partial<Record<string, ComponentType>>;
 
 /** The component names the documentation can render an Example for. */
-export type ExampleName = keyof typeof exampleItems;
+export type ExampleName = keyof typeof zenExampleComponents;
 
 /**
  * The live Example each Style ships. A Style's Example uses the same markup;
@@ -138,63 +142,15 @@ const exampleComponents = {
     label: KazeLabelExample,
     separator: KazeSeparatorExample,
   },
-  zen: {
-    accordion: AccordionExample,
-    alert: AlertExample,
-    'alert-dialog': AlertDialogExample,
-    avatar: AvatarExample,
-    badge: BadgeExample,
-    breadcrumb: BreadcrumbExample,
-    button: ButtonExample,
-    'button-group': ButtonGroupExample,
-    calendar: CalendarExample,
-    card: CardExample,
-    checkbox: CheckboxExample,
-    collapsible: CollapsibleExample,
-    combobox: ComboboxExample,
-    command: CommandExample,
-    'context-menu': ContextMenuExample,
-    dialog: DialogExample,
-    drawer: DrawerExample,
-    'dropdown-menu': DropdownMenuExample,
-    empty: EmptyExample,
-    field: FieldExample,
-    form: FormExample,
-    'hover-card': HoverCardExample,
-    input: InputExample,
-    'input-group': InputGroupExample,
-    'input-otp': InputOtpExample,
-    kbd: KbdExample,
-    label: LabelExample,
-    pagination: PaginationExample,
-    popover: PopoverExample,
-    progress: ProgressExample,
-    'radio-group': RadioGroupExample,
-    'scroll-area': ScrollAreaExample,
-    select: SelectExample,
-    separator: SeparatorExample,
-    sheet: SheetExample,
-    sidebar: SidebarExample,
-    skeleton: SkeletonExample,
-    slider: SliderExample,
-    spinner: SpinnerExample,
-    switch: SwitchExample,
-    table: TableExample,
-    tabs: TabsExample,
-    textarea: TextareaExample,
-    toast: ToastExample,
-    toggle: ToggleExample,
-    'toggle-group': ToggleGroupExample,
-    tooltip: TooltipExample,
-  },
+  zen: zenExampleComponents,
 } satisfies Record<StyleName, Partial<Record<ExampleName, ComponentType>>>;
 
 /** The Registry item a Consumer installs for an Example. */
-export const exampleItemName = (name: ExampleName) => exampleItems[name];
+export const exampleItemName = (name: ExampleName) => `${name}-example`;
 
 /** The source file a Registry Example ships from, derived from its item name. */
 export const exampleFileName = (name: ExampleName) =>
-  `${exampleItems[name]}.tsx`;
+  `${exampleItemName(name)}.tsx`;
 
 /** Read the source a Consumer project receives, verbatim from the Registry. */
 export const readExampleSource = (style: StyleName, name: ExampleName) =>

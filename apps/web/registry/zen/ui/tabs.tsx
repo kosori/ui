@@ -1,16 +1,38 @@
 'use client';
 
 import { Tabs as TabsPrimitive } from '@base-ui/react/tabs';
+import { cva } from 'class-variance-authority';
 import { cn } from 'cn';
 import { type Context, createContext, useContext } from 'react';
 import {
   type SegmentedControlSize,
+  segmentedControlIndicatorSurfaceClassName,
   segmentedControlItemLayoutClassName,
   segmentedControlItemSizeClassNames,
+  tabsIndicatorClassName,
 } from '@/lib/segmented-control';
 
-type TabsVariant = 'default' | 'underline';
+type TabsVariant = 'default' | 'underline' | 'line';
 type TabsSize = SegmentedControlSize;
+
+const tabsListUnderlineClassName =
+  'data-[orientation=vertical]:px-1 data-[orientation=horizontal]:py-1 *:data-[slot=tabs-tab]:hover:bg-accent';
+
+export const tabsListVariants = cva(
+  'relative z-0 flex w-fit items-center justify-center gap-x-0.5 text-muted-foreground data-[orientation=vertical]:flex-col',
+  {
+    defaultVariants: {
+      variant: 'default',
+    },
+    variants: {
+      variant: {
+        default: 'rounded-lg bg-muted p-0.5 text-muted-foreground/72',
+        line: tabsListUnderlineClassName,
+        underline: tabsListUnderlineClassName,
+      },
+    },
+  }
+);
 
 const TabsListContext: Context<TabsSize> = createContext<TabsSize>('default');
 
@@ -42,14 +64,7 @@ export function TabsList({
 }): React.ReactElement {
   return (
     <TabsPrimitive.List
-      className={cn(
-        'relative z-0 flex w-fit items-center justify-center gap-x-0.5 text-muted-foreground',
-        'data-[orientation=vertical]:flex-col',
-        variant === 'default'
-          ? 'rounded-lg bg-muted p-0.5 text-muted-foreground/72'
-          : 'data-[orientation=vertical]:px-1 data-[orientation=horizontal]:py-1 *:data-[slot=tabs-tab]:hover:bg-accent',
-        className
-      )}
+      className={cn(tabsListVariants({ variant }), className)}
       data-size={size}
       data-slot='tabs-list'
       {...props}
@@ -59,10 +74,10 @@ export function TabsList({
       </TabsListContext.Provider>
       <TabsPrimitive.Indicator
         className={cn(
-          'absolute bottom-0 left-0 h-(--active-tab-height) w-(--active-tab-width) translate-x-(--active-tab-left) -translate-y-(--active-tab-bottom) transition-[width,translate] duration-200 ease-in-out',
-          variant === 'underline'
+          tabsIndicatorClassName,
+          variant === 'underline' || variant === 'line'
             ? 'z-10 bg-primary data-[orientation=horizontal]:h-0.5 data-[orientation=vertical]:w-0.5 data-[orientation=vertical]:-translate-x-px data-[orientation=horizontal]:translate-y-px'
-            : '-z-1 rounded-md bg-background shadow-sm/5 dark:bg-input'
+            : cn('-z-1', segmentedControlIndicatorSurfaceClassName)
         )}
         data-slot='tab-indicator'
       />

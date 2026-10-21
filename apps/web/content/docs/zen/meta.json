@@ -6,9 +6,11 @@
     "index",
     "installation",
     "components",
+    "compatibility",
     "accordion",
     "alert",
     "alert-dialog",
+    "aspect-ratio",
     "avatar",
     "badge",
     "breadcrumb",
@@ -21,8 +23,10 @@
     "combobox",
     "command",
     "context-menu",
+    "data-table",
     "date-picker",
     "dialog",
+    "direction",
     "drawer",
     "dropdown-menu",
     "empty",
@@ -54,6 +58,7 @@
     "toggle",
     "toggle-group",
     "tooltip",
+    "typography",
     "theming"
   ]
 }

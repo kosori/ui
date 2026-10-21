@@ -1,10 +1,11 @@
 import {
   AlertDialog,
-  AlertDialogClose,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogPopup,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
@@ -12,26 +13,22 @@ import { Button } from '@/components/ui/button';
 
 const AlertDialogExample = () => (
   <AlertDialog>
-    <AlertDialogTrigger render={<Button variant='destructive-outline' />}>
-      Delete Account
+    <AlertDialogTrigger render={<Button variant='outline' />}>
+      Show Dialog
     </AlertDialogTrigger>
-    <AlertDialogPopup>
+    <AlertDialogContent>
       <AlertDialogHeader>
         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
         <AlertDialogDescription>
           This action cannot be undone. This will permanently delete your
-          account and remove your data from our servers.
+          account from our servers.
         </AlertDialogDescription>
       </AlertDialogHeader>
-      <AlertDialogFooter variant='bare'>
-        <AlertDialogClose render={<Button variant='ghost' />}>
-          Cancel
-        </AlertDialogClose>
-        <AlertDialogClose render={<Button variant='destructive' />}>
-          Delete Account
-        </AlertDialogClose>
+      <AlertDialogFooter>
+        <AlertDialogCancel>Cancel</AlertDialogCancel>
+        <AlertDialogAction>Continue</AlertDialogAction>
       </AlertDialogFooter>
-    </AlertDialogPopup>
+    </AlertDialogContent>
   </AlertDialog>
 );
 

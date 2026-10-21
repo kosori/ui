@@ -14,9 +14,7 @@ const InputOtpExample = () => (
     <OTPField length={OTP_LENGTH}>
       {OTP_SLOT_KEYS.map((slotKey, index) => (
         <OTPFieldInput
-          aria-label={
-            index === 0 ? undefined : `Character ${index + 1} of ${OTP_LENGTH}`
-          }
+          aria-label={`Character ${index + 1} of ${OTP_LENGTH}`}
           key={slotKey}
         />
       ))}

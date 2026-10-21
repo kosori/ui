@@ -12,11 +12,7 @@ const SwitchExample = () => (
         You can enable or disable notifications at any time.
       </p>
     </div>
-    <Switch
-      className='[--thumb-size:--spacing(4)] sm:[--thumb-size:--spacing(3)]'
-      defaultChecked
-      id='kosori-notifications'
-    />
+    <Switch defaultChecked id='kosori-notifications' />
   </Label>
 );
 

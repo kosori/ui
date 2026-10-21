@@ -3,6 +3,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from 'cn';
 import type * as React from 'react';
+import { Button, type ButtonProps } from '@/components/ui/button';
 import { Input, type InputProps } from '@/components/ui/input';
 import { Textarea, type TextareaProps } from '@/components/ui/textarea';
 
@@ -80,6 +81,29 @@ export function InputGroupAddon({
           input.focus();
         }
       }}
+      {...props}
+    />
+  );
+}
+
+/** Render a compact button sized for an Input Group addon. */
+export function InputGroupButton({
+  className,
+  size = 'xs',
+  type = 'button',
+  variant = 'ghost',
+  ...props
+}: Omit<ButtonProps, 'size' | 'type'> & {
+  size?: 'xs' | 'sm' | 'icon-xs' | 'icon-sm';
+  type?: 'button' | 'submit' | 'reset';
+}): React.ReactElement {
+  return (
+    <Button
+      className={className}
+      data-slot='input-group-button'
+      size={size}
+      type={type}
+      variant={variant}
       {...props}
     />
   );

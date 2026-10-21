@@ -37,7 +37,7 @@ The primitive library kosori's components wrap. kosori has exactly one, Base UI;
 _Avoid_: Headless library, primitives, foundation
 
 **Base color**:
-The named palette (`neutral`, `zinc`, …) that supplies the palette-specific colour Token values. State Tokens (`success`, `warning`, `info` and their foregrounds) are identical in every Base color. It is independent of Style, and a Style only proposes a default.
+The named palette (`neutral`, `zinc`, …) that supplies the palette-specific colour Token values. State Tokens (`success`, `warning`, `info`, `destructive-foreground` and the state foregrounds) are identical in every Base color. It is independent of Style, and a Style only proposes a default.
 _Avoid_: Palette, accent, brand colour
 
 **Token**:
@@ -48,13 +48,25 @@ _Avoid_: CSS variable, custom property, design token
 A demonstration of a Component in use, distributed as a registry item so that documentation and installation resolve it by the same name and the same path.
 _Avoid_: Demo, preview, story, sample, playground
 
+**Design**:
+The visual half of a Port: class strings, default variant values, dividers, spacing and composition. coss/ui owns Design, and a Port never retunes it.
+_Avoid_: Look, styling, skin, theme
+
+**Structure**:
+The API half of a Port: export names, prop names and render plumbing. shadcn/ui owns Structure, and a Port never omits an export shadcn/ui publishes.
+_Avoid_: API, interface, surface, shape
+
 **Port**:
-A component taken from an upstream registry into a Style, copied verbatim except for the renames an install requires: imports, registry dependencies and item names. A Port diverges from its upstream through Tokens alone.
+A component whose Design comes from coss/ui and whose Structure comes from shadcn/ui. A Port changes only imports, registry dependencies, item names, icons and the markup shadcn/ui parity requires. It never diverges from coss/ui's Design through anything but Tokens.
 _Avoid_: Fork, rewrite, adaptation
 
 **Pending**:
 A name a Style publishes as part of its catalog scope but does not yet serve. Pending names appear in documentation without a page and never appear in the registry catalog.
 _Avoid_: Missing, TODO, unimplemented
+
+**Composition**:
+A documented pattern that is not a Registry item and never will be, because upstream publishes it only as documentation. A Composition has a page but no installable name.
+_Avoid_: Recipe, pattern, example, template
 
 **Internal item**:
 A Registry item a Style ships only to satisfy another item's dependency. It installs and byte-matches like any other item but is never documented, never Pending, and has no Example, page or menu entry.

@@ -18,7 +18,7 @@ const DialogExample = () => (
     <DialogTrigger render={<Button variant='outline' />}>
       Open parent
     </DialogTrigger>
-    <DialogPopup showCloseButton={false}>
+    <DialogPopup>
       <DialogHeader>
         <DialogTitle>Manage team member</DialogTitle>
         <DialogDescription>
@@ -36,11 +36,12 @@ const DialogExample = () => (
         </div>
       </DialogPanel>
       <DialogFooter>
+        <DialogClose render={<Button variant='ghost' />}>Cancel</DialogClose>
         <Dialog>
           <DialogTrigger render={<Button variant='outline' />}>
             Edit details
           </DialogTrigger>
-          <DialogPopup showCloseButton={false}>
+          <DialogPopup>
             <DialogHeader>
               <DialogTitle>Edit details</DialogTitle>
               <DialogDescription>
@@ -61,7 +62,7 @@ const DialogExample = () => (
               <DialogClose render={<Button variant='ghost' />}>
                 Cancel
               </DialogClose>
-              <Button type='submit'>Save changes</Button>
+              <Button>Save changes</Button>
             </DialogFooter>
           </DialogPopup>
         </Dialog>

@@ -22,8 +22,8 @@ const items = [
 
 const SidebarExample = () => (
   <div className='relative h-80 w-full translate-y-0 overflow-hidden rounded-lg border'>
-    <SidebarProvider defaultOpen={false}>
-      <Sidebar collapsible='icon'>
+    <SidebarProvider>
+      <Sidebar>
         <SidebarHeader>
           <div className='flex h-8 items-center gap-2 px-2 font-medium text-sm'>
             Acme
@@ -53,8 +53,7 @@ const SidebarExample = () => (
           <span className='font-medium text-sm'>Dashboard</span>
         </header>
         <div className='p-6 text-muted-foreground text-sm'>
-          The sidebar is collapsed to its icon rail. Use the trigger to expand
-          it.
+          Use the trigger to collapse or reveal the sidebar.
         </div>
       </SidebarInset>
     </SidebarProvider>

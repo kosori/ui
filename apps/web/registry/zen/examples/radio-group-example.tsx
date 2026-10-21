@@ -2,7 +2,7 @@ import { Label } from '@/components/ui/label';
 import { Radio, RadioGroup } from '@/components/ui/radio-group';
 
 const RadioGroupExample = () => (
-  <RadioGroup defaultValue='r-1'>
+  <RadioGroup aria-label='Notification method' defaultValue='r-1'>
     <Label className='flex items-start gap-2 rounded-lg border p-3 hover:bg-accent/50 has-data-checked:border-primary/48 has-data-checked:bg-accent/50'>
       <Radio value='r-1' />
       <div className='flex flex-col gap-1'>

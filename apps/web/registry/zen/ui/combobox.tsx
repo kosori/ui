@@ -16,6 +16,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+/** Return a ref that anchors a combobox popup to an element of the caller's choosing. */
+export function useComboboxAnchor(): RefObject<HTMLDivElement | null> {
+  return useRef<HTMLDivElement | null>(null);
+}
+
 export const ComboboxContext: Context<{
   chipsRef: RefObject<Element | null> | null;
   multiple: boolean;
@@ -351,6 +356,7 @@ export function ComboboxClear({
 }: ComboboxPrimitive.Clear.Props): ReactElement {
   return (
     <ComboboxPrimitive.Clear
+      aria-label='Clear selection'
       className={className}
       data-slot='combobox-clear'
       {...props}
@@ -454,4 +460,8 @@ export const useComboboxFilter: typeof ComboboxPrimitive.useFilter =
 
 const Primitive = ComboboxPrimitive;
 
-export { Primitive as ComboboxPrimitive };
+export {
+  ComboboxGroupLabel as ComboboxLabel,
+  ComboboxPopup as ComboboxContent,
+  Primitive as ComboboxPrimitive,
+};

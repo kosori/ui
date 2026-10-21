@@ -42,6 +42,7 @@ const ComponentPreview = async ({ name, style = 'zen' }: Props) => {
       </div>
       <div
         className='flex min-h-40 flex-wrap items-center gap-4 p-6'
+        data-example={name}
         style={previewRadiusTokens(style)}
       >
         <ExamplePreview name={name} style={style} />
