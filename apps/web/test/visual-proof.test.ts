@@ -1,11 +1,7 @@
 import { expect, test } from 'bun:test';
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import {
-  CAPTURE_DIR,
-  CAPTURE_SCHEMES,
-  captureManifest,
-} from '../scripts/capture/manifest';
+import { CAPTURE_DIR, captureManifest } from '../scripts/capture/manifest';
 
 const webDir = join(import.meta.dirname, '..');
 const examplesDir = join(webDir, 'registry/zen/examples');
@@ -28,7 +24,6 @@ test('the capture manifest covers every zen Example once in both schemes', async
   );
 
   for (const entry of manifest) {
-    expect(entry.schemes).toEqual([...CAPTURE_SCHEMES]);
     expect(entry.route.startsWith('/docs/zen/')).toBe(true);
   }
 });

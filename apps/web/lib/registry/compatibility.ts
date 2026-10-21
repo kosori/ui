@@ -1,8 +1,12 @@
 import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import type { StyleName } from '../../registry/preset';
-import { findStyle, STYLES } from '../../registry/preset';
+import {
+  findStyle,
+  STATE_TOKEN_NAMES,
+  STYLES,
+  type StyleName,
+} from '../../registry/preset';
 import { readCatalog } from './catalog';
 import { isInternalItem } from './internal';
 
@@ -179,7 +183,6 @@ export const SYNTHESIZED_EXPORTS = [
     names: ['AlertDialogAction', 'AlertDialogCancel', 'AlertDialogMedia'],
   },
   { item: 'avatar', names: ['AvatarBadge'] },
-  { item: 'button-group', names: ['buttonGroupVariants'] },
   { item: 'calendar', names: ['CalendarDayButton'] },
   { item: 'input-group', names: ['InputGroupButton'] },
   { item: 'popover', names: ['PopoverHeader'] },
@@ -213,7 +216,6 @@ export const FIELD_COMPATIBILITY = {
 /** The InputOTP adapter's slot API and the source fact that makes it an adapter. */
 export const INPUT_OTP_ADAPTER = {
   exports: ['InputOTP', 'InputOTPGroup', 'InputOTPSeparator', 'InputOTPSlot'],
-  indexProp: 'index: number',
 } as const;
 
 /** The shadcn/ui toast surface kosori exports on top of Base UI's manager. */
@@ -250,12 +252,18 @@ const TOAST_DIVERGENCE: Divergence = {
   title: 'Toast is a Base UI surface',
 };
 
-const SONNER_DIVERGENCE: Divergence = {
-  body: 'sonner is not shipped and is not Pending. zen serves toast instead; kaze does not serve a toast surface at all.',
+/** Explain sonner using the toast surface the Style actually serves. */
+const sonnerDivergence = (
+  style: StyleName,
+  served: ReadonlySet<string>
+): Divergence => ({
+  body: served.has('toast')
+    ? `sonner is not shipped and is not Pending. ${style} serves toast instead.`
+    : `sonner is not shipped and is not Pending. ${style} serves no toast surface.`,
   code: ['sonner', '@kosori/toast'],
   id: 'sonner',
   title: 'sonner is absent',
-};
+});
 
 const ICON_DIVERGENCE: Divergence = {
   body: 'Icons come from Tabler, not Lucide. A pasted shadcn/ui snippet that imports Lucide icons needs its icon imports changed; component names and props do not change.',
@@ -266,15 +274,7 @@ const ICON_DIVERGENCE: Divergence = {
 
 const TOKEN_DIVERGENCE: Divergence = {
   body: 'kosori adds seven state Tokens to every Base color because coss/ui class strings reference them and shadcn/ui has no equivalent. The values are identical across Base colors, so success, warning and info mean the same thing in every palette.',
-  code: [
-    'success',
-    'success-foreground',
-    'warning',
-    'warning-foreground',
-    'info',
-    'info-foreground',
-    'destructive-foreground',
-  ],
+  code: STATE_TOKEN_NAMES,
   id: 'tokens',
   title: 'State Tokens are a kosori addition',
 };
@@ -318,10 +318,7 @@ export const parseExports = (source: string): ModuleExports => {
 };
 
 /** Read a Style's source for an item, wherever that Style keeps it. */
-export const readStyleExports = async (
-  style: string,
-  item: string
-): Promise<ModuleExports> => {
+export const readStyleSource = (style: string, item: string) => {
   const path = [
     join(REGISTRY_DIR, style, 'ui', `${item}.tsx`),
     join(REGISTRY_DIR, style, `${item}.tsx`),
@@ -331,11 +328,17 @@ export const readStyleExports = async (
     throw new Error(`${style} has no source for ${item}`);
   }
 
-  return parseExports(await readFile(path, 'utf8'));
+  return readFile(path, 'utf8');
 };
 
+/** Parse the exports a Style's source for an item publishes. */
+export const readStyleExports = async (
+  style: string,
+  item: string
+): Promise<ModuleExports> => parseExports(await readStyleSource(style, item));
+
 /** The documented component names a Style's catalog serves. */
-const readServedNames = async (style: string) => {
+export const readServedComponentNames = async (style: string) => {
   const catalog = await readCatalog(style);
 
   return catalog
@@ -350,7 +353,7 @@ const readUnservedNames = async (style: StyleName, served: Set<string>) => {
     ({ incomplete, name }) => !incomplete && name !== style
   );
   const catalogs = await Promise.all(
-    complete.map(({ name }) => readServedNames(name))
+    complete.map(({ name }) => readServedComponentNames(name))
   );
 
   return [...new Set(catalogs.flat())]
@@ -363,7 +366,7 @@ export const getCompatibilityFacts = async (
   style: StyleName
 ): Promise<CompatibilityFacts> => {
   const definition = findStyle(style);
-  const served = await readServedNames(style);
+  const served = await readServedComponentNames(style);
   const servedSet = new Set(served);
   const field = servedSet.has('field')
     ? await readStyleExports(style, 'field')
@@ -393,7 +396,7 @@ export const getCompatibilityFacts = async (
     divergences.push(TOAST_DIVERGENCE);
   }
 
-  divergences.push(SONNER_DIVERGENCE);
+  divergences.push(sonnerDivergence(style, servedSet));
 
   if (definition?.config.iconLibrary === ICON_SUBSTITUTION.iconLibrary) {
     divergences.push(ICON_DIVERGENCE);

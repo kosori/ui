@@ -10,30 +10,17 @@ import {
   ICON_SUBSTITUTION,
   INPUT_OTP_ADAPTER,
   readStyleExports,
+  readStyleSource,
   SYNTHESIZED_EXPORTS,
   TOAST_SURFACE,
 } from '../lib/registry/compatibility';
 import { COMPOSITIONS } from '../lib/registry/compositions';
 import { PENDING_COMPONENTS } from '../lib/registry/pending';
-import { findStyle, STYLES } from '../registry/preset';
+import { findStyle, STATE_TOKEN_NAMES, STYLES } from '../registry/preset';
 
 const webDir = join(import.meta.dirname, '..');
 const docsDir = join(webDir, 'content/docs');
 const registryDir = join(webDir, 'registry');
-
-/** Read one Registry source file from the directory a Style keeps it in. */
-const readSource = (style: string, item: string) => {
-  const path = [
-    join(registryDir, style, 'ui', `${item}.tsx`),
-    join(registryDir, style, `${item}.tsx`),
-  ].find((candidate) => existsSync(candidate));
-
-  if (!path) {
-    throw new Error(`${style} has no source for ${item}`);
-  }
-
-  return readFile(path, 'utf8');
-};
 
 test('every alias the page claims exists in its component module', async () => {
   const claims = await Promise.all(
@@ -108,6 +95,17 @@ test('every synthesized shadcn/ui name the page claims is exported', async () =>
   }
 });
 
+test('an exported name is an alias or synthesized, never both', () => {
+  const aliases = new Set(ALIASES.map(({ name }) => name));
+  const duplicated = SYNTHESIZED_EXPORTS.flatMap(({ names }) =>
+    names.filter((name) => aliases.has(name))
+  );
+
+  expect(duplicated, 'a name is claimed as both alias and synthesized').toEqual(
+    []
+  );
+});
+
 test('Field is a divergence only where the module lacks the shadcn/ui parts', async () => {
   const field = await readStyleExports('zen', 'field');
 
@@ -145,7 +143,7 @@ test('Field is a divergence only where the module lacks the shadcn/ui parts', as
 
 test('the InputOTP adapter the page describes matches its module', async () => {
   const module = await readStyleExports('zen', 'input-otp');
-  const source = await readSource('zen', 'input-otp');
+  const source = await readStyleSource('zen', 'input-otp');
 
   for (const name of INPUT_OTP_ADAPTER.exports) {
     expect(module.names.has(name), `input-otp does not export ${name}`).toBe(
@@ -167,7 +165,7 @@ test('the InputOTP adapter the page describes matches its module', async () => {
 
 test('the toast surface the page describes matches its module', async () => {
   const module = await readStyleExports('zen', 'toast');
-  const source = await readSource('zen', 'toast');
+  const source = await readStyleSource('zen', 'toast');
 
   for (const name of TOAST_SURFACE.exports) {
     expect(module.names.has(name), `toast does not export ${name}`).toBe(true);
@@ -184,8 +182,8 @@ test('the toast surface the page describes matches its module', async () => {
 });
 
 test('sonner is absent from every catalog and named as absent by the page', async () => {
-  expect(PENDING_COMPONENTS as readonly string[]).not.toContain('sonner');
-  expect(COMPOSITIONS as readonly string[]).not.toContain('sonner');
+  expect(PENDING_COMPONENTS).not.toContain('sonner');
+  expect(COMPOSITIONS).not.toContain('sonner');
 
   const styles = await Promise.all(
     STYLES.map(async ({ name }) => ({
@@ -208,7 +206,20 @@ test('sonner is absent from every catalog and named as absent by the page', asyn
     expect(sonner?.code, `${name} does not point at sonner`).toContain(
       'sonner'
     );
+    expect(
+      sonner?.body,
+      `${name} does not derive its sonner copy from what it serves`
+    ).toContain(
+      facts.served.includes('toast') ? 'serves toast' : 'serves no toast'
+    );
   }
+});
+
+test('the state Token divergence lists the preset names', async () => {
+  const zen = await getCompatibilityFacts('zen');
+  const tokens = zen.divergences.find(({ id }) => id === 'tokens');
+
+  expect(tokens?.code).toEqual([...STATE_TOKEN_NAMES]);
 });
 
 test('the icon substitution the page describes matches the preset and sources', async () => {
