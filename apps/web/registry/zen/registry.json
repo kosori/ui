@@ -334,6 +334,57 @@
       ]
     },
     {
+      "name": "carousel",
+      "type": "registry:ui",
+      "dependencies": ["@tabler/icons-react", "cn", "embla-carousel-react"],
+      "registryDependencies": ["@kosori/button"],
+      "files": [
+        {
+          "path": "registry/zen/ui/carousel.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "authored": true
+      }
+    },
+    {
+      "name": "carousel-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/aspect-ratio", "@kosori/carousel"],
+      "files": [
+        {
+          "path": "registry/zen/examples/carousel-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "dependencies": ["cn", "react-is", "recharts"],
+      "files": [
+        {
+          "path": "registry/zen/ui/chart.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "authored": true
+      }
+    },
+    {
+      "name": "chart-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/chart"],
+      "files": [
+        {
+          "path": "registry/zen/examples/chart-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "checkbox",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
