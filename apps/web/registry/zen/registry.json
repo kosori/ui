@@ -97,7 +97,10 @@
           "path": "registry/zen/ui/aspect-ratio.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "meta": {
+        "authored": true
+      }
     },
     {
       "name": "aspect-ratio-example",
@@ -495,7 +498,10 @@
           "path": "registry/zen/ui/direction.tsx",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "meta": {
+        "authored": true
+      }
     },
     {
       "name": "direction-example",

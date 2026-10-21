@@ -7,10 +7,11 @@ type Props = {
 };
 
 /**
- * Render a Style's deliberate shadcn/ui divergences, aliases, Pending names and
- * Compositions from the Registry sources and the Style's own catalog.
+ * Render a Style's deliberate shadcn/ui divergences, aliases, Authored names,
+ * Pending names and Compositions from the Registry sources and the Style's own
+ * catalog.
  */
-const Compatibility = async ({ style }: Props) => {
+export const Compatibility = async ({ style }: Props) => {
   if (!style) {
     throw new Error('Compatibility requires a Style');
   }
@@ -80,6 +81,28 @@ const Compatibility = async ({ style }: Props) => {
         ) : (
           <p className='mt-3 text-muted-foreground text-sm'>
             {style} adds no synthesized exports.
+          </p>
+        )}
+      </section>
+
+      <section>
+        <h2 className='font-medium text-lg'>Authored</h2>
+        <p className='mt-2 text-muted-foreground text-sm'>
+          Names shadcn/ui publishes that coss/ui does not ship. The Structure is
+          shadcn/ui&apos;s and the Design is inherited from the nearest Port, so
+          an Authored component carries no upstream pin.
+        </p>
+        {facts.authored.length > 0 ? (
+          <ul className='mt-3 grid gap-2 sm:grid-cols-2'>
+            {facts.authored.map((name) => (
+              <li className='font-mono text-sm' key={name}>
+                {name}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className='mt-3 text-muted-foreground text-sm'>
+            {style} serves no Authored components.
           </p>
         )}
       </section>

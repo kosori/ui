@@ -12,12 +12,6 @@ type Pin = {
   kosori: string;
 };
 
-/**
- * Components kosori serves without a coss/ui counterpart, so there is no
- * upstream revision to pin.
- */
-const NO_UPSTREAM = new Set(['aspect-ratio', 'direction']);
-
 /** Read the pin record's entry rows, ignoring the revision table. */
 const readPins = async (): Promise<Pin[]> => {
   const source = await readFile(versionPath, 'utf8');
@@ -48,8 +42,7 @@ test('the pin record covers every Port in the catalog', async () => {
     .filter((item) => item.type !== 'registry:example')
     // An Authored component carries no coss pin (ADR-0008).
     .filter((item) => item.meta?.authored !== true)
-    .map((item) => item.name)
-    .filter((name) => !NO_UPSTREAM.has(name));
+    .map((item) => item.name);
 
   expect(new Set(pins.map((pin) => pin.kosori))).toEqual(new Set(ports));
 });
