@@ -38,6 +38,8 @@
     "input-otp",
     "kbd",
     "label",
+    "menubar",
+    "navigation-menu",
     "pagination",
     "popover",
     "progress",

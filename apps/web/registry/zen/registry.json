@@ -795,6 +795,63 @@
       ]
     },
     {
+      "name": "menubar",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/dropdown-menu"],
+      "meta": {
+        "authored": true
+      },
+      "files": [
+        {
+          "path": "registry/zen/ui/menubar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "menubar-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/menubar"],
+      "files": [
+        {
+          "path": "registry/zen/examples/menubar-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "dependencies": [
+        "@base-ui/react",
+        "@tabler/icons-react",
+        "class-variance-authority",
+        "cn"
+      ],
+      "meta": {
+        "authored": true
+      },
+      "files": [
+        {
+          "path": "registry/zen/ui/navigation-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "navigation-menu-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/navigation-menu"],
+      "files": [
+        {
+          "path": "registry/zen/examples/navigation-menu-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "pagination",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],

@@ -16,7 +16,12 @@ type Pin = {
  * Components kosori serves without a coss/ui counterpart, so there is no
  * upstream revision to pin.
  */
-const NO_UPSTREAM = new Set(['aspect-ratio', 'direction']);
+const NO_UPSTREAM = new Set([
+  'aspect-ratio',
+  'direction',
+  'menubar',
+  'navigation-menu',
+]);
 
 /** Read the pin record's entry rows, ignoring the revision table. */
 const readPins = async (): Promise<Pin[]> => {

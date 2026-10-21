@@ -37,6 +37,8 @@ import InputGroupExample from '@/registry/zen/examples/input-group-example';
 import InputOtpExample from '@/registry/zen/examples/input-otp-example';
 import KbdExample from '@/registry/zen/examples/kbd-example';
 import LabelExample from '@/registry/zen/examples/label-example';
+import MenubarExample from '@/registry/zen/examples/menubar-example';
+import NavigationMenuExample from '@/registry/zen/examples/navigation-menu-example';
 import PaginationExample from '@/registry/zen/examples/pagination-example';
 import PopoverExample from '@/registry/zen/examples/popover-example';
 import ProgressExample from '@/registry/zen/examples/progress-example';
@@ -103,6 +105,8 @@ const zenExampleComponents = {
   'input-otp': InputOtpExample,
   kbd: KbdExample,
   label: LabelExample,
+  menubar: MenubarExample,
+  'navigation-menu': NavigationMenuExample,
   pagination: PaginationExample,
   popover: PopoverExample,
   progress: ProgressExample,
