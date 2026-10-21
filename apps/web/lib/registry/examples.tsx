@@ -35,12 +35,17 @@ import HoverCardExample from '@/registry/zen/examples/hover-card-example';
 import InputExample from '@/registry/zen/examples/input-example';
 import InputGroupExample from '@/registry/zen/examples/input-group-example';
 import InputOtpExample from '@/registry/zen/examples/input-otp-example';
+import ItemExample from '@/registry/zen/examples/item-example';
 import KbdExample from '@/registry/zen/examples/kbd-example';
 import LabelExample from '@/registry/zen/examples/label-example';
+import MenubarExample from '@/registry/zen/examples/menubar-example';
+import NativeSelectExample from '@/registry/zen/examples/native-select-example';
+import NavigationMenuExample from '@/registry/zen/examples/navigation-menu-example';
 import PaginationExample from '@/registry/zen/examples/pagination-example';
 import PopoverExample from '@/registry/zen/examples/popover-example';
 import ProgressExample from '@/registry/zen/examples/progress-example';
 import RadioGroupExample from '@/registry/zen/examples/radio-group-example';
+import ResizableExample from '@/registry/zen/examples/resizable-example';
 import ScrollAreaExample from '@/registry/zen/examples/scroll-area-example';
 import SelectExample from '@/registry/zen/examples/select-example';
 import SeparatorExample from '@/registry/zen/examples/separator-example';
@@ -101,12 +106,17 @@ const zenExampleComponents = {
   input: InputExample,
   'input-group': InputGroupExample,
   'input-otp': InputOtpExample,
+  item: ItemExample,
   kbd: KbdExample,
   label: LabelExample,
+  menubar: MenubarExample,
+  'native-select': NativeSelectExample,
+  'navigation-menu': NavigationMenuExample,
   pagination: PaginationExample,
   popover: PopoverExample,
   progress: ProgressExample,
   'radio-group': RadioGroupExample,
+  resizable: ResizableExample,
   'scroll-area': ScrollAreaExample,
   select: SelectExample,
   separator: SeparatorExample,

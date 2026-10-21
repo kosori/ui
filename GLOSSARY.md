@@ -60,6 +60,10 @@ _Avoid_: API, interface, surface, shape
 A component whose Design comes from coss/ui and whose Structure comes from shadcn/ui. A Port changes only imports, registry dependencies, item names, icons and the markup shadcn/ui parity requires. It never diverges from coss/ui's Design through anything but Tokens.
 _Avoid_: Fork, rewrite, adaptation
 
+**Authored component**:
+A component that serves a name shadcn/ui publishes but coss/ui does not ship. Its Structure is shadcn/ui's; its Design is inherited from the nearest Port rather than copied from an upstream file. It carries no upstream pin.
+_Avoid_: Custom component, original component, kosori-only component
+
 **Pending**:
 A name a Style publishes as part of its catalog scope but does not yet serve. Pending names appear in documentation without a page and never appear in the registry catalog.
 _Avoid_: Missing, TODO, unimplemented
