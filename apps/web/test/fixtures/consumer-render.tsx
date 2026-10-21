@@ -1,7 +1,9 @@
+import { Button } from '@/components/ui/button';
 import { Card, CardHeader } from '@/components/ui/card';
 import { DialogFooter } from '@/components/ui/dialog';
 import { Table } from '@/components/ui/table';
 
+/** Compile a Consumer's render, layer and state-colour surface after install. */
 export const RenderFixture = () => (
   <main>
     <Card>
@@ -10,6 +12,11 @@ export const RenderFixture = () => (
       />
     </Card>
     <DialogFooter render={<footer />} />
-    <Table render={<section />} />
+    <Button variant='destructive-outline'>Delete</Button>
+    <Table
+      className='render-fixture-table'
+      data-fixture='table'
+      render={<section />}
+    />
   </main>
 );
