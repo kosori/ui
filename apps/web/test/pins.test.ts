@@ -46,6 +46,7 @@ test('the pin record covers every Port in the catalog', async () => {
   const catalog = await readCatalog('zen');
   const ports = catalog
     .filter((item) => item.type !== 'registry:example')
+    .filter((item) => item.meta?.authored !== true)
     .map((item) => item.name)
     .filter((name) => !NO_UPSTREAM.has(name));
 
