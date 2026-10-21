@@ -2,6 +2,8 @@ import { expect, test } from 'bun:test';
 import { existsSync } from 'node:fs';
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { Compatibility } from '../components/compatibility';
 import { readCatalog } from '../lib/registry/catalog';
 import {
   ALIASES,
@@ -275,6 +277,117 @@ test('Pending and Compositions come from each Style own data', async () => {
     kaze.notServed,
     'kaze does not name a catalog name it leaves unserved'
   ).toContain('toast');
+});
+
+test('every Authored catalog item appears once in its Style facts', async () => {
+  const styles = await Promise.all(
+    STYLES.map(async ({ name }) => ({
+      catalog: await readCatalog(name),
+      facts: await getCompatibilityFacts(name),
+      name,
+    }))
+  );
+
+  for (const { catalog, facts, name } of styles) {
+    const expected = catalog
+      .filter(
+        (item) => item.type === 'registry:ui' && item.meta?.authored === true
+      )
+      .map((item) => item.name)
+      .sort();
+
+    expect(
+      facts.authored,
+      `${name} does not report its Authored items`
+    ).toEqual(expected);
+    expect(
+      new Set(facts.authored).size,
+      `${name} reports an Authored item more than once`
+    ).toBe(facts.authored.length);
+  }
+});
+
+test('an Authored name is neither Pending nor a Composition', async () => {
+  const styles = await Promise.all(
+    STYLES.map(async ({ name }) => ({
+      facts: await getCompatibilityFacts(name),
+      name,
+    }))
+  );
+
+  for (const { facts, name } of styles) {
+    for (const authored of facts.authored) {
+      expect(
+        facts.pending,
+        `${name} lists the Authored ${authored} as Pending`
+      ).not.toContain(authored);
+      expect(
+        facts.compositions,
+        `${name} lists the Authored ${authored} as a Composition`
+      ).not.toContain(authored);
+      expect(PENDING_COMPONENTS, `${authored} is Pending`).not.toContain(
+        authored
+      );
+      expect(COMPOSITIONS, `${authored} is a Composition`).not.toContain(
+        authored
+      );
+    }
+  }
+});
+
+test('every Authored name has no VERSION.md pin row', async () => {
+  const source = await readFile(join(webDir, '..', '..', 'VERSION.md'), 'utf8');
+  const pinned = new Set(
+    source
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.startsWith('|') && line.endsWith('|'))
+      .map((line) =>
+        line
+          .slice(1, -1)
+          .split('|')
+          .map((cell) => cell.trim())
+      )
+      .filter(
+        (cells) =>
+          cells.length === 3 &&
+          /^[a-z][a-z-]*$/.test(cells[0]) &&
+          /^[0-9a-f]{64}$/.test(cells[2])
+      )
+      .map(([name]) => name)
+  );
+
+  const styles = await Promise.all(
+    STYLES.map(async ({ name }) => ({
+      facts: await getCompatibilityFacts(name),
+      name,
+    }))
+  );
+
+  for (const { facts, name } of styles) {
+    for (const authored of facts.authored) {
+      expect(
+        pinned.has(authored),
+        `${name} pins the Authored ${authored} to an upstream revision`
+      ).toBe(false);
+    }
+  }
+});
+
+test('the page renders Authored names or says the Style serves none', async () => {
+  const zen = renderToStaticMarkup(await Compatibility({ style: 'zen' }));
+  const kaze = renderToStaticMarkup(await Compatibility({ style: 'kaze' }));
+
+  expect(zen, 'zen does not render the Authored section').toContain('Authored');
+  expect(zen, 'zen does not list its Authored names').toContain(
+    'native-select'
+  );
+  expect(zen, 'zen claims to serve no Authored components').not.toContain(
+    'zen serves no Authored components'
+  );
+  expect(kaze, 'kaze does not say it serves no Authored components').toContain(
+    'kaze serves no Authored components'
+  );
 });
 
 test('the Compatibility page is reachable from every Style menu', async () => {

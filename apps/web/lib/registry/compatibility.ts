@@ -51,6 +51,7 @@ export type ModuleExports = {
 /** Everything a Style's compatibility page states. */
 export type CompatibilityFacts = {
   aliases: readonly AliasClaim[];
+  authored: readonly string[];
   compositions: readonly string[];
   divergences: readonly Divergence[];
   incomplete: boolean;
@@ -347,6 +348,17 @@ export const readServedComponentNames = async (style: string) => {
     .sort();
 };
 
+/** The documented names a Style's catalog marks as Authored (ADR-0008). */
+const readAuthoredComponentNames = async (style: string) => {
+  const catalog = await readCatalog(style);
+
+  return catalog
+    .filter((item) => item.type === 'registry:ui' && !isInternalItem(item.name))
+    .filter((item) => item.meta?.authored === true)
+    .map((item) => item.name)
+    .sort();
+};
+
 /** The documented names a complete Style serves that this Style does not. */
 const readUnservedNames = async (style: StyleName, served: Set<string>) => {
   const complete = STYLES.filter(
@@ -406,6 +418,7 @@ export const getCompatibilityFacts = async (
 
   return {
     aliases,
+    authored: await readAuthoredComponentNames(style),
     compositions: definition?.compositions ?? [],
     divergences,
     incomplete: definition?.incomplete ?? false,
