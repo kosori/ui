@@ -751,6 +751,33 @@
       ]
     },
     {
+      "name": "item",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
+      "registryDependencies": ["@kosori/separator"],
+      "files": [
+        {
+          "path": "registry/zen/ui/item.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "authored": true
+      }
+    },
+    {
+      "name": "item-example",
+      "type": "registry:example",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["@kosori/item"],
+      "files": [
+        {
+          "path": "registry/zen/examples/item-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "kbd",
       "type": "registry:ui",
       "dependencies": ["cn"],
@@ -790,6 +817,31 @@
       "files": [
         {
           "path": "registry/zen/examples/label-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "native-select",
+      "type": "registry:ui",
+      "dependencies": ["@tabler/icons-react", "class-variance-authority", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/ui/native-select.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "authored": true
+      }
+    },
+    {
+      "name": "native-select-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/native-select"],
+      "files": [
+        {
+          "path": "registry/zen/examples/native-select-example.tsx",
           "type": "registry:example"
         }
       ]

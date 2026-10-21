@@ -1,0 +1,63 @@
+---
+title: Item
+description: A flexible row for an object, a person or an action in a list.
+---
+
+Item composes media, content, actions and an optional separator into one row.
+`ItemGroup` stacks rows as a list, `ItemTitle` and `ItemDescription` carry the
+hierarchy, and every part marks itself with `data-slot`.
+
+It is an Authored component: shadcn/ui owns its structure, and its design comes
+from `Card` for the surface and `Field` for the padding rhythm and muted text,
+because coss/ui ships no item.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/item
+```
+
+## Example
+
+<ComponentPreview name='item' />
+
+## Usage
+
+```tsx
+import { IconCloudUpload } from '@tabler/icons-react';
+
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle,
+} from '@/components/ui/item';
+
+const ItemDemo = () => (
+  <ItemGroup>
+    <Item>
+      <ItemMedia>
+        <IconCloudUpload />
+      </ItemMedia>
+      <ItemContent>
+        <ItemTitle>Deploy project</ItemTitle>
+        <ItemDescription>Push the latest commit to production.</ItemDescription>
+      </ItemContent>
+      <ItemActions>
+        <span className='text-muted-foreground text-xs'>2m</span>
+      </ItemActions>
+    </Item>
+  </ItemGroup>
+);
+```
+
+## Variants
+
+| Part | Prop | Values |
+| --- | --- | --- |
+| `Item` | `variant` | `default`, `outline`, `muted` |
+| `Item` | `size` | `default`, `sm`, `xs` |
+| `ItemMedia` | `variant` | `default`, `icon`, `image` |
