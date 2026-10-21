@@ -141,7 +141,15 @@ export function Calendar({
   );
 }
 
-/** Render a day cell's button; Calendar uses it as its default DayButton. */
+/**
+ * Render a day cell's button; Calendar uses it as its default DayButton.
+ *
+ * It is deliberately a pass-through: Calendar supplies the shared
+ * `day_button` class through DayPicker's `classNames`, and the surrounding
+ * `day` and selected-state classes style the cell. Styling the button here
+ * would duplicate that surface and apply it twice when a consumer overrides
+ * `components.DayButton`.
+ */
 export function CalendarDayButton({
   className,
   ...props

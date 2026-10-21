@@ -243,12 +243,12 @@ export const composeDocsStylesheet = () => {
   const item = composeStyleItem(zen, DEFAULT_BASE_COLOR);
   const theme = Object.entries(item.cssVars?.theme ?? {}).filter(([token]) =>
     token.startsWith('--color-')
-  ) as [string, string][];
-  const light = Object.entries(item.cssVars?.light ?? {}).map(
-    ([token, value]) => [`--${token}`, value] as [string, string]
-  );
-  const dark = Object.entries(item.cssVars?.dark ?? {}).map(
-    ([token, value]) => [`--${token}`, value] as [string, string]
+  ) satisfies [string, string][];
+  const light: [string, string][] = Object.entries(
+    item.cssVars?.light ?? {}
+  ).map(([token, value]) => [`--${token}`, value]);
+  const dark: [string, string][] = Object.entries(item.cssVars?.dark ?? {}).map(
+    ([token, value]) => [`--${token}`, value]
   );
 
   return [

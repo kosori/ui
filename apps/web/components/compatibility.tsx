@@ -88,7 +88,8 @@ const Compatibility = async ({ style }: Props) => {
         <h2 className='font-medium text-lg'>Pending</h2>
         <p className='mt-2 text-muted-foreground text-sm'>
           Names this Style publishes as part of its scope but does not serve.
-          They have no page and never appear in the Registry catalog.
+          They have no page and never appear in the Registry catalog. sonner is
+          not Pending; the divergence above explains why it is absent.
         </p>
         {facts.pending.length > 0 ? (
           <ul className='mt-3 grid gap-2 sm:grid-cols-2'>

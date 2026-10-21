@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { readCatalog } from '@/lib/registry/catalog';
-import { isInternalItem } from '@/lib/registry/internal';
+import { readServedComponentNames } from '@/lib/registry/compatibility';
 import { findStyle, type StyleName } from '@/registry/preset';
 
 type Props = {
@@ -17,11 +16,7 @@ const ComponentsStatus = async ({ style }: Props) => {
   }
 
   const definition = findStyle(style);
-  const catalog = await readCatalog(style);
-  const implemented = catalog
-    .filter((item) => item.type === 'registry:ui' && !isInternalItem(item.name))
-    .map((item) => item.name)
-    .sort();
+  const implemented = await readServedComponentNames(style);
   const pending = definition?.pending ?? [];
   const compositions = definition?.compositions ?? [];
 
@@ -46,6 +41,10 @@ const ComponentsStatus = async ({ style }: Props) => {
         {pending.length > 0 ? (
           <section>
             <h2 className='font-medium text-lg'>Pending</h2>
+            <p className='mt-2 text-muted-foreground text-sm'>
+              {pending.length} Pending names. sonner is not one of them; the
+              Compatibility page explains why.
+            </p>
             <ul className='mt-3 space-y-2'>
               {pending.map((name) => (
                 <li key={name}>

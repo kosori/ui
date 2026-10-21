@@ -1,12 +1,14 @@
 import { expect, test } from 'bun:test';
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { parseExports } from '../lib/registry/compatibility';
 import {
   EXAMPLE_OVERRIDES,
   type ExampleOverride,
 } from './fixtures/example-overrides';
 
 const examplesDir = join(import.meta.dirname, '../registry/zen/examples');
+const uiDir = join(import.meta.dirname, '../registry/zen/ui');
 
 /** A prop whose value decides whether an Example shows the shipped design. */
 type PropRule = {
@@ -44,35 +46,6 @@ const PROP_RULES: readonly PropRule[] = [
   { component: 'SidebarProvider', expected: 'true', prop: 'defaultOpen' },
 ];
 
-/**
- * The variant props an Example of that component may show. Only components
- * named by the Example's own file are checked, so a Button used as a popup
- * trigger does not count as a Button Example.
- */
-const OWN_VARIANT_RULES: readonly PropRule[] = [
-  { component: 'Alert', expected: 'default', prop: 'variant' },
-  { component: 'Badge', expected: 'default', prop: 'size' },
-  { component: 'Badge', expected: 'default', prop: 'variant' },
-  { component: 'Button', expected: 'default', prop: 'size' },
-  { component: 'Button', expected: 'default', prop: 'variant' },
-  { component: 'ButtonGroup', expected: 'horizontal', prop: 'orientation' },
-  { component: 'ContextMenuItem', expected: 'default', prop: 'variant' },
-  { component: 'ContextMenuLinkItem', expected: 'default', prop: 'variant' },
-  {
-    component: 'DropdownMenuCheckboxItem',
-    expected: 'default',
-    prop: 'variant',
-  },
-  { component: 'DropdownMenuItem', expected: 'default', prop: 'variant' },
-  { component: 'EmptyMedia', expected: 'default', prop: 'variant' },
-  { component: 'SelectTrigger', expected: 'default', prop: 'size' },
-  { component: 'SidebarMenuButton', expected: 'default', prop: 'size' },
-  { component: 'SidebarMenuButton', expected: 'default', prop: 'variant' },
-  { component: 'TabsList', expected: 'default', prop: 'variant' },
-  { component: 'Toggle', expected: 'default', prop: 'size' },
-  { component: 'Toggle', expected: 'default', prop: 'variant' },
-];
-
 /** Class fragments no Example may add to a component's shipped className. */
 const CLASS_RULES: readonly ClassRule[] = [
   { component: 'DrawerFooter', fragment: 'justify-center' },
@@ -82,16 +55,44 @@ const CLASS_RULES: readonly ClassRule[] = [
   { component: 'Switch', fragment: '--thumb-size' },
 ];
 
-/** Raw palette colours a state Token already names. */
-const PALETTE_TOKENS = {
+/** The Tailwind palette families an Example must not name directly. */
+const PALETTE_FAMILIES = [
+  'slate',
+  'gray',
+  'zinc',
+  'neutral',
+  'stone',
+  'red',
+  'orange',
+  'amber',
+  'yellow',
+  'lime',
+  'green',
+  'emerald',
+  'teal',
+  'cyan',
+  'sky',
+  'blue',
+  'indigo',
+  'violet',
+  'purple',
+  'fuchsia',
+  'pink',
+  'rose',
+] as const;
+
+/** The state Token a palette family already names, when it has one. */
+const PALETTE_STATE_TOKENS: Record<string, string | undefined> = {
   amber: 'warning',
   blue: 'info',
   emerald: 'success',
   red: 'destructive',
-} as const;
+};
 
-const PALETTE_PATTERN =
-  /\b(?:bg|text|border|ring|fill|stroke|from|via|to)-(emerald|amber|red|blue)-\d{2,3}(?:\/\d+)?\b/g;
+const PALETTE_PATTERN = new RegExp(
+  `\\b(?:bg|text|border|ring|fill|stroke|from|via|to)-(${PALETTE_FAMILIES.join('|')})-\\d{2,3}(?:/\\d+)?\\b`,
+  'g'
+);
 
 type JsxTag = {
   name: string;
@@ -235,13 +236,144 @@ const readTags = (source: string): JsxTag[] => {
   return tags;
 };
 
-/** The PascalCase component an Example file is named after. */
-const exampleComponent = (example: string) =>
-  example
-    .replace(/-example\.tsx$/, '')
-    .split('-')
-    .map((part) => `${part[0].toUpperCase()}${part.slice(1)}`)
-    .join('');
+/** The index of the delimiter that closes `open`, ignoring nested strings. */
+const matchingDelimiter = (
+  source: string,
+  open: number,
+  openChar: string,
+  closeChar: string
+) => {
+  let depth = 0;
+  let quote: string | null = null;
+
+  for (let cursor = open; cursor < source.length; cursor += 1) {
+    const char = source[cursor];
+
+    if (quote) {
+      if (char === quote && source[cursor - 1] !== '\\') {
+        quote = null;
+      }
+      continue;
+    }
+
+    if (char === '"' || char === "'" || char === '`') {
+      quote = char;
+    } else if (char === openChar) {
+      depth += 1;
+    } else if (char === closeChar) {
+      depth -= 1;
+      if (depth === 0) {
+        return cursor;
+      }
+    }
+  }
+
+  return -1;
+};
+
+/** The variant and size defaults each exported component ships. */
+const readComponentDefaults = async () => {
+  const defaults = new Map<string, Map<string, string>>();
+  const files = (await readdir(uiDir)).filter((file) => file.endsWith('.tsx'));
+  const sources = await Promise.all(
+    files.map(async (file) => ({
+      file,
+      source: await readFile(join(uiDir, file), 'utf8'),
+    }))
+  );
+
+  for (const { source } of sources) {
+    const cvaDefaults = new Map<string, Map<string, string>>();
+
+    for (const match of source.matchAll(
+      /(?:const|let|var)\s+([A-Za-z0-9_$]+)\s*=\s*cva\s*\(/g
+    )) {
+      const [, name] = match;
+      const open = (match.index ?? 0) + match[0].length - 1;
+      const close = matchingDelimiter(source, open, '(', ')');
+      if (!name || close === -1) {
+        continue;
+      }
+
+      const block = /defaultVariants\s*:\s*\{([^}]*)\}/.exec(
+        source.slice(open, close)
+      );
+      const values = new Map<string, string>();
+
+      for (const pair of block?.[1]?.matchAll(
+        /([A-Za-z0-9_$]+)\s*:\s*['"]([^'"]+)['"]/g
+      ) ?? []) {
+        const [, prop, value] = pair;
+        if (prop && value && (prop === 'variant' || prop === 'size')) {
+          values.set(prop, value);
+        }
+      }
+
+      if (values.size > 0) {
+        cvaDefaults.set(name, values);
+      }
+    }
+
+    for (const match of source.matchAll(
+      /export\s+function\s+([A-Za-z0-9_$]+)\s*\(/g
+    )) {
+      const [, name] = match;
+      const open = (match.index ?? 0) + match[0].length - 1;
+      const close = matchingDelimiter(source, open, '(', ')');
+      if (!name || close === -1) {
+        continue;
+      }
+
+      const bodyOpen = source.indexOf('{', close);
+      if (bodyOpen === -1) {
+        continue;
+      }
+
+      const bodyClose = matchingDelimiter(source, bodyOpen, '{', '}');
+      if (bodyClose === -1) {
+        continue;
+      }
+
+      const params = source.slice(open + 1, close);
+      const body = source.slice(bodyOpen, bodyClose);
+      const values = new Map<string, string>();
+
+      for (const pair of params.matchAll(
+        /\b(variant|size)\s*=\s*['"]([^'"]+)['"]/g
+      )) {
+        const [, prop, value] = pair;
+        if (prop && value) {
+          values.set(prop, value);
+        }
+      }
+
+      for (const [cvaName, cvaValues] of cvaDefaults) {
+        if (!new RegExp(`\\b${cvaName}\\s*\\(`).test(body)) {
+          continue;
+        }
+
+        for (const [prop, value] of cvaValues) {
+          if (!values.has(prop)) {
+            values.set(prop, value);
+          }
+        }
+      }
+
+      if (values.size > 0) {
+        defaults.set(name, values);
+      }
+    }
+
+    for (const [exported, local] of parseExports(source).aliases) {
+      const localDefaults = defaults.get(local);
+      if (localDefaults && !defaults.has(exported)) {
+        defaults.set(exported, localDefaults);
+      }
+    }
+  }
+
+  return defaults;
+};
 
 /** One override of a tracked prop, or null when the tag uses the default. */
 const propViolation = (
@@ -277,20 +409,30 @@ const findViolations = async (): Promise<Violation[]> => {
       source: await readFile(join(examplesDir, example), 'utf8'),
     }))
   );
+  const componentDefaults = await readComponentDefaults();
   const violations: Violation[] = [];
 
   for (const { example, source } of sources) {
-    const owner = exampleComponent(example);
-    const ownVariantRules = OWN_VARIANT_RULES.filter((rule) =>
-      rule.component.startsWith(owner)
-    );
-
     for (const tag of readTags(source)) {
-      for (const rule of [...PROP_RULES, ...ownVariantRules]) {
+      for (const rule of PROP_RULES) {
         const violation = propViolation(example, tag, rule);
         if (violation) {
           violations.push(violation);
         }
+      }
+
+      for (const [prop, expected] of componentDefaults.get(tag.name) ?? []) {
+        const actual = tag.props.get(prop);
+        if (actual === undefined || actual === expected) {
+          continue;
+        }
+
+        violations.push({
+          example,
+          message: `${example}: ${tag.name}.${prop} is ${actual}, expected ${expected}`,
+          target: `${tag.name}.${prop}`,
+          value: actual,
+        });
       }
 
       for (const rule of CLASS_RULES) {
@@ -313,11 +455,14 @@ const findViolations = async (): Promise<Violation[]> => {
     }
 
     for (const match of source.matchAll(PALETTE_PATTERN)) {
-      const token = PALETTE_TOKENS[match[1] as keyof typeof PALETTE_TOKENS];
+      const family = match[1] ?? '';
+      const token = PALETTE_STATE_TOKENS[family];
 
       violations.push({
         example,
-        message: `${example}: ${match[0]} is a raw palette colour; use a ${token} Token`,
+        message: `${example}: ${match[0]} is a raw palette colour; use ${
+          token ? `a ${token} Token` : 'a Token'
+        }`,
         target: 'className',
         value: match[0],
       });
@@ -327,6 +472,7 @@ const findViolations = async (): Promise<Violation[]> => {
   return violations;
 };
 
+/** The stable identity an allowlist entry and a found violation share. */
 const violationKey = ({ example, target, value }: ExampleOverride) =>
   `${example}\0${target}\0${value}`;
 

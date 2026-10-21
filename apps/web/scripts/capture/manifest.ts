@@ -16,7 +16,6 @@ export const EXAMPLE_ATTRIBUTE = 'data-example';
 export type CaptureEntry = {
   example: string;
   route: string;
-  schemes: readonly CaptureScheme[];
 };
 
 const PREVIEW_PATTERN = /<ComponentPreview\s+name=(?:'([\w-]+)'|"([\w-]+)")/g;
@@ -87,5 +86,5 @@ export const captureManifest = async (
 
   return [...routes.entries()]
     .sort(([left], [right]) => left.localeCompare(right))
-    .map(([example, route]) => ({ example, route, schemes: CAPTURE_SCHEMES }));
+    .map(([example, route]) => ({ example, route }));
 };

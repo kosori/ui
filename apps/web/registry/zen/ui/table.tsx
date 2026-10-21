@@ -7,36 +7,34 @@ import type React from 'react';
 
 export type TableVariant = 'default' | 'card';
 
-export type TableProps = React.ComponentProps<'table'> & {
+export type TableProps = useRender.ComponentProps<'div'> & {
   variant?: TableVariant;
-  render?: useRender.ComponentProps<'div'>['render'];
 };
 
 export function Table({
   className,
   variant = 'default',
   render,
+  children,
   ...props
 }: TableProps): React.ReactElement {
   const defaultProps = {
     children: (
       <table
-        className={cn(
-          'w-full caption-bottom in-data-[variant=card]:border-separate in-data-[variant=card]:border-spacing-0 text-sm',
-          className
-        )}
+        className='w-full caption-bottom in-data-[variant=card]:border-separate in-data-[variant=card]:border-spacing-0 text-sm'
         data-slot='table'
-        {...props}
-      />
+      >
+        {children}
+      </table>
     ),
-    className: 'relative w-full overflow-x-auto',
+    className: cn('relative w-full overflow-x-auto', className),
     'data-slot': 'table-container',
     'data-variant': variant,
   };
 
   return useRender({
     defaultTagName: 'div',
-    props: mergeProps<'div'>(defaultProps, {}),
+    props: mergeProps<'div'>(defaultProps, props),
     render,
   });
 }

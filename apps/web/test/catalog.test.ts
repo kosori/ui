@@ -8,6 +8,76 @@ import { PENDING_COMPONENTS } from '../lib/registry/pending';
 import { findStyle, STYLES } from '../registry/preset';
 
 const docsDir = join(import.meta.dirname, '../content/docs');
+const registryDir = join(import.meta.dirname, '../registry');
+const iconOnlyControlPattern = /(?:Button|Clear|Close|Remove|Trigger)$/;
+const iconElementPattern =
+  /^<([A-Z][\w.]*)(?:\s[^>]*)?\/>$|^<([A-Z][\w.]*)(?:\s[^>]*)?>[\s\S]*<\/\2>$/;
+
+/** The end of a JSX opening tag, allowing expressions and quoted strings. */
+const openingTagEnd = (source: string, start: number) => {
+  let quote: string | null = null;
+  let braces = 0;
+
+  for (let cursor = start; cursor < source.length; cursor += 1) {
+    const char = source[cursor];
+
+    if (quote) {
+      if (char === quote) {
+        quote = null;
+      }
+      continue;
+    }
+
+    if (char === '"' || char === "'" || char === '`') {
+      quote = char;
+    } else if (char === '{') {
+      braces += 1;
+    } else if (char === '}') {
+      braces -= 1;
+    } else if (char === '>' && braces === 0) {
+      return cursor;
+    }
+  }
+
+  return -1;
+};
+
+/** The icon-only controls a component source renders. */
+const iconOnlyControls = (source: string) => {
+  const controls: { name: string; opening: string }[] = [];
+
+  for (const match of source.matchAll(/<([A-Z][\w.]*)/g)) {
+    const [, name] = match;
+    const start = match.index ?? 0;
+    const end = openingTagEnd(source, start + match[0].length);
+
+    if (!name || end === -1 || !iconOnlyControlPattern.test(name)) {
+      continue;
+    }
+
+    const opening = source.slice(start, end + 1);
+    if (opening.endsWith('/>')) {
+      continue;
+    }
+
+    const closing = `</${name}>`;
+    const closeIndex = source.indexOf(closing, end + 1);
+    if (closeIndex === -1) {
+      continue;
+    }
+
+    const children = source
+      .slice(end + 1, closeIndex)
+      .replace(/\/\*[\s\S]*?\*\/|\{\/\*[\s\S]*?\*\/\}/g, '')
+      .trim();
+
+    if (iconElementPattern.test(children)) {
+      controls.push({ name, opening });
+    }
+  }
+
+  return controls;
+};
 
 /** The documentation pages a Style publishes in its menu. */
 const readPages = async (style: string) => {
@@ -72,7 +142,7 @@ test('a Composition has a page but no installable name', async () => {
         `${name} ships an Example for Composition ${composition}`
       ).toBe(false);
       expect(
-        PENDING_COMPONENTS as readonly string[],
+        PENDING_COMPONENTS,
         `${composition} is a Composition and also Pending`
       ).not.toContain(composition);
     }
@@ -101,14 +171,8 @@ test('the two trivial names are served with an Example and a page', async () => 
       existsSync(join(docsDir, 'zen', `${name}.mdx`)),
       `zen has no ${name} page`
     ).toBe(true);
-    expect(
-      PENDING_COMPONENTS as readonly string[],
-      `${name} is Pending`
-    ).not.toContain(name);
-    expect(
-      COMPOSITIONS as readonly string[],
-      `${name} is a Composition`
-    ).not.toContain(name);
+    expect(PENDING_COMPONENTS, `${name} is Pending`).not.toContain(name);
+    expect(COMPOSITIONS, `${name} is a Composition`).not.toContain(name);
   }
 });
 
@@ -123,8 +187,8 @@ test('an Incomplete Style reports its own scope, not the global Pending list', (
 test('sonner is absent everywhere except the toast explanation', async () => {
   const styles = await readStyleFacts();
 
-  expect(PENDING_COMPONENTS as readonly string[]).not.toContain('sonner');
-  expect(COMPOSITIONS as readonly string[]).not.toContain('sonner');
+  expect(PENDING_COMPONENTS).not.toContain('sonner');
+  expect(COMPOSITIONS).not.toContain('sonner');
 
   for (const { catalog, name, pages } of styles) {
     const names = new Set(catalog.map((item) => item.name));
@@ -141,4 +205,27 @@ test('sonner is absent everywhere except the toast explanation', async () => {
   expect(await readFile(join(docsDir, 'zen/toast.mdx'), 'utf8')).toContain(
     'sonner'
   );
+});
+
+test('every icon-only control in autocomplete and combobox has a name', async () => {
+  const sources = await Promise.all(
+    ['autocomplete', 'combobox'].map(async (item) => ({
+      item,
+      source: await readFile(
+        join(registryDir, 'zen/ui', `${item}.tsx`),
+        'utf8'
+      ),
+    }))
+  );
+  const missing: string[] = [];
+
+  for (const { item, source } of sources) {
+    for (const control of iconOnlyControls(source)) {
+      if (!/\baria-label=/.test(control.opening)) {
+        missing.push(`${item}: ${control.name}`);
+      }
+    }
+  }
+
+  expect(missing, 'an icon-only control has no accessible name').toEqual([]);
 });

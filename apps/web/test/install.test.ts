@@ -15,12 +15,15 @@ import { tmpdir } from 'node:os';
 import { extname, join, relative } from 'node:path';
 import tailwindcss from '@tailwindcss/postcss';
 import postcss from 'postcss';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import type { RegistryItem } from 'shadcn/schema';
 import { GET } from '../app/init/[style]/[baseColor]/route';
 import { readCatalog } from '../lib/registry/catalog';
 import { COMPOSITIONS } from '../lib/registry/compositions';
 import { INTERNAL_ITEMS, isInternalItem } from '../lib/registry/internal';
 import { PENDING_COMPONENTS } from '../lib/registry/pending';
+import { stateCssVarsForSource } from '../lib/registry/state-tokens';
 import { BASE_COLORS } from '../registry/base-colors';
 import {
   composeDocsStylesheet,
@@ -29,6 +32,7 @@ import {
   STYLES,
   styleRadius,
 } from '../registry/preset';
+import { Table } from '../registry/zen/ui/table';
 
 const webDir = join(import.meta.dirname, '..');
 const fixtureDir = join(import.meta.dirname, 'fixtures/consumer');
@@ -36,6 +40,7 @@ const shadcn = join(webDir, 'node_modules/.bin/shadcn');
 const tsc = join(webDir, 'node_modules/.bin/tsc');
 const productionNamespace =
   'https://kosori.codingcodax.dev/r/{style}/{name}.json';
+const TEST_TIMEOUT = Number(process.env.KOSORI_TEST_TIMEOUT ?? 600_000);
 
 /**
  * Documentation pages that are not a catalog component. Every other page in a
@@ -531,6 +536,33 @@ const compileUtilities = async (cssPath: string, utilities: string[]) => {
   return result.css;
 };
 
+test('Table puts consumer attributes on the element render replaces', () => {
+  const html = renderToStaticMarkup(
+    createElement(
+      Table,
+      {
+        className: 'fixture-class',
+        'data-fixture': 'table',
+        render: createElement('section'),
+      },
+      createElement('tbody')
+    )
+  );
+
+  expect(html, 'Table did not render the consumer element').toStartWith(
+    '<section'
+  );
+  expect(html, 'Table className did not reach the rendered element').toContain(
+    'class="relative w-full overflow-x-auto fixture-class"'
+  );
+  expect(html, 'Table attributes did not reach the rendered element').toContain(
+    'data-fixture="table"'
+  );
+  expect(html, 'Table lost its inner table styling').toContain(
+    '<table class="w-full caption-bottom'
+  );
+});
+
 test('date-picker is documented as a composition with no registry item', async () => {
   const docsDir = join(webDir, 'content/docs/zen');
   const catalog = await readCatalog('zen');
@@ -561,6 +593,7 @@ test('date-picker is documented as a composition with no registry item', async (
   );
 });
 
+// biome-ignore format: the shared timeout keeps this declaration on one line
 test('installing a preset and every item of every Style leaves Consumer projects that typecheck', async () => {
   const server = serveInterop();
   const origin = `http://127.0.0.1:${server.port}`;
@@ -659,7 +692,7 @@ test('installing a preset and every item of every Style leaves Consumer projects
         // claims them: no Example, page or menu entry of their own.
         for (const internal of INTERNAL_ITEMS) {
           expect(
-            PENDING_COMPONENTS as readonly string[],
+            PENDING_COMPONENTS,
             `${internal.name} is Internal (${internal.reason}) and also Pending`
           ).not.toContain(internal.name);
           expect(
@@ -812,7 +845,7 @@ test('installing a preset and every item of every Style leaves Consumer projects
   } finally {
     server.stop(true);
   }
-}, 240_000);
+}, TEST_TIMEOUT);
 
 test('every Internal item is installable under its declared type', async () => {
   const catalogs = await Promise.all(
@@ -992,6 +1025,29 @@ test('a partial install declares every state Token its source references', async
   }
 });
 
+test('per-item state cssVars are derived from the base color palette', async () => {
+  const items = (await readCatalog('zen')).filter(
+    (item) => item.type === 'registry:ui'
+  );
+  const sources = await Promise.all(
+    items.map(async (item) => ({
+      item,
+      source: (
+        await Promise.all(
+          item.files.map((file) => readFile(join(webDir, file.path), 'utf8'))
+        )
+      ).join('\n'),
+    }))
+  );
+
+  for (const { item, source } of sources) {
+    expect(
+      item.cssVars,
+      `${item.name} declares cssVars by hand; run bun run registry:build`
+    ).toEqual(stateCssVarsForSource(source));
+  }
+});
+
 test('the documentation stylesheet is generated from the neutral preset', async () => {
   const committed = await readFile(join(webDir, 'app/tokens.css'), 'utf8');
   const globals = await readFile(join(webDir, 'app/globals.css'), 'utf8');
@@ -1016,6 +1072,7 @@ test('the documentation stylesheet is generated from the neutral preset', async 
   }
 });
 
+// biome-ignore format: the shared timeout keeps this declaration on one line
 test('installing state-coloured items without the preset compiles their utilities', async () => {
   const build = await buildRegistry('zen');
   expect(build.exitCode, build.stdout + build.stderr).toBe(0);
@@ -1088,8 +1145,9 @@ test('installing state-coloured items without the preset compiles their utilitie
     await rm(scratch, { force: true, recursive: true });
     server.stop(true);
   }
-}, 240_000);
+}, TEST_TIMEOUT);
 
+// biome-ignore format: the shared timeout keeps this declaration on one line
 test('init writes the semantic state Tokens for every Base color in both schemes', async () => {
   const server = serveInterop();
   const origin = `http://127.0.0.1:${server.port}`;
@@ -1097,7 +1155,7 @@ test('init writes the semantic state Tokens for every Base color in both schemes
 
   try {
     for (const style of STYLES) {
-      for (const baseColor of Object.keys(BASE_COLORS)) {
+      for (const [baseColor, tokens] of Object.entries(BASE_COLORS)) {
         // biome-ignore lint/performance/noAwaitInLoops: each Base color owns a scratch project and a CLI run
         const scratch = await mkdtemp(
           join(tmpdir(), `kosori-tokens-${style.name}-${baseColor}-`)
@@ -1140,9 +1198,7 @@ test('init writes the semantic state Tokens for every Base color in both schemes
           }
 
           const theme = declarations(css, '@theme inline');
-          for (const token of Object.keys(
-            BASE_COLORS[baseColor as keyof typeof BASE_COLORS].light
-          )) {
+          for (const token of Object.keys(tokens.light)) {
             if (token === 'radius') {
               continue;
             }
@@ -1160,8 +1216,9 @@ test('init writes the semantic state Tokens for every Base color in both schemes
   } finally {
     server.stop(true);
   }
-}, 600_000);
+}, TEST_TIMEOUT);
 
+// biome-ignore format: the shared timeout keeps this declaration on one line
 test('state utilities compile for every Base color', async () => {
   const server = serveInterop();
   const origin = `http://127.0.0.1:${server.port}`;
@@ -1217,8 +1274,9 @@ test('state utilities compile for every Base color', async () => {
   } finally {
     server.stop(true);
   }
-}, 240_000);
+}, TEST_TIMEOUT);
 
+// biome-ignore format: the shared timeout keeps this declaration on one line
 test('a Consumer project builds the shadcn/ui toast call site on the Base UI manager', async () => {
   const server = serveInterop();
   const origin = `http://127.0.0.1:${server.port}`;
@@ -1349,4 +1407,4 @@ export default Page;
   } finally {
     server.stop(true);
   }
-}, 420_000);
+}, TEST_TIMEOUT);
