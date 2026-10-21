@@ -90,3 +90,15 @@ A port adds its row in the same commit as its source, catalog entry, Example and
 3. Add `| <kosori-name> | <coss-name> | <sha256> |` in alphabetical order by kosori name.
 
 A renamed item records both names, for example `dropdown-menu` and `menu`. An item that is not ported from coss has no row.
+
+## Drift
+
+`.github/workflows/upstream-drift.yml` re-fetches the pinned registry every Monday, rehashes each row and reports what moved. It only reports: it never edits this file, never re-pins a row and never opens a pull request. A changed hash means upstream bytes moved under a Port; re-pin the row in the commit that adopts the change. New upstream `registry:ui` items are informational, and items that fail to fetch are listed separately rather than counted as drift.
+
+Run the same check locally:
+
+```sh
+bun run verify:upstream
+```
+
+Add `--fail-on-drift` to exit non-zero when anything changed, was added, was removed or could not be fetched, or `--json` for the raw report.
