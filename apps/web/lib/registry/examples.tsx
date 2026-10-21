@@ -35,8 +35,10 @@ import HoverCardExample from '@/registry/zen/examples/hover-card-example';
 import InputExample from '@/registry/zen/examples/input-example';
 import InputGroupExample from '@/registry/zen/examples/input-group-example';
 import InputOtpExample from '@/registry/zen/examples/input-otp-example';
+import ItemExample from '@/registry/zen/examples/item-example';
 import KbdExample from '@/registry/zen/examples/kbd-example';
 import LabelExample from '@/registry/zen/examples/label-example';
+import NativeSelectExample from '@/registry/zen/examples/native-select-example';
 import PaginationExample from '@/registry/zen/examples/pagination-example';
 import PopoverExample from '@/registry/zen/examples/popover-example';
 import ProgressExample from '@/registry/zen/examples/progress-example';
@@ -101,8 +103,10 @@ const zenExampleComponents = {
   input: InputExample,
   'input-group': InputGroupExample,
   'input-otp': InputOtpExample,
+  item: ItemExample,
   kbd: KbdExample,
   label: LabelExample,
+  'native-select': NativeSelectExample,
   pagination: PaginationExample,
   popover: PopoverExample,
   progress: ProgressExample,
