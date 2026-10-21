@@ -630,6 +630,16 @@ test('installing a preset and every item of every Style leaves Consumer projects
           );
         }
 
+        // A Consumer renders a chart the way shadcn/ui documents it, so the
+        // Recharts runtime dependency is exercised through the installed source.
+        if (items.some((item) => item.name === 'chart')) {
+          await mkdir(join(scratch, 'app/chart'), { recursive: true });
+          await cp(
+            join(webDir, 'test/fixtures/snippets/chart.tsx'),
+            join(scratch, 'app/chart/page.tsx')
+          );
+        }
+
         // ADR-0003: an install writes only the component directory, the CSS
         // entry and the dependency manifests. Record the tree before it runs.
         const before = await readTree(scratch);

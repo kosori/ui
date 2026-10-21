@@ -1,0 +1,63 @@
+---
+title: Chart
+description: Composes Recharts into a responsive container with themed tooltips and legends.
+---
+
+Chart is an Authored component: coss/ui has no counterpart, so it takes
+shadcn/ui's Structure and wraps [Recharts](https://recharts.org) rather than
+copying an upstream file. The container, tooltip and legend reuse kosori's
+design vocabulary: the tooltip surface comes from Popover, muted labels use
+`text-muted-foreground`, and series colours come from the `--chart-1` to
+`--chart-5` Tokens through `ChartStyle`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/chart
+```
+
+## Example
+
+<ComponentPreview name='chart' />
+
+## Usage
+
+```tsx
+'use client';
+
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart';
+
+const chartConfig = {
+  desktop: { label: 'Desktop', color: 'var(--chart-1)' },
+} satisfies ChartConfig;
+
+const data = [
+  { desktop: 186, month: 'January' },
+  { desktop: 305, month: 'February' },
+];
+
+const ChartDemo = () => (
+  <ChartContainer className='w-full' config={chartConfig}>
+    <BarChart accessibilityLayer data={data}>
+      <CartesianGrid vertical={false} />
+      <XAxis dataKey='month' tickLine={false} axisLine={false} />
+      <ChartTooltip content={<ChartTooltipContent />} />
+      <ChartLegend content={<ChartLegendContent />} />
+      <Bar dataKey='desktop' fill='var(--color-desktop)' radius={4} />
+    </BarChart>
+  </ChartContainer>
+);
+```
+
+A `ChartConfig` entry labels a series and sets its colour. `ChartStyle` writes
+those colours as custom properties on the container, so the same config works in
+light and dark without a second definition. Pass `theme` instead of `color` when
+a series needs a different value per scheme.

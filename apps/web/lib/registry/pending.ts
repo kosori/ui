@@ -6,7 +6,6 @@
 export const PENDING_COMPONENTS = [
   'attachment',
   'bubble',
-  'chart',
   'code-block',
   'marker',
   'message',
