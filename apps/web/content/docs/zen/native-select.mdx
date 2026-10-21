@@ -1,0 +1,43 @@
+---
+title: Native Select
+description: A native select element styled to match Select.
+---
+
+Native Select wraps the platform `<select>` element, so the option list and its
+keyboard behaviour come from the browser. It inherits its trigger surface, focus
+ring, disabled treatment and sizing from `Select`.
+
+It is an Authored component: shadcn/ui owns its structure and its design comes
+from the nearest Port, because coss/ui ships no native select.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/native-select
+```
+
+## Example
+
+<ComponentPreview name='native-select' />
+
+## Usage
+
+```tsx
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from '@/components/ui/native-select';
+
+const NativeSelectDemo = () => (
+  <NativeSelect aria-label='Select framework' defaultValue='next'>
+    <NativeSelectOption value='next'>Next.js</NativeSelectOption>
+    <NativeSelectOption value='vite'>Vite</NativeSelectOption>
+  </NativeSelect>
+);
+```
+
+## Variants
+
+| Part | Prop | Values |
+| --- | --- | --- |
+| `NativeSelect` | `size` | `default`, `sm` |

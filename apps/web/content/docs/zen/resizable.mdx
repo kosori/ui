@@ -1,0 +1,43 @@
+---
+title: Resizable
+description: Accessible resizable panel groups and layouts with keyboard support.
+---
+
+Resizable wraps
+[react-resizable-panels](https://github.com/bvaughn/react-resizable-panels) in
+a group, a panel and a draggable divider. Each divider is a `separator` with a
+focus ring and arrow-key support. It is not a Port: coss/ui has no counterpart,
+so the panel surface and radius come from Card and the divider from Separator.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/resizable
+```
+
+## Example
+
+<ComponentPreview name='resizable' />
+
+## Usage
+
+```tsx
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from '@/components/ui/resizable';
+
+const ResizableDemo = () => (
+  <div className='h-64 w-full max-w-md'>
+    <ResizablePanelGroup>
+      <ResizablePanel>One</ResizablePanel>
+      <ResizableHandle />
+      <ResizablePanel>Two</ResizablePanel>
+    </ResizablePanelGroup>
+  </div>
+);
+```
+
+A divider takes focus and resizes with the arrow keys. Pass `withHandle` to
+render the visible grab affordance.

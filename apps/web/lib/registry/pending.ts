@@ -9,12 +9,9 @@ export const PENDING_COMPONENTS = [
   'carousel',
   'chart',
   'code-block',
-  'item',
   'marker',
   'message',
   'message-scroller',
-  'native-select',
   'questionnaire',
-  'resizable',
   'trace',
 ] as const;
