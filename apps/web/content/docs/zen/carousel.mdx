@@ -1,0 +1,78 @@
+---
+title: Carousel
+description: A slide track with previous and next controls, built on Embla Carousel.
+---
+
+Carousel wraps [embla-carousel-react](https://www.embla-carousel.com/) in a
+track, a slide and two icon controls. Each slide takes the full width of the
+track, and the controls scroll the track one slide at a time. Arrow keys work
+when the track has focus.
+
+It is an Authored component: shadcn/ui owns its structure and its design comes
+from the nearest Port, because coss/ui ships no carousel. The controls inherit
+their surface, focus ring and disabled treatment from `Button`, and a slide
+inherits its sizing from `AspectRatio`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/carousel
+```
+
+## Example
+
+<ComponentPreview name='carousel' />
+
+## Usage
+
+```tsx
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+
+const CarouselDemo = () => (
+  <Carousel className='w-full max-w-sm'>
+    <CarouselContent>
+      <CarouselItem>Slide one</CarouselItem>
+      <CarouselItem>Slide two</CarouselItem>
+    </CarouselContent>
+    <CarouselPrevious />
+    <CarouselNext />
+  </Carousel>
+);
+```
+
+The previous and next controls sit outside the track, so leave room for them:
+the Example pads its container by `px-12`.
+
+## Orientation
+
+`orientation` switches the scroll axis. The controls rotate and move above and
+below the track, so a vertical carousel needs vertical room instead:
+
+```tsx
+<Carousel className='h-64 w-full max-w-xs' orientation='vertical'>
+  <CarouselContent>
+    <CarouselItem>Slide one</CarouselItem>
+    <CarouselItem>Slide two</CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
+```
+
+## API
+
+| Prop | Type | Default | Purpose |
+| --- | --- | --- | --- |
+| `opts` | Embla options | `undefined` | Forwarded to Embla Carousel |
+| `orientation` | `horizontal`, `vertical` | `horizontal` | Scroll axis |
+| `plugins` | Embla plugins | `undefined` | Forwarded to Embla Carousel |
+| `setApi` | `(api: CarouselApi) => void` | `undefined` | Receives the Embla API |
+
+`useCarousel` reads the nearest carousel's API and scroll state, and throws
+outside a `Carousel`.
