@@ -6,6 +6,7 @@ import { cn } from 'cn';
 import { type Context, createContext, useContext } from 'react';
 import {
   type SegmentedControlSize,
+  segmentedControlIndicatorSurfaceClassName,
   segmentedControlItemLayoutClassName,
   segmentedControlItemSizeClassNames,
   tabsIndicatorClassName,
@@ -76,7 +77,7 @@ export function TabsList({
           tabsIndicatorClassName,
           variant === 'underline' || variant === 'line'
             ? 'z-10 bg-primary data-[orientation=horizontal]:h-0.5 data-[orientation=vertical]:w-0.5 data-[orientation=vertical]:-translate-x-px data-[orientation=horizontal]:translate-y-px'
-            : '-z-1'
+            : cn('-z-1', segmentedControlIndicatorSurfaceClassName)
         )}
         data-slot='tab-indicator'
       />
