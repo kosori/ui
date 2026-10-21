@@ -18,6 +18,42 @@ export type ExampleOverride = {
 
 export const EXAMPLE_OVERRIDES = [
   {
+    example: 'button-group-example.tsx',
+    reason: 'Shows icon-sized items inside the group.',
+    target: 'Button.size',
+    value: 'icon',
+  },
+  {
+    example: 'button-group-example.tsx',
+    reason: 'Shows outlined items inside the group.',
+    target: 'Button.variant',
+    value: 'outline',
+  },
+  {
+    example: 'empty-example.tsx',
+    reason: 'Shows a small action button beside the empty state.',
+    target: 'Button.size',
+    value: 'sm',
+  },
+  {
+    example: 'empty-example.tsx',
+    reason: 'Shows an outlined action button beside the empty state.',
+    target: 'Button.variant',
+    value: 'outline',
+  },
+  {
+    example: 'table-example.tsx',
+    reason: 'Shows outline status badges in the table.',
+    target: 'Badge.variant',
+    value: 'outline',
+  },
+  {
+    example: 'toast-example.tsx',
+    reason: 'Shows outlined triggers for each toast type.',
+    target: 'Button.variant',
+    value: 'outline',
+  },
+  {
     example: 'card-example.tsx',
     reason: 'Submits the demo project form.',
     target: 'Button.type',
