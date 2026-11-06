@@ -7,6 +7,7 @@ import { Compatibility } from '../components/compatibility';
 import { readCatalog } from '../lib/registry/catalog';
 import {
   ALIASES,
+  COSS_ONLY_ITEMS,
   FIELD_COMPATIBILITY,
   getCompatibilityFacts,
   ICON_SUBSTITUTION,
@@ -372,6 +373,57 @@ test('every Authored name has no VERSION.md pin row', async () => {
       ).toBe(false);
     }
   }
+});
+
+test('every Coss-only name is served and pinned', async () => {
+  const source = await readFile(join(webDir, '..', '..', 'VERSION.md'), 'utf8');
+  const pinned = new Set(
+    source
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.startsWith('|') && line.endsWith('|'))
+      .map((line) =>
+        line
+          .slice(1, -1)
+          .split('|')
+          .map((cell) => cell.trim())
+      )
+      .filter(
+        (cells) =>
+          cells.length === 3 &&
+          /^[a-z][a-z-]*$/.test(cells[0]) &&
+          /^[0-9a-f]{64}$/.test(cells[2])
+      )
+      .map(([name]) => name)
+  );
+  const facts = await getCompatibilityFacts('zen');
+
+  expect(facts.cossOnly).toEqual([...COSS_ONLY_ITEMS]);
+
+  for (const name of facts.cossOnly) {
+    expect(facts.served, `${name} is Coss-only but is not served`).toContain(
+      name
+    );
+    expect(pinned.has(name), `${name} has no VERSION.md pin`).toBe(true);
+  }
+});
+
+test('the page renders Coss-only names or says the Style serves none', async () => {
+  const zen = renderToStaticMarkup(await Compatibility({ style: 'zen' }));
+  const kaze = renderToStaticMarkup(await Compatibility({ style: 'kaze' }));
+
+  expect(zen, 'zen does not render the Coss-only section').toContain(
+    'Coss-only'
+  );
+  expect(zen, 'zen does not list its Coss-only names').toContain(
+    'checkbox-group'
+  );
+  expect(zen, 'zen claims to serve no Coss-only components').not.toContain(
+    'zen serves no Coss-only components'
+  );
+  expect(kaze, 'kaze does not say it serves no Coss-only components').toContain(
+    'kaze serves no Coss-only components'
+  );
 });
 
 test('the page renders Authored names or says the Style serves none', async () => {

@@ -43,9 +43,13 @@ A name shadcn/ui publishes but coss/ui does not ship may be served as an
 `aspect-ratio` and `direction` predate this ADR and are retroactively the first
 Authored components: they were built to fill the same gap without a name for it.
 
-Coss-only components remain out of scope. This ADR adds no reason to invent a
-name shadcn/ui does not publish; ADR-0005's naming rule still decides what the
-catalog serves.
+Coss-only components remain out of scope for this ADR. This ADR adds no reason
+to invent a name shadcn/ui does not publish; ADR-0005's naming rule still
+decides what the catalog serves.
+
+> **Superseded in part by [ADR-0009](0009-coss-only-components.md).** Coss-only
+> components may now be served under coss's own name. The Authored definition
+> above is unchanged.
 
 ## Considered options
 

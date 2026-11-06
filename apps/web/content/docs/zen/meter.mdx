@@ -1,0 +1,42 @@
+---
+title: Meter
+description: A value within a known range, drawn as a labelled bar.
+---
+
+Meter wraps Base UI's meter primitive. Left to itself it renders a `MeterTrack`
+with a `MeterIndicator`; pass children to place the label and value around it,
+and every part marks itself with `data-slot`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/meter
+```
+
+## Example
+
+<ComponentPreview name='meter' />
+
+## Usage
+
+```tsx
+import {
+  Meter,
+  MeterIndicator,
+  MeterLabel,
+  MeterTrack,
+  MeterValue,
+} from '@/components/ui/meter';
+
+const MeterDemo = () => (
+  <Meter value={60}>
+    <div className='flex items-center justify-between gap-2'>
+      <MeterLabel>Storage usage</MeterLabel>
+      <MeterValue />
+    </div>
+    <MeterTrack>
+      <MeterIndicator />
+    </MeterTrack>
+  </Meter>
+);
+```

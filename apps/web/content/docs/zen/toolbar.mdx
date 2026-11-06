@@ -1,0 +1,42 @@
+---
+title: Toolbar
+description: A row of controls that groups related actions and separates them.
+---
+
+Toolbar wraps Base UI's toolbar and keeps coss's card surface. Its buttons,
+links and inputs are unstyled by design, so compose them with `render` to reuse
+Button or Toggle instead of restyling them here.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/toolbar
+```
+
+## Example
+
+<ComponentPreview name='toolbar' />
+
+## Usage
+
+```tsx
+import { Button } from '@/components/ui/button';
+import { Toggle } from '@/components/ui/toggle';
+import {
+  Toolbar,
+  ToolbarButton,
+  ToolbarGroup,
+  ToolbarSeparator,
+} from '@/components/ui/toolbar';
+
+const ToolbarDemo = () => (
+  <Toolbar>
+    <ToolbarGroup>
+      <ToolbarButton render={<Toggle />}>Bold</ToolbarButton>
+      <ToolbarButton render={<Toggle />}>Underline</ToolbarButton>
+    </ToolbarGroup>
+    <ToolbarSeparator />
+    <ToolbarButton render={<Button />}>Save</ToolbarButton>
+  </Toolbar>
+);
+```

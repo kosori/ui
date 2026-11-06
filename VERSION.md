@@ -33,6 +33,7 @@ One row per Port, ordered alphabetically by kosori name.
 | calendar | calendar | 547ebebda2747dadee61815f41448a2b6cecce3ad125806666df7595013896f0 |
 | card | card | b59dbc0bd5d61694fcf1948fb8134795b0f5a1bf0a28d8d6bc817297c73a006e |
 | checkbox | checkbox | a1b8b4180a39a47c47bd2b50e432d0911da6efe3b963b065b3b5cb8893760047 |
+| checkbox-group | checkbox-group | f78494035296e12c0ff602022338bb8f37a46f3a15647b53f0b2e8ac6c97f45e |
 | collapsible | collapsible | f70e7b9fde220ce5f039c93176a545a46a9b553ecdb23595a320e5163a95a1e8 |
 | combobox | combobox | dd8d7cfaa60c0e9b9a0ffa3f2334d43fbed05aaa67d0259fd4d89f2814c4689b |
 | command | command | 26f77d2322179cd7a5694d865e85362d492db053a91cb0ef7c51b573e45076a4 |
@@ -49,6 +50,8 @@ One row per Port, ordered alphabetically by kosori name.
 | input-otp | otp-field | 4122b6f91e0c011a9bfe40b4ecad4d0b89a7b371e773adac6af6b2bcc5ac033e |
 | kbd | kbd | ad8f26b95d8307f460316cd27a2b595d04069df2561395b5d39067a99e407cb5 |
 | label | label | edaf5fb049b3e2f27ddd70a6c6772c7d99e920c589b41019b8f4fa602113e695 |
+| meter | meter | f7f0b85f6878378c76e66887a111a1cb8476ebea84a2ebb4f6d41fe0fbad8653 |
+| number-field | number-field | e49f539416076d832d855e53be646fbc613ccaf0b419b8951f477267b81cdbde |
 | pagination | pagination | 4c3d048be127d228ad199b8555b833ffc26cd9506b4a75b4b298754833474993 |
 | popover | popover | ff9b981ce4e68b86a266f69480c59967c7065aacfa2d4ce927d91a1eff0035cf |
 | progress | progress | 605ea95436094735fc94d2ae38fd50df2dcce1617b2a67c504114bd0e55cc2b2 |
@@ -69,6 +72,7 @@ One row per Port, ordered alphabetically by kosori name.
 | toast | toast | 3be7bcee60026cdc2a2177026598bf51cf8a739f5553466c8fbc9b5bd994d3e1 |
 | toggle | toggle | a32372d0eaa291bc81f61f4ddb1f5bb827c507fd53de03c6f709adc242ee5bfb |
 | toggle-group | toggle-group | 8c67854bffcf762299fb989721e47da30fea3268cb969fdc6c775c3fe89982bb |
+| toolbar | toolbar | f08696682ad171b5a0d2c918202bcee10b9f6de1408a2a2e864f61e8d424dba2 |
 | tooltip | tooltip | 0ac59089d1d813b7eb1cd9e08ed2ff3b3931e4024df649ddb45b1eb43d50f694 |
 | use-media-query | use-media-query | 17d75ccaf898415db77dd72659c9b1fdb9338290ae54e8371b772e0b221c9fca |
 
