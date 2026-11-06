@@ -1,0 +1,46 @@
+---
+title: Number Field
+description: A numeric input with increment, decrement and drag-to-scrub controls.
+---
+
+NumberField wraps Base UI's number field and keeps the field id in context so
+`NumberFieldScrubArea` can label the input for accessibility. It ships three
+sizes and marks each part with `data-slot`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/number-field
+```
+
+## Example
+
+<ComponentPreview name='number-field' />
+
+## Usage
+
+```tsx
+import {
+  NumberField,
+  NumberFieldDecrement,
+  NumberFieldGroup,
+  NumberFieldIncrement,
+  NumberFieldInput,
+} from '@/components/ui/number-field';
+
+const NumberFieldDemo = () => (
+  <NumberField defaultValue={0}>
+    <NumberFieldGroup>
+      <NumberFieldDecrement />
+      <NumberFieldInput aria-label='Quantity' />
+      <NumberFieldIncrement />
+    </NumberFieldGroup>
+  </NumberField>
+);
+```
+
+## Variants
+
+| Part | Prop | Values |
+| --- | --- | --- |
+| `NumberField` | `size` | `sm`, `default`, `lg` |
