@@ -71,6 +71,7 @@ One row per Port, ordered alphabetically by kosori name.
 | toast | toast | 3be7bcee60026cdc2a2177026598bf51cf8a739f5553466c8fbc9b5bd994d3e1 |
 | toggle | toggle | a32372d0eaa291bc81f61f4ddb1f5bb827c507fd53de03c6f709adc242ee5bfb |
 | toggle-group | toggle-group | 8c67854bffcf762299fb989721e47da30fea3268cb969fdc6c775c3fe89982bb |
+| toolbar | toolbar | f08696682ad171b5a0d2c918202bcee10b9f6de1408a2a2e864f61e8d424dba2 |
 | tooltip | tooltip | 0ac59089d1d813b7eb1cd9e08ed2ff3b3931e4024df649ddb45b1eb43d50f694 |
 | use-media-query | use-media-query | 17d75ccaf898415db77dd72659c9b1fdb9338290ae54e8371b772e0b221c9fca |
 

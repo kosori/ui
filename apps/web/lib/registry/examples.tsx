@@ -65,6 +65,7 @@ import TextareaExample from '@/registry/zen/examples/textarea-example';
 import ToastExample from '@/registry/zen/examples/toast-example';
 import ToggleExample from '@/registry/zen/examples/toggle-example';
 import ToggleGroupExample from '@/registry/zen/examples/toggle-group-example';
+import ToolbarExample from '@/registry/zen/examples/toolbar-example';
 import TooltipExample from '@/registry/zen/examples/tooltip-example';
 
 const REGISTRY_DIR = join(process.cwd(), 'registry');
@@ -140,6 +141,7 @@ const zenExampleComponents = {
   toast: ToastExample,
   toggle: ToggleExample,
   'toggle-group': ToggleGroupExample,
+  toolbar: ToolbarExample,
   tooltip: TooltipExample,
 } satisfies Partial<Record<string, ComponentType>>;
 

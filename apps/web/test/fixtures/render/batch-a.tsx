@@ -110,6 +110,14 @@ import {
   ToggleGroupItem,
   ToggleGroupSeparator,
 } from '@/components/ui/toggle-group';
+import {
+  Toolbar,
+  ToolbarButton,
+  ToolbarGroup,
+  ToolbarInput,
+  ToolbarLink,
+  ToolbarSeparator,
+} from '@/components/ui/toolbar';
 
 export const accepted = (
   <>
@@ -172,6 +180,12 @@ export const accepted = (
     <ToggleGroup render={<div />} />
     <ToggleGroupItem render={<button type='button' />} />
     <ToggleGroupSeparator render={<div />} />
+    <Toolbar render={<div />} />
+    <ToolbarButton render={<button type='button' />} />
+    <ToolbarGroup render={<div />} />
+    <ToolbarInput render={<input />} />
+    <ToolbarLink render={<a href='/' />} />
+    <ToolbarSeparator render={<div />} />
   </>
 );
 

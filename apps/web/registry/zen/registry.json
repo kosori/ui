@@ -1506,6 +1506,32 @@
       ]
     },
     {
+      "name": "toolbar",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/ui/toolbar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toolbar-example",
+      "type": "registry:example",
+      "registryDependencies": [
+        "@kosori/button",
+        "@kosori/toggle",
+        "@kosori/toolbar"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/examples/toolbar-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "tooltip",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
