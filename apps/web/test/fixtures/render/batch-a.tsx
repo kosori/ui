@@ -104,6 +104,14 @@ import {
 import { Kbd, KbdGroup } from '@/components/ui/kbd';
 import { Label } from '@/components/ui/label';
 import { Meter } from '@/components/ui/meter';
+import {
+  NumberField,
+  NumberFieldDecrement,
+  NumberFieldGroup,
+  NumberFieldIncrement,
+  NumberFieldInput,
+  NumberFieldScrubArea,
+} from '@/components/ui/number-field';
 import { Toggle } from '@/components/ui/toggle';
 import {
   ToggleGroup,
@@ -161,6 +169,12 @@ export const accepted = (
     <Checkbox render={<span />} />
     <CheckboxGroup render={<div />} />
     <Meter render={<div />} value={50} />
+    <NumberField render={<div />} />
+    <NumberFieldDecrement render={<button type='button' />} />
+    <NumberFieldGroup render={<div />} />
+    <NumberFieldIncrement render={<button type='button' />} />
+    <NumberFieldInput render={<input />} />
+    <NumberFieldScrubArea label='Quantity' render={<div />} />
     <Collapsible render={<div />} />
     <CollapsibleTrigger render={<button type='button' />} />
     <CollapsibleContent render={<div />} />

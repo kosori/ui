@@ -51,6 +51,7 @@ One row per Port, ordered alphabetically by kosori name.
 | kbd | kbd | ad8f26b95d8307f460316cd27a2b595d04069df2561395b5d39067a99e407cb5 |
 | label | label | edaf5fb049b3e2f27ddd70a6c6772c7d99e920c589b41019b8f4fa602113e695 |
 | meter | meter | f7f0b85f6878378c76e66887a111a1cb8476ebea84a2ebb4f6d41fe0fbad8653 |
+| number-field | number-field | e49f539416076d832d855e53be646fbc613ccaf0b419b8951f477267b81cdbde |
 | pagination | pagination | 4c3d048be127d228ad199b8555b833ffc26cd9506b4a75b4b298754833474993 |
 | popover | popover | ff9b981ce4e68b86a266f69480c59967c7065aacfa2d4ce927d91a1eff0035cf |
 | progress | progress | 605ea95436094735fc94d2ae38fd50df2dcce1617b2a67c504114bd0e55cc2b2 |
