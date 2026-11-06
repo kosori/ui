@@ -63,6 +63,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
+import { CheckboxGroup } from '@/components/ui/checkbox-group';
 import {
   Collapsible,
   CollapsibleContent,
@@ -149,6 +150,7 @@ export const accepted = (
     <ButtonGroupText render={<span />} />
     <ButtonGroupSeparator render={<div />} />
     <Checkbox render={<span />} />
+    <CheckboxGroup render={<div />} />
     <Collapsible render={<div />} />
     <CollapsibleTrigger render={<button type='button' />} />
     <CollapsibleContent render={<div />} />

@@ -407,6 +407,32 @@
       ]
     },
     {
+      "name": "checkbox-group",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/ui/checkbox-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox-group-example",
+      "type": "registry:example",
+      "registryDependencies": [
+        "@kosori/checkbox",
+        "@kosori/checkbox-group",
+        "@kosori/label"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/examples/checkbox-group-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "collapsible",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],

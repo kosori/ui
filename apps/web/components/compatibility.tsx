@@ -8,8 +8,8 @@ type Props = {
 
 /**
  * Render a Style's deliberate shadcn/ui divergences, aliases, Authored names,
- * Pending names and Compositions from the Registry sources and the Style's own
- * catalog.
+ * Coss-only names, Pending names and Compositions from the Registry sources and
+ * the Style's own catalog.
  */
 export const Compatibility = async ({ style }: Props) => {
   if (!style) {
@@ -103,6 +103,29 @@ export const Compatibility = async ({ style }: Props) => {
         ) : (
           <p className='mt-3 text-muted-foreground text-sm'>
             {style} serves no Authored components.
+          </p>
+        )}
+      </section>
+
+      <section>
+        <h2 className='font-medium text-lg'>Coss-only</h2>
+        <p className='mt-2 text-muted-foreground text-sm'>
+          Names coss/ui publishes that shadcn/ui never shipped. Each keeps
+          coss&apos;s name and Design, and infers its Structure from the nearest
+          shadcn/ui family, so no shadcn/ui snippet resolves the name. It
+          carries an upstream pin.
+        </p>
+        {facts.cossOnly.length > 0 ? (
+          <ul className='mt-3 grid gap-2 sm:grid-cols-2'>
+            {facts.cossOnly.map((name) => (
+              <li className='font-mono text-sm' key={name}>
+                {name}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className='mt-3 text-muted-foreground text-sm'>
+            {style} serves no Coss-only components.
           </p>
         )}
       </section>

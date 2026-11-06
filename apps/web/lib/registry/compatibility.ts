@@ -53,6 +53,7 @@ export type CompatibilityFacts = {
   aliases: readonly AliasClaim[];
   authored: readonly string[];
   compositions: readonly string[];
+  cossOnly: readonly string[];
   divergences: readonly Divergence[];
   incomplete: boolean;
   notServed: readonly string[];
@@ -193,6 +194,12 @@ export const SYNTHESIZED_EXPORTS = [
   },
   { item: 'tabs', names: ['tabsListVariants'] },
 ] as const satisfies readonly SynthesizedClaim[];
+
+/**
+ * Coss-only names the catalog serves. Each keeps coss's name and Design, and
+ * infers its Structure from the nearest shadcn/ui family (ADR-0009).
+ */
+export const COSS_ONLY_ITEMS = ['checkbox-group'] as const;
 
 /** The Field parts that keep their shadcn/ui name in every Style. */
 export const FIELD_COMPATIBILITY = {
@@ -420,6 +427,7 @@ export const getCompatibilityFacts = async (
     aliases,
     authored: await readAuthoredComponentNames(style),
     compositions: definition?.compositions ?? [],
+    cossOnly: COSS_ONLY_ITEMS.filter((name) => servedSet.has(name)),
     divergences,
     incomplete: definition?.incomplete ?? false,
     notServed: definition?.incomplete

@@ -64,6 +64,10 @@ _Avoid_: Fork, rewrite, adaptation
 A component that serves a name shadcn/ui publishes but coss/ui does not ship. Its Structure is shadcn/ui's; its Design is inherited from the nearest Port rather than copied from an upstream file. It carries no upstream pin.
 _Avoid_: Custom component, original component, kosori-only component
 
+**Coss-only component**:
+A component coss/ui publishes under a name shadcn/ui never shipped. It keeps coss's name and Design verbatim, and its Structure is inferred from the nearest shadcn/ui family. It carries a coss pin like a Port.
+_Avoid_: Extra component, upstream-only component, kosori-only component
+
 **Pending**:
 A name a Style publishes as part of its catalog scope but does not yet serve. Pending names appear in documentation without a page and never appear in the registry catalog.
 _Avoid_: Missing, TODO, unimplemented

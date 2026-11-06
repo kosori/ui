@@ -1,0 +1,39 @@
+---
+title: Checkbox Group
+description: A group of checkboxes that shares one value and one disabled state.
+---
+
+CheckboxGroup wraps Base UI's checkbox group and stacks its checkboxes in a flex
+column; a checkbox joins the group through its `value` and marks itself with
+`data-slot`.
+
+## Installation
+
+```bash
+npx shadcn@latest add @kosori/checkbox-group
+```
+
+## Example
+
+<ComponentPreview name='checkbox-group' />
+
+## Usage
+
+```tsx
+import { Checkbox } from '@/components/ui/checkbox';
+import { CheckboxGroup } from '@/components/ui/checkbox-group';
+import { Label } from '@/components/ui/label';
+
+const CheckboxGroupDemo = () => (
+  <CheckboxGroup defaultValue={['next']}>
+    <Label>
+      <Checkbox value='next' />
+      Next.js
+    </Label>
+    <Label>
+      <Checkbox value='vite' />
+      Vite
+    </Label>
+  </CheckboxGroup>
+);
+```

@@ -33,6 +33,7 @@ One row per Port, ordered alphabetically by kosori name.
 | calendar | calendar | 547ebebda2747dadee61815f41448a2b6cecce3ad125806666df7595013896f0 |
 | card | card | b59dbc0bd5d61694fcf1948fb8134795b0f5a1bf0a28d8d6bc817297c73a006e |
 | checkbox | checkbox | a1b8b4180a39a47c47bd2b50e432d0911da6efe3b963b065b3b5cb8893760047 |
+| checkbox-group | checkbox-group | f78494035296e12c0ff602022338bb8f37a46f3a15647b53f0b2e8ac6c97f45e |
 | collapsible | collapsible | f70e7b9fde220ce5f039c93176a545a46a9b553ecdb23595a320e5163a95a1e8 |
 | combobox | combobox | dd8d7cfaa60c0e9b9a0ffa3f2334d43fbed05aaa67d0259fd4d89f2814c4689b |
 | command | command | 26f77d2322179cd7a5694d865e85362d492db053a91cb0ef7c51b573e45076a4 |

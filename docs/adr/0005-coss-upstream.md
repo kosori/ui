@@ -6,6 +6,8 @@
 
 shadcn/ui owns item names. A Consumer project's existing shadcn knowledge, documentation and examples transfer only if `@kosori/zen` serves the names they already know, so four coss names are renamed: `menu` becomes `dropdown-menu`, `preview-card` becomes `hover-card`, `otp-field` becomes `input-otp` and `group` becomes `button-group`. `fieldset` folds into `field`, `sonner` is not shipped, and `sidebar` ships even though coss publishes it without a documentation page. coss-only components with no shadcn/ui name are not Ports.
 
+> **Superseded in part by [ADR-0009](0009-coss-only-components.md).** A coss-only component may now be served under coss's own name, with its Structure inferred from the nearest shadcn/ui family. The renaming and Pending rules here still stand.
+
 ## Divergence
 
 A Port diverges from upstream through Tokens alone. Class strings are not retuned for `zen`'s taste: the diff against coss must show a rename or an import, never a redesign. This keeps each Port reviewable against the file it came from and leaves motion as a later diff against a verified baseline rather than a second redesign.

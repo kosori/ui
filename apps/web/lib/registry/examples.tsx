@@ -22,6 +22,7 @@ import CardExample from '@/registry/zen/examples/card-example';
 import CarouselExample from '@/registry/zen/examples/carousel-example';
 import ChartExample from '@/registry/zen/examples/chart-example';
 import CheckboxExample from '@/registry/zen/examples/checkbox-example';
+import CheckboxGroupExample from '@/registry/zen/examples/checkbox-group-example';
 import CollapsibleExample from '@/registry/zen/examples/collapsible-example';
 import ComboboxExample from '@/registry/zen/examples/combobox-example';
 import CommandExample from '@/registry/zen/examples/command-example';
@@ -95,6 +96,7 @@ const zenExampleComponents = {
   carousel: CarouselExample,
   chart: ChartExample,
   checkbox: CheckboxExample,
+  'checkbox-group': CheckboxGroupExample,
   collapsible: CollapsibleExample,
   combobox: ComboboxExample,
   command: CommandExample,
