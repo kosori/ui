@@ -43,8 +43,10 @@
     "kbd",
     "label",
     "menubar",
+    "meter",
     "native-select",
     "navigation-menu",
+    "number-field",
     "pagination",
     "popover",
     "progress",
@@ -65,6 +67,7 @@
     "toast",
     "toggle",
     "toggle-group",
+    "toolbar",
     "tooltip",
     "typography",
     "theming"

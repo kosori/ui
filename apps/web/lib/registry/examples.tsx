@@ -42,8 +42,10 @@ import ItemExample from '@/registry/zen/examples/item-example';
 import KbdExample from '@/registry/zen/examples/kbd-example';
 import LabelExample from '@/registry/zen/examples/label-example';
 import MenubarExample from '@/registry/zen/examples/menubar-example';
+import MeterExample from '@/registry/zen/examples/meter-example';
 import NativeSelectExample from '@/registry/zen/examples/native-select-example';
 import NavigationMenuExample from '@/registry/zen/examples/navigation-menu-example';
+import NumberFieldExample from '@/registry/zen/examples/number-field-example';
 import PaginationExample from '@/registry/zen/examples/pagination-example';
 import PopoverExample from '@/registry/zen/examples/popover-example';
 import ProgressExample from '@/registry/zen/examples/progress-example';
@@ -64,6 +66,7 @@ import TextareaExample from '@/registry/zen/examples/textarea-example';
 import ToastExample from '@/registry/zen/examples/toast-example';
 import ToggleExample from '@/registry/zen/examples/toggle-example';
 import ToggleGroupExample from '@/registry/zen/examples/toggle-group-example';
+import ToolbarExample from '@/registry/zen/examples/toolbar-example';
 import TooltipExample from '@/registry/zen/examples/tooltip-example';
 
 const REGISTRY_DIR = join(process.cwd(), 'registry');
@@ -116,8 +119,10 @@ const zenExampleComponents = {
   kbd: KbdExample,
   label: LabelExample,
   menubar: MenubarExample,
+  meter: MeterExample,
   'native-select': NativeSelectExample,
   'navigation-menu': NavigationMenuExample,
+  'number-field': NumberFieldExample,
   pagination: PaginationExample,
   popover: PopoverExample,
   progress: ProgressExample,
@@ -138,6 +143,7 @@ const zenExampleComponents = {
   toast: ToastExample,
   toggle: ToggleExample,
   'toggle-group': ToggleGroupExample,
+  toolbar: ToolbarExample,
   tooltip: TooltipExample,
 } satisfies Partial<Record<string, ComponentType>>;
 

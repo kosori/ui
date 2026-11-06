@@ -931,6 +931,28 @@
       ]
     },
     {
+      "name": "meter",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/ui/meter.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "meter-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/meter"],
+      "files": [
+        {
+          "path": "registry/zen/examples/meter-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "native-select",
       "type": "registry:ui",
       "dependencies": ["@tabler/icons-react", "class-variance-authority", "cn"],
@@ -982,6 +1004,29 @@
       "files": [
         {
           "path": "registry/zen/examples/navigation-menu-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "number-field",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/label"],
+      "files": [
+        {
+          "path": "registry/zen/ui/number-field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "number-field-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/number-field"],
+      "files": [
+        {
+          "path": "registry/zen/examples/number-field-example.tsx",
           "type": "registry:example"
         }
       ]
@@ -1479,6 +1524,32 @@
       "files": [
         {
           "path": "registry/zen/examples/toggle-group-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "toolbar",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/ui/toolbar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toolbar-example",
+      "type": "registry:example",
+      "registryDependencies": [
+        "@kosori/button",
+        "@kosori/toggle",
+        "@kosori/toolbar"
+      ],
+      "files": [
+        {
+          "path": "registry/zen/examples/toolbar-example.tsx",
           "type": "registry:example"
         }
       ]
