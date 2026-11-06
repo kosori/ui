@@ -199,7 +199,7 @@ export const SYNTHESIZED_EXPORTS = [
  * Coss-only names the catalog serves. Each keeps coss's name and Design, and
  * infers its Structure from the nearest shadcn/ui family (ADR-0009).
  */
-export const COSS_ONLY_ITEMS = ['checkbox-group'] as const;
+export const COSS_ONLY_ITEMS = ['checkbox-group', 'meter'] as const;
 
 /** The Field parts that keep their shadcn/ui name in every Style. */
 export const FIELD_COMPATIBILITY = {

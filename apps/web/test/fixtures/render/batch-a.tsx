@@ -103,6 +103,7 @@ import {
 } from '@/components/ui/input-otp';
 import { Kbd, KbdGroup } from '@/components/ui/kbd';
 import { Label } from '@/components/ui/label';
+import { Meter } from '@/components/ui/meter';
 import { Toggle } from '@/components/ui/toggle';
 import {
   ToggleGroup,
@@ -151,6 +152,7 @@ export const accepted = (
     <ButtonGroupSeparator render={<div />} />
     <Checkbox render={<span />} />
     <CheckboxGroup render={<div />} />
+    <Meter render={<div />} value={50} />
     <Collapsible render={<div />} />
     <CollapsibleTrigger render={<button type='button' />} />
     <CollapsibleContent render={<div />} />

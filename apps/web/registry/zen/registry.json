@@ -931,6 +931,28 @@
       ]
     },
     {
+      "name": "meter",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "cn"],
+      "files": [
+        {
+          "path": "registry/zen/ui/meter.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "meter-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/meter"],
+      "files": [
+        {
+          "path": "registry/zen/examples/meter-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "native-select",
       "type": "registry:ui",
       "dependencies": ["@tabler/icons-react", "class-variance-authority", "cn"],
