@@ -45,6 +45,7 @@ import MenubarExample from '@/registry/zen/examples/menubar-example';
 import MeterExample from '@/registry/zen/examples/meter-example';
 import NativeSelectExample from '@/registry/zen/examples/native-select-example';
 import NavigationMenuExample from '@/registry/zen/examples/navigation-menu-example';
+import NumberFieldExample from '@/registry/zen/examples/number-field-example';
 import PaginationExample from '@/registry/zen/examples/pagination-example';
 import PopoverExample from '@/registry/zen/examples/popover-example';
 import ProgressExample from '@/registry/zen/examples/progress-example';
@@ -121,6 +122,7 @@ const zenExampleComponents = {
   meter: MeterExample,
   'native-select': NativeSelectExample,
   'navigation-menu': NavigationMenuExample,
+  'number-field': NumberFieldExample,
   pagination: PaginationExample,
   popover: PopoverExample,
   progress: ProgressExample,

@@ -1009,6 +1009,29 @@
       ]
     },
     {
+      "name": "number-field",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/label"],
+      "files": [
+        {
+          "path": "registry/zen/ui/number-field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "number-field-example",
+      "type": "registry:example",
+      "registryDependencies": ["@kosori/number-field"],
+      "files": [
+        {
+          "path": "registry/zen/examples/number-field-example.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "pagination",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
