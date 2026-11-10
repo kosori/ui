@@ -2,7 +2,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { RegistryItem } from 'shadcn/schema';
 import { stateCssVarsForSource } from '../lib/registry/state-tokens';
-import { STYLES } from '../registry/preset';
+import { STATE_TOKEN_NAMES, STYLES } from '../registry/preset';
 
 const webDir = join(import.meta.dirname, '..');
 const registryDir = join(webDir, 'registry');
@@ -60,11 +60,47 @@ const readItemSource = async (item: RegistryItem) =>
     )
   ).join('\n');
 
-/** Replace an item's state `cssVars` with the ones its source derives. */
+/** Keep item-specific Tokens while refreshing the state Tokens from source. */
+const mergeCssVars = (
+  declared: RegistryItem['cssVars'],
+  derived: ReturnType<typeof stateCssVarsForSource>
+) => {
+  const declaredSections = declared as
+    | Record<string, Record<string, string>>
+    | undefined;
+  const derivedSections = derived as
+    | Record<string, Record<string, string>>
+    | undefined;
+  const merged: Record<string, Record<string, string>> = {};
+  const stateTokens = new Set(STATE_TOKEN_NAMES);
+
+  for (const section of ['light', 'dark', 'theme']) {
+    const custom = Object.fromEntries(
+      Object.entries(declaredSections?.[section] ?? {}).filter(([token]) => {
+        const stateToken =
+          section === 'theme' ? token.replace(/^--color-/, '') : token;
+        return !stateTokens.has(
+          stateToken as (typeof STATE_TOKEN_NAMES)[number]
+        );
+      })
+    );
+    const values = { ...custom, ...(derivedSections?.[section] ?? {}) };
+    if (Object.keys(values).length > 0) {
+      merged[section] = values;
+    }
+  }
+
+  return Object.keys(merged).length > 0 ? merged : undefined;
+};
+
+/** Refresh an item's state Tokens and retain its other declared Tokens. */
 const withDerivedCssVars = async (item: RegistryItem) => {
   const cssVars =
     item.type === 'registry:ui'
-      ? stateCssVarsForSource(await readItemSource(item))
+      ? mergeCssVars(
+          item.cssVars,
+          stateCssVarsForSource(await readItemSource(item))
+        )
       : undefined;
   const ordered: Record<string, unknown> = {};
 

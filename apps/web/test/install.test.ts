@@ -1051,10 +1051,30 @@ test('per-item state cssVars are derived from the base color palette', async () 
   );
 
   for (const { item, source } of sources) {
-    expect(
-      item.cssVars,
-      `${item.name} declares cssVars by hand; run bun run registry:build`
-    ).toEqual(stateCssVarsForSource(source));
+    const expected = stateCssVarsForSource(source) as
+      | Record<string, Record<string, string>>
+      | undefined;
+    const declared = item.cssVars as
+      | Record<string, Record<string, string>>
+      | undefined;
+    const stateTokens = new Set(STATE_TOKEN_NAMES);
+
+    for (const section of ['light', 'dark', 'theme']) {
+      const declaredStateTokens = Object.fromEntries(
+        Object.entries(declared?.[section] ?? {}).filter(([token]) => {
+          const stateToken =
+            section === 'theme' ? token.replace(/^--color-/, '') : token;
+          return stateTokens.has(
+            stateToken as (typeof STATE_TOKEN_NAMES)[number]
+          );
+        })
+      );
+
+      expect(
+        declaredStateTokens,
+        `${item.name} declares stale state Tokens in ${section}`
+      ).toEqual(expected?.[section] ?? {});
+    }
   }
 });
 
@@ -1114,6 +1134,9 @@ test('installing state-coloured items without the preset compiles their utilitie
         '@kosori/alert',
         '@kosori/toast',
         '@kosori/button',
+        '@kosori/dialog',
+        '@kosori/popover',
+        '@kosori/dropdown-menu',
         '-y',
         '-s',
       ],
@@ -1133,6 +1156,12 @@ test('installing state-coloured items without the preset compiles their utilitie
     );
     expect(motionTokens, 'the installed Button press easing Token').toContain(
       '--motion-press-easing: cubic-bezier(0.2, 0, 0, 1)'
+    );
+    expect(motionTokens, 'the installed overlay duration Token').toContain(
+      '--motion-overlay-duration: 180ms'
+    );
+    expect(motionTokens, 'the installed overlay easing Token').toContain(
+      '--motion-overlay-easing: cubic-bezier(0.2, 0, 0, 1)'
     );
     const theme = declarations(css, '@theme inline');
     for (const [token, value] of Object.entries(STATE_TOKENS.light)) {

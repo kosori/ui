@@ -229,16 +229,16 @@
       "type": "registry:ui",
       "cssVars": {
         "light": {
-          "destructive-foreground": "var(--color-red-700)",
           "motion-press-scale": "0.97",
           "motion-press-duration": "120ms",
-          "motion-press-easing": "cubic-bezier(0.2, 0, 0, 1)"
+          "motion-press-easing": "cubic-bezier(0.2, 0, 0, 1)",
+          "destructive-foreground": "var(--color-red-700)"
         },
         "dark": {
-          "destructive-foreground": "var(--color-red-400)",
           "motion-press-scale": "0.97",
           "motion-press-duration": "120ms",
-          "motion-press-easing": "cubic-bezier(0.2, 0, 0, 1)"
+          "motion-press-easing": "cubic-bezier(0.2, 0, 0, 1)",
+          "destructive-foreground": "var(--color-red-400)"
         },
         "theme": {
           "--color-destructive-foreground": "var(--destructive-foreground)"
@@ -547,6 +547,16 @@
     {
       "name": "dialog",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "motion-overlay-duration": "180ms",
+          "motion-overlay-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        },
+        "dark": {
+          "motion-overlay-duration": "180ms",
+          "motion-overlay-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        }
+      },
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
       "registryDependencies": ["@kosori/button", "@kosori/scroll-area"],
       "files": [
@@ -636,9 +646,13 @@
       "type": "registry:ui",
       "cssVars": {
         "light": {
+          "motion-overlay-duration": "180ms",
+          "motion-overlay-easing": "cubic-bezier(0.2, 0, 0, 1)",
           "destructive-foreground": "var(--color-red-700)"
         },
         "dark": {
+          "motion-overlay-duration": "180ms",
+          "motion-overlay-easing": "cubic-bezier(0.2, 0, 0, 1)",
           "destructive-foreground": "var(--color-red-400)"
         },
         "theme": {
@@ -1063,6 +1077,16 @@
     {
       "name": "popover",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "motion-overlay-duration": "180ms",
+          "motion-overlay-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        },
+        "dark": {
+          "motion-overlay-duration": "180ms",
+          "motion-overlay-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        }
+      },
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
