@@ -1051,29 +1051,30 @@ test('per-item state cssVars are derived from the base color palette', async () 
   );
 
   for (const { item, source } of sources) {
-    const expected = stateCssVarsForSource(source);
-    if (!expected) {
-      for (const token of STATE_TOKEN_NAMES) {
-        expect(
-          item.cssVars?.light?.[token],
-          `${item.name} light ${token}`
-        ).toBe(undefined);
-        expect(item.cssVars?.dark?.[token], `${item.name} dark ${token}`).toBe(
-          undefined
-        );
-      }
-      continue;
-    }
+    const expected = stateCssVarsForSource(source) as
+      | Record<string, Record<string, string>>
+      | undefined;
+    const declared = item.cssVars as
+      | Record<string, Record<string, string>>
+      | undefined;
+    const stateTokens = new Set(STATE_TOKEN_NAMES);
 
-    expect(item.cssVars?.light, `${item.name} light state Tokens`).toEqual(
-      expect.objectContaining(expected.light)
-    );
-    expect(item.cssVars?.dark, `${item.name} dark state Tokens`).toEqual(
-      expect.objectContaining(expected.dark)
-    );
-    expect(item.cssVars?.theme, `${item.name} theme state Tokens`).toEqual(
-      expect.objectContaining(expected.theme)
-    );
+    for (const section of ['light', 'dark', 'theme']) {
+      const declaredStateTokens = Object.fromEntries(
+        Object.entries(declared?.[section] ?? {}).filter(([token]) => {
+          const stateToken =
+            section === 'theme' ? token.replace(/^--color-/, '') : token;
+          return stateTokens.has(
+            stateToken as (typeof STATE_TOKEN_NAMES)[number]
+          );
+        })
+      );
+
+      expect(
+        declaredStateTokens,
+        `${item.name} declares stale state Tokens in ${section}`
+      ).toEqual(expected?.[section] ?? {});
+    }
   }
 });
 
@@ -1135,6 +1136,9 @@ test('installing state-coloured items without the preset compiles their utilitie
         '@kosori/button',
         '@kosori/accordion',
         '@kosori/collapsible',
+        '@kosori/dialog',
+        '@kosori/popover',
+        '@kosori/dropdown-menu',
         '@kosori/checkbox',
         '@kosori/switch',
         '@kosori/toggle',
@@ -1163,6 +1167,12 @@ test('installing state-coloured items without the preset compiles their utilitie
     );
     expect(motionTokens, 'the installed expansion easing Token').toContain(
       '--motion-expand-easing: cubic-bezier(0.2, 0, 0, 1)'
+    );
+    expect(motionTokens, 'the installed overlay duration Token').toContain(
+      '--motion-overlay-duration: 180ms'
+    );
+    expect(motionTokens, 'the installed overlay easing Token').toContain(
+      '--motion-overlay-easing: cubic-bezier(0.2, 0, 0, 1)'
     );
     expect(motionTokens, 'the installed control state duration Token').toContain(
       '--motion-state-duration: 120ms'

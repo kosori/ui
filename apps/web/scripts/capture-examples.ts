@@ -342,6 +342,139 @@ const main = async () => {
           }
         }
 
+        if (['dialog', 'popover', 'dropdown-menu'].includes(example)) {
+          const popupSlot =
+            example === 'dialog'
+              ? 'dialog-popup'
+              : example === 'popover'
+                ? 'popover-popup'
+                : 'menu-popup';
+          const triggerSlot =
+            example === 'dialog'
+              ? 'dialog-trigger'
+              : example === 'popover'
+                ? 'popover-trigger'
+                : 'menu-trigger';
+          const trigger = preview
+            .locator(`[data-slot="${triggerSlot}"]`)
+            .first();
+          await trigger.scrollIntoViewIfNeeded();
+          const triggerBefore = await trigger.boundingBox();
+
+          await page.waitForTimeout(500);
+          await trigger.click();
+          const popup = page.locator(`[data-slot="${popupSlot}"]`).first();
+          await popup.waitFor({ state: 'visible' });
+          if (example !== 'popover') {
+            const focusIsInPopup = await popup.evaluate((element) =>
+              element.contains(document.activeElement)
+            );
+            if (!focusIsInPopup) {
+              throw new Error(`${example} did not move focus into its popup`);
+            }
+          }
+          const motion = await popup.evaluate((element) => {
+            const style = getComputedStyle(element);
+            return {
+              duration: style.transitionDuration,
+              properties: style.transitionProperty,
+            };
+          });
+          if (
+            !(
+              motion.properties.includes('opacity') &&
+              motion.duration
+                .split(',')
+                .some((value) => Number.parseFloat(value) > 0)
+            )
+          ) {
+            throw new Error(`${example} popup did not animate its open state`);
+          }
+
+          const triggerAfterOpen = await trigger.boundingBox();
+          if (
+            !(triggerBefore && triggerAfterOpen) ||
+            triggerBefore.x !== triggerAfterOpen.x ||
+            triggerBefore.y !== triggerAfterOpen.y
+          ) {
+            throw new Error(`${example} trigger moved while its popup opened`);
+          }
+
+          if (example === 'dropdown-menu') {
+            await page.keyboard.press('ArrowDown');
+            const highlightedItem = popup.locator('[data-highlighted]').first();
+            await highlightedItem.waitFor({ state: 'visible' });
+            const firstHighlight = await highlightedItem.textContent();
+            await page.keyboard.press('ArrowDown');
+            await page.waitForFunction(
+              ({ popupElement, firstHighlight }) => {
+                const item = popupElement.querySelector('[data-highlighted]');
+                return item !== null && item.textContent !== firstHighlight;
+              },
+              {
+                firstHighlight,
+                popupElement: await popup.elementHandle(),
+              }
+            );
+          }
+
+          await page.keyboard.press('Escape');
+          await popup.waitFor({ state: 'hidden' });
+          await trigger.waitFor({ state: 'visible' });
+          if (
+            !(await trigger.evaluate(
+              (element) => element === document.activeElement
+            ))
+          ) {
+            throw new Error(`${example} did not restore focus to its trigger`);
+          }
+          const triggerAfterClose = await trigger.boundingBox();
+          if (
+            !(triggerBefore && triggerAfterClose) ||
+            triggerBefore.x !== triggerAfterClose.x ||
+            triggerBefore.y !== triggerAfterClose.y
+          ) {
+            throw new Error(`${example} trigger moved while its popup closed`);
+          }
+
+          const reducedPage = await page.context().newPage();
+          await reducedPage.emulateMedia({ reducedMotion: 'reduce' });
+          await reducedPage.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          const reducedPreview = reducedPage.locator(captureSelector(example));
+          const reducedTrigger = reducedPreview
+            .locator(`[data-slot="${triggerSlot}"]`)
+            .first();
+          await reducedTrigger.scrollIntoViewIfNeeded();
+          await reducedPage.waitForTimeout(500);
+          await reducedTrigger.click();
+          const reducedPopup = reducedPage
+            .locator(`[data-slot="${popupSlot}"]`)
+            .first();
+          await reducedPopup.waitFor({ state: 'visible' });
+          const reducedTransition = await reducedPopup.evaluate((element) => {
+            const style = getComputedStyle(element);
+            return {
+              scale: style.scale,
+              transform: style.transform,
+              translate: style.translate,
+            };
+          });
+          if (
+            reducedTransition.scale !== 'none' &&
+            reducedTransition.scale !== '1'
+          ) {
+            throw new Error(`${example} retained scaling with reduced motion`);
+          }
+          if (reducedTransition.translate !== 'none') {
+            throw new Error(
+              `${example} retained popup travel with reduced motion`
+            );
+          }
+          await reducedPage.close();
+        }
+
         const selectionState = (element: Element) =>
           [
             element.getAttribute('aria-checked'),
