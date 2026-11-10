@@ -395,19 +395,27 @@ const main = async () => {
           }
         }
 
-        if (['dialog', 'popover', 'dropdown-menu'].includes(example)) {
+        if (
+          ['alert-dialog', 'dialog', 'popover', 'dropdown-menu'].includes(
+            example
+          )
+        ) {
           const popupSlot =
-            example === 'dialog'
-              ? 'dialog-popup'
-              : example === 'popover'
-                ? 'popover-popup'
-                : 'menu-popup';
+            example === 'alert-dialog'
+              ? 'alert-dialog-popup'
+              : example === 'dialog'
+                ? 'dialog-popup'
+                : example === 'popover'
+                  ? 'popover-popup'
+                  : 'menu-popup';
           const triggerSlot =
-            example === 'dialog'
-              ? 'dialog-trigger'
-              : example === 'popover'
-                ? 'popover-trigger'
-                : 'menu-trigger';
+            example === 'alert-dialog'
+              ? 'alert-dialog-trigger'
+              : example === 'dialog'
+                ? 'dialog-trigger'
+                : example === 'popover'
+                  ? 'popover-trigger'
+                  : 'menu-trigger';
           const trigger = preview
             .locator(`[data-slot="${triggerSlot}"]`)
             .first();
@@ -506,7 +514,7 @@ const main = async () => {
           const reducedTrigger = reducedPreview
             .locator(`[data-slot="${triggerSlot}"]`)
             .first();
-          if (example === 'dialog') {
+          if (example === 'dialog' || example === 'alert-dialog') {
             await reducedPage.setViewportSize({ height: 844, width: 390 });
           }
           await reducedTrigger.scrollIntoViewIfNeeded();

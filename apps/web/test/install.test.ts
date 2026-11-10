@@ -1132,6 +1132,7 @@ test('installing state-coloured items without the preset compiles their utilitie
         'add',
         '@kosori/badge',
         '@kosori/alert',
+        '@kosori/alert-dialog',
         '@kosori/toast',
         '@kosori/button',
         '@kosori/accordion',
