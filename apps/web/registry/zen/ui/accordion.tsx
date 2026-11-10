@@ -41,7 +41,7 @@ export function AccordionTrigger({
       >
         {children}
         <IconChevronDown
-          className='pointer-events-none size-4 shrink-0 translate-y-0.5 opacity-80 transition-transform duration-200 ease-in-out'
+          className='pointer-events-none size-4 shrink-0 translate-y-0.5 opacity-80 transition-transform duration-[var(--motion-expand-duration,200ms)] ease-[var(--motion-expand-easing,cubic-bezier(0.2,0,0,1))] motion-reduce:transition-none'
           data-slot='accordion-indicator'
         />
       </AccordionPrimitive.Trigger>
@@ -56,7 +56,7 @@ export function AccordionPanel({
 }: AccordionPrimitive.Panel.Props): React.ReactElement {
   return (
     <AccordionPrimitive.Panel
-      className='h-(--accordion-panel-height) overflow-hidden text-muted-foreground text-sm transition-[height] duration-200 ease-in-out data-ending-style:h-0 data-starting-style:h-0'
+      className='h-(--accordion-panel-height) overflow-hidden text-muted-foreground text-sm transition-[height] duration-[var(--motion-expand-duration,200ms)] ease-[var(--motion-expand-easing,cubic-bezier(0.2,0,0,1))] data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none'
       data-slot='accordion-panel'
       {...props}
     >

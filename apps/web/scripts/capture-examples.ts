@@ -62,7 +62,7 @@ const startServer = async (): Promise<Server> => {
       stdio: 'inherit',
     }
   );
-  const baseUrl = `http://127.0.0.1:${port}`;
+  const baseUrl = `http://localhost:${port}`;
 
   try {
     await waitForServer(`${baseUrl}/docs/zen`);
@@ -100,6 +100,21 @@ const main = async () => {
   const browser = await chromium.launch();
   const failures: string[] = [];
 
+  /** Open an Example page with the browser's reduced-motion preference set. */
+  const openReducedMotionPage = async (
+    route: string,
+    colorScheme: (typeof CAPTURE_SCHEMES)[number]
+  ) => {
+    const context = await browser.newContext({
+      colorScheme,
+      reducedMotion: 'reduce',
+    });
+    const page = await context.newPage();
+    await page.goto(`${server.baseUrl}${route}`, { waitUntil: 'load' });
+    await page.waitForLoadState('networkidle');
+    return { context, page };
+  };
+
   /** Capture every Example in one scheme, reusing one page for the whole run. */
   const captureScheme = async (scheme: (typeof CAPTURE_SCHEMES)[number]) => {
     await mkdir(join(outputDir, scheme), { recursive: true });
@@ -121,6 +136,7 @@ const main = async () => {
       try {
         // biome-ignore lint/performance/noAwaitInLoops: one page navigates at a time, keeping captures ordered and memory-bounded
         await page.goto(`${server.baseUrl}${route}`, { waitUntil: 'load' });
+        await page.waitForLoadState('networkidle');
         await page.waitForFunction(
           (dark) =>
             document.documentElement.classList.contains('dark') === dark,
@@ -130,6 +146,548 @@ const main = async () => {
 
         const preview = page.locator(captureSelector(example));
         await preview.waitFor({ state: 'visible' });
+
+        if (example === 'accordion' || example === 'collapsible') {
+          await page.waitForLoadState('networkidle');
+          const trigger = preview
+            .locator(`[data-slot="${example}-trigger"]`)
+            .first();
+          const panel = preview
+            .locator(
+              '[data-slot="accordion-panel"], [data-slot="collapsible-panel"]'
+            )
+            .first();
+          const triggerSelector = `[data-example="${example}"] [data-slot="${example === 'accordion' ? 'accordion-trigger' : 'collapsible-trigger'}"]`;
+          const clickAndExpect = async (expanded: boolean) => {
+            await trigger.click();
+            try {
+              await page.waitForFunction(
+                ({ selector, value }) =>
+                  document
+                    .querySelector(selector)
+                    ?.getAttribute('aria-expanded') === String(value),
+                { selector: triggerSelector, value: expanded },
+                { timeout: 5000 }
+              );
+            } catch (error) {
+              const actual = await trigger.getAttribute('aria-expanded');
+              throw new Error(
+                `${example} expected expanded=${expanded}, got ${actual}`,
+                { cause: error }
+              );
+            }
+          };
+          await clickAndExpect(true);
+          await clickAndExpect(false);
+          await page.waitForTimeout(300);
+          const closedPanelCount = await panel.count();
+          if (closedPanelCount > 0) {
+            const collapsedHeight = await panel.evaluate(
+              (element) => element.getBoundingClientRect().height
+            );
+            if (collapsedHeight > 1) {
+              throw new Error(`${example} did not finish collapsing`);
+            }
+          }
+          await clickAndExpect(true);
+          await trigger.click();
+          await trigger.click();
+          const finalExpanded =
+            (await trigger.getAttribute('aria-expanded')) === 'true';
+          await page.waitForTimeout(300);
+          const settledPanelCount = await panel.count();
+          if (finalExpanded && settledPanelCount === 0) {
+            throw new Error(
+              `${example} did not settle open after interruption`
+            );
+          }
+          if (settledPanelCount > 0) {
+            const settledHeight = await panel.evaluate(
+              (element) => element.getBoundingClientRect().height
+            );
+            if (finalExpanded ? settledHeight < 1 : settledHeight > 1) {
+              throw new Error(
+                `${example} did not settle to its current state after interruption`
+              );
+            }
+          }
+
+          const { context: reducedContext, page: reducedPage } =
+            await openReducedMotionPage(route, scheme);
+          const reducedPreview = reducedPage.locator(captureSelector(example));
+          const reducedTrigger = reducedPreview
+            .locator(`[data-slot="${example}-trigger"]`)
+            .first();
+          const reducedPanel = reducedPreview
+            .locator(
+              '[data-slot="accordion-panel"], [data-slot="collapsible-panel"]'
+            )
+            .first();
+          await reducedTrigger.click();
+          try {
+            await reducedPage.waitForFunction(
+              (selector) =>
+                document
+                  .querySelector(selector)
+                  ?.getAttribute('aria-expanded') === 'true',
+              triggerSelector,
+              { timeout: 5000 }
+            );
+          } catch (error) {
+            throw new Error(`${example} did not open with reduced motion`, {
+              cause: error,
+            });
+          }
+          const transitionProperty = await reducedPanel.evaluate(
+            (element) => getComputedStyle(element).transitionProperty
+          );
+          if (transitionProperty !== 'none') {
+            throw new Error(
+              `${example} retains a transition with reduced motion`
+            );
+          }
+          await reducedContext.close();
+        }
+
+        if (example === 'button') {
+          const touchContext = await browser.newContext({
+            hasTouch: true,
+            isMobile: true,
+            viewport: { height: 1000, width: 1440 },
+          });
+          const touchPage = await touchContext.newPage();
+          await touchPage.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          const touchButton = touchPage
+            .locator(captureSelector(example))
+            .getByRole('button', { name: 'Button' });
+          const touchBounds = await touchButton.boundingBox();
+          if (!touchBounds) {
+            throw new Error('Touch target has no visible bounds');
+          }
+          const touchSession = await touchContext.newCDPSession(touchPage);
+          await touchButton.evaluate((element) => {
+            element.addEventListener('pointerdown', (event) => {
+              (element as HTMLElement).dataset.touchPointerType = (
+                event as PointerEvent
+              ).pointerType;
+            });
+          });
+          await touchSession.send('Input.dispatchTouchEvent', {
+            touchPoints: [
+              {
+                id: 0,
+                x: touchBounds.x + touchBounds.width / 2,
+                y: touchBounds.y + touchBounds.height / 2,
+              },
+            ],
+            type: 'touchStart',
+          });
+          await touchPage.waitForTimeout(50);
+          const touchResults = await touchButton.evaluate((element) => ({
+            active: element.hasAttribute('data-zen-touch-pressed'),
+            pointer: (element as HTMLElement).dataset.touchPointerType,
+            scale: getComputedStyle(element).scale,
+          }));
+          await touchSession.send('Input.dispatchTouchEvent', {
+            touchPoints: [],
+            type: 'touchEnd',
+          });
+          const touchReleased = await touchButton.evaluate(
+            (element) => !element.hasAttribute('data-zen-touch-pressed')
+          );
+          await touchSession.detach();
+          await touchContext.close();
+          if (
+            touchResults.pointer !== 'touch' ||
+            touchResults.scale !== '0.97' ||
+            !touchResults.active ||
+            !touchReleased
+          ) {
+            throw new Error(
+              `Touch press feedback was pointer=${touchResults.pointer}, active=${touchResults.active}, scale=${touchResults.scale}, released=${touchReleased}`
+            );
+          }
+
+          const pointerPage = await page.context().newPage();
+          await pointerPage.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          const pointerButton = pointerPage
+            .locator(captureSelector(example))
+            .getByRole('button', { name: 'Button' });
+          await pointerButton.hover();
+          await pointerPage.mouse.down();
+          await pointerPage.waitForFunction(
+            (element) => getComputedStyle(element).scale === '0.97',
+            await pointerButton.elementHandle()
+          );
+          const pointerTransform = await pointerButton.evaluate(
+            (element) => getComputedStyle(element).scale
+          );
+          await pointerPage.mouse.up();
+          await pointerPage.close();
+
+          const keyboardPage = await page.context().newPage();
+          await keyboardPage.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          const keyboardButton = keyboardPage
+            .locator(captureSelector(example))
+            .getByRole('button', { name: 'Button' });
+          await keyboardButton.focus();
+          await keyboardPage.keyboard.down(' ');
+          await keyboardPage.waitForFunction(
+            (element) => getComputedStyle(element).scale === '0.97',
+            await keyboardButton.elementHandle()
+          );
+          const keyboardTransform = await keyboardButton.evaluate(
+            (element) => getComputedStyle(element).scale
+          );
+          await keyboardPage.keyboard.up(' ');
+          await keyboardPage.close();
+
+          const stationaryScales = await Promise.all(
+            ['Disabled', 'Loading', 'Popup trigger'].map(async (name) => ({
+              name,
+              scale: await preview
+                .getByRole('button', { name })
+                .evaluate((element) => getComputedStyle(element).scale),
+            }))
+          );
+          for (const { name, scale } of stationaryScales) {
+            if (scale !== 'none') {
+              throw new Error(`${name} button moved during press feedback`);
+            }
+          }
+
+          const { page: reducedMotion } = await openReducedMotionPage(
+            route,
+            scheme
+          );
+          const honorsReducedMotion = await reducedMotion.evaluate(
+            () => matchMedia('(prefers-reduced-motion: reduce)').matches
+          );
+          if (!honorsReducedMotion) {
+            throw new Error('Browser did not enable reduced motion');
+          }
+          const reducedButton = reducedMotion
+            .locator(captureSelector(example))
+            .getByRole('button', { name: 'Button' });
+          await reducedButton.hover();
+          await reducedMotion.mouse.down();
+          await reducedMotion.waitForTimeout(50);
+          const reducedTransform = await reducedButton.evaluate(
+            (element) => getComputedStyle(element).scale
+          );
+          await reducedMotion.mouse.up();
+          await reducedMotion.context().close();
+
+          if (
+            pointerTransform !== '0.97' ||
+            keyboardTransform !== '0.97' ||
+            reducedTransform !== '1'
+          ) {
+            throw new Error(
+              `Button press scale was pointer=${pointerTransform}, keyboard=${keyboardTransform}, reduced=${reducedTransform}`
+            );
+          }
+        }
+
+        if (['dialog', 'popover', 'dropdown-menu'].includes(example)) {
+          const popupSlot =
+            example === 'dialog'
+              ? 'dialog-popup'
+              : example === 'popover'
+                ? 'popover-popup'
+                : 'menu-popup';
+          const triggerSlot =
+            example === 'dialog'
+              ? 'dialog-trigger'
+              : example === 'popover'
+                ? 'popover-trigger'
+                : 'menu-trigger';
+          const trigger = preview
+            .locator(`[data-slot="${triggerSlot}"]`)
+            .first();
+          await trigger.scrollIntoViewIfNeeded();
+          const triggerBefore = await trigger.boundingBox();
+
+          await page.waitForTimeout(500);
+          await trigger.click();
+          const popup = page.locator(`[data-slot="${popupSlot}"]`).first();
+          await popup.waitFor({ state: 'visible' });
+          if (example !== 'popover') {
+            try {
+              await page.waitForFunction(
+                (selector) => {
+                  const element = document.querySelector(selector);
+                  return element?.contains(document.activeElement) ?? false;
+                },
+                `[data-slot="${popupSlot}"]`,
+                { timeout: 5000 }
+              );
+            } catch (error) {
+              throw new Error(`${example} did not move focus into its popup`, {
+                cause: error,
+              });
+            }
+          }
+          const motion = await popup.evaluate((element) => {
+            const style = getComputedStyle(element);
+            return {
+              duration: style.transitionDuration,
+              properties: style.transitionProperty,
+            };
+          });
+          if (
+            !(
+              motion.properties.includes('opacity') &&
+              motion.duration
+                .split(',')
+                .some((value) => Number.parseFloat(value) > 0)
+            )
+          ) {
+            throw new Error(`${example} popup did not animate its open state`);
+          }
+
+          const triggerAfterOpen = await trigger.boundingBox();
+          if (
+            !(triggerBefore && triggerAfterOpen) ||
+            triggerBefore.x !== triggerAfterOpen.x ||
+            triggerBefore.y !== triggerAfterOpen.y
+          ) {
+            throw new Error(`${example} trigger moved while its popup opened`);
+          }
+
+          if (example === 'dropdown-menu') {
+            await page.keyboard.press('ArrowDown');
+            const highlightedItem = popup.locator('[data-highlighted]').first();
+            await highlightedItem.waitFor({ state: 'visible' });
+            const firstHighlight = await highlightedItem.textContent();
+            await page.keyboard.press('ArrowDown');
+            await page.waitForFunction(
+              ({ popupElement, firstHighlight }) => {
+                const item = popupElement.querySelector('[data-highlighted]');
+                return item !== null && item.textContent !== firstHighlight;
+              },
+              {
+                firstHighlight,
+                popupElement: await popup.elementHandle(),
+              }
+            );
+          }
+
+          await page.keyboard.press('Escape');
+          await popup.waitFor({ state: 'hidden' });
+          await trigger.waitFor({ state: 'visible' });
+          if (
+            !(await trigger.evaluate(
+              (element) => element === document.activeElement
+            ))
+          ) {
+            throw new Error(`${example} did not restore focus to its trigger`);
+          }
+          const triggerAfterClose = await trigger.boundingBox();
+          if (
+            !(triggerBefore && triggerAfterClose) ||
+            triggerBefore.x !== triggerAfterClose.x ||
+            triggerBefore.y !== triggerAfterClose.y
+          ) {
+            throw new Error(`${example} trigger moved while its popup closed`);
+          }
+
+          const { page: reducedPage } = await openReducedMotionPage(
+            route,
+            scheme
+          );
+          const reducedPreview = reducedPage.locator(captureSelector(example));
+          const reducedTrigger = reducedPreview
+            .locator(`[data-slot="${triggerSlot}"]`)
+            .first();
+          if (example === 'dialog') {
+            await reducedPage.setViewportSize({ height: 844, width: 390 });
+          }
+          await reducedTrigger.scrollIntoViewIfNeeded();
+          await reducedPage.waitForTimeout(500);
+          await reducedPage.evaluate((selector) => {
+            document.documentElement.dataset.reducedMotionTransitions = '[]';
+            document.addEventListener('transitionrun', (event) => {
+              if (
+                !(
+                  event.target instanceof Element &&
+                  event.target.matches(selector)
+                )
+              ) {
+                return;
+              }
+              const properties = JSON.parse(
+                document.documentElement.dataset.reducedMotionTransitions ??
+                  '[]'
+              ) as string[];
+              properties.push((event as TransitionEvent).propertyName);
+              document.documentElement.dataset.reducedMotionTransitions =
+                JSON.stringify(properties);
+            });
+          }, `[data-slot="${popupSlot}"]`);
+          await reducedTrigger.click();
+          const reducedPopup = reducedPage
+            .locator(`[data-slot="${popupSlot}"]`)
+            .first();
+          await reducedPopup.waitFor({ state: 'visible' });
+          const reducedTransition = await reducedPopup.evaluate((element) => {
+            const style = getComputedStyle(element);
+            return {
+              properties: style.transitionProperty,
+              scale: style.scale,
+              transform: style.transform,
+              translate: style.translate,
+            };
+          });
+          const activeTransitionProperties = await reducedPage
+            .locator('html')
+            .getAttribute('data-reduced-motion-transitions');
+          const transitionedProperties = JSON.parse(
+            activeTransitionProperties ?? '[]'
+          ) as string[];
+          if (
+            reducedTransition.scale !== 'none' &&
+            reducedTransition.scale !== '1'
+          ) {
+            throw new Error(`${example} retained scaling with reduced motion`);
+          }
+          if (reducedTransition.translate !== 'none') {
+            throw new Error(
+              `${example} retained popup travel with reduced motion`
+            );
+          }
+          if (
+            reducedTransition.properties
+              .split(',')
+              .some((property) =>
+                ['scale', 'translate', 'transform'].includes(property.trim())
+              ) ||
+            transitionedProperties.some((property) =>
+              ['scale', 'translate', 'transform'].includes(property)
+            )
+          ) {
+            throw new Error(
+              `${example} retained a travel transition with reduced motion`
+            );
+          }
+          await reducedPage.close();
+        }
+
+        const selectionState = (element: Element) =>
+          [
+            element.getAttribute('aria-checked'),
+            element.getAttribute('data-checked'),
+            element.getAttribute('aria-pressed'),
+            element.getAttribute('data-pressed'),
+            element.getAttribute('data-state'),
+            String((element as HTMLInputElement).checked),
+          ].join('|');
+        const hasNoTravel = (element: Element) =>
+          getComputedStyle(element).transitionProperty === 'none';
+
+        if (example === 'checkbox' || example === 'switch') {
+          const control = preview.getByRole(
+            example === 'checkbox' ? 'checkbox' : 'switch'
+          );
+          const before = await control.evaluate(selectionState);
+          await preview.getByText('Enable notifications').click();
+          await page.waitForTimeout(100);
+          const after = await control.evaluate(selectionState);
+          if (before === after) {
+            throw new Error(
+              `${example} did not communicate its toggled state: ${before} -> ${after}`
+            );
+          }
+          const reduced = await page.context().newPage();
+          await reduced.emulateMedia({ reducedMotion: 'reduce' });
+          await reduced.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          await reduced.waitForLoadState('networkidle');
+          const reducedControl = reduced
+            .locator(captureSelector(example))
+            .getByRole(example === 'checkbox' ? 'checkbox' : 'switch');
+          const motionTarget =
+            example === 'checkbox'
+              ? reduced
+                  .locator(captureSelector(example))
+                  .locator('[data-slot="checkbox-indicator"]')
+              : reducedControl;
+          if (!(await motionTarget.evaluate(hasNoTravel))) {
+            throw new Error(`${example} moved with reduced motion enabled`);
+          }
+          const reducedBefore = await reducedControl.evaluate(selectionState);
+          await reduced
+            .locator(captureSelector(example))
+            .getByText('Enable notifications')
+            .click();
+          await reduced.waitForTimeout(100);
+          if (
+            (await reducedControl.evaluate(selectionState)) === reducedBefore
+          ) {
+            throw new Error(`${example} lost its state with reduced motion`);
+          }
+          await reduced.close();
+        }
+
+        if (example === 'radio-group') {
+          const radios = preview.getByRole('radio');
+          await radios.nth(1).click();
+          await radios.nth(1).focus();
+          await page.keyboard.press('ArrowUp');
+          await page.waitForTimeout(100);
+          if (
+            !(await radios
+              .first()
+              .evaluate(
+                (element) => element.getAttribute('aria-checked') === 'true'
+              ))
+          ) {
+            throw new Error('Radio arrow navigation did not update selection');
+          }
+        }
+
+        if (example === 'toggle' || example === 'toggle-group') {
+          const toggle = preview.locator('[data-slot="toggle"]').first();
+          const before = await toggle.evaluate(selectionState);
+          await toggle.click();
+          await page.waitForTimeout(100);
+          const after = await toggle.evaluate(selectionState);
+          if (before === after) {
+            throw new Error(
+              `${example} did not communicate its selected state: ${before} -> ${after}`
+            );
+          }
+          const reduced = await page.context().newPage();
+          await reduced.emulateMedia({ reducedMotion: 'reduce' });
+          await reduced.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          await reduced.waitForLoadState('networkidle');
+          const reducedToggle = reduced
+            .locator(captureSelector(example))
+            .locator('[data-slot="toggle"]')
+            .first();
+          if (!(await reducedToggle.evaluate(hasNoTravel))) {
+            throw new Error(`${example} moved with reduced motion enabled`);
+          }
+          const reducedBefore = await reducedToggle.evaluate(selectionState);
+          await reducedToggle.click();
+          await reduced.waitForTimeout(100);
+          if (
+            (await reducedToggle.evaluate(selectionState)) === reducedBefore
+          ) {
+            throw new Error(`${example} lost its state with reduced motion`);
+          }
+          await reduced.close();
+        }
+
         await preview.screenshot({
           animations: 'disabled',
           path: join(outputDir, scheme, `${example}.png`),

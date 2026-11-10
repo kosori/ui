@@ -56,8 +56,12 @@ _Avoid_: Look, styling, skin, theme
 The API half of a Port: export names, prop names and render plumbing. shadcn/ui owns Structure, and a Port never omits an export shadcn/ui publishes.
 _Avoid_: API, interface, surface, shape
 
+**Motion**:
+The time-based behavioral feedback of a component in response to interaction or state change. Motion is independent of Design and Structure.
+_Avoid_: Animation style
+
 **Port**:
-A component whose Design comes from coss/ui and whose Structure comes from shadcn/ui. A Port changes only imports, registry dependencies, item names, icons and the markup shadcn/ui parity requires. It never diverges from coss/ui's Design through anything but Tokens.
+A component whose Design comes from coss/ui and whose Structure comes from shadcn/ui. A Port preserves those responsibilities; its Motion follows the library's separate motion policy.
 _Avoid_: Fork, rewrite, adaptation
 
 **Authored component**:
