@@ -62,7 +62,7 @@ const startServer = async (): Promise<Server> => {
       stdio: 'inherit',
     }
   );
-  const baseUrl = `http://127.0.0.1:${port}`;
+  const baseUrl = `http://localhost:${port}`;
 
   try {
     await waitForServer(`${baseUrl}/docs/zen`);
@@ -130,6 +130,116 @@ const main = async () => {
 
         const preview = page.locator(captureSelector(example));
         await preview.waitFor({ state: 'visible' });
+
+        if (example === 'accordion' || example === 'collapsible') {
+          await page.waitForLoadState('networkidle');
+          const trigger = preview
+            .locator(`[data-slot="${example}-trigger"]`)
+            .first();
+          const panel = preview
+            .locator(
+              '[data-slot="accordion-panel"], [data-slot="collapsible-panel"]'
+            )
+            .first();
+          const triggerSelector = `[data-example="${example}"] [data-slot="${example === 'accordion' ? 'accordion-trigger' : 'collapsible-trigger'}"]`;
+          const clickAndExpect = async (expanded: boolean) => {
+            await trigger.click();
+            try {
+              await page.waitForFunction(
+                ({ selector, value }) =>
+                  document
+                    .querySelector(selector)
+                    ?.getAttribute('aria-expanded') === String(value),
+                { selector: triggerSelector, value: expanded },
+                { timeout: 5000 }
+              );
+            } catch (error) {
+              const actual = await trigger.getAttribute('aria-expanded');
+              throw new Error(
+                `${example} expected expanded=${expanded}, got ${actual}`,
+                { cause: error }
+              );
+            }
+          };
+          await clickAndExpect(true);
+          await clickAndExpect(false);
+          await page.waitForTimeout(300);
+          const closedPanelCount = await panel.count();
+          if (closedPanelCount > 0) {
+            const collapsedHeight = await panel.evaluate(
+              (element) => element.getBoundingClientRect().height
+            );
+            if (collapsedHeight > 1) {
+              throw new Error(`${example} did not finish collapsing`);
+            }
+          }
+          await clickAndExpect(true);
+          await trigger.click();
+          await trigger.click();
+          const finalExpanded =
+            (await trigger.getAttribute('aria-expanded')) === 'true';
+          await page.waitForTimeout(300);
+          const settledPanelCount = await panel.count();
+          if (finalExpanded && settledPanelCount === 0) {
+            throw new Error(
+              `${example} did not settle open after interruption`
+            );
+          }
+          if (settledPanelCount > 0) {
+            const settledHeight = await panel.evaluate(
+              (element) => element.getBoundingClientRect().height
+            );
+            if (finalExpanded ? settledHeight < 1 : settledHeight > 1) {
+              throw new Error(
+                `${example} did not settle to its current state after interruption`
+              );
+            }
+          }
+
+          const reducedContext = await browser.newContext({
+            colorScheme: scheme,
+            reducedMotion: 'reduce',
+            viewport: { height: 1000, width: 1440 },
+          });
+          const reducedPage = await reducedContext.newPage();
+          await reducedPage.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          await reducedPage.waitForLoadState('networkidle');
+          const reducedPreview = reducedPage.locator(captureSelector(example));
+          const reducedTrigger = reducedPreview
+            .locator(`[data-slot="${example}-trigger"]`)
+            .first();
+          const reducedPanel = reducedPreview
+            .locator(
+              '[data-slot="accordion-panel"], [data-slot="collapsible-panel"]'
+            )
+            .first();
+          await reducedTrigger.click();
+          try {
+            await reducedPage.waitForFunction(
+              (selector) =>
+                document
+                  .querySelector(selector)
+                  ?.getAttribute('aria-expanded') === 'true',
+              triggerSelector,
+              { timeout: 5000 }
+            );
+          } catch (error) {
+            throw new Error(`${example} did not open with reduced motion`, {
+              cause: error,
+            });
+          }
+          const transitionProperty = await reducedPanel.evaluate(
+            (element) => getComputedStyle(element).transitionProperty
+          );
+          if (transitionProperty !== 'none') {
+            throw new Error(
+              `${example} retains a transition with reduced motion`
+            );
+          }
+          await reducedContext.close();
+        }
 
         if (example === 'button') {
           const button = preview.getByRole('button', { name: 'Button' });

@@ -1114,6 +1114,8 @@ test('installing state-coloured items without the preset compiles their utilitie
         '@kosori/alert',
         '@kosori/toast',
         '@kosori/button',
+        '@kosori/accordion',
+        '@kosori/collapsible',
         '-y',
         '-s',
       ],
@@ -1133,6 +1135,12 @@ test('installing state-coloured items without the preset compiles their utilitie
     );
     expect(motionTokens, 'the installed Button press easing Token').toContain(
       '--motion-press-easing: cubic-bezier(0.2, 0, 0, 1)'
+    );
+    expect(motionTokens, 'the installed expansion duration Token').toContain(
+      '--motion-expand-duration: 200ms'
+    );
+    expect(motionTokens, 'the installed expansion easing Token').toContain(
+      '--motion-expand-easing: cubic-bezier(0.2, 0, 0, 1)'
     );
     const theme = declarations(css, '@theme inline');
     for (const [token, value] of Object.entries(STATE_TOKENS.light)) {
