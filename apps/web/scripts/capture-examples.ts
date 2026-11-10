@@ -9,6 +9,21 @@ import {
   captureSelector,
 } from './capture/manifest';
 
+const OVERLAY_EXAMPLES = {
+  'alert-dialog': {
+    popupSlot: 'alert-dialog-popup',
+    triggerSlot: 'alert-dialog-trigger',
+  },
+  dialog: { popupSlot: 'dialog-popup', triggerSlot: 'dialog-trigger' },
+  'dropdown-menu': { popupSlot: 'menu-popup', triggerSlot: 'menu-trigger' },
+  popover: { popupSlot: 'popover-popup', triggerSlot: 'popover-trigger' },
+} as const;
+
+type OverlayExample = keyof typeof OVERLAY_EXAMPLES;
+
+const isOverlayExample = (example: string): example is OverlayExample =>
+  Object.hasOwn(OVERLAY_EXAMPLES, example);
+
 const webDir = join(import.meta.dirname, '..');
 const outputDir = join(webDir, CAPTURE_DIR);
 const port = Number(process.env.VISUAL_PORT ?? 3210);
@@ -395,19 +410,8 @@ const main = async () => {
           }
         }
 
-        if (['dialog', 'popover', 'dropdown-menu'].includes(example)) {
-          const popupSlot =
-            example === 'dialog'
-              ? 'dialog-popup'
-              : example === 'popover'
-                ? 'popover-popup'
-                : 'menu-popup';
-          const triggerSlot =
-            example === 'dialog'
-              ? 'dialog-trigger'
-              : example === 'popover'
-                ? 'popover-trigger'
-                : 'menu-trigger';
+        if (isOverlayExample(example)) {
+          const { popupSlot, triggerSlot } = OVERLAY_EXAMPLES[example];
           const trigger = preview
             .locator(`[data-slot="${triggerSlot}"]`)
             .first();
@@ -506,7 +510,7 @@ const main = async () => {
           const reducedTrigger = reducedPreview
             .locator(`[data-slot="${triggerSlot}"]`)
             .first();
-          if (example === 'dialog') {
+          if (example === 'dialog' || example === 'alert-dialog') {
             await reducedPage.setViewportSize({ height: 844, width: 390 });
           }
           await reducedTrigger.scrollIntoViewIfNeeded();

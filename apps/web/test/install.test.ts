@@ -1116,6 +1116,18 @@ test('installing state-coloured items without the preset compiles their utilitie
     await cp(fixtureDir, scratch, { recursive: true });
     await symlink(join(webDir, 'node_modules'), join(scratch, 'node_modules'));
 
+    const alertDialog = (await readCatalog('zen')).find(
+      (item) => item.name === 'alert-dialog'
+    );
+    expect(alertDialog?.cssVars?.light).toMatchObject({
+      'motion-overlay-duration': '180ms',
+      'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+    });
+    expect(alertDialog?.cssVars?.dark).toMatchObject({
+      'motion-overlay-duration': '180ms',
+      'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+    });
+
     const config = JSON.parse(
       await readFile(join(scratch, 'components.json'), 'utf8')
     );
@@ -1132,6 +1144,7 @@ test('installing state-coloured items without the preset compiles their utilitie
         'add',
         '@kosori/badge',
         '@kosori/alert',
+        '@kosori/alert-dialog',
         '@kosori/toast',
         '@kosori/button',
         '@kosori/accordion',

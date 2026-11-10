@@ -66,6 +66,16 @@
     {
       "name": "alert-dialog",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "motion-overlay-duration": "180ms",
+          "motion-overlay-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        },
+        "dark": {
+          "motion-overlay-duration": "180ms",
+          "motion-overlay-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        }
+      },
       "dependencies": ["@base-ui/react", "cn"],
       "registryDependencies": ["@kosori/button"],
       "files": [
