@@ -100,6 +100,21 @@ const main = async () => {
   const browser = await chromium.launch();
   const failures: string[] = [];
 
+  /** Open an Example page with the browser's reduced-motion preference set. */
+  const openReducedMotionPage = async (
+    route: string,
+    colorScheme: (typeof CAPTURE_SCHEMES)[number]
+  ) => {
+    const context = await browser.newContext({
+      colorScheme,
+      reducedMotion: 'reduce',
+    });
+    const page = await context.newPage();
+    await page.goto(`${server.baseUrl}${route}`, { waitUntil: 'load' });
+    await page.waitForLoadState('networkidle');
+    return { context, page };
+  };
+
   /** Capture every Example in one scheme, reusing one page for the whole run. */
   const captureScheme = async (scheme: (typeof CAPTURE_SCHEMES)[number]) => {
     await mkdir(join(outputDir, scheme), { recursive: true });
@@ -197,16 +212,8 @@ const main = async () => {
             }
           }
 
-          const reducedContext = await browser.newContext({
-            colorScheme: scheme,
-            reducedMotion: 'reduce',
-            viewport: { height: 1000, width: 1440 },
-          });
-          const reducedPage = await reducedContext.newPage();
-          await reducedPage.goto(`${server.baseUrl}${route}`, {
-            waitUntil: 'load',
-          });
-          await reducedPage.waitForLoadState('networkidle');
+          const { context: reducedContext, page: reducedPage } =
+            await openReducedMotionPage(route, scheme);
           const reducedPreview = reducedPage.locator(captureSelector(example));
           const reducedTrigger = reducedPreview
             .locator(`[data-slot="${example}-trigger"]`)
@@ -243,25 +250,6 @@ const main = async () => {
         }
 
         if (example === 'button') {
-          const button = preview.getByRole('button', { name: 'Button' });
-          await button.hover();
-          await page.mouse.down();
-          await page.waitForFunction(
-            (element) => getComputedStyle(element).scale === '0.97',
-            await button.elementHandle()
-          );
-          await page.mouse.up();
-          await button.focus();
-          await page.keyboard.down(' ');
-          await page.waitForFunction(
-            (element) => getComputedStyle(element).scale === '0.97',
-            await button.elementHandle()
-          );
-          const keyboardTransform = await button.evaluate(
-            (element) => getComputedStyle(element).scale
-          );
-          await page.keyboard.up(' ');
-
           const touchContext = await browser.newContext({
             hasTouch: true,
             isMobile: true,
@@ -274,29 +262,91 @@ const main = async () => {
           const touchButton = touchPage
             .locator(captureSelector(example))
             .getByRole('button', { name: 'Button' });
-          await touchButton.evaluate((element) => {
-            element.addEventListener(
-              'pointerdown',
-              (event) => {
-                if (
-                  event instanceof PointerEvent &&
-                  event.pointerType === 'touch'
-                ) {
-                  document.documentElement.dataset.buttonTouchPointer =
-                    event.pointerType;
-                }
-              },
-              { once: true }
-            );
-          });
-          await touchButton.tap();
-          const touchScale = await touchPage
-            .locator('html')
-            .getAttribute('data-button-touch-pointer');
-          await touchContext.close();
-          if (touchScale !== 'touch') {
-            throw new Error(`Touch input was reported as ${touchScale}`);
+          const touchBounds = await touchButton.boundingBox();
+          if (!touchBounds) {
+            throw new Error('Touch target has no visible bounds');
           }
+          const touchSession = await touchContext.newCDPSession(touchPage);
+          await touchButton.evaluate((element) => {
+            element.addEventListener('pointerdown', (event) => {
+              (element as HTMLElement).dataset.touchPointerType = (
+                event as PointerEvent
+              ).pointerType;
+            });
+          });
+          await touchSession.send('Input.dispatchTouchEvent', {
+            touchPoints: [
+              {
+                id: 0,
+                x: touchBounds.x + touchBounds.width / 2,
+                y: touchBounds.y + touchBounds.height / 2,
+              },
+            ],
+            type: 'touchStart',
+          });
+          await touchPage.waitForTimeout(50);
+          const touchResults = await touchButton.evaluate((element) => ({
+            active: element.hasAttribute('data-zen-touch-pressed'),
+            pointer: (element as HTMLElement).dataset.touchPointerType,
+            scale: getComputedStyle(element).scale,
+          }));
+          await touchSession.send('Input.dispatchTouchEvent', {
+            touchPoints: [],
+            type: 'touchEnd',
+          });
+          const touchReleased = await touchButton.evaluate(
+            (element) => !element.hasAttribute('data-zen-touch-pressed')
+          );
+          await touchSession.detach();
+          await touchContext.close();
+          if (
+            touchResults.pointer !== 'touch' ||
+            touchResults.scale !== '0.97' ||
+            !touchResults.active ||
+            !touchReleased
+          ) {
+            throw new Error(
+              `Touch press feedback was pointer=${touchResults.pointer}, active=${touchResults.active}, scale=${touchResults.scale}, released=${touchReleased}`
+            );
+          }
+
+          const pointerPage = await page.context().newPage();
+          await pointerPage.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          const pointerButton = pointerPage
+            .locator(captureSelector(example))
+            .getByRole('button', { name: 'Button' });
+          await pointerButton.hover();
+          await pointerPage.mouse.down();
+          await pointerPage.waitForFunction(
+            (element) => getComputedStyle(element).scale === '0.97',
+            await pointerButton.elementHandle()
+          );
+          const pointerTransform = await pointerButton.evaluate(
+            (element) => getComputedStyle(element).scale
+          );
+          await pointerPage.mouse.up();
+          await pointerPage.close();
+
+          const keyboardPage = await page.context().newPage();
+          await keyboardPage.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          const keyboardButton = keyboardPage
+            .locator(captureSelector(example))
+            .getByRole('button', { name: 'Button' });
+          await keyboardButton.focus();
+          await keyboardPage.keyboard.down(' ');
+          await keyboardPage.waitForFunction(
+            (element) => getComputedStyle(element).scale === '0.97',
+            await keyboardButton.elementHandle()
+          );
+          const keyboardTransform = await keyboardButton.evaluate(
+            (element) => getComputedStyle(element).scale
+          );
+          await keyboardPage.keyboard.up(' ');
+          await keyboardPage.close();
 
           const stationaryScales = await Promise.all(
             ['Disabled', 'Loading', 'Popup trigger'].map(async (name) => ({
@@ -312,17 +362,16 @@ const main = async () => {
             }
           }
 
-          const reducedMotion = await page.context().newPage();
-          await reducedMotion.emulateMedia({ reducedMotion: 'reduce' });
+          const { page: reducedMotion } = await openReducedMotionPage(
+            route,
+            scheme
+          );
           const honorsReducedMotion = await reducedMotion.evaluate(
             () => matchMedia('(prefers-reduced-motion: reduce)').matches
           );
           if (!honorsReducedMotion) {
             throw new Error('Browser did not enable reduced motion');
           }
-          await reducedMotion.goto(`${server.baseUrl}${route}`, {
-            waitUntil: 'load',
-          });
           const reducedButton = reducedMotion
             .locator(captureSelector(example))
             .getByRole('button', { name: 'Button' });
@@ -333,11 +382,15 @@ const main = async () => {
             (element) => getComputedStyle(element).scale
           );
           await reducedMotion.mouse.up();
-          await reducedMotion.close();
+          await reducedMotion.context().close();
 
-          if (keyboardTransform !== '0.97' || reducedTransform !== '1') {
+          if (
+            pointerTransform !== '0.97' ||
+            keyboardTransform !== '0.97' ||
+            reducedTransform !== '1'
+          ) {
             throw new Error(
-              `Button press scale was keyboard=${keyboardTransform}, reduced=${reducedTransform}`
+              `Button press scale was pointer=${pointerTransform}, keyboard=${keyboardTransform}, reduced=${reducedTransform}`
             );
           }
         }
@@ -366,11 +419,19 @@ const main = async () => {
           const popup = page.locator(`[data-slot="${popupSlot}"]`).first();
           await popup.waitFor({ state: 'visible' });
           if (example !== 'popover') {
-            const focusIsInPopup = await popup.evaluate((element) =>
-              element.contains(document.activeElement)
-            );
-            if (!focusIsInPopup) {
-              throw new Error(`${example} did not move focus into its popup`);
+            try {
+              await page.waitForFunction(
+                (selector) => {
+                  const element = document.querySelector(selector);
+                  return element?.contains(document.activeElement) ?? false;
+                },
+                `[data-slot="${popupSlot}"]`,
+                { timeout: 5000 }
+              );
+            } catch (error) {
+              throw new Error(`${example} did not move focus into its popup`, {
+                cause: error,
+              });
             }
           }
           const motion = await popup.evaluate((element) => {
@@ -437,17 +498,39 @@ const main = async () => {
             throw new Error(`${example} trigger moved while its popup closed`);
           }
 
-          const reducedPage = await page.context().newPage();
-          await reducedPage.emulateMedia({ reducedMotion: 'reduce' });
-          await reducedPage.goto(`${server.baseUrl}${route}`, {
-            waitUntil: 'load',
-          });
+          const { page: reducedPage } = await openReducedMotionPage(
+            route,
+            scheme
+          );
           const reducedPreview = reducedPage.locator(captureSelector(example));
           const reducedTrigger = reducedPreview
             .locator(`[data-slot="${triggerSlot}"]`)
             .first();
+          if (example === 'dialog') {
+            await reducedPage.setViewportSize({ height: 844, width: 390 });
+          }
           await reducedTrigger.scrollIntoViewIfNeeded();
           await reducedPage.waitForTimeout(500);
+          await reducedPage.evaluate((selector) => {
+            document.documentElement.dataset.reducedMotionTransitions = '[]';
+            document.addEventListener('transitionrun', (event) => {
+              if (
+                !(
+                  event.target instanceof Element &&
+                  event.target.matches(selector)
+                )
+              ) {
+                return;
+              }
+              const properties = JSON.parse(
+                document.documentElement.dataset.reducedMotionTransitions ??
+                  '[]'
+              ) as string[];
+              properties.push((event as TransitionEvent).propertyName);
+              document.documentElement.dataset.reducedMotionTransitions =
+                JSON.stringify(properties);
+            });
+          }, `[data-slot="${popupSlot}"]`);
           await reducedTrigger.click();
           const reducedPopup = reducedPage
             .locator(`[data-slot="${popupSlot}"]`)
@@ -456,11 +539,18 @@ const main = async () => {
           const reducedTransition = await reducedPopup.evaluate((element) => {
             const style = getComputedStyle(element);
             return {
+              properties: style.transitionProperty,
               scale: style.scale,
               transform: style.transform,
               translate: style.translate,
             };
           });
+          const activeTransitionProperties = await reducedPage
+            .locator('html')
+            .getAttribute('data-reduced-motion-transitions');
+          const transitionedProperties = JSON.parse(
+            activeTransitionProperties ?? '[]'
+          ) as string[];
           if (
             reducedTransition.scale !== 'none' &&
             reducedTransition.scale !== '1'
@@ -470,6 +560,20 @@ const main = async () => {
           if (reducedTransition.translate !== 'none') {
             throw new Error(
               `${example} retained popup travel with reduced motion`
+            );
+          }
+          if (
+            reducedTransition.properties
+              .split(',')
+              .some((property) =>
+                ['scale', 'translate', 'transform'].includes(property.trim())
+              ) ||
+            transitionedProperties.some((property) =>
+              ['scale', 'translate', 'transform'].includes(property)
+            )
+          ) {
+            throw new Error(
+              `${example} retained a travel transition with reduced motion`
             );
           }
           await reducedPage.close();
