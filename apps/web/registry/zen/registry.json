@@ -7,6 +7,16 @@
       "name": "accordion",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "cssVars": {
+        "light": {
+          "motion-expand-duration": "200ms",
+          "motion-expand-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        },
+        "dark": {
+          "motion-expand-duration": "200ms",
+          "motion-expand-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        }
+      },
       "files": [
         {
           "path": "registry/zen/ui/accordion.tsx",
@@ -452,6 +462,16 @@
       "name": "collapsible",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
+      "cssVars": {
+        "light": {
+          "motion-expand-duration": "200ms",
+          "motion-expand-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        },
+        "dark": {
+          "motion-expand-duration": "200ms",
+          "motion-expand-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        }
+      },
       "files": [
         {
           "path": "registry/zen/ui/collapsible.tsx",

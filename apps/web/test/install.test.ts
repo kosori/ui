@@ -1133,6 +1133,8 @@ test('installing state-coloured items without the preset compiles their utilitie
         '@kosori/alert',
         '@kosori/toast',
         '@kosori/button',
+        '@kosori/accordion',
+        '@kosori/collapsible',
         '@kosori/checkbox',
         '@kosori/switch',
         '@kosori/toggle',
@@ -1155,6 +1157,12 @@ test('installing state-coloured items without the preset compiles their utilitie
     );
     expect(motionTokens, 'the installed Button press easing Token').toContain(
       '--motion-press-easing: cubic-bezier(0.2, 0, 0, 1)'
+    );
+    expect(motionTokens, 'the installed expansion duration Token').toContain(
+      '--motion-expand-duration: 200ms'
+    );
+    expect(motionTokens, 'the installed expansion easing Token').toContain(
+      '--motion-expand-easing: cubic-bezier(0.2, 0, 0, 1)'
     );
     expect(motionTokens, 'the installed control state duration Token').toContain(
       '--motion-state-duration: 120ms'
