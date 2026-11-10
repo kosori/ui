@@ -1124,6 +1124,16 @@ test('installing state-coloured items without the preset compiles their utilitie
 
     const cssPath = join(scratch, CSS_ENTRY);
     const css = await readFile(cssPath, 'utf8');
+    const motionTokens = declarations(css, ':root');
+    expect(motionTokens, 'the installed Button press scale Token').toContain(
+      '--motion-press-scale: 0.97'
+    );
+    expect(motionTokens, 'the installed Button press duration Token').toContain(
+      '--motion-press-duration: 120ms'
+    );
+    expect(motionTokens, 'the installed Button press easing Token').toContain(
+      '--motion-press-easing: cubic-bezier(0.2, 0, 0, 1)'
+    );
     const theme = declarations(css, '@theme inline');
     for (const [token, value] of Object.entries(STATE_TOKENS.light)) {
       expect(declarations(css, ':root'), `partial light ${token}`).toContain(

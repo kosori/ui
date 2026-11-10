@@ -130,6 +130,107 @@ const main = async () => {
 
         const preview = page.locator(captureSelector(example));
         await preview.waitFor({ state: 'visible' });
+
+        if (example === 'button') {
+          const button = preview.getByRole('button', { name: 'Button' });
+          await button.hover();
+          await page.mouse.down();
+          await page.waitForFunction(
+            (element) => getComputedStyle(element).scale === '0.97',
+            await button.elementHandle()
+          );
+          await page.mouse.up();
+          await button.focus();
+          await page.keyboard.down(' ');
+          await page.waitForFunction(
+            (element) => getComputedStyle(element).scale === '0.97',
+            await button.elementHandle()
+          );
+          const keyboardTransform = await button.evaluate(
+            (element) => getComputedStyle(element).scale
+          );
+          await page.keyboard.up(' ');
+
+          const touchContext = await browser.newContext({
+            hasTouch: true,
+            isMobile: true,
+            viewport: { height: 1000, width: 1440 },
+          });
+          const touchPage = await touchContext.newPage();
+          await touchPage.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          const touchButton = touchPage
+            .locator(captureSelector(example))
+            .getByRole('button', { name: 'Button' });
+          await touchButton.evaluate((element) => {
+            element.addEventListener(
+              'pointerdown',
+              (event) => {
+                if (
+                  event instanceof PointerEvent &&
+                  event.pointerType === 'touch'
+                ) {
+                  document.documentElement.dataset.buttonTouchPointer =
+                    event.pointerType;
+                }
+              },
+              { once: true }
+            );
+          });
+          await touchButton.tap();
+          const touchScale = await touchPage
+            .locator('html')
+            .getAttribute('data-button-touch-pointer');
+          await touchContext.close();
+          if (touchScale !== 'touch') {
+            throw new Error(`Touch input was reported as ${touchScale}`);
+          }
+
+          const stationaryScales = await Promise.all(
+            ['Disabled', 'Loading', 'Popup trigger'].map(async (name) => ({
+              name,
+              scale: await preview
+                .getByRole('button', { name })
+                .evaluate((element) => getComputedStyle(element).scale),
+            }))
+          );
+          for (const { name, scale } of stationaryScales) {
+            if (scale !== 'none') {
+              throw new Error(`${name} button moved during press feedback`);
+            }
+          }
+
+          const reducedMotion = await page.context().newPage();
+          await reducedMotion.emulateMedia({ reducedMotion: 'reduce' });
+          const honorsReducedMotion = await reducedMotion.evaluate(
+            () => matchMedia('(prefers-reduced-motion: reduce)').matches
+          );
+          if (!honorsReducedMotion) {
+            throw new Error('Browser did not enable reduced motion');
+          }
+          await reducedMotion.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          const reducedButton = reducedMotion
+            .locator(captureSelector(example))
+            .getByRole('button', { name: 'Button' });
+          await reducedButton.hover();
+          await reducedMotion.mouse.down();
+          await reducedMotion.waitForTimeout(50);
+          const reducedTransform = await reducedButton.evaluate(
+            (element) => getComputedStyle(element).scale
+          );
+          await reducedMotion.mouse.up();
+          await reducedMotion.close();
+
+          if (keyboardTransform !== '0.97' || reducedTransform !== '1') {
+            throw new Error(
+              `Button press scale was keyboard=${keyboardTransform}, reduced=${reducedTransform}`
+            );
+          }
+        }
+
         await preview.screenshot({
           animations: 'disabled',
           path: join(outputDir, scheme, `${example}.png`),

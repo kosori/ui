@@ -229,10 +229,16 @@
       "type": "registry:ui",
       "cssVars": {
         "light": {
-          "destructive-foreground": "var(--color-red-700)"
+          "destructive-foreground": "var(--color-red-700)",
+          "motion-press-scale": "0.97",
+          "motion-press-duration": "120ms",
+          "motion-press-easing": "cubic-bezier(0.2, 0, 0, 1)"
         },
         "dark": {
-          "destructive-foreground": "var(--color-red-400)"
+          "destructive-foreground": "var(--color-red-400)",
+          "motion-press-scale": "0.97",
+          "motion-press-duration": "120ms",
+          "motion-press-easing": "cubic-bezier(0.2, 0, 0, 1)"
         },
         "theme": {
           "--color-destructive-foreground": "var(--destructive-foreground)"
