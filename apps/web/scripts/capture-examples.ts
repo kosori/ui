@@ -62,7 +62,7 @@ const startServer = async (): Promise<Server> => {
       stdio: 'inherit',
     }
   );
-  const baseUrl = `http://127.0.0.1:${port}`;
+  const baseUrl = `http://localhost:${port}`;
 
   try {
     await waitForServer(`${baseUrl}/docs/zen`);
@@ -121,6 +121,7 @@ const main = async () => {
       try {
         // biome-ignore lint/performance/noAwaitInLoops: one page navigates at a time, keeping captures ordered and memory-bounded
         await page.goto(`${server.baseUrl}${route}`, { waitUntil: 'load' });
+        await page.waitForLoadState('networkidle');
         await page.waitForFunction(
           (dark) =>
             document.documentElement.classList.contains('dark') === dark,
@@ -229,6 +230,115 @@ const main = async () => {
               `Button press scale was keyboard=${keyboardTransform}, reduced=${reducedTransform}`
             );
           }
+        }
+
+        const selectionState = (element: Element) =>
+          [
+            element.getAttribute('aria-checked'),
+            element.getAttribute('data-checked'),
+            element.getAttribute('aria-pressed'),
+            element.getAttribute('data-pressed'),
+            element.getAttribute('data-state'),
+            String((element as HTMLInputElement).checked),
+          ].join('|');
+        const hasNoTravel = (element: Element) =>
+          getComputedStyle(element).transitionProperty === 'none';
+
+        if (example === 'checkbox' || example === 'switch') {
+          const control = preview.getByRole(
+            example === 'checkbox' ? 'checkbox' : 'switch'
+          );
+          const before = await control.evaluate(selectionState);
+          await preview.getByText('Enable notifications').click();
+          await page.waitForTimeout(100);
+          const after = await control.evaluate(selectionState);
+          if (before === after) {
+            throw new Error(
+              `${example} did not communicate its toggled state: ${before} -> ${after}`
+            );
+          }
+          const reduced = await page.context().newPage();
+          await reduced.emulateMedia({ reducedMotion: 'reduce' });
+          await reduced.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          await reduced.waitForLoadState('networkidle');
+          const reducedControl = reduced
+            .locator(captureSelector(example))
+            .getByRole(example === 'checkbox' ? 'checkbox' : 'switch');
+          const motionTarget =
+            example === 'checkbox'
+              ? reduced
+                  .locator(captureSelector(example))
+                  .locator('[data-slot="checkbox-indicator"]')
+              : reducedControl;
+          if (!(await motionTarget.evaluate(hasNoTravel))) {
+            throw new Error(`${example} moved with reduced motion enabled`);
+          }
+          const reducedBefore = await reducedControl.evaluate(selectionState);
+          await reduced
+            .locator(captureSelector(example))
+            .getByText('Enable notifications')
+            .click();
+          await reduced.waitForTimeout(100);
+          if (
+            (await reducedControl.evaluate(selectionState)) === reducedBefore
+          ) {
+            throw new Error(`${example} lost its state with reduced motion`);
+          }
+          await reduced.close();
+        }
+
+        if (example === 'radio-group') {
+          const radios = preview.getByRole('radio');
+          await radios.nth(1).click();
+          await radios.nth(1).focus();
+          await page.keyboard.press('ArrowUp');
+          await page.waitForTimeout(100);
+          if (
+            !(await radios
+              .first()
+              .evaluate(
+                (element) => element.getAttribute('aria-checked') === 'true'
+              ))
+          ) {
+            throw new Error('Radio arrow navigation did not update selection');
+          }
+        }
+
+        if (example === 'toggle' || example === 'toggle-group') {
+          const toggle = preview.locator('[data-slot="toggle"]').first();
+          const before = await toggle.evaluate(selectionState);
+          await toggle.click();
+          await page.waitForTimeout(100);
+          const after = await toggle.evaluate(selectionState);
+          if (before === after) {
+            throw new Error(
+              `${example} did not communicate its selected state: ${before} -> ${after}`
+            );
+          }
+          const reduced = await page.context().newPage();
+          await reduced.emulateMedia({ reducedMotion: 'reduce' });
+          await reduced.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          await reduced.waitForLoadState('networkidle');
+          const reducedToggle = reduced
+            .locator(captureSelector(example))
+            .locator('[data-slot="toggle"]')
+            .first();
+          if (!(await reducedToggle.evaluate(hasNoTravel))) {
+            throw new Error(`${example} moved with reduced motion enabled`);
+          }
+          const reducedBefore = await reducedToggle.evaluate(selectionState);
+          await reducedToggle.click();
+          await reduced.waitForTimeout(100);
+          if (
+            (await reducedToggle.evaluate(selectionState)) === reducedBefore
+          ) {
+            throw new Error(`${example} lost its state with reduced motion`);
+          }
+          await reduced.close();
         }
 
         await preview.screenshot({

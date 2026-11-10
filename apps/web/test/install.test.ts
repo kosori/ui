@@ -1051,10 +1051,29 @@ test('per-item state cssVars are derived from the base color palette', async () 
   );
 
   for (const { item, source } of sources) {
-    expect(
-      item.cssVars,
-      `${item.name} declares cssVars by hand; run bun run registry:build`
-    ).toEqual(stateCssVarsForSource(source));
+    const expected = stateCssVarsForSource(source);
+    if (!expected) {
+      for (const token of STATE_TOKEN_NAMES) {
+        expect(
+          item.cssVars?.light?.[token],
+          `${item.name} light ${token}`
+        ).toBe(undefined);
+        expect(item.cssVars?.dark?.[token], `${item.name} dark ${token}`).toBe(
+          undefined
+        );
+      }
+      continue;
+    }
+
+    expect(item.cssVars?.light, `${item.name} light state Tokens`).toEqual(
+      expect.objectContaining(expected.light)
+    );
+    expect(item.cssVars?.dark, `${item.name} dark state Tokens`).toEqual(
+      expect.objectContaining(expected.dark)
+    );
+    expect(item.cssVars?.theme, `${item.name} theme state Tokens`).toEqual(
+      expect.objectContaining(expected.theme)
+    );
   }
 });
 
@@ -1114,6 +1133,9 @@ test('installing state-coloured items without the preset compiles their utilitie
         '@kosori/alert',
         '@kosori/toast',
         '@kosori/button',
+        '@kosori/checkbox',
+        '@kosori/switch',
+        '@kosori/toggle',
         '-y',
         '-s',
       ],
@@ -1133,6 +1155,12 @@ test('installing state-coloured items without the preset compiles their utilitie
     );
     expect(motionTokens, 'the installed Button press easing Token').toContain(
       '--motion-press-easing: cubic-bezier(0.2, 0, 0, 1)'
+    );
+    expect(motionTokens, 'the installed control state duration Token').toContain(
+      '--motion-state-duration: 120ms'
+    );
+    expect(motionTokens, 'the installed control state easing Token').toContain(
+      '--motion-state-easing: cubic-bezier(0.2, 0, 0, 1)'
     );
     const theme = declarations(css, '@theme inline');
     for (const [token, value] of Object.entries(STATE_TOKENS.light)) {

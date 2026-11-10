@@ -18,7 +18,7 @@ export function Checkbox({
       {...props}
     >
       <CheckboxPrimitive.Indicator
-        className='absolute -inset-px flex items-center justify-center rounded-[.25rem] text-primary-foreground data-unchecked:hidden data-checked:bg-primary data-indeterminate:text-foreground'
+        className='absolute -inset-px flex scale-90 items-center justify-center rounded-[.25rem] text-primary-foreground opacity-0 transition-[opacity,scale] duration-[var(--motion-state-duration,120ms)] ease-[var(--motion-state-easing,cubic-bezier(0.2,0,0,1))] data-checked:scale-100 data-indeterminate:scale-100 data-checked:bg-primary data-indeterminate:text-foreground data-checked:opacity-100 data-indeterminate:opacity-100 motion-reduce:scale-100 motion-reduce:transition-none'
         data-slot='checkbox-indicator'
         // biome-ignore lint/performance/noJsxPropsBind: Base UI's render prop receives the indicator state
         render={(
