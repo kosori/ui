@@ -1137,6 +1137,9 @@ test('installing state-coloured items without the preset compiles their utilitie
         '@kosori/dialog',
         '@kosori/popover',
         '@kosori/dropdown-menu',
+        '@kosori/checkbox',
+        '@kosori/switch',
+        '@kosori/toggle',
         '-y',
         '-s',
       ],
@@ -1162,6 +1165,12 @@ test('installing state-coloured items without the preset compiles their utilitie
     );
     expect(motionTokens, 'the installed overlay easing Token').toContain(
       '--motion-overlay-easing: cubic-bezier(0.2, 0, 0, 1)'
+    );
+    expect(motionTokens, 'the installed control state duration Token').toContain(
+      '--motion-state-duration: 120ms'
+    );
+    expect(motionTokens, 'the installed control state easing Token').toContain(
+      '--motion-state-easing: cubic-bezier(0.2, 0, 0, 1)'
     );
     const theme = declarations(css, '@theme inline');
     for (const [token, value] of Object.entries(STATE_TOKENS.light)) {

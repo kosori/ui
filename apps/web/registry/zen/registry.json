@@ -393,6 +393,16 @@
     {
       "name": "checkbox",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "motion-state-duration": "120ms",
+          "motion-state-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        },
+        "dark": {
+          "motion-state-duration": "120ms",
+          "motion-state-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        }
+      },
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
@@ -1387,6 +1397,16 @@
     {
       "name": "switch",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "motion-state-duration": "120ms",
+          "motion-state-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        },
+        "dark": {
+          "motion-state-duration": "120ms",
+          "motion-state-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        }
+      },
       "dependencies": ["@base-ui/react", "cn"],
       "files": [
         {
@@ -1516,6 +1536,18 @@
     {
       "name": "toggle",
       "type": "registry:ui",
+      "cssVars": {
+        "light": {
+          "motion-press-scale": "0.97",
+          "motion-state-duration": "120ms",
+          "motion-state-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        },
+        "dark": {
+          "motion-press-scale": "0.97",
+          "motion-state-duration": "120ms",
+          "motion-state-easing": "cubic-bezier(0.2, 0, 0, 1)"
+        }
+      },
       "dependencies": ["@base-ui/react", "class-variance-authority", "cn"],
       "files": [
         {
