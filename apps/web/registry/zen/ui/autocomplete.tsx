@@ -121,12 +121,12 @@ export function AutocompletePopup({
       >
         <span
           className={cn(
-            'relative flex max-h-full min-w-(--anchor-width) max-w-(--available-width) origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding shadow-lg/5 transition-[scale,opacity] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
+            'motion-reduce:!transition-opacity relative flex max-h-full min-w-(--anchor-width) max-w-(--available-width) origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding shadow-lg/5 transition-[scale,opacity] duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] has-data-[ending-style]:opacity-0 has-data-[starting-style]:opacity-0 motion-safe:has-data-[ending-style]:scale-98 motion-safe:has-data-[starting-style]:scale-98 motion-reduce:scale-100 dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
             className
           )}
         >
           <AutocompletePrimitive.Popup
-            className='flex max-h-[min(var(--available-height),23rem)] flex-1 flex-col text-foreground'
+            className='motion-reduce:!transition-opacity flex max-h-[min(var(--available-height),23rem)] flex-1 flex-col text-foreground transition-opacity duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] data-ending-style:opacity-0 data-starting-style:opacity-0'
             data-slot='autocomplete-popup'
             {...props}
           >

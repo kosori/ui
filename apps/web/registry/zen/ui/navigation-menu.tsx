@@ -77,7 +77,7 @@ export function NavigationMenuTrigger({
       {children}{' '}
       <IconChevronDown
         aria-hidden='true'
-        className='ms-1 opacity-80 group-data-popup-open/navigation-menu-trigger:rotate-180'
+        className='ms-1 opacity-80 transition-transform duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] group-data-popup-open/navigation-menu-trigger:rotate-180 motion-reduce:transition-none'
       />
     </NavigationMenuPrimitive.Trigger>
   );
@@ -117,7 +117,10 @@ export function NavigationMenuPositioner({
         sideOffset={sideOffset}
         {...props}
       >
-        <NavigationMenuPrimitive.Popup className='relative flex h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding text-popover-foreground shadow-lg/5 outline-none before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]'>
+        <NavigationMenuPrimitive.Popup
+          className='motion-reduce:!transition-opacity relative flex h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding text-popover-foreground shadow-lg/5 outline-none transition-[scale,opacity] duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] data-ending-style:opacity-0 data-starting-style:opacity-0 motion-safe:data-ending-style:scale-98 motion-safe:data-starting-style:scale-98 motion-reduce:scale-100 dark:before:shadow-[0_-1px_--theme(--color-white/6%)]'
+          data-slot='navigation-menu-popup'
+        >
           <NavigationMenuPrimitive.Viewport className='relative size-full overflow-hidden' />
         </NavigationMenuPrimitive.Popup>
       </NavigationMenuPrimitive.Positioner>
