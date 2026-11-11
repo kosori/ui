@@ -45,24 +45,17 @@ writes that file, and it is yours to edit.
 | `responsive` | `stiffness: 520`, `damping: 44` | Direct manipulation that tracks the pointer |
 | `gentle` | `stiffness: 340`, `damping: 34` | Larger layout changes |
 
-Press feedback is a scale, not a spring: `motionTokens.pressScale` defaults to
-`0.97` and lives beside the presets.
+Press feedback animates `scale`: `motionTokens.pressScale` defaults to `0.97`
+and lives beside the presets.
 
 ```tsx
-import { motion, useReducedMotion } from 'motion/react';
-import { motionTokens } from '@/lib/motion';
+import { motion } from 'motion/react';
+import { useMotionTransition } from '@/lib/motion';
 
 export function Thumb({ on }: { on: boolean }) {
-  const reduce = useReducedMotion();
+  const transition = useMotionTransition('snappy');
 
-  return (
-    <motion.span
-      animate={{ x: on ? 20 : 0 }}
-      transition={
-        reduce ? { duration: 0 } : motionTokens.spring.snappy
-      }
-    />
-  );
+  return <motion.span animate={{ x: on ? 20 : 0 }} transition={transition} />;
 }
 ```
 
@@ -85,9 +78,10 @@ variables, and easing is never duplicated in `lib/motion.ts`.
 
 ## Reduced motion
 
-Every component reads the preference itself with `useReducedMotion()`. There is
-no provider to mount and no change to your layout — installing a component is
-the whole setup.
+Every component reads the preference itself through `useMotionTransition()`,
+which wraps `useReducedMotion()` and collapses its preset to an instant change.
+There is no provider to mount and no change to your layout — installing a
+component is the whole setup.
 
 Under reduced motion the end state, focus and feedback are kept and travel is
 removed:
