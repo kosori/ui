@@ -168,6 +168,24 @@ const waitForValueIncrease = async (
   );
 };
 
+const waitForIndicatorWidthIncrease = async (
+  page: Page,
+  selector: string,
+  previousWidth: number
+) => {
+  await page.waitForFunction(
+    ({ indicatorSelector, width }) => {
+      const indicator = document.querySelector(indicatorSelector);
+      return (
+        indicator instanceof HTMLElement &&
+        indicator.getBoundingClientRect().width > width + 1
+      );
+    },
+    { indicatorSelector: selector, width: previousWidth },
+    { timeout: 5000 }
+  );
+};
+
 const webDir = join(import.meta.dirname, '..');
 const outputDir = join(webDir, CAPTURE_DIR);
 const port = Number(process.env.VISUAL_PORT ?? 3210);
@@ -860,7 +878,12 @@ const main = async () => {
             thumbBox.x + thumbBox.width / 2 + 12,
             thumbBox.y + thumbBox.height / 2
           );
-          await page.waitForTimeout(50);
+          await page.waitForFunction(
+            (element) =>
+              Number.parseFloat(getComputedStyle(element).scale) > 1.15,
+            await thumb.elementHandle(),
+            { timeout: 1500 }
+          );
           const draggingScale = await thumb.evaluate(
             (element) => getComputedStyle(element).scale
           );
@@ -911,6 +934,7 @@ const main = async () => {
             .locator(`[data-slot="${example}-indicator"]`)
             .first();
           const rootSelector = `${captureSelector(example)} [data-slot="${example}"]`;
+          const indicatorSelector = `${captureSelector(example)} [data-slot="${example}-indicator"]`;
           const controlName =
             example === 'progress' ? 'Advance progress' : 'Increase usage';
           const initialValue = Number(await root.getAttribute('aria-valuenow'));
@@ -927,6 +951,11 @@ const main = async () => {
           }
           await preview.getByRole('button', { name: controlName }).click();
           await waitForValueIncrease(page, rootSelector, initialValue);
+          await waitForIndicatorWidthIncrease(
+            page,
+            indicatorSelector,
+            initialWidth
+          );
           const updatedValue = Number(await root.getAttribute('aria-valuenow'));
           const updatedWidth = await indicator.evaluate(
             (element) => element.getBoundingClientRect().width
@@ -960,6 +989,11 @@ const main = async () => {
             reduced,
             rootSelector,
             reducedInitialValue
+          );
+          await waitForIndicatorWidthIncrease(
+            reduced,
+            indicatorSelector,
+            reducedInitialWidth
           );
           const reducedUpdatedValue = Number(
             await reducedRoot.getAttribute('aria-valuenow')

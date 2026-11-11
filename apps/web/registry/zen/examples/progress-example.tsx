@@ -13,12 +13,7 @@ const ProgressExample = () => {
   return (
     <div className='flex w-full max-w-sm flex-col gap-4'>
       <Progress aria-label='Loading progress' value={value} />
-      <Button
-        disabled={value >= 100}
-        onClick={advanceProgress}
-        size='sm'
-        variant='outline'
-      >
+      <Button disabled={value >= 100} onClick={advanceProgress}>
         Advance progress
       </Button>
     </div>

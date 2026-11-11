@@ -26,12 +26,7 @@ const MeterExample = () => {
           <MeterIndicator />
         </MeterTrack>
       </Meter>
-      <Button
-        disabled={value >= 100}
-        onClick={increaseUsage}
-        size='sm'
-        variant='outline'
-      >
+      <Button disabled={value >= 100} onClick={increaseUsage}>
         Increase usage
       </Button>
     </div>
