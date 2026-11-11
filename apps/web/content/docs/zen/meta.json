@@ -70,6 +70,7 @@
     "toolbar",
     "tooltip",
     "typography",
+    "motion",
     "theming"
   ]
 }

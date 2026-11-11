@@ -60,6 +60,10 @@ _Avoid_: API, interface, surface, shape
 The time-based behavioral feedback of a component in response to interaction or state change. Motion is independent of Design and Structure.
 _Avoid_: Animation style
 
+**Motion preset**:
+A named bundle of physics values — a spring, or an easing/duration pair — that a component references by name instead of a literal. Presets split by engine: springs live in the Motion library, easing and duration in CSS Tokens.
+_Avoid_: Animation config, timing, transition, easing curve
+
 **Port**:
 A component whose Design comes from coss/ui and whose Structure comes from shadcn/ui. A Port preserves those responsibilities; its Motion follows the library's separate motion policy.
 _Avoid_: Fork, rewrite, adaptation

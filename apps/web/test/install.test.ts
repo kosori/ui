@@ -52,6 +52,7 @@ const NON_COMPONENT_PAGES = [
   'components',
   'index',
   'installation',
+  'motion',
   'theming',
 ];
 
