@@ -1,7 +1,7 @@
 import { spawn } from 'node:child_process';
 import { mkdir, rm } from 'node:fs/promises';
 import { join } from 'node:path';
-import { chromium } from 'playwright';
+import { chromium, type Locator } from 'playwright';
 import {
   CAPTURE_DIR,
   CAPTURE_SCHEMES,
@@ -11,18 +11,145 @@ import {
 
 const OVERLAY_EXAMPLES = {
   'alert-dialog': {
+    focusPopup: true,
+    mobileViewport: true,
+    openAction: 'click',
     popupSlot: 'alert-dialog-popup',
+    restoreFocus: true,
+    transitionProperty: 'opacity',
     triggerSlot: 'alert-dialog-trigger',
   },
-  dialog: { popupSlot: 'dialog-popup', triggerSlot: 'dialog-trigger' },
-  'dropdown-menu': { popupSlot: 'menu-popup', triggerSlot: 'menu-trigger' },
-  popover: { popupSlot: 'popover-popup', triggerSlot: 'popover-trigger' },
+  combobox: {
+    focusPopup: false,
+    mobileViewport: false,
+    openAction: 'fill',
+    popupSlot: 'combobox-popup',
+    restoreFocus: true,
+    transitionProperty: 'opacity',
+    triggerSlot: 'combobox-input',
+  },
+  'context-menu': {
+    focusPopup: false,
+    mobileViewport: false,
+    openAction: 'right-click',
+    popupSlot: 'context-menu-popup',
+    restoreFocus: false,
+    transitionProperty: 'opacity',
+    triggerSlot: 'context-menu-trigger',
+  },
+  dialog: {
+    focusPopup: true,
+    mobileViewport: true,
+    openAction: 'click',
+    popupSlot: 'dialog-popup',
+    restoreFocus: true,
+    transitionProperty: 'opacity',
+    triggerSlot: 'dialog-trigger',
+  },
+  drawer: {
+    focusPopup: true,
+    mobileViewport: true,
+    openAction: 'click',
+    popupSlot: 'drawer-popup',
+    restoreFocus: true,
+    transitionProperty: 'transform',
+    triggerSlot: 'drawer-trigger',
+  },
+  'dropdown-menu': {
+    focusPopup: true,
+    mobileViewport: false,
+    openAction: 'click',
+    popupSlot: 'menu-popup',
+    restoreFocus: true,
+    transitionProperty: 'opacity',
+    triggerSlot: 'menu-trigger',
+  },
+  'hover-card': {
+    focusPopup: false,
+    mobileViewport: false,
+    openAction: 'hover',
+    popupSlot: 'preview-card-content',
+    restoreFocus: false,
+    transitionProperty: 'opacity',
+    triggerSlot: 'preview-card-trigger',
+  },
+  menubar: {
+    focusPopup: true,
+    mobileViewport: false,
+    openAction: 'click',
+    popupSlot: 'menubar-content',
+    restoreFocus: true,
+    transitionProperty: 'opacity',
+    triggerSlot: 'menubar-trigger',
+  },
+  'navigation-menu': {
+    focusPopup: false,
+    mobileViewport: false,
+    openAction: 'click',
+    popupSlot: 'navigation-menu-popup',
+    restoreFocus: true,
+    transitionProperty: 'opacity',
+    triggerSlot: 'navigation-menu-trigger',
+  },
+  popover: {
+    focusPopup: false,
+    mobileViewport: false,
+    openAction: 'click',
+    popupSlot: 'popover-popup',
+    restoreFocus: true,
+    transitionProperty: 'opacity',
+    triggerSlot: 'popover-trigger',
+  },
+  select: {
+    focusPopup: true,
+    mobileViewport: false,
+    openAction: 'click',
+    popupSlot: 'select-popup',
+    restoreFocus: true,
+    transitionProperty: 'opacity',
+    triggerSlot: 'select-trigger',
+  },
+  sheet: {
+    focusPopup: true,
+    mobileViewport: true,
+    openAction: 'click',
+    popupSlot: 'sheet-popup',
+    restoreFocus: true,
+    transitionProperty: 'opacity',
+    triggerSlot: 'sheet-trigger',
+  },
+  tooltip: {
+    focusPopup: false,
+    mobileViewport: false,
+    openAction: 'hover',
+    popupSlot: 'tooltip-popup',
+    restoreFocus: false,
+    transitionProperty: 'opacity',
+    triggerSlot: 'tooltip-trigger',
+  },
 } as const;
 
 type OverlayExample = keyof typeof OVERLAY_EXAMPLES;
+type OverlayOpenAction = 'click' | 'fill' | 'hover' | 'right-click';
 
 const isOverlayExample = (example: string): example is OverlayExample =>
   Object.hasOwn(OVERLAY_EXAMPLES, example);
+
+const openOverlay = async (trigger: Locator, action: OverlayOpenAction) => {
+  if (action === 'fill') {
+    await trigger.fill('status');
+    return;
+  }
+
+  if (action === 'hover') {
+    await trigger.hover();
+    return;
+  }
+
+  await trigger.click(
+    action === 'right-click' ? { button: 'right' } : undefined
+  );
+};
 
 const webDir = join(import.meta.dirname, '..');
 const outputDir = join(webDir, CAPTURE_DIR);
@@ -411,7 +538,15 @@ const main = async () => {
         }
 
         if (isOverlayExample(example)) {
-          const { popupSlot, triggerSlot } = OVERLAY_EXAMPLES[example];
+          const {
+            focusPopup,
+            mobileViewport,
+            openAction,
+            popupSlot,
+            restoreFocus,
+            triggerSlot,
+            transitionProperty,
+          } = OVERLAY_EXAMPLES[example];
           const trigger = preview
             .locator(`[data-slot="${triggerSlot}"]`)
             .first();
@@ -419,10 +554,10 @@ const main = async () => {
           const triggerBefore = await trigger.boundingBox();
 
           await page.waitForTimeout(500);
-          await trigger.click();
+          await openOverlay(trigger, openAction);
           const popup = page.locator(`[data-slot="${popupSlot}"]`).first();
           await popup.waitFor({ state: 'visible' });
-          if (example !== 'popover') {
+          if (focusPopup) {
             try {
               await page.waitForFunction(
                 (selector) => {
@@ -447,7 +582,7 @@ const main = async () => {
           });
           if (
             !(
-              motion.properties.includes('opacity') &&
+              motion.properties.includes(transitionProperty) &&
               motion.duration
                 .split(',')
                 .some((value) => Number.parseFloat(value) > 0)
@@ -487,6 +622,7 @@ const main = async () => {
           await popup.waitFor({ state: 'hidden' });
           await trigger.waitFor({ state: 'visible' });
           if (
+            restoreFocus &&
             !(await trigger.evaluate(
               (element) => element === document.activeElement
             ))
@@ -510,7 +646,7 @@ const main = async () => {
           const reducedTrigger = reducedPreview
             .locator(`[data-slot="${triggerSlot}"]`)
             .first();
-          if (example === 'dialog' || example === 'alert-dialog') {
+          if (mobileViewport) {
             await reducedPage.setViewportSize({ height: 844, width: 390 });
           }
           await reducedTrigger.scrollIntoViewIfNeeded();
@@ -535,7 +671,7 @@ const main = async () => {
                 JSON.stringify(properties);
             });
           }, `[data-slot="${popupSlot}"]`);
-          await reducedTrigger.click();
+          await openOverlay(reducedTrigger, openAction);
           const reducedPopup = reducedPage
             .locator(`[data-slot="${popupSlot}"]`)
             .first();
@@ -688,6 +824,143 @@ const main = async () => {
             (await reducedToggle.evaluate(selectionState)) === reducedBefore
           ) {
             throw new Error(`${example} lost its state with reduced motion`);
+          }
+          await reduced.close();
+        }
+
+        if (example === 'slider') {
+          const thumb = preview.locator('[data-slot="slider-thumb"]').first();
+          const thumbBox = await thumb.boundingBox();
+          if (!thumbBox) {
+            throw new Error('Slider thumb is not visible');
+          }
+          await page.mouse.move(
+            thumbBox.x + thumbBox.width / 2,
+            thumbBox.y + thumbBox.height / 2
+          );
+          await page.mouse.down();
+          await page.mouse.move(
+            thumbBox.x + thumbBox.width / 2 + 12,
+            thumbBox.y + thumbBox.height / 2
+          );
+          await page.waitForTimeout(50);
+          const draggingScale = await thumb.evaluate(
+            (element) => getComputedStyle(element).scale
+          );
+          await page.mouse.up();
+
+          const { page: reduced } = await openReducedMotionPage(route, scheme);
+          const reducedThumb = reduced
+            .locator(captureSelector(example))
+            .locator('[data-slot="slider-thumb"]')
+            .first();
+          const reducedThumbBox = await reducedThumb.boundingBox();
+          if (!reducedThumbBox) {
+            throw new Error('Reduced-motion Slider thumb is not visible');
+          }
+          await reduced.mouse.move(
+            reducedThumbBox.x + reducedThumbBox.width / 2,
+            reducedThumbBox.y + reducedThumbBox.height / 2
+          );
+          await reduced.mouse.down();
+          await reduced.mouse.move(
+            reducedThumbBox.x + reducedThumbBox.width / 2 + 12,
+            reducedThumbBox.y + reducedThumbBox.height / 2
+          );
+          await reduced.waitForTimeout(50);
+          const reducedMotion = await reducedThumb.evaluate((element) => {
+            const style = getComputedStyle(element);
+            return { scale: style.scale, transition: style.transitionProperty };
+          });
+          await reduced.mouse.up();
+          await reduced.close();
+
+          if (Number.parseFloat(draggingScale) < 1.1) {
+            throw new Error(`Slider drag feedback scale was ${draggingScale}`);
+          }
+          if (
+            reducedMotion.scale !== '1' ||
+            reducedMotion.transition !== 'none'
+          ) {
+            throw new Error(
+              `Slider retained motion with reduced motion: ${JSON.stringify(reducedMotion)}`
+            );
+          }
+        }
+
+        if (example === 'progress' || example === 'meter') {
+          const indicator = preview
+            .locator(`[data-slot="${example}-indicator"]`)
+            .first();
+          const transitionProperty = await indicator.evaluate(
+            (element) => getComputedStyle(element).transitionProperty
+          );
+          if (transitionProperty !== 'width') {
+            throw new Error(
+              `${example} transitions ${transitionProperty} instead of width only`
+            );
+          }
+          const { page: reduced } = await openReducedMotionPage(route, scheme);
+          const reducedIndicator = reduced
+            .locator(captureSelector(example))
+            .locator(`[data-slot="${example}-indicator"]`)
+            .first();
+          if (!(await reducedIndicator.evaluate(hasNoTravel))) {
+            throw new Error(`${example} transitioned with reduced motion`);
+          }
+          await reduced.close();
+        }
+
+        if (example === 'sidebar') {
+          const sidebar = preview.locator('[data-slot="sidebar"]').first();
+          const trigger = preview.locator('[data-slot="sidebar-trigger"]');
+          await trigger.click();
+          if ((await sidebar.getAttribute('data-state')) !== 'collapsed') {
+            throw new Error('Sidebar did not collapse after activation');
+          }
+          const { page: reduced } = await openReducedMotionPage(route, scheme);
+          const reducedSidebar = reduced
+            .locator(captureSelector(example))
+            .locator('[data-slot="sidebar"]')
+            .first();
+          const reducedGap = reduced
+            .locator(captureSelector(example))
+            .locator('[data-slot="sidebar-gap"]');
+          if (!(await reducedGap.evaluate(hasNoTravel))) {
+            throw new Error('Sidebar moved with reduced motion enabled');
+          }
+          await reduced
+            .locator(captureSelector(example))
+            .locator('[data-slot="sidebar-trigger"]')
+            .click();
+          if (
+            (await reducedSidebar.getAttribute('data-state')) !== 'collapsed'
+          ) {
+            throw new Error(
+              'Sidebar lost its collapse state with reduced motion'
+            );
+          }
+          await reduced.close();
+        }
+
+        if (example === 'toast') {
+          await preview.getByRole('button', { name: 'Default Toast' }).click();
+          const toast = page.locator('[data-slot="toast"]').first();
+          await toast.waitFor({ state: 'visible' });
+          const { page: reduced } = await openReducedMotionPage(route, scheme);
+          await reduced
+            .locator(captureSelector(example))
+            .getByRole('button', { name: 'Default Toast' })
+            .click();
+          const reducedToast = reduced.locator('[data-slot="toast"]').first();
+          await reducedToast.waitFor({ state: 'visible' });
+          const transitionProperties = await reducedToast.evaluate(
+            (element) => getComputedStyle(element).transitionProperty
+          );
+          if (transitionProperties.includes('transform')) {
+            throw new Error(
+              'Toast retained travel transitions with reduced motion'
+            );
           }
           await reduced.close();
         }
