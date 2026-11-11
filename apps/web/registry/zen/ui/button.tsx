@@ -3,13 +3,14 @@
 import { Button as ButtonPrimitive } from '@base-ui/react/button';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from 'cn';
+import { motion, useReducedMotion } from 'motion/react';
 import type * as React from 'react';
-import { useCallback } from 'react';
 
 import { Spinner } from '@/components/ui/spinner';
+import { motionTokens, useMotionTransition } from '@/lib/motion';
 
 export const buttonVariants = cva(
-  "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg border font-medium text-base outline-none transition-[box-shadow,scale] duration-[var(--motion-press-duration,120ms)] ease-[var(--motion-press-easing,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] pointer-coarse:after:absolute pointer-coarse:after:size-full pointer-coarse:after:min-h-11 pointer-coarse:after:min-w-11 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-64 data-loading:select-none data-loading:text-transparent motion-reduce:scale-[1] motion-reduce:transition-none sm:text-sm [&:active:not([aria-haspopup])]:scale-[var(--motion-press-scale,0.97)] [&:active:not([aria-haspopup])]:motion-reduce:scale-[1] [&[data-pressed]:not([aria-haspopup])]:scale-[var(--motion-press-scale,0.97)] [&[data-pressed]:not([aria-haspopup])]:motion-reduce:scale-[1] [&[data-zen-touch-pressed]:not([aria-haspopup])]:scale-[var(--motion-press-scale,0.97)] [&[data-zen-touch-pressed]:not([aria-haspopup])]:motion-reduce:scale-[1] [&_svg:not([class*='opacity-'])]:opacity-80 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:-mx-0.5 [&_svg]:shrink-0",
+  "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg border font-medium text-base outline-none transition-[box-shadow] duration-[var(--duration-fast,160ms)] ease-[var(--ease-standard,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] pointer-coarse:after:absolute pointer-coarse:after:size-full pointer-coarse:after:min-h-11 pointer-coarse:after:min-w-11 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-64 data-loading:select-none data-loading:text-transparent motion-reduce:transition-none sm:text-sm [&_svg:not([class*='opacity-'])]:opacity-80 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:-mx-0.5 [&_svg]:shrink-0",
   {
     defaultVariants: {
       size: 'default',
@@ -62,56 +63,13 @@ export function Button({
   children,
   loading = false,
   disabled: disabledProp,
-  onLostPointerCapture,
-  onPointerCancel,
-  onPointerDown,
-  onPointerUp,
   ...props
 }: ButtonProps): React.ReactElement {
-  const isDisabled: boolean = Boolean(loading || disabledProp);
-  const handleLostPointerCapture = useCallback<
-    NonNullable<ButtonPrimitive.Props['onLostPointerCapture']>
-  >(
-    (event) => {
-      delete event.currentTarget.dataset.zenTouchPressed;
-      onLostPointerCapture?.(event);
-    },
-    [onLostPointerCapture]
-  );
-  const handlePointerCancel = useCallback<
-    NonNullable<ButtonPrimitive.Props['onPointerCancel']>
-  >(
-    (event) => {
-      delete event.currentTarget.dataset.zenTouchPressed;
-      onPointerCancel?.(event);
-    },
-    [onPointerCancel]
-  );
-  const handlePointerDown = useCallback<
-    NonNullable<ButtonPrimitive.Props['onPointerDown']>
-  >(
-    (event) => {
-      onPointerDown?.(event);
-      if (
-        event.pointerType === 'touch' &&
-        !event.defaultPrevented &&
-        !isDisabled &&
-        !event.currentTarget.hasAttribute('aria-haspopup')
-      ) {
-        event.currentTarget.dataset.zenTouchPressed = '';
-      }
-    },
-    [isDisabled, onPointerDown]
-  );
-  const handlePointerUp = useCallback<
-    NonNullable<ButtonPrimitive.Props['onPointerUp']>
-  >(
-    (event) => {
-      delete event.currentTarget.dataset.zenTouchPressed;
-      onPointerUp?.(event);
-    },
-    [onPointerUp]
-  );
+  const reduce = useReducedMotion();
+  const transition = useMotionTransition('snappy');
+  const hasPopup = Boolean(props['aria-haspopup']);
+  const whileTap =
+    reduce || hasPopup ? undefined : { scale: motionTokens.pressScale };
 
   return (
     <ButtonPrimitive
@@ -119,11 +77,8 @@ export function Button({
       className={cn(buttonVariants({ className, size, variant }))}
       data-loading={loading ? '' : undefined}
       data-slot='button'
-      disabled={isDisabled}
-      onLostPointerCapture={handleLostPointerCapture}
-      onPointerCancel={handlePointerCancel}
-      onPointerDown={handlePointerDown}
-      onPointerUp={handlePointerUp}
+      disabled={loading || Boolean(disabledProp)}
+      render={<motion.button transition={transition} whileTap={whileTap} />}
       {...props}
     >
       {children}
