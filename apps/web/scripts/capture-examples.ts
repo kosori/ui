@@ -1,7 +1,7 @@
 import { spawn } from 'node:child_process';
 import { mkdir, rm } from 'node:fs/promises';
 import { join } from 'node:path';
-import { chromium, type Locator } from 'playwright';
+import { chromium, type Locator, type Page } from 'playwright';
 import {
   CAPTURE_DIR,
   CAPTURE_SCHEMES,
@@ -148,6 +148,23 @@ const openOverlay = async (trigger: Locator, action: OverlayOpenAction) => {
 
   await trigger.click(
     action === 'right-click' ? { button: 'right' } : undefined
+  );
+};
+
+const waitForValueIncrease = async (
+  page: Page,
+  selector: string,
+  previousValue: number
+) => {
+  await page.waitForFunction(
+    ({ rootSelector, value }) => {
+      const nextValue = Number(
+        document.querySelector(rootSelector)?.getAttribute('aria-valuenow')
+      );
+      return Number.isFinite(nextValue) && nextValue > value;
+    },
+    { rootSelector: selector, value: previousValue },
+    { timeout: 5000 }
   );
 };
 
@@ -889,9 +906,17 @@ const main = async () => {
         }
 
         if (example === 'progress' || example === 'meter') {
+          const root = preview.locator(`[data-slot="${example}"]`).first();
           const indicator = preview
             .locator(`[data-slot="${example}-indicator"]`)
             .first();
+          const rootSelector = `${captureSelector(example)} [data-slot="${example}"]`;
+          const controlName =
+            example === 'progress' ? 'Advance progress' : 'Increase usage';
+          const initialValue = Number(await root.getAttribute('aria-valuenow'));
+          const initialWidth = await indicator.evaluate(
+            (element) => element.getBoundingClientRect().width
+          );
           const transitionProperty = await indicator.evaluate(
             (element) => getComputedStyle(element).transitionProperty
           );
@@ -900,11 +925,56 @@ const main = async () => {
               `${example} transitions ${transitionProperty} instead of width only`
             );
           }
+          await preview.getByRole('button', { name: controlName }).click();
+          await waitForValueIncrease(page, rootSelector, initialValue);
+          const updatedValue = Number(await root.getAttribute('aria-valuenow'));
+          const updatedWidth = await indicator.evaluate(
+            (element) => element.getBoundingClientRect().width
+          );
+          if (updatedValue <= initialValue || updatedWidth <= initialWidth) {
+            throw new Error(
+              `${example} value changed from ${initialValue} to ${updatedValue}, but its indicator did not grow (${initialWidth}px to ${updatedWidth}px)`
+            );
+          }
+
           const { page: reduced } = await openReducedMotionPage(route, scheme);
+          const reducedRoot = reduced
+            .locator(captureSelector(example))
+            .locator(`[data-slot="${example}"]`)
+            .first();
           const reducedIndicator = reduced
             .locator(captureSelector(example))
             .locator(`[data-slot="${example}-indicator"]`)
             .first();
+          const reducedInitialValue = Number(
+            await reducedRoot.getAttribute('aria-valuenow')
+          );
+          const reducedInitialWidth = await reducedIndicator.evaluate(
+            (element) => element.getBoundingClientRect().width
+          );
+          await reduced
+            .locator(captureSelector(example))
+            .getByRole('button', { name: controlName })
+            .click();
+          await waitForValueIncrease(
+            reduced,
+            rootSelector,
+            reducedInitialValue
+          );
+          const reducedUpdatedValue = Number(
+            await reducedRoot.getAttribute('aria-valuenow')
+          );
+          const reducedUpdatedWidth = await reducedIndicator.evaluate(
+            (element) => element.getBoundingClientRect().width
+          );
+          if (
+            reducedUpdatedValue <= reducedInitialValue ||
+            reducedUpdatedWidth <= reducedInitialWidth
+          ) {
+            throw new Error(
+              `${example} lost its value update with reduced motion: ${reducedInitialValue} -> ${reducedUpdatedValue}`
+            );
+          }
           if (!(await reducedIndicator.evaluate(hasNoTravel))) {
             throw new Error(`${example} transitioned with reduced motion`);
           }

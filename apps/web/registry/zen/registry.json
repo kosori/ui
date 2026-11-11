@@ -1052,7 +1052,7 @@
     {
       "name": "meter-example",
       "type": "registry:example",
-      "registryDependencies": ["@kosori/meter"],
+      "registryDependencies": ["@kosori/meter", "@kosori/button"],
       "files": [
         {
           "path": "registry/zen/examples/meter-example.tsx",
@@ -1229,7 +1229,7 @@
     {
       "name": "progress-example",
       "type": "registry:example",
-      "registryDependencies": ["@kosori/progress"],
+      "registryDependencies": ["@kosori/progress", "@kosori/button"],
       "files": [
         {
           "path": "registry/zen/examples/progress-example.tsx",
