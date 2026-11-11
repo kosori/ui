@@ -186,6 +186,53 @@ const waitForIndicatorWidthIncrease = async (
   );
 };
 
+/**
+ * The scale a computed transform currently shows. A resting element reports
+ * `none`, which is the identity.
+ */
+const scaleOf = (element: Element): number => {
+  const style = getComputedStyle(element);
+
+  if (style.scale !== 'none') {
+    return Number.parseFloat(style.scale);
+  }
+
+  if (style.transform === 'none') {
+    return 1;
+  }
+
+  const matrix = style.transform.match(/^matrix\(([^)]+)\)$/)?.[1]?.split(',');
+  if (!matrix || matrix.length < 4) {
+    return Number.parseFloat(style.transform);
+  }
+
+  const [a = '1', b = '0'] = matrix;
+  return Math.hypot(Number(a), Number(b));
+};
+
+/** Poll a rendered element until its sampled scale satisfies a predicate. */
+const waitForScale = async (
+  target: Locator,
+  predicate: (scale: number) => boolean,
+  label: string,
+  timeout = 5000
+): Promise<number> => {
+  const deadline = Date.now() + timeout;
+  let scale = await target.evaluate(scaleOf);
+
+  while (!predicate(scale)) {
+    if (Date.now() >= deadline) {
+      throw new Error(`${label} did not reach its scale (last ${scale})`);
+    }
+
+    // biome-ignore lint/performance/noAwaitInLoops: one element is sampled at a time so scale readings stay ordered
+    await new Promise((resolve) => setTimeout(resolve, 16));
+    scale = await target.evaluate(scaleOf);
+  }
+
+  return scale;
+};
+
 const webDir = join(import.meta.dirname, '..');
 const outputDir = join(webDir, CAPTURE_DIR);
 const port = Number(process.env.VISUAL_PORT ?? 3210);
@@ -436,6 +483,7 @@ const main = async () => {
           await touchPage.goto(`${server.baseUrl}${route}`, {
             waitUntil: 'load',
           });
+          await touchPage.waitForLoadState('networkidle');
           const touchButton = touchPage
             .locator(captureSelector(example))
             .getByRole('button', { name: 'Button' });
@@ -461,29 +509,28 @@ const main = async () => {
             ],
             type: 'touchStart',
           });
-          await touchPage.waitForTimeout(50);
-          const touchResults = await touchButton.evaluate((element) => ({
-            active: element.hasAttribute('data-zen-touch-pressed'),
-            pointer: (element as HTMLElement).dataset.touchPointerType,
-            scale: getComputedStyle(element).scale,
-          }));
+          const touchScale = await waitForScale(
+            touchButton,
+            (scale) => scale < 0.975,
+            'Touch press'
+          );
+          const touchPointer = await touchButton.evaluate(
+            (element) => (element as HTMLElement).dataset.touchPointerType
+          );
           await touchSession.send('Input.dispatchTouchEvent', {
             touchPoints: [],
             type: 'touchEnd',
           });
-          const touchReleased = await touchButton.evaluate(
-            (element) => !element.hasAttribute('data-zen-touch-pressed')
+          await waitForScale(
+            touchButton,
+            (scale) => scale > 0.995,
+            'Touch release'
           );
           await touchSession.detach();
           await touchContext.close();
-          if (
-            touchResults.pointer !== 'touch' ||
-            touchResults.scale !== '0.97' ||
-            !touchResults.active ||
-            !touchReleased
-          ) {
+          if (touchPointer !== 'touch' || touchScale > 0.975) {
             throw new Error(
-              `Touch press feedback was pointer=${touchResults.pointer}, active=${touchResults.active}, scale=${touchResults.scale}, released=${touchReleased}`
+              `Touch press feedback was pointer=${touchPointer}, scale=${touchScale}`
             );
           }
 
@@ -491,50 +538,118 @@ const main = async () => {
           await pointerPage.goto(`${server.baseUrl}${route}`, {
             waitUntil: 'load',
           });
+          await pointerPage.waitForLoadState('networkidle');
           const pointerButton = pointerPage
             .locator(captureSelector(example))
             .getByRole('button', { name: 'Button' });
           await pointerButton.hover();
           await pointerPage.mouse.down();
-          await pointerPage.waitForFunction(
-            (element) => getComputedStyle(element).scale === '0.97',
-            await pointerButton.elementHandle()
-          );
-          const pointerTransform = await pointerButton.evaluate(
-            (element) => getComputedStyle(element).scale
+          const pointerScale = await waitForScale(
+            pointerButton,
+            (scale) => scale < 0.975,
+            'Pointer press'
           );
           await pointerPage.mouse.up();
+          await waitForScale(
+            pointerButton,
+            (scale) => scale > 0.995,
+            'Pointer release'
+          );
+
+          await pointerPage.mouse.down();
+          const midPressScale = await waitForScale(
+            pointerButton,
+            (scale) => scale < 0.997,
+            'Pointer mid-press'
+          );
+          await pointerPage.mouse.up();
+          const reversedScale = await pointerButton.evaluate(scaleOf);
+          await waitForScale(
+            pointerButton,
+            (scale) => scale > 0.995,
+            'Pointer reversal'
+          );
           await pointerPage.close();
+          if (
+            pointerScale > 0.975 ||
+            midPressScale <= pointerScale ||
+            reversedScale >= 1
+          ) {
+            throw new Error(
+              `Button press was pointer=${pointerScale}, mid=${midPressScale}, reversed=${reversedScale}`
+            );
+          }
 
           const keyboardPage = await page.context().newPage();
           await keyboardPage.goto(`${server.baseUrl}${route}`, {
             waitUntil: 'load',
           });
+          await keyboardPage.waitForLoadState('networkidle');
           const keyboardButton = keyboardPage
             .locator(captureSelector(example))
             .getByRole('button', { name: 'Button' });
-          await keyboardButton.focus();
-          await keyboardPage.keyboard.down(' ');
-          await keyboardPage.waitForFunction(
-            (element) => getComputedStyle(element).scale === '0.97',
-            await keyboardButton.elementHandle()
+          await keyboardPage.waitForTimeout(200);
+          const pressWithKeyboard = async () => {
+            await keyboardButton.evaluate((element) =>
+              (element as HTMLElement).blur()
+            );
+            await keyboardButton.focus();
+            await keyboardPage.keyboard.down('Enter');
+            try {
+              return await waitForScale(
+                keyboardButton,
+                (scale) => scale < 0.975,
+                'Keyboard press',
+                1500
+              );
+            } finally {
+              await keyboardPage.keyboard.up('Enter');
+            }
+          };
+          let keyboardScale: number;
+          try {
+            keyboardScale = await pressWithKeyboard();
+          } catch {
+            // A cold dev server can hydrate after `load`, so retry the press
+            // once the page has certainly attached its focus listeners.
+            try {
+              keyboardScale = await pressWithKeyboard();
+            } catch (error) {
+              const state = await keyboardButton.evaluate((element) => ({
+                active: document.activeElement === element,
+                focused: document.hasFocus(),
+                reduced: matchMedia('(prefers-reduced-motion: reduce)').matches,
+                transform: getComputedStyle(element).transform,
+              }));
+              throw new Error(
+                `Keyboard press never scaled: ${JSON.stringify(state)}`,
+                { cause: error }
+              );
+            }
+          }
+          await waitForScale(
+            keyboardButton,
+            (scale) => scale > 0.995,
+            'Keyboard release'
           );
-          const keyboardTransform = await keyboardButton.evaluate(
-            (element) => getComputedStyle(element).scale
-          );
-          await keyboardPage.keyboard.up(' ');
           await keyboardPage.close();
 
-          const stationaryScales = await Promise.all(
-            ['Disabled', 'Loading', 'Popup trigger'].map(async (name) => ({
-              name,
-              scale: await preview
-                .getByRole('button', { name })
-                .evaluate((element) => getComputedStyle(element).scale),
-            }))
-          );
-          for (const { name, scale } of stationaryScales) {
-            if (scale !== 'none') {
+          for (const name of ['Disabled', 'Loading', 'Popup trigger']) {
+            const stationary = preview.getByRole('button', { name });
+            // biome-ignore lint/performance/noAwaitInLoops: presses run one at a time so each sampled scale is attributable
+            const stationaryBox = await stationary.boundingBox();
+            if (!stationaryBox) {
+              throw new Error(`${name} button has no visible bounds`);
+            }
+            await page.mouse.move(
+              stationaryBox.x + stationaryBox.width / 2,
+              stationaryBox.y + stationaryBox.height / 2
+            );
+            await page.mouse.down();
+            await page.waitForTimeout(120);
+            const scale = await stationary.evaluate(scaleOf);
+            await page.mouse.up();
+            if (scale !== 1) {
               throw new Error(`${name} button moved during press feedback`);
             }
           }
@@ -554,21 +669,21 @@ const main = async () => {
             .getByRole('button', { name: 'Button' });
           await reducedButton.hover();
           await reducedMotion.mouse.down();
-          await reducedMotion.waitForTimeout(50);
-          const reducedTransform = await reducedButton.evaluate(
-            (element) => getComputedStyle(element).scale
+          await reducedMotion.waitForTimeout(80);
+          const reducedTransform = await reducedButton.evaluate(scaleOf);
+          const reducedInline = await reducedButton.evaluate(
+            (element) => (element as HTMLElement).style.transform
           );
           await reducedMotion.mouse.up();
           await reducedMotion.context().close();
-
-          if (
-            pointerTransform !== '0.97' ||
-            keyboardTransform !== '0.97' ||
-            reducedTransform !== '1'
-          ) {
+          if (reducedTransform !== 1 || reducedInline !== '') {
             throw new Error(
-              `Button press scale was pointer=${pointerTransform}, keyboard=${keyboardTransform}, reduced=${reducedTransform}`
+              `Button moved with reduced motion: transform=${reducedTransform}, inline=${reducedInline}`
             );
+          }
+
+          if (keyboardScale > 0.975) {
+            throw new Error(`Keyboard press scale was ${keyboardScale}`);
           }
         }
 
@@ -830,6 +945,29 @@ const main = async () => {
 
         if (example === 'toggle' || example === 'toggle-group') {
           const toggle = preview.locator('[data-slot="toggle"]').first();
+          const toggleBox = await toggle.boundingBox();
+          if (!toggleBox) {
+            throw new Error(`${example} toggle has no visible bounds`);
+          }
+          await page.mouse.move(
+            toggleBox.x + toggleBox.width / 2,
+            toggleBox.y + toggleBox.height / 2
+          );
+          await page.mouse.down();
+          const togglePress = await waitForScale(
+            toggle,
+            (scale) => scale < 0.975,
+            `${example} press`
+          );
+          await page.mouse.up();
+          await waitForScale(
+            toggle,
+            (scale) => scale > 0.995,
+            `${example} release`
+          );
+          if (togglePress > 0.98) {
+            throw new Error(`${example} press scale was ${togglePress}`);
+          }
           const before = await toggle.evaluate(selectionState);
           await toggle.click();
           await page.waitForTimeout(100);
@@ -851,6 +989,25 @@ const main = async () => {
             .first();
           if (!(await reducedToggle.evaluate(hasNoTravel))) {
             throw new Error(`${example} moved with reduced motion enabled`);
+          }
+          const reducedToggleBox = await reducedToggle.boundingBox();
+          if (!reducedToggleBox) {
+            throw new Error(
+              `${example} reduced-motion toggle has no visible bounds`
+            );
+          }
+          await reduced.mouse.move(
+            reducedToggleBox.x + reducedToggleBox.width / 2,
+            reducedToggleBox.y + reducedToggleBox.height / 2
+          );
+          await reduced.mouse.down();
+          await reduced.waitForTimeout(80);
+          const reducedTogglePress = await reducedToggle.evaluate(scaleOf);
+          await reduced.mouse.up();
+          if (reducedTogglePress !== 1) {
+            throw new Error(
+              `${example} pressed with reduced motion: ${reducedTogglePress}`
+            );
           }
           const reducedBefore = await reducedToggle.evaluate(selectionState);
           await reducedToggle.click();

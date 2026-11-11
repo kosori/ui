@@ -1101,6 +1101,114 @@ test('the documentation stylesheet is generated from the neutral preset', async 
       `the docs stylesheet omits the --color-${token} mapping`
     ).toContain(`--color-${token}: var(--${token});`);
   }
+
+  for (const token of [
+    'ease-standard',
+    'ease-enter',
+    'ease-spring',
+    'duration-fast',
+    'duration-standard',
+    'duration-considered',
+  ]) {
+    expect(committed, `the docs stylesheet omits --${token}`).toContain(
+      `--${token}:`
+    );
+    expect(
+      committed,
+      `the docs stylesheet maps --${token} as a colour`
+    ).not.toContain(`--color-${token}:`);
+  }
+});
+
+test('the preset declares the shared easing and duration scale', () => {
+  const zenStyle = STYLES.find((style) => style.name === 'zen');
+  expect(zenStyle).toBeDefined();
+
+  const item = composeStyleItem(zenStyle ?? STYLES[0], 'neutral');
+  const scale = {
+    'duration-considered': '480ms',
+    'duration-fast': '160ms',
+    'duration-standard': '240ms',
+    'ease-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+    'ease-spring': 'cubic-bezier(0.32, 0.72, 0, 1)',
+    'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+  };
+
+  expect(item.cssVars?.light).toMatchObject(scale);
+  expect(item.cssVars?.dark).toMatchObject(scale);
+  for (const token of Object.keys(scale)) {
+    expect(
+      item.cssVars?.theme?.[`--color-${token}`],
+      `the preset maps --${token} as a colour`
+    ).toBeUndefined();
+  }
+});
+
+test('the motion library owns the motion package and only its importers depend on it', async () => {
+  const items = await readCatalog('zen');
+  const library = items.find((item) => item.name === 'motion');
+
+  expect(library, 'the motion library is in the Zen Registry').toBeDefined();
+  expect(library?.type).toBe('registry:lib');
+  expect(library?.dependencies).toEqual(['motion']);
+  expect(library?.files).toEqual([
+    { path: 'registry/zen/lib/motion.ts', type: 'registry:lib' },
+  ]);
+
+  const sources = await Promise.all(
+    items.map(async (item) => ({
+      item,
+      source: (
+        await Promise.all(
+          item.files.map((file) => readFile(join(webDir, file.path), 'utf8'))
+        )
+      ).join('\n'),
+    }))
+  );
+
+  expect(JSON.stringify(items)).not.toContain('motion-press');
+
+  const importers = sources
+    .filter(({ source }) => /from ['"]@\/lib\/motion['"]/.test(source))
+    .map(({ item }) => item.name)
+    .sort();
+  expect(importers, 'Button and Toggle press run on the library').toEqual(
+    expect.arrayContaining(['button', 'toggle'])
+  );
+
+  for (const { item, source } of sources) {
+    const importsLibrary = /from ['"]@\/lib\/motion['"]/.test(source);
+    const isLibrary = item.name === 'motion';
+
+    expect(
+      (item.dependencies ?? []).includes('motion'),
+      `${item.name} declares the motion package`
+    ).toBe(isLibrary);
+    expect(
+      (item.registryDependencies ?? []).includes('@kosori/motion'),
+      `${item.name} ${importsLibrary ? 'imports' : 'does not import'} the library`
+    ).toBe(importsLibrary && !isLibrary);
+  }
+
+  for (const name of ['button', 'toggle']) {
+    const { item, source } = sources.find(
+      ({ item }) => item.name === name
+    ) as (typeof sources)[number];
+
+    expect(source, `${name} reads the shared duration Token`).toContain(
+      'var(--duration-fast,160ms)'
+    );
+    expect(source, `${name} reads the shared easing Token`).toContain(
+      'var(--ease-standard,cubic-bezier(0.2,0,0,1))'
+    );
+    expect(source, `${name} keeps the old press Tokens`).not.toContain(
+      'motion-press'
+    );
+    expect(item.cssVars?.light).toMatchObject({
+      'duration-fast': '160ms',
+      'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+    });
+  }
 });
 
 // biome-ignore format: the shared timeout keeps this declaration on one line
@@ -1126,6 +1234,10 @@ test('installing state-coloured items without the preset compiles their utilitie
       autocomplete: {
         'motion-overlay-duration': '180ms',
         'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+      button: {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       combobox: {
         'motion-overlay-duration': '180ms',
@@ -1166,6 +1278,10 @@ test('installing state-coloured items without the preset compiles their utilitie
       sidebar: {
         'motion-expand-duration': '200ms',
         'motion-expand-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+      toggle: {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       tooltip: {
         'motion-overlay-duration': '180ms',
@@ -1235,15 +1351,16 @@ test('installing state-coloured items without the preset compiles their utilitie
     const cssPath = join(scratch, CSS_ENTRY);
     const css = await readFile(cssPath, 'utf8');
     const motionTokens = declarations(css, ':root');
-    expect(motionTokens, 'the installed Button press scale Token').toContain(
-      '--motion-press-scale: 0.97'
+    expect(motionTokens, 'the installed shared duration Token').toContain(
+      '--duration-fast: 160ms'
     );
-    expect(motionTokens, 'the installed Button press duration Token').toContain(
-      '--motion-press-duration: 120ms'
+    expect(motionTokens, 'the installed shared easing Token').toContain(
+      '--ease-standard: cubic-bezier(0.2, 0, 0, 1)'
     );
-    expect(motionTokens, 'the installed Button press easing Token').toContain(
-      '--motion-press-easing: cubic-bezier(0.2, 0, 0, 1)'
-    );
+    expect(
+      motionTokens,
+      'the installed stylesheet still declares a press Token'
+    ).not.toContain('--motion-press-');
     expect(motionTokens, 'the installed expansion duration Token').toContain(
       '--motion-expand-duration: 200ms'
     );
@@ -1531,6 +1648,12 @@ export default Page;
         cliEnv
       );
       expect(add.exitCode, add.stdout + add.stderr).toBe(0);
+
+      // A new package dependency makes the CLI run its package manager, which
+      // replaces the harness's symlink with a separate dependency tree. Point
+      // it back at the workspace so Next and its CLI share one React instance.
+      await rm(join(scratch, 'node_modules'), { force: true, recursive: true });
+      await symlink(join(webDir, 'node_modules'), join(scratch, 'node_modules'));
 
       const manifest = await readFile(join(scratch, 'package.json'), 'utf8');
       expect(manifest, 'sonner is installed').not.toContain('sonner');
