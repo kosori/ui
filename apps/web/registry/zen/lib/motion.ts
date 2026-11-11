@@ -1,7 +1,7 @@
 'use client';
 
 import { type MotionProps, useReducedMotion } from 'motion/react';
-import { useCallback, useState } from 'react';
+import { type KeyboardEvent, useCallback, useMemo, useState } from 'react';
 
 /** The spring presets and press scale every animated component references. */
 export const motionTokens = {
@@ -27,6 +27,41 @@ export function useMotionTransition(
   const reduce = useReducedMotion();
 
   return reduce ? { duration: 0 } : motionTokens.spring[preset];
+}
+
+export type KeyboardPress = {
+  handlers: {
+    onBlurCapture: () => void;
+    onKeyDownCapture: (event: KeyboardEvent<HTMLElement>) => void;
+    onKeyUpCapture: (event: KeyboardEvent<HTMLElement>) => void;
+  };
+  pressed: boolean;
+};
+
+/**
+ * Track Space activation so a keyboard press gets the same feedback as a
+ * pointer press, which Motion's `whileTap` already covers along with Enter.
+ */
+export function useKeyboardPress(): KeyboardPress {
+  const [pressed, setPressed] = useState(false);
+  const handlers = useMemo(
+    () => ({
+      onBlurCapture: () => setPressed(false),
+      onKeyDownCapture: (event: KeyboardEvent<HTMLElement>) => {
+        if (event.key === ' ') {
+          setPressed(true);
+        }
+      },
+      onKeyUpCapture: (event: KeyboardEvent<HTMLElement>) => {
+        if (event.key === ' ') {
+          setPressed(false);
+        }
+      },
+    }),
+    []
+  );
+
+  return { handlers, pressed };
 }
 
 export type ControllableOpenOptions<Details = undefined> = {

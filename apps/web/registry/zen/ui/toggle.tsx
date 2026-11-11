@@ -6,7 +6,11 @@ import { cn } from 'cn';
 import { motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
 
-import { motionTokens, useMotionTransition } from '@/lib/motion';
+import {
+  motionTokens,
+  useKeyboardPress,
+  useMotionTransition,
+} from '@/lib/motion';
 
 export const toggleVariants = cva(
   "relative inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-lg border font-medium text-base text-foreground outline-none transition-[box-shadow,background-color,color] duration-[var(--duration-fast,160ms)] ease-[var(--ease-standard,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] pointer-coarse:after:absolute pointer-coarse:after:size-full pointer-coarse:after:min-h-11 pointer-coarse:after:min-w-11 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-64 data-pressed:bg-input/64 data-pressed:text-accent-foreground motion-reduce:transition-none sm:text-sm [&_svg:not([class*='opacity-'])]:opacity-80 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:-mx-0.5 [&_svg]:shrink-0",
@@ -39,15 +43,27 @@ export function Toggle({
   VariantProps<typeof toggleVariants>): React.ReactElement {
   const reduce = useReducedMotion();
   const transition = useMotionTransition('snappy');
+  const keyboard = useKeyboardPress();
   const hasPopup = Boolean(props['aria-haspopup']);
   const whileTap =
     reduce || hasPopup ? undefined : { scale: motionTokens.pressScale };
+  const animate =
+    reduce || hasPopup
+      ? undefined
+      : { scale: keyboard.pressed ? motionTokens.pressScale : 1 };
 
   return (
     <TogglePrimitive
       className={cn(toggleVariants({ className, size, variant }))}
       data-slot='toggle'
-      render={<motion.button transition={transition} whileTap={whileTap} />}
+      render={
+        <motion.button
+          {...(animate ? { animate, initial: false } : {})}
+          transition={transition}
+          whileTap={whileTap}
+          {...keyboard.handlers}
+        />
+      }
       {...props}
     />
   );

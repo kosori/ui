@@ -589,49 +589,63 @@ const main = async () => {
             .locator(captureSelector(example))
             .getByRole('button', { name: 'Button' });
           await keyboardPage.waitForTimeout(200);
-          const pressWithKeyboard = async () => {
+          const pressWithKeyboard = async (key: string) => {
             await keyboardButton.evaluate((element) =>
               (element as HTMLElement).blur()
             );
             await keyboardButton.focus();
-            await keyboardPage.keyboard.down('Enter');
+            await keyboardPage.keyboard.down(key);
             try {
               return await waitForScale(
                 keyboardButton,
                 (scale) => scale < 0.975,
-                'Keyboard press',
+                `Keyboard press (${key})`,
                 1500
               );
             } finally {
-              await keyboardPage.keyboard.up('Enter');
+              await keyboardPage.keyboard.up(key);
             }
           };
-          let keyboardScale: number;
-          try {
-            keyboardScale = await pressWithKeyboard();
-          } catch {
-            // A cold dev server can hydrate after `load`, so retry the press
-            // once the page has certainly attached its focus listeners.
+          const pressUntilScaled = async (key: string): Promise<number> => {
             try {
-              keyboardScale = await pressWithKeyboard();
-            } catch (error) {
-              const state = await keyboardButton.evaluate((element) => ({
-                active: document.activeElement === element,
-                focused: document.hasFocus(),
-                reduced: matchMedia('(prefers-reduced-motion: reduce)').matches,
-                transform: getComputedStyle(element).transform,
-              }));
-              throw new Error(
-                `Keyboard press never scaled: ${JSON.stringify(state)}`,
-                { cause: error }
-              );
+              return await pressWithKeyboard(key);
+            } catch {
+              // A cold dev server can hydrate after `load`, so retry the press
+              // once the page has certainly attached its focus listeners.
+              try {
+                return await pressWithKeyboard(key);
+              } catch (retryError) {
+                const state = await keyboardButton.evaluate((element) => ({
+                  active: document.activeElement === element,
+                  focused: document.hasFocus(),
+                  reduced: matchMedia('(prefers-reduced-motion: reduce)')
+                    .matches,
+                  transform: getComputedStyle(element).transform,
+                }));
+                throw new Error(
+                  `Keyboard press (${key}) never scaled: ${JSON.stringify(state)}`,
+                  { cause: retryError }
+                );
+              }
             }
+          };
+          const keyboardScales: number[] = [];
+          for (const key of ['Enter', ' ']) {
+            // biome-ignore lint/performance/noAwaitInLoops: presses run one at a time so each sampled scale is attributable
+            keyboardScales.push(await pressUntilScaled(key));
+            await waitForScale(
+              keyboardButton,
+              (scale) => scale > 0.995,
+              `Keyboard release (${key})`
+            );
           }
-          await waitForScale(
-            keyboardButton,
-            (scale) => scale > 0.995,
-            'Keyboard release'
-          );
+          const [keyboardScale, spaceScale] = keyboardScales;
+          if (keyboardScale === undefined || spaceScale === undefined) {
+            throw new Error('Keyboard press did not report a scale');
+          }
+          if (spaceScale > 0.975) {
+            throw new Error(`Space press scale was ${spaceScale}`);
+          }
           await keyboardPage.close();
 
           for (const name of ['Disabled', 'Loading', 'Popup trigger']) {
@@ -676,7 +690,10 @@ const main = async () => {
           );
           await reducedMotion.mouse.up();
           await reducedMotion.context().close();
-          if (reducedTransform !== 1 || reducedInline !== '') {
+          if (
+            reducedTransform !== 1 ||
+            (reducedInline !== '' && reducedInline !== 'none')
+          ) {
             throw new Error(
               `Button moved with reduced motion: transform=${reducedTransform}, inline=${reducedInline}`
             );
