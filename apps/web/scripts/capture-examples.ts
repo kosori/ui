@@ -172,6 +172,7 @@ const MOTION_OVERLAYS = new Set<OverlayExample>([
   'dialog',
   'dropdown-menu',
   'hover-card',
+  'menubar',
   'navigation-menu',
   'popover',
   'select',
