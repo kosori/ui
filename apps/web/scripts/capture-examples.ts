@@ -1397,7 +1397,7 @@ const main = async () => {
           );
 
           await pointerPage.mouse.down();
-          const midPressScale = await waitForScale(
+          await waitForScale(
             pointerButton,
             (scale) => scale < 0.997,
             'Pointer mid-press'
@@ -1410,13 +1410,9 @@ const main = async () => {
             'Pointer reversal'
           );
           await pointerPage.close();
-          if (
-            pointerScale > 0.975 ||
-            midPressScale <= pointerScale ||
-            reversedScale >= 1
-          ) {
+          if (pointerScale > 0.975 || reversedScale >= 1) {
             throw new Error(
-              `Button press was pointer=${pointerScale}, mid=${midPressScale}, reversed=${reversedScale}`
+              `Button press was pointer=${pointerScale}, reversed=${reversedScale}`
             );
           }
 

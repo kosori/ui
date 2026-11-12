@@ -13,7 +13,7 @@ position.
 
 | Surface | Engine | Preset |
 | --- | --- | --- |
-| Button and Toggle press | Motion | `snappy` |
+| Button and Toggle press | Motion | `press` |
 | Switch thumb and Checkbox mark | Motion | `snappy` |
 | Slider thumb | Motion | `responsive` |
 | Accordion and Collapsible height | Motion | `smooth` |
@@ -40,14 +40,17 @@ writes that file, and it is yours to edit.
 
 | Preset | Values | Used for |
 | --- | --- | --- |
-| `snappy` | `visualDuration: 0.26`, `bounce: 0` | Presses, toggles, thumbs, small indicators |
+| `snappy` | `visualDuration: 0.26`, `bounce: 0` | Toggles, thumbs, small indicators |
 | `smooth` | `visualDuration: 0.4`, `bounce: 0` | Panels, height changes, dialogs, sheets |
 | `morph` | `visualDuration: 0.42`, `bounce: 0` | Shared highlights and widths that follow content |
 | `responsive` | `stiffness: 520`, `damping: 44` | Direct manipulation that tracks the pointer |
 | `gentle` | `stiffness: 340`, `damping: 34` | Available for larger layout changes; no zen component selects it yet |
 
-Press feedback animates `scale`: `motionTokens.pressScale` defaults to `0.97`
-and lives beside the presets.
+Press feedback is a scale, not a spring: `motionTokens.pressScale` defaults to
+`0.97`, pressed in 100ms and released in 160ms by `motionTokens.press`. A click
+is shorter than a spring, so the press and its release use short tweens instead
+of the `snappy` preset; a spring there leaves the button still shrinking when
+the click ends.
 
 ```tsx
 import { motion } from 'motion/react';

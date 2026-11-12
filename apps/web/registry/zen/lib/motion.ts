@@ -20,8 +20,12 @@ import {
   useState,
 } from 'react';
 
-/** The spring presets and press scale every animated component references. */
+/** The spring presets and press feedback every animated component references. */
 export const motionTokens = {
+  press: {
+    down: { duration: 0.1, ease: [0.2, 0, 0, 1] as const },
+    up: { duration: 0.16, ease: [0.2, 0, 0, 1] as const },
+  },
   pressScale: 0.97,
   spring: {
     gentle: { damping: 34, stiffness: 340 },
@@ -93,20 +97,25 @@ export type PressFeedback = Pick<
  */
 export function usePressFeedback(hasPopup: boolean): PressFeedback {
   const reduce = useReducedMotion();
-  const transition = useMotionTransition('snappy');
   const keyboard = useKeyboardPress();
   const enabled = !(reduce || hasPopup);
+  const { press } = motionTokens;
 
   return {
     ...(enabled
       ? {
-          animate: { scale: keyboard.pressed ? motionTokens.pressScale : 1 },
+          animate: {
+            scale: keyboard.pressed ? motionTokens.pressScale : 1,
+            transition: keyboard.pressed ? press.down : press.up,
+          },
           initial: false,
         }
       : {}),
     ...keyboard.handlers,
-    transition,
-    whileTap: enabled ? { scale: motionTokens.pressScale } : undefined,
+    transition: press.up,
+    whileTap: enabled
+      ? { scale: motionTokens.pressScale, transition: press.down }
+      : undefined,
   };
 }
 

@@ -51,7 +51,7 @@ test('the Motion page names a shipped preset for every animated surface', async 
   const rows = tableAfter(page, 'What animates').filter(
     ([, engine]) => engine === 'Motion'
   );
-  const presets = new Set(Object.keys(motionTokens.spring));
+  const presets = new Set([...Object.keys(motionTokens.spring), 'press']);
 
   expect(
     rows.map(([surface]) => surface).sort(),
@@ -115,7 +115,10 @@ test('the Motion page lists every preset with the values that ship', async () =>
     }
   }
 
-  expect(page, 'the page documents the press scale').toContain(
+  expect(
+    page.replaceAll(/\s+/g, ' '),
+    'the page documents the press scale'
+  ).toContain(
     `\`motionTokens.pressScale\` defaults to \`${motionTokens.pressScale}\``
   );
 });
