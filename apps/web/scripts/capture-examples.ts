@@ -135,6 +135,12 @@ type OverlayOpenAction = 'click' | 'fill' | 'hover' | 'right-click';
 const isOverlayExample = (example: string): example is OverlayExample =>
   Object.hasOwn(OVERLAY_EXAMPLES, example);
 
+/**
+ * Overlays that animate their popup through Motion instead of a CSS
+ * transition, so the seam asserts an exit that outlives the open state.
+ */
+const MOTION_OVERLAYS = new Set<OverlayExample>(['dialog']);
+
 const openOverlay = async (trigger: Locator, action: OverlayOpenAction) => {
   if (action === 'fill') {
     await trigger.fill('status');
@@ -714,6 +720,7 @@ const main = async () => {
             triggerSlot,
             transitionProperty,
           } = OVERLAY_EXAMPLES[example];
+          const engine = MOTION_OVERLAYS.has(example) ? 'motion' : 'css';
           const trigger = preview
             .locator(`[data-slot="${triggerSlot}"]`)
             .first();
@@ -740,22 +747,38 @@ const main = async () => {
               });
             }
           }
-          const motion = await popup.evaluate((element) => {
-            const style = getComputedStyle(element);
-            return {
-              duration: style.transitionDuration,
-              properties: style.transitionProperty,
-            };
-          });
-          if (
-            !(
-              motion.properties.includes(transitionProperty) &&
-              motion.duration
-                .split(',')
-                .some((value) => Number.parseFloat(value) > 0)
-            )
-          ) {
-            throw new Error(`${example} popup did not animate its open state`);
+          if (engine === 'css') {
+            const motion = await popup.evaluate((element) => {
+              const style = getComputedStyle(element);
+              return {
+                duration: style.transitionDuration,
+                properties: style.transitionProperty,
+              };
+            });
+            if (
+              !(
+                motion.properties.includes(transitionProperty) &&
+                motion.duration
+                  .split(',')
+                  .some((value) => Number.parseFloat(value) > 0)
+              )
+            ) {
+              throw new Error(
+                `${example} popup did not animate its open state`
+              );
+            }
+          } else {
+            await page.waitForFunction(
+              (selector) => {
+                const element = document.querySelector(selector);
+                return (
+                  element !== null &&
+                  Number.parseFloat(getComputedStyle(element).opacity) > 0.99
+                );
+              },
+              `[data-slot="${popupSlot}"]`,
+              { timeout: 5000 }
+            );
           }
 
           const triggerAfterOpen = await trigger.boundingBox();
@@ -785,8 +808,82 @@ const main = async () => {
             );
           }
 
+          if (example === 'dialog') {
+            const popupSelector = `[data-slot="${popupSlot}"]`;
+            await popup.getByRole('button', { name: 'Edit details' }).click();
+            await page.waitForFunction(
+              (selector) => document.querySelectorAll(selector).length === 2,
+              popupSelector,
+              { timeout: 5000 }
+            );
+            const nestedPopup = page.locator(popupSelector).nth(1);
+            await nestedPopup.waitFor({ state: 'visible' });
+            await page.waitForFunction(
+              (selector) => {
+                const [parent] = document.querySelectorAll(selector);
+                return (
+                  parent instanceof HTMLElement &&
+                  Number.parseFloat(getComputedStyle(parent).scale) < 0.95 &&
+                  parent.contains(document.activeElement) === false &&
+                  document
+                    .querySelectorAll(selector)[1]
+                    ?.contains(document.activeElement) === true
+                );
+              },
+              popupSelector,
+              { timeout: 5000 }
+            );
+            await nestedPopup.locator('input').first().fill('Ada Lovelace');
+            if (
+              (await nestedPopup.locator('input').first().inputValue()) !==
+              'Ada Lovelace'
+            ) {
+              throw new Error(`${example} nested popup was not interactive`);
+            }
+            await page.keyboard.press('Escape');
+            await page.waitForFunction(
+              (selector) => document.querySelectorAll(selector).length === 1,
+              popupSelector,
+              { timeout: 5000 }
+            );
+            await page.waitForFunction(
+              (selector) => {
+                const [parent] = document.querySelectorAll(selector);
+                return (
+                  parent instanceof HTMLElement &&
+                  Number.parseFloat(getComputedStyle(parent).scale) > 0.99 &&
+                  Number.parseFloat(getComputedStyle(parent).opacity) > 0.95
+                );
+              },
+              popupSelector,
+              { timeout: 5000 }
+            );
+          }
+
           await page.keyboard.press('Escape');
-          await popup.waitFor({ state: 'hidden' });
+          if (engine === 'motion') {
+            if (
+              (await page.locator(`[data-slot="${popupSlot}"]`).count()) === 0
+            ) {
+              throw new Error(
+                `${example} removed its popup before the exit animation`
+              );
+            }
+            await page.waitForFunction(
+              (selector) => {
+                const element = document.querySelector(selector);
+                return (
+                  element !== null &&
+                  Number.parseFloat(getComputedStyle(element).opacity) < 0.9
+                );
+              },
+              `[data-slot="${popupSlot}"]`,
+              { timeout: 5000 }
+            );
+            await popup.waitFor({ state: 'detached' });
+          } else {
+            await popup.waitFor({ state: 'hidden' });
+          }
           await trigger.waitFor({ state: 'visible' });
           if (
             restoreFocus &&
@@ -843,6 +940,16 @@ const main = async () => {
             .locator(`[data-slot="${popupSlot}"]`)
             .first();
           await reducedPopup.waitFor({ state: 'visible' });
+          if (engine === 'motion' && focusPopup) {
+            await reducedPage.waitForFunction(
+              (selector) =>
+                document
+                  .querySelector(selector)
+                  ?.contains(document.activeElement) ?? false,
+              `[data-slot="${popupSlot}"]`,
+              { timeout: 5000 }
+            );
+          }
           const reducedTransition = await reducedPopup.evaluate((element) => {
             const style = getComputedStyle(element);
             return {
@@ -884,6 +991,65 @@ const main = async () => {
             );
           }
           await reducedPage.close();
+
+          if (example === 'dialog') {
+            const popupSelector = `[data-slot="${popupSlot}"]`;
+            await trigger.click();
+            const interrupted = page.locator(popupSelector).first();
+            await interrupted.waitFor({ state: 'visible' });
+            await interrupted.evaluate((element) => {
+              (element as HTMLElement).dataset.interrupted = 'true';
+            });
+            await page.keyboard.press('Escape');
+            await page.waitForFunction(
+              (selector) => {
+                const elements = [...document.querySelectorAll(selector)];
+                return (
+                  elements.length === 1 &&
+                  elements[0] instanceof HTMLElement &&
+                  elements[0].dataset.interrupted === 'true' &&
+                  !elements[0].hasAttribute('data-open')
+                );
+              },
+              popupSelector,
+              { timeout: 5000 }
+            );
+            // The exiting backdrop covers the trigger, so reopen through the element.
+            await trigger.evaluate((element) => {
+              (element as HTMLElement).click();
+            });
+            await page.waitForFunction(
+              (selector) => {
+                const elements = [...document.querySelectorAll(selector)];
+                return (
+                  elements.length === 1 &&
+                  elements[0] instanceof HTMLElement &&
+                  elements[0].dataset.interrupted === 'true' &&
+                  elements[0].hasAttribute('data-open') &&
+                  Number.parseFloat(getComputedStyle(elements[0]).opacity) >
+                    0.95
+                );
+              },
+              popupSelector,
+              { timeout: 5000 }
+            );
+            const reopened = await page.evaluate(
+              (selector) =>
+                document
+                  .querySelector(selector)
+                  ?.contains(document.activeElement) ?? false,
+              popupSelector
+            );
+            if (!reopened) {
+              throw new Error(`${example} lost focus when reopened mid-flight`);
+            }
+            await page.keyboard.press('Escape');
+            await page.waitForFunction(
+              (selector) => document.querySelector(selector) === null,
+              popupSelector,
+              { timeout: 5000 }
+            );
+          }
         }
 
         const selectionState = (element: Element) =>
