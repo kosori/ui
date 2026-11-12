@@ -4,6 +4,12 @@ import { Combobox as ComboboxPrimitive } from '@base-ui/react/combobox';
 import { IconSelector, IconX } from '@tabler/icons-react';
 import { cn } from 'cn';
 import {
+  AnimatePresence,
+  type HTMLMotionProps,
+  motion,
+  useReducedMotion,
+} from 'motion/react';
+import {
   type Context,
   createContext,
   type ReactElement,
@@ -15,6 +21,7 @@ import {
 } from 'react';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { motionTokens, useControllableOpen } from '@/lib/motion';
 
 /** Return a ref that anchors a combobox popup to an element of the caller's choosing. */
 export function useComboboxAnchor(): RefObject<HTMLDivElement | null> {
@@ -32,16 +39,42 @@ export const ComboboxContext: Context<{
   multiple: false,
 });
 
+const ComboboxOpenContext = createContext<boolean | null>(null);
+
+/** Resolve a Combobox's open state so its popup can exit before unmounting. */
 export function Combobox<
   Value,
   Multiple extends boolean | undefined = false,
   Item = Value,
->(props: ComboboxPrimitive.Root.Props<Value, Multiple, Item>): ReactElement {
+>({
+  children,
+  defaultOpen,
+  onOpenChange,
+  open,
+  ...props
+}: ComboboxPrimitive.Root.Props<Value, Multiple, Item>): ReactElement {
   const chipsRef = useRef<Element | null>(null);
+  const combobox =
+    useControllableOpen<ComboboxPrimitive.Root.OpenChangeEventDetails>({
+      defaultOpen,
+      onOpenChange,
+      open,
+    });
+
   return (
-    <ComboboxContext.Provider value={{ chipsRef, multiple: !!props.multiple }}>
-      <ComboboxPrimitive.Root {...props} />
-    </ComboboxContext.Provider>
+    <ComboboxOpenContext.Provider value={combobox.open}>
+      <ComboboxContext.Provider
+        value={{ chipsRef, multiple: !!props.multiple }}
+      >
+        <ComboboxPrimitive.Root
+          onOpenChange={combobox.setOpen}
+          open={combobox.open}
+          {...props}
+        >
+          {children}
+        </ComboboxPrimitive.Root>
+      </ComboboxContext.Provider>
+    </ComboboxOpenContext.Provider>
   );
 }
 
@@ -181,6 +214,7 @@ export function ComboboxPopup({
   align = 'start',
   anchor: anchorProp,
   portalProps,
+  render,
   ...props
 }: ComboboxPrimitive.Popup.Props & {
   align?: ComboboxPrimitive.Positioner.Props['align'];
@@ -191,10 +225,14 @@ export function ComboboxPopup({
   portalProps?: ComboboxPrimitive.Portal.Props;
 }): ReactElement {
   const { chipsRef } = useContext(ComboboxContext);
+  const open = useContext(ComboboxOpenContext);
+  const reduce = useReducedMotion();
+  const transition = motionTokens.spring.snappy;
+  const scale = reduce ? 1 : 0.98;
   const anchor = anchorProp ?? chipsRef;
 
-  return (
-    <ComboboxPrimitive.Portal {...portalProps}>
+  const popup = (
+    <ComboboxPrimitive.Portal keepMounted={open !== null} {...portalProps}>
       <ComboboxPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -204,15 +242,29 @@ export function ComboboxPopup({
         side={side}
         sideOffset={sideOffset}
       >
-        <span
-          className={cn(
-            'motion-reduce:!transition-opacity relative flex max-h-full min-w-(--anchor-width) max-w-(--available-width) origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding shadow-lg/5 transition-[scale,opacity] duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] has-data-[ending-style]:opacity-0 has-data-[starting-style]:opacity-0 motion-safe:has-data-[ending-style]:scale-98 motion-safe:has-data-[starting-style]:scale-98 motion-reduce:scale-100 dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
-            className
-          )}
-        >
+        <span className='relative flex max-h-full min-w-(--anchor-width) max-w-(--available-width)'>
           <ComboboxPrimitive.Popup
-            className='motion-reduce:!transition-opacity flex max-h-[min(var(--available-height),23rem)] flex-1 flex-col text-foreground transition-opacity duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] data-ending-style:opacity-0 data-starting-style:opacity-0'
+            className={cn(
+              'relative flex max-h-[min(var(--available-height),23rem)] flex-1 origin-(--transform-origin) flex-col rounded-lg border bg-popover not-dark:bg-clip-padding text-foreground shadow-lg/5 before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
+              className
+            )}
             data-slot='combobox-popup'
+            render={
+              render ??
+              ((elementProps, state) => (
+                <motion.div
+                  {...(elementProps as HTMLMotionProps<'div'>)}
+                  animate={{
+                    opacity: state.open ? 1 : 0,
+                    scale: 1,
+                  }}
+                  exit={{ opacity: 0, scale }}
+                  initial={{ opacity: 0, scale }}
+                  layout={reduce ? false : 'size'}
+                  transition={transition}
+                />
+              ))
+            }
             {...props}
           >
             {children}
@@ -221,6 +273,12 @@ export function ComboboxPopup({
       </ComboboxPrimitive.Positioner>
     </ComboboxPrimitive.Portal>
   );
+
+  if (open === null) {
+    return popup;
+  }
+
+  return <AnimatePresence>{open && popup}</AnimatePresence>;
 }
 
 export function ComboboxItem({

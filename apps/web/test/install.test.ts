@@ -1311,6 +1311,9 @@ test('the motion library owns the motion package and only its importers depend o
   });
 
   for (const name of [
+    'autocomplete',
+    'combobox',
+    'navigation-menu',
     'popover',
     'dropdown-menu',
     'context-menu',
@@ -1339,6 +1342,10 @@ test('the motion library owns the motion package and only its importers depend o
       ),
       `${name} still carries a motion Token`
     ).toEqual([]);
+    expect(
+      entry?.item.registryDependencies,
+      `${name} installs the motion library`
+    ).toContain('@kosori/motion');
   }
 
   for (const name of ['popover', 'dropdown-menu', 'context-menu'] as const) {
@@ -1603,16 +1610,16 @@ test('installing state-coloured items without the preset compiles their utilitie
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       autocomplete: {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       button: {
         'duration-fast': '160ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       combobox: {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       dialog: {
         'duration-fast': '160ms',
@@ -1631,8 +1638,8 @@ test('installing state-coloured items without the preset compiles their utilitie
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       'navigation-menu': {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       progress: {
         'duration-fast': '160ms',
