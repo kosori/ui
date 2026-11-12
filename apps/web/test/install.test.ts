@@ -1472,15 +1472,15 @@ test('installing state-coloured items without the preset compiles their utilitie
         'duration-standard': '240ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
+      switch: {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
       toast: {
         'duration-considered': '480ms',
         'duration-fast': '160ms',
         'duration-standard': '240ms',
         'ease-enter': 'cubic-bezier(0.2, 0, 0, 1)',
-        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
-      },
-      switch: {
-        'duration-fast': '160ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       toggle: {
@@ -1593,12 +1593,10 @@ test('installing state-coloured items without the preset compiles their utilitie
     expect(motionTokens, 'the installed overlay easing Token').toContain(
       '--motion-overlay-easing: cubic-bezier(0.2, 0, 0, 1)'
     );
-    expect(motionTokens, 'the installed control state duration Token').toContain(
-      '--motion-state-duration: 120ms'
-    );
-    expect(motionTokens, 'the installed control state easing Token').toContain(
-      '--motion-state-easing: cubic-bezier(0.2, 0, 0, 1)'
-    );
+    expect(
+      motionTokens,
+      'the installed stylesheet declares no control state Token'
+    ).not.toContain('--motion-state-');
     const theme = declarations(css, '@theme inline');
     for (const [token, value] of Object.entries(STATE_TOKENS.light)) {
       expect(declarations(css, ':root'), `partial light ${token}`).toContain(
