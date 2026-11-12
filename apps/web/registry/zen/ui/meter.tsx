@@ -59,7 +59,7 @@ export function MeterIndicator({
   return (
     <MeterPrimitive.Indicator
       className={cn(
-        'bg-primary motion-safe:transition-[width] motion-safe:duration-[var(--motion-state-duration,120ms)] motion-safe:ease-[var(--motion-state-easing,cubic-bezier(0.2,0,0,1))] motion-reduce:transition-none',
+        'bg-primary motion-safe:transition-[width] motion-safe:duration-[var(--duration-fast,160ms)] motion-safe:ease-[var(--ease-standard,cubic-bezier(0.2,0,0,1))] motion-reduce:transition-none',
         className
       )}
       data-slot='meter-indicator'

@@ -69,10 +69,11 @@ everything else.
 | --- | --- | --- |
 | `--ease-standard` | `cubic-bezier(0.2, 0, 0, 1)` | Default for UI transitions |
 | `--ease-enter` | `cubic-bezier(0.2, 0, 0, 1)` | Elements arriving on screen |
-| `--ease-spring` | `cubic-bezier(0.32, 0.72, 0, 1)` | A gentle settle, paired with `--duration-spring` |
+| `--ease-spring` | `cubic-bezier(0.32, 0.72, 0, 1)` | A gentle settle, paired with `--duration-drawer` |
 | `--duration-fast` | `160ms` | Hover, colour and small state changes |
-| `--duration-standard` | `240ms` | Panels and menus |
-| `--duration-considered` | `480ms` | Rare, introductory reveals |
+| `--duration-standard` | `240ms` | Panels, menus and the Sidebar collapse |
+| `--duration-considered` | `480ms` | Toast stacking and other deliberate reveals |
+| `--duration-drawer` | `450ms` | The Drawer's swipe settle, off the shared scale |
 
 A timing value belongs to one engine. Springs are never mirrored as CSS
 variables, and easing is never duplicated in `lib/motion.ts`.
