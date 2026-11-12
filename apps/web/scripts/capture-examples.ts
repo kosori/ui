@@ -244,7 +244,7 @@ const readPopupExit = async (page: Page) =>
   });
 
 /** Motion overlays that keep their popup mounted while it is hidden. */
-const isCheapOverlay = (example: OverlayExample) =>
+const isKeptMountedOverlay = (example: OverlayExample) =>
   example === 'hover-card' || example === 'tooltip';
 
 /**
@@ -1508,7 +1508,7 @@ const main = async () => {
           } = OVERLAY_EXAMPLES[example] as OverlayExampleConfig;
           const popupSelector = `[data-slot="${popupSlot}"]`;
           const engine = MOTION_OVERLAYS.has(example) ? 'motion' : 'css';
-          const cheapOverlay = isCheapOverlay(example);
+          const keptMountedOverlay = isKeptMountedOverlay(example);
           const trigger = preview
             .locator(`[data-slot="${triggerSlot}"]`)
             .first();
@@ -1528,12 +1528,12 @@ const main = async () => {
 
           await page.waitForTimeout(500);
           const popup = page.locator(popupSelector).first();
-          const entranceSamples: number[] = cheapOverlay
+          const entranceSamples: number[] = keptMountedOverlay
             ? await sampleOpacityWhile(popup, () =>
                 openOverlayWhenReady(page, trigger, popup, openAction)
               )
             : [];
-          if (!cheapOverlay) {
+          if (!keptMountedOverlay) {
             await openOverlayWhenReady(page, trigger, popup, openAction);
           }
           let commandSize: { height: number; width: number } | undefined;
@@ -1599,7 +1599,7 @@ const main = async () => {
               { timeout: 5000 }
             );
 
-            if (cheapOverlay) {
+            if (keptMountedOverlay) {
               if (!positionerSlot) {
                 throw new Error(`${example} has no positioner slot`);
               }
@@ -1767,7 +1767,7 @@ const main = async () => {
             }
           }
 
-          if (cheapOverlay) {
+          if (keptMountedOverlay) {
             await page.mouse.move(0, 0);
             await page.keyboard.press('Escape');
             await page.waitForTimeout(40);
@@ -1955,7 +1955,7 @@ const main = async () => {
             }
           }
           if (engine === 'motion') {
-            if (cheapOverlay) {
+            if (keptMountedOverlay) {
               await popup.waitFor({ state: 'hidden' });
               await waitForOpacity(
                 page,
@@ -2033,7 +2033,7 @@ const main = async () => {
             await popup.waitFor({ state: 'hidden' });
           }
 
-          if (cheapOverlay) {
+          if (keptMountedOverlay) {
             await waitForOpacity(
               page,
               popupSelector,
@@ -2156,7 +2156,7 @@ const main = async () => {
             );
           }
 
-          if (cheapOverlay) {
+          if (keptMountedOverlay) {
             await waitForOpacity(
               reducedPage,
               popupSelector,
