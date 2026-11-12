@@ -12,7 +12,7 @@ import {
 } from 'motion/react';
 import type * as React from 'react';
 import { createContext, useCallback, useContext, useState } from 'react';
-import { useControllableOpen, useMotionTransition } from '@/lib/motion';
+import { motionTokens, useControllableOpen } from '@/lib/motion';
 
 const NavigationMenuOpenContext = createContext<boolean | null>(null);
 
@@ -148,7 +148,7 @@ export function NavigationMenuPositioner({
 }: NavigationMenuPrimitive.Positioner.Props): React.ReactElement {
   const open = useContext(NavigationMenuOpenContext);
   const reduce = useReducedMotion();
-  const transition = useMotionTransition('snappy');
+  const transition = motionTokens.spring.snappy;
   const scale = reduce ? 1 : 0.98;
 
   return (
@@ -165,7 +165,7 @@ export function NavigationMenuPositioner({
         {...props}
       >
         <NavigationMenuPrimitive.Popup
-          className='relative flex h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding text-popover-foreground shadow-lg/5 outline-none transition-opacity duration-[var(--duration-fast,160ms)] ease-[var(--ease-standard,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] data-ending-style:opacity-0 data-starting-style:opacity-0 dark:before:shadow-[0_-1px_--theme(--color-white/6%)]'
+          className='relative flex h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding text-popover-foreground shadow-lg/5 outline-none before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]'
           data-slot='navigation-menu-popup'
           render={
             open === null

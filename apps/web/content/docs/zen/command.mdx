@@ -5,7 +5,9 @@ description: A keyboard-driven palette for searching and running actions.
 
 Command composes Base UI's Autocomplete and Dialog primitives, so filtering,
 keyboard navigation and grouping share one model. Every part carries a
-`data-slot` for styling.
+`data-slot` for styling. Its dialog popup animates with
+[Motion](/docs/zen/motion): the popup stays mounted until its exit ends, and the
+searchable list stays interactive while it enters and leaves.
 
 ## Installation
 

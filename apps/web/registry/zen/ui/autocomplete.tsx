@@ -13,7 +13,7 @@ import type React from 'react';
 import { createContext, type ReactElement, useContext } from 'react';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useControllableOpen, useMotionTransition } from '@/lib/motion';
+import { motionTokens, useControllableOpen } from '@/lib/motion';
 
 const AutocompleteOpenContext = createContext<boolean | null>(null);
 
@@ -162,7 +162,7 @@ export function AutocompletePopup({
 }): React.ReactElement {
   const open = useContext(AutocompleteOpenContext);
   const reduce = useReducedMotion();
-  const transition = useMotionTransition('snappy');
+  const transition = motionTokens.spring.snappy;
   const scale = reduce ? 1 : 0.98;
 
   const popup = (
@@ -179,7 +179,7 @@ export function AutocompletePopup({
         <span className='relative flex max-h-full min-w-(--anchor-width) max-w-(--available-width)'>
           <AutocompletePrimitive.Popup
             className={cn(
-              'relative flex max-h-[min(var(--available-height),23rem)] flex-1 origin-(--transform-origin) flex-col rounded-lg border bg-popover not-dark:bg-clip-padding text-foreground shadow-lg/5 transition-opacity duration-[var(--duration-fast,160ms)] ease-[var(--ease-standard,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] data-ending-style:opacity-0 data-starting-style:opacity-0 dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
+              'relative flex max-h-[min(var(--available-height),23rem)] flex-1 origin-(--transform-origin) flex-col rounded-lg border bg-popover not-dark:bg-clip-padding text-foreground shadow-lg/5 before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
               className
             )}
             data-slot='autocomplete-popup'
@@ -194,7 +194,7 @@ export function AutocompletePopup({
                   }}
                   exit={{ opacity: 0, scale }}
                   initial={{ opacity: 0, scale }}
-                  layout='size'
+                  layout={reduce ? false : 'size'}
                   transition={transition}
                 />
               ))
