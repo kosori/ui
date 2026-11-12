@@ -940,6 +940,16 @@ const main = async () => {
             .locator(`[data-slot="${popupSlot}"]`)
             .first();
           await reducedPopup.waitFor({ state: 'visible' });
+          if (engine === 'motion' && focusPopup) {
+            await reducedPage.waitForFunction(
+              (selector) =>
+                document
+                  .querySelector(selector)
+                  ?.contains(document.activeElement) ?? false,
+              `[data-slot="${popupSlot}"]`,
+              { timeout: 5000 }
+            );
+          }
           const reducedTransition = await reducedPopup.evaluate((element) => {
             const style = getComputedStyle(element);
             return {

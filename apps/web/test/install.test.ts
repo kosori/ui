@@ -1226,7 +1226,7 @@ test('the motion library owns the motion package and only its importers depend o
   );
   expect(
     dialog?.source,
-    'the Dialog kept a motion Token after moving to Motion'
+    'the Dialog still carries a motion Token'
   ).not.toContain('motion-overlay');
   expect(dialog?.item.cssVars?.light).toMatchObject({
     'duration-fast': '160ms',

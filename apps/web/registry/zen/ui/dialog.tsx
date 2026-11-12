@@ -22,7 +22,7 @@ const DialogOpenContext = createContext<boolean | null>(null);
 export const DialogCreateHandle: typeof DialogPrimitive.createHandle =
   DialogPrimitive.createHandle;
 
-/** Resolve a Dialog's open state so its popup can finish exiting before it unmounts. */
+/** Resolve a Dialog's open state so its popup can exit before unmounting. */
 export function Dialog<Payload = unknown>({
   children,
   defaultOpen,
