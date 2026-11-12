@@ -1454,6 +1454,61 @@ test('the CSS-kept items read the shared timing Tokens', async () => {
   }
 });
 
+test('the stateful controls own their state motion through the library', async () => {
+  const items = await readCatalog('zen');
+  const sources = new Map(
+    await Promise.all(
+      items.map(async (item) => [
+        item.name,
+        (
+          await Promise.all(
+            item.files.map((file) => readFile(join(webDir, file.path), 'utf8'))
+          )
+        ).join('\n'),
+      ])
+    )
+  );
+
+  for (const name of ['checkbox', 'slider', 'switch']) {
+    const item = items.find((registryItem) => registryItem.name === name);
+    const source = sources.get(name) ?? '';
+
+    expect(source, `${name} imports the motion library`).toMatch(
+      /from ['"]@\/lib\/motion['"]/
+    );
+    expect(
+      item?.registryDependencies ?? [],
+      `${name} depends on the motion library`
+    ).toContain('@kosori/motion');
+    expect(
+      item?.dependencies ?? [],
+      `${name} does not declare the motion package`
+    ).not.toContain('motion');
+    expect(
+      JSON.stringify(item?.cssVars ?? {}),
+      `${name} declares no motion Tokens`
+    ).not.toContain('motion-');
+    if (name === 'switch') {
+      expect(item?.cssVars?.light, 'switch light Tokens').toMatchObject({
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      });
+      expect(item?.cssVars?.dark, 'switch dark Tokens').toMatchObject({
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      });
+    } else {
+      expect(item?.cssVars, `${name} declares no Tokens`).toBeUndefined();
+    }
+    expect(source, `${name} keeps no CSS travel`).not.toMatch(
+      /transition[^\s'"]*translate|translate-x-|\[transition:translate/
+    );
+    expect(source, `${name} keeps no CSS state scale`).not.toMatch(
+      /data-(?:checked|dragging):scale-|scale-90/
+    );
+  }
+});
+
 // biome-ignore format: the shared timeout keeps this declaration on one line
 test('installing state-coloured items without the preset compiles their utilities', async () => {
   const build = await buildRegistry('zen');
@@ -1516,6 +1571,10 @@ test('installing state-coloured items without the preset compiles their utilitie
       },
       sidebar: {
         'duration-standard': '240ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+      switch: {
+        'duration-fast': '160ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       toast: {
@@ -1635,12 +1694,10 @@ test('installing state-coloured items without the preset compiles their utilitie
     expect(motionTokens, 'the installed overlay easing Token').toContain(
       '--motion-overlay-easing: cubic-bezier(0.2, 0, 0, 1)'
     );
-    expect(motionTokens, 'the installed control state duration Token').toContain(
-      '--motion-state-duration: 120ms'
-    );
-    expect(motionTokens, 'the installed control state easing Token').toContain(
-      '--motion-state-easing: cubic-bezier(0.2, 0, 0, 1)'
-    );
+    expect(
+      motionTokens,
+      'the installed stylesheet declares no control state Token'
+    ).not.toContain('--motion-state-');
     const theme = declarations(css, '@theme inline');
     for (const [token, value] of Object.entries(STATE_TOKENS.light)) {
       expect(declarations(css, ':root'), `partial light ${token}`).toContain(
