@@ -136,6 +136,7 @@ export function MotionPanel({
   const open = props['data-open'] !== undefined;
   const [settledOpen, setSettledOpen] = useState(open);
   const clipped = !(open && (reduce || settledOpen));
+  const handleAnimationStart = useCallback(() => setSettledOpen(false), []);
   const handleAnimationComplete = useCallback(
     () => setSettledOpen(open),
     [open]
@@ -149,6 +150,7 @@ export function MotionPanel({
     inert: open ? undefined : true,
     initial: false,
     onAnimationComplete: handleAnimationComplete,
+    onAnimationStart: handleAnimationStart,
     transition,
   });
 }
