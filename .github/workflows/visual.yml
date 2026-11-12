@@ -44,4 +44,5 @@ jobs:
         with:
           name: visual-proof
           path: apps/web/.visual-proof
+          include-hidden-files: true
           if-no-files-found: warn

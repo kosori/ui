@@ -523,39 +523,51 @@ const expectSameBounds = (
 
 /**
  * Sample an element's visual box every frame for a short window, so a size
- * change can be told apart from an abrupt jump.
+ * change can be told apart from an abrupt jump. The layout width is sampled
+ * beside the painted one because a scale animation shrinks the painted box
+ * without changing the width the popup actually occupies.
  */
 const sampleBoxes = (
   page: Page,
   selector: string,
   durationMs = 400
-): Promise<{ height: number; width: number }[]> =>
+): Promise<{ height: number; layoutWidth: number; width: number }[]> =>
   page.evaluate(
     ({ selector: target, duration }) =>
-      new Promise<{ height: number; width: number }[]>((resolve) => {
-        const element = document.querySelector(target);
+      new Promise<{ height: number; layoutWidth: number; width: number }[]>(
+        (resolve) => {
+          const element = document.querySelector(target);
 
-        if (!element) {
-          resolve([]);
-          return;
-        }
-
-        const samples: { height: number; width: number }[] = [];
-        const start = performance.now();
-
-        const tick = () => {
-          const box = element.getBoundingClientRect();
-          samples.push({ height: box.height, width: box.width });
-
-          if (performance.now() - start < duration) {
-            requestAnimationFrame(tick);
-          } else {
-            resolve(samples);
+          if (!element) {
+            resolve([]);
+            return;
           }
-        };
 
-        requestAnimationFrame(tick);
-      }),
+          const samples: {
+            height: number;
+            layoutWidth: number;
+            width: number;
+          }[] = [];
+          const start = performance.now();
+
+          const tick = () => {
+            const box = element.getBoundingClientRect();
+            samples.push({
+              height: box.height,
+              layoutWidth: (element as HTMLElement).offsetWidth,
+              width: box.width,
+            });
+
+            if (performance.now() - start < duration) {
+              requestAnimationFrame(tick);
+            } else {
+              resolve(samples);
+            }
+          };
+
+          requestAnimationFrame(tick);
+        }
+      ),
     { duration: durationMs, selector }
   );
 
@@ -1097,7 +1109,37 @@ const main = async () => {
               left = await indicator.evaluate(leftOf);
             }
             await page.waitForTimeout(80);
-            expectSameBounds(await boundsOf(indicator), expected, label);
+            const alignment = await page.evaluate(() => {
+              const indicator = document.querySelector(
+                '[data-slot="tab-indicator"]'
+              );
+              const tab = document.querySelector(
+                '[data-slot="tabs-tab"][aria-selected="true"]'
+              );
+              if (!(indicator && tab)) {
+                return null;
+              }
+
+              const indicatorRect = indicator.getBoundingClientRect();
+              const tabRect = tab.getBoundingClientRect();
+
+              return {
+                height: indicatorRect.height - tabRect.height,
+                left: indicatorRect.left - tabRect.left,
+                top: indicatorRect.top - tabRect.top,
+                width: indicatorRect.width - tabRect.width,
+              };
+            });
+            if (!alignment) {
+              throw new Error(`${label} lost its highlight or selected tab`);
+            }
+            for (const key of ['height', 'left', 'top', 'width'] as const) {
+              if (Math.abs(alignment[key]) > 1.5) {
+                throw new Error(
+                  `${label} sits ${key}+=${alignment[key]} relative to its tab`
+                );
+              }
+            }
           };
           const expectTravel = async (
             from: number,
@@ -2284,7 +2326,9 @@ const main = async () => {
                 `${example} resized abruptly when the list filtered`
               );
             }
-            if (samples.some((sample) => sample.width < measuredWidth - 1)) {
+            if (
+              samples.some((sample) => sample.layoutWidth < measuredWidth - 1)
+            ) {
               throw new Error(
                 `${example} lost its measured width while filtering`
               );
