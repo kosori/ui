@@ -2,7 +2,10 @@
 
 import { Tooltip as TooltipPrimitive } from '@base-ui/react/tooltip';
 import { cn } from 'cn';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
+
+import { useMotionTransition } from '@/lib/motion';
 
 export const TooltipCreateHandle: typeof TooltipPrimitive.createHandle =
   TooltipPrimitive.createHandle;
@@ -34,8 +37,11 @@ export function TooltipPopup({
   anchor?: TooltipPrimitive.Positioner.Props['anchor'];
   portalProps?: TooltipPrimitive.Portal.Props;
 }): React.ReactElement {
+  const reduce = useReducedMotion();
+  const transition = useMotionTransition('snappy');
+
   return (
-    <TooltipPrimitive.Portal {...portalProps}>
+    <TooltipPrimitive.Portal {...portalProps} keepMounted>
       <TooltipPrimitive.Positioner
         align={align}
         anchor={anchor}
@@ -46,10 +52,25 @@ export function TooltipPopup({
       >
         <TooltipPrimitive.Popup
           className={cn(
-            'motion-reduce:!transition-opacity relative flex h-(--popup-height,auto) w-(--popup-width,auto) origin-(--transform-origin) text-balance rounded-md border bg-popover not-dark:bg-clip-padding text-popover-foreground text-xs shadow-md/5 transition-[width,height,scale,opacity] duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-md)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] data-ending-style:opacity-0 data-starting-style:opacity-0 data-instant:duration-0 motion-safe:data-ending-style:scale-98 motion-safe:data-starting-style:scale-98 motion-reduce:scale-100 dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
+            'relative flex h-(--popup-height,auto) w-(--popup-width,auto) origin-(--transform-origin) text-balance rounded-md border bg-popover not-dark:bg-clip-padding text-popover-foreground text-xs shadow-md/5 before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-md)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] motion-reduce:transition-opacity motion-reduce:duration-[var(--duration-fast,160ms)] motion-reduce:ease-[var(--ease-standard,cubic-bezier(0.2,0,0,1))] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
             className
           )}
           data-slot='tooltip-popup'
+          // biome-ignore lint/performance/noJsxPropsBind: Base UI's render prop receives the popup state
+          render={(
+            elementProps: React.ComponentProps<'div'>,
+            state: TooltipPrimitive.Popup.State
+          ) => (
+            <motion.div
+              {...(elementProps as HTMLMotionProps<'div'>)}
+              animate={{
+                opacity: state.open ? 1 : 0,
+                scale: state.open || reduce ? 1 : 0.98,
+              }}
+              initial={false}
+              transition={state.instant ? { duration: 0 } : transition}
+            />
+          )}
           {...props}
         >
           <TooltipPrimitive.Viewport
