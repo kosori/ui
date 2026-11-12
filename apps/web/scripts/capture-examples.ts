@@ -180,7 +180,7 @@ const MOTION_OVERLAYS = new Set<OverlayExample>([
   'tooltip',
 ]);
 
-type PopupExitProof = { ending: boolean; faded: boolean };
+type PopupExitProof = { durations: number[]; ending: boolean; faded: boolean };
 
 /**
  * Record a popup's closing state before it leaves the DOM, so an exit that
@@ -188,7 +188,7 @@ type PopupExitProof = { ending: boolean; faded: boolean };
  */
 const watchPopupExit = async (page: Page, selector: string) => {
   await page.evaluate((popupSelector: string) => {
-    const proof = { ending: false, faded: false };
+    const proof = { durations: [] as number[], ending: false, faded: false };
     (window as unknown as { popupExitProof: PopupExitProof }).popupExitProof =
       proof;
 
@@ -202,6 +202,9 @@ const watchPopupExit = async (page: Page, selector: string) => {
         element.hasAttribute('data-closed')
       ) {
         proof.ending = true;
+        proof.durations = getComputedStyle(element)
+          .transitionDuration.split(',')
+          .map((value) => Number.parseFloat(value));
       }
 
       const opacity = Number.parseFloat(element.style.opacity);
@@ -2020,26 +2023,20 @@ const main = async () => {
           await watchPopupExit(page, `[data-slot="${popupSlot}"]`);
           await page.keyboard.press('Escape');
           if (example === 'drawer') {
-            await page.waitForFunction(
-              (selector) =>
-                document
-                  .querySelector(selector)
-                  ?.hasAttribute('data-ending-style') ?? false,
-              popupSelector,
-              { timeout: 5000 }
+            await popup.waitFor({ state: 'hidden', timeout: 5000 });
+            const reduced = await page.evaluate(
+              () => matchMedia('(prefers-reduced-motion: reduce)').matches
             );
-            const exitDuration = await popup.evaluate(
-              (element) => getComputedStyle(element).transitionDuration
-            );
-            const durations = exitDuration
-              .split(',')
-              .map((value) => Number.parseFloat(value));
+            const exit = await readPopupExit(page);
+            const durations = exit?.durations ?? [];
             if (
-              !durations.includes(0.24) ||
-              durations.some((value) => value > 0.25)
+              !reduced &&
+              (durations.length === 0 ||
+                !durations.includes(0.24) ||
+                durations.some((value) => value > 0.25))
             ) {
               throw new Error(
-                `drawer closed over ${exitDuration} instead of the standard duration`
+                `drawer exited over ${durations.join('s,') || 'no recorded'}s instead of the standard 240ms`
               );
             }
           }
