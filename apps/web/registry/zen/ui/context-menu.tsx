@@ -3,10 +3,45 @@
 import { ContextMenu as ContextMenuPrimitive } from '@base-ui/react/context-menu';
 import { IconChevronRight } from '@tabler/icons-react';
 import { cn } from 'cn';
+import {
+  AnimatePresence,
+  type HTMLMotionProps,
+  motion,
+  useReducedMotion,
+} from 'motion/react';
 import type * as React from 'react';
+import { createContext, useContext } from 'react';
+import { motionTokens, useControllableOpen } from '@/lib/motion';
 
-export const ContextMenu: typeof ContextMenuPrimitive.Root =
-  ContextMenuPrimitive.Root;
+const ContextMenuOpenContext = createContext<boolean | null>(null);
+
+/** Resolve a Context Menu's open state so its popup exits before unmounting. */
+export function ContextMenu({
+  children,
+  defaultOpen,
+  onOpenChange,
+  open,
+  ...props
+}: ContextMenuPrimitive.Root.Props): React.ReactElement {
+  const menu =
+    useControllableOpen<ContextMenuPrimitive.Root.ChangeEventDetails>({
+      defaultOpen,
+      onOpenChange,
+      open,
+    });
+
+  return (
+    <ContextMenuOpenContext.Provider value={menu.open}>
+      <ContextMenuPrimitive.Root
+        onOpenChange={menu.setOpen}
+        open={menu.open}
+        {...props}
+      >
+        {children}
+      </ContextMenuPrimitive.Root>
+    </ContextMenuOpenContext.Provider>
+  );
+}
 
 export const ContextMenuPortal: typeof ContextMenuPrimitive.Portal =
   ContextMenuPrimitive.Portal;
@@ -36,6 +71,7 @@ export function ContextMenuPopup({
   side = 'bottom',
   anchor,
   portalProps,
+  render,
   ...props
 }: ContextMenuPrimitive.Popup.Props & {
   align?: ContextMenuPrimitive.Positioner.Props['align'];
@@ -45,8 +81,13 @@ export function ContextMenuPopup({
   anchor?: ContextMenuPrimitive.Positioner.Props['anchor'];
   portalProps?: ContextMenuPrimitive.Portal.Props;
 }): React.ReactElement {
-  return (
-    <ContextMenuPortal {...portalProps}>
+  const open = useContext(ContextMenuOpenContext);
+  const reduce = useReducedMotion();
+  const transition = motionTokens.spring.snappy;
+  const scale = reduce ? 1 : 0.98;
+
+  const popup = (
+    <ContextMenuPortal keepMounted={open !== null} {...portalProps}>
       <ContextMenuPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -58,10 +99,22 @@ export function ContextMenuPopup({
       >
         <ContextMenuPrimitive.Popup
           className={cn(
-            "motion-reduce:!transition-opacity relative flex not-[class*='w-']:min-w-32 origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding shadow-lg/5 outline-none transition-[scale,opacity] duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] focus:outline-none data-ending-style:opacity-0 data-starting-style:opacity-0 motion-safe:data-ending-style:scale-98 motion-safe:data-starting-style:scale-98 motion-reduce:scale-100 dark:before:shadow-[0_-1px_--theme(--color-white/6%)]",
+            "relative flex not-[class*='w-']:min-w-32 origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding shadow-lg/5 outline-none before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] focus:outline-none dark:before:shadow-[0_-1px_--theme(--color-white/6%)]",
             className
           )}
           data-slot='context-menu-popup'
+          render={
+            render ??
+            ((elementProps, state) => (
+              <motion.div
+                {...(elementProps as HTMLMotionProps<'div'>)}
+                animate={{ opacity: state.open ? 1 : 0, scale: 1 }}
+                exit={{ opacity: 0, scale }}
+                initial={{ opacity: 0, scale }}
+                transition={transition}
+              />
+            ))
+          }
           {...props}
         >
           <div className='max-h-(--available-height) w-full overflow-y-auto p-1'>
@@ -71,6 +124,12 @@ export function ContextMenuPopup({
       </ContextMenuPrimitive.Positioner>
     </ContextMenuPortal>
   );
+
+  if (open === null) {
+    return popup;
+  }
+
+  return <AnimatePresence>{open && popup}</AnimatePresence>;
 }
 
 export function ContextMenuGroup(
