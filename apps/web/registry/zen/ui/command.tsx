@@ -3,7 +3,14 @@
 import { Dialog as CommandDialogPrimitive } from '@base-ui/react/dialog';
 import { IconSearch } from '@tabler/icons-react';
 import { cn } from 'cn';
+import {
+  AnimatePresence,
+  type HTMLMotionProps,
+  motion,
+  useReducedMotion,
+} from 'motion/react';
 import type * as React from 'react';
+import { createContext, useContext } from 'react';
 import {
   Autocomplete,
   AutocompleteCollection,
@@ -15,9 +22,37 @@ import {
   AutocompleteList,
   AutocompleteSeparator,
 } from '@/components/ui/autocomplete';
+import { motionTokens, useControllableOpen } from '@/lib/motion';
 
-export const CommandDialog: typeof CommandDialogPrimitive.Root =
-  CommandDialogPrimitive.Root;
+const CommandDialogOpenContext = createContext<boolean | null>(null);
+
+/** Resolve a Command's open state so its popup can exit before unmounting. */
+export function CommandDialog<Payload = unknown>({
+  children,
+  defaultOpen,
+  onOpenChange,
+  open,
+  ...props
+}: CommandDialogPrimitive.Root.Props<Payload>): React.ReactElement {
+  const commandDialog =
+    useControllableOpen<CommandDialogPrimitive.Root.ChangeEventDetails>({
+      defaultOpen,
+      onOpenChange,
+      open,
+    });
+
+  return (
+    <CommandDialogOpenContext.Provider value={commandDialog.open}>
+      <CommandDialogPrimitive.Root
+        onOpenChange={commandDialog.setOpen}
+        open={commandDialog.open}
+        {...props}
+      >
+        {children}
+      </CommandDialogPrimitive.Root>
+    </CommandDialogOpenContext.Provider>
+  );
+}
 
 export const CommandDialogPortal: typeof CommandDialogPrimitive.Portal =
   CommandDialogPrimitive.Portal;
@@ -38,15 +73,28 @@ export function CommandDialogTrigger(
 
 export function CommandDialogBackdrop({
   className,
+  render,
   ...props
 }: CommandDialogPrimitive.Backdrop.Props): React.ReactElement {
+  const transition = motionTokens.spring.snappy;
+
   return (
     <CommandDialogPrimitive.Backdrop
       className={cn(
-        'fixed inset-0 z-50 bg-black/32 backdrop-blur-sm transition-all duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0 supports-[-webkit-touch-callout:none]:absolute',
+        'fixed inset-0 z-50 bg-black/32 backdrop-blur-sm supports-[-webkit-touch-callout:none]:absolute',
         className
       )}
       data-slot='command-dialog-backdrop'
+      render={
+        render ?? (
+          <motion.div
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
+            transition={transition}
+          />
+        )
+      }
       {...props}
     />
   );
@@ -72,20 +120,41 @@ export function CommandDialogPopup({
   className,
   children,
   portalProps,
+  render,
   ...props
 }: CommandDialogPrimitive.Popup.Props & {
   portalProps?: CommandDialogPrimitive.Portal.Props;
 }): React.ReactElement {
-  return (
-    <CommandDialogPortal {...portalProps}>
+  const open = useContext(CommandDialogOpenContext);
+  const reduce = useReducedMotion();
+  const transition = motionTokens.spring.snappy;
+  const scale = reduce ? 1 : 0.98;
+
+  const popup = (
+    <CommandDialogPortal keepMounted={open !== null} {...portalProps}>
       <CommandDialogBackdrop />
       <CommandDialogViewport>
         <CommandDialogPrimitive.Popup
           className={cn(
-            'relative row-start-2 flex max-h-105 min-h-0 w-full min-w-0 max-w-xl -translate-y-[calc(1.25rem*var(--nested-dialogs))] scale-[calc(1-0.1*var(--nested-dialogs))] flex-col rounded-2xl border bg-popover not-dark:bg-clip-padding text-popover-foreground opacity-[calc(1-0.1*var(--nested-dialogs))] shadow-lg/5 outline-none transition-[scale,opacity,translate] duration-200 ease-in-out will-change-transform before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-2xl)-1px)] before:bg-muted/72 before:shadow-[0_1px_--theme(--color-black/4%)] data-nested:data-ending-style:translate-y-8 data-nested:data-starting-style:translate-y-8 data-nested-dialog-open:origin-top data-ending-style:scale-98 data-starting-style:scale-98 data-ending-style:opacity-0 data-starting-style:opacity-0 **:data-[slot=scroll-area-viewport]:data-has-overflow-y:pe-1 dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
+            'relative row-start-2 flex max-h-105 min-h-0 w-full min-w-0 max-w-xl -translate-y-[calc(1.25rem*var(--nested-dialogs))] scale-[calc(1-0.1*var(--nested-dialogs))] flex-col rounded-2xl border bg-popover not-dark:bg-clip-padding text-popover-foreground shadow-lg/5 outline-none will-change-transform before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-2xl)-1px)] before:bg-muted/72 before:shadow-[0_1px_--theme(--color-black/4%)] data-nested-dialog-open:origin-top **:data-[slot=scroll-area-viewport]:data-has-overflow-y:pe-1 motion-reduce:scale-100 motion-reduce:transition-none dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
             className
           )}
           data-slot='command-dialog-popup'
+          render={
+            render ??
+            ((elementProps, state) => (
+              <motion.div
+                {...(elementProps as HTMLMotionProps<'div'>)}
+                animate={{
+                  opacity: state.open && !state.nestedDialogOpen ? 1 : 0,
+                  scale: 1,
+                }}
+                exit={{ opacity: 0, scale }}
+                initial={{ opacity: 0, scale }}
+                transition={transition}
+              />
+            ))
+          }
           {...props}
         >
           {children}
@@ -93,6 +162,12 @@ export function CommandDialogPopup({
       </CommandDialogViewport>
     </CommandDialogPortal>
   );
+
+  if (open === null) {
+    return popup;
+  }
+
+  return <AnimatePresence>{open && popup}</AnimatePresence>;
 }
 
 export function Command({

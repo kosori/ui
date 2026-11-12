@@ -1283,6 +1283,66 @@ test('the motion library owns the motion package and only its importers depend o
   }
 });
 
+test('the remaining Dialog-family popups exit through Motion like the Dialog', async () => {
+  const items = await readCatalog('zen');
+  const names = ['alert-dialog', 'command', 'sheet'] as const;
+  const sources = await Promise.all(
+    names.map(async (name) => {
+      const item = items.find((candidate) => candidate.name === name);
+      const source = (
+        await Promise.all(
+          (item?.files ?? []).map((file) =>
+            readFile(join(webDir, file.path), 'utf8')
+          )
+        )
+      ).join('\n');
+
+      return { item, name, source };
+    })
+  );
+
+  for (const { item, name, source } of sources) {
+    expect(item, `${name} is in the Zen Registry`).toBeDefined();
+    expect(source, `${name} owns its open state`).toContain(
+      'useControllableOpen'
+    );
+    expect(source, `${name} animates presence`).toContain('AnimatePresence');
+    expect(source, `${name} keeps its portal for the exit`).toContain(
+      'keepMounted'
+    );
+    expect(source, `${name} leaves no CSS-only exit behind`).not.toContain(
+      'data-ending-style'
+    );
+    expect(source, `${name} leaves no CSS-only enter behind`).not.toContain(
+      'data-starting-style'
+    );
+    expect(source, `${name} drops the overlay motion Token`).not.toContain(
+      'motion-overlay'
+    );
+    expect(
+      item?.registryDependencies ?? [],
+      `${name} installs the motion library`
+    ).toContain('@kosori/motion');
+    expect(
+      (item?.dependencies ?? []).includes('motion'),
+      `${name} takes the motion package transitively`
+    ).toBe(false);
+  }
+
+  for (const name of ['alert-dialog', 'sheet'] as const) {
+    const item = items.find((candidate) => candidate.name === name);
+
+    expect(item?.cssVars?.light, `${name} light timing Tokens`).toMatchObject({
+      'duration-fast': '160ms',
+      'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+    });
+    expect(item?.cssVars?.dark, `${name} dark timing Tokens`).toMatchObject({
+      'duration-fast': '160ms',
+      'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+    });
+  }
+});
+
 test('the CSS-kept items read the shared timing Tokens', async () => {
   const items = await readCatalog('zen');
   const expectations: Record<
@@ -1411,8 +1471,8 @@ test('installing state-coloured items without the preset compiles their utilitie
     const registryItems = await readCatalog('zen');
     const motionTokensByItem = {
       'alert-dialog': {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       autocomplete: {
         'motion-overlay-duration': '180ms',
@@ -1451,8 +1511,8 @@ test('installing state-coloured items without the preset compiles their utilitie
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       sheet: {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       sidebar: {
         'duration-standard': '240ms',
