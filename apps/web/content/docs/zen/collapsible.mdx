@@ -5,9 +5,10 @@ description: A collapsible panel controlled by a button trigger.
 
 Collapsible wraps the
 [Base UI Collapsible](https://base-ui.com/react/components/collapsible)
-primitive, animates its panel height, and exposes `CollapsiblePanel` as
-`CollapsibleContent`. It is a client component: it manages open state and marks
-each part with `data-slot`.
+primitive, springs its panel height open and closed on the `smooth` preset, and
+exposes `CollapsiblePanel` as `CollapsibleContent`. Once a panel settles open it
+stops clipping, so nested content is not cut off. It is a client component: it
+manages open state and marks each part with `data-slot`.
 
 ## Installation
 

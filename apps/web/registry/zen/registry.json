@@ -8,15 +8,16 @@
       "type": "registry:ui",
       "cssVars": {
         "light": {
-          "motion-expand-duration": "200ms",
-          "motion-expand-easing": "cubic-bezier(0.2, 0, 0, 1)"
+          "duration-standard": "240ms",
+          "ease-standard": "cubic-bezier(0.2, 0, 0, 1)"
         },
         "dark": {
-          "motion-expand-duration": "200ms",
-          "motion-expand-easing": "cubic-bezier(0.2, 0, 0, 1)"
+          "duration-standard": "240ms",
+          "ease-standard": "cubic-bezier(0.2, 0, 0, 1)"
         }
       },
       "dependencies": ["@base-ui/react", "@tabler/icons-react", "cn"],
+      "registryDependencies": ["@kosori/motion"],
       "files": [
         {
           "path": "registry/zen/ui/accordion.tsx",
@@ -479,17 +480,8 @@
     {
       "name": "collapsible",
       "type": "registry:ui",
-      "cssVars": {
-        "light": {
-          "motion-expand-duration": "200ms",
-          "motion-expand-easing": "cubic-bezier(0.2, 0, 0, 1)"
-        },
-        "dark": {
-          "motion-expand-duration": "200ms",
-          "motion-expand-easing": "cubic-bezier(0.2, 0, 0, 1)"
-        }
-      },
       "dependencies": ["@base-ui/react", "cn"],
+      "registryDependencies": ["@kosori/motion"],
       "files": [
         {
           "path": "registry/zen/ui/collapsible.tsx",
@@ -1592,7 +1584,7 @@
       "name": "tabs",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react", "cn"],
-      "registryDependencies": ["@kosori/segmented-control"],
+      "registryDependencies": ["@kosori/motion", "@kosori/segmented-control"],
       "files": [
         {
           "path": "registry/zen/ui/tabs.tsx",
