@@ -72,11 +72,11 @@ everything else.
 | --- | --- | --- |
 | `--ease-standard` | `cubic-bezier(0.2, 0, 0, 1)` | Default for UI transitions |
 | `--ease-enter` | `cubic-bezier(0.2, 0, 0, 1)` | Elements arriving on screen |
-| `--ease-spring` | `cubic-bezier(0.32, 0.72, 0, 1)` | A gentle settle, paired with `--duration-drawer` |
+| `--ease-spring` | `cubic-bezier(0.32, 0.72, 0, 1)` | A gentle settle, used by the Drawer |
 | `--duration-fast` | `160ms` | Hover, colour, small state and Progress/Meter changes |
-| `--duration-standard` | `240ms` | The accordion indicator, Toast content and the Sidebar collapse |
-| `--duration-considered` | `480ms` | Toast stacking and other deliberate reveals |
-| `--duration-drawer` | `450ms` | The Drawer's swipe settle, off the shared scale |
+| `--duration-standard` | `240ms` | The accordion indicator, a Drawer opened or closed by click, and the Sidebar collapse |
+| `--duration-considered` | `480ms` | The Toast and other deliberate reveals |
+| `--duration-drawer` | `450ms` | The Drawer's swipe settle |
 
 A timing value belongs to one engine. Springs are never mirrored as CSS
 variables, and easing is never duplicated in `lib/motion.ts`.

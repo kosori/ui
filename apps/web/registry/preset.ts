@@ -44,6 +44,7 @@ export type StateTokenName = (typeof STATE_TOKEN_NAMES)[number];
 /** The shared CSS timing scale every Zen transition reads. */
 const MOTION_TOKENS = {
   'duration-considered': '480ms',
+  'duration-drawer': '450ms',
   'duration-fast': '160ms',
   'duration-standard': '240ms',
   'ease-enter': 'cubic-bezier(0.2, 0, 0, 1)',
