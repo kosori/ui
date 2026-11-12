@@ -1739,12 +1739,10 @@ test('installing state-coloured items without the preset compiles their utilitie
       motionTokens,
       'the installed stylesheet still declares a press Token'
     ).not.toContain('--motion-press-');
-    expect(motionTokens, 'the installed expansion duration Token').toContain(
-      '--motion-expand-duration: 200ms'
-    );
-    expect(motionTokens, 'the installed expansion easing Token').toContain(
-      '--motion-expand-easing: cubic-bezier(0.2, 0, 0, 1)'
-    );
+    expect(
+      motionTokens,
+      'the installed stylesheet still declares an expansion Token'
+    ).not.toContain('--motion-expand-');
     expect(motionTokens, 'the installed overlay duration Token').toContain(
       '--motion-overlay-duration: 180ms'
     );
