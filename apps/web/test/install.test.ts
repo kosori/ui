@@ -1145,6 +1145,7 @@ test('the preset declares the shared easing and duration scale', () => {
   const item = composeStyleItem(zenStyle ?? STYLES[0], 'neutral');
   const scale = {
     'duration-considered': '480ms',
+    'duration-drawer': '450ms',
     'duration-fast': '160ms',
     'duration-standard': '240ms',
     'ease-enter': 'cubic-bezier(0.2, 0, 0, 1)',
@@ -1259,10 +1260,12 @@ test('the CSS-kept items read the shared timing Tokens', async () => {
     drawer: {
       reads: [
         'var(--duration-drawer,450ms)',
+        'var(--duration-standard,240ms)',
         'var(--ease-spring,cubic-bezier(0.32,0.72,0,1))',
       ],
       tokens: {
         'duration-drawer': '450ms',
+        'duration-standard': '240ms',
         'ease-spring': 'cubic-bezier(0.32, 0.72, 0, 1)',
       },
     },
@@ -1300,14 +1303,12 @@ test('the CSS-kept items read the shared timing Tokens', async () => {
       reads: [
         'var(--duration-considered,480ms)',
         'var(--duration-fast,160ms)',
-        'var(--duration-standard,240ms)',
         'var(--ease-enter,cubic-bezier(0.2,0,0,1))',
         'var(--ease-standard,cubic-bezier(0.2,0,0,1))',
       ],
       tokens: {
         'duration-considered': '480ms',
         'duration-fast': '160ms',
-        'duration-standard': '240ms',
         'ease-enter': 'cubic-bezier(0.2, 0, 0, 1)',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
@@ -1359,6 +1360,28 @@ test('the CSS-kept items read the shared timing Tokens', async () => {
       ).toEqual([]);
     }
   }
+});
+
+test('the Toast runs one timing across its root, content and anchored popups', async () => {
+  const items = await readCatalog('zen');
+  const item = items.find((candidate) => candidate.name === 'toast');
+  const source = (
+    await Promise.all(
+      (item?.files ?? []).map((file) =>
+        readFile(join(webDir, file.path), 'utf8')
+      )
+    )
+  ).join('\n');
+
+  expect(source, 'the toast content fades on the root duration').toContain(
+    'transition-opacity duration-[var(--duration-considered,480ms)]'
+  );
+  expect(source, 'the anchored toast fades on the root duration').toMatch(
+    /transition-\[scale,opacity\] duration-\[var\(--duration-considered,480ms\)\]/
+  );
+  expect(source, 'the toast content keeps a shorter duration').not.toContain(
+    'var(--duration-standard,240ms)'
+  );
 });
 
 test('the stateful controls own their state motion through the library', async () => {
@@ -1458,6 +1481,7 @@ test('installing state-coloured items without the preset compiles their utilitie
       },
       drawer: {
         'duration-drawer': '450ms',
+        'duration-standard': '240ms',
         'ease-spring': 'cubic-bezier(0.32, 0.72, 0, 1)',
       },
       'hover-card': {
@@ -1491,7 +1515,6 @@ test('installing state-coloured items without the preset compiles their utilitie
       toast: {
         'duration-considered': '480ms',
         'duration-fast': '160ms',
-        'duration-standard': '240ms',
         'ease-enter': 'cubic-bezier(0.2, 0, 0, 1)',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
