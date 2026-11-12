@@ -1409,6 +1409,10 @@ test('installing state-coloured items without the preset compiles their utilitie
         'duration-drawer': '450ms',
         'ease-spring': 'cubic-bezier(0.32, 0.72, 0, 1)',
       },
+      'hover-card': {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
       meter: {
         'duration-fast': '160ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
@@ -1441,6 +1445,10 @@ test('installing state-coloured items without the preset compiles their utilitie
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       toggle: {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+      tooltip: {
         'duration-fast': '160ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
