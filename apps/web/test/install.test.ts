@@ -1211,6 +1211,117 @@ test('the motion library owns the motion package and only its importers depend o
   }
 });
 
+test('the CSS-kept items read the shared timing Tokens', async () => {
+  const items = await readCatalog('zen');
+  const expectations: Record<
+    string,
+    { reads: string[]; tokens: Record<string, string> }
+  > = {
+    drawer: {
+      reads: [
+        'var(--duration-drawer,450ms)',
+        'var(--ease-spring,cubic-bezier(0.32,0.72,0,1))',
+      ],
+      tokens: {
+        'duration-drawer': '450ms',
+        'ease-spring': 'cubic-bezier(0.32, 0.72, 0, 1)',
+      },
+    },
+    meter: {
+      reads: [
+        'var(--duration-fast,160ms)',
+        'var(--ease-standard,cubic-bezier(0.2,0,0,1))',
+      ],
+      tokens: {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+    progress: {
+      reads: [
+        'var(--duration-fast,160ms)',
+        'var(--ease-standard,cubic-bezier(0.2,0,0,1))',
+      ],
+      tokens: {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+    sidebar: {
+      reads: [
+        'var(--duration-standard,240ms)',
+        'var(--ease-standard,cubic-bezier(0.2,0,0,1))',
+      ],
+      tokens: {
+        'duration-standard': '240ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+    toast: {
+      reads: [
+        'var(--duration-considered,480ms)',
+        'var(--duration-fast,160ms)',
+        'var(--duration-standard,240ms)',
+        'var(--ease-enter,cubic-bezier(0.2,0,0,1))',
+        'var(--ease-standard,cubic-bezier(0.2,0,0,1))',
+      ],
+      tokens: {
+        'duration-considered': '480ms',
+        'duration-fast': '160ms',
+        'duration-standard': '240ms',
+        'ease-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+  };
+
+  for (const name of Object.keys(expectations)) {
+    expect(
+      items.some((candidate) => candidate.name === name),
+      `${name} is present in the Zen Registry`
+    ).toBe(true);
+  }
+
+  const sources = await Promise.all(
+    Object.entries(expectations).map(async ([name, expectation]) => {
+      const item = items.find((candidate) => candidate.name === name);
+      const source = (
+        await Promise.all(
+          (item?.files ?? []).map((file) =>
+            readFile(join(webDir, file.path), 'utf8')
+          )
+        )
+      ).join('\n');
+
+      return { expectation, item, name, source };
+    })
+  );
+
+  for (const { expectation, item, name, source } of sources) {
+    expect(source, `${name} keeps an old motion Token`).not.toContain(
+      '--motion-'
+    );
+    for (const read of expectation.reads) {
+      expect(source, `${name} reads ${read}`).toContain(read);
+    }
+
+    for (const scheme of ['light', 'dark'] as const) {
+      const declared = item?.cssVars?.[scheme] as
+        | Record<string, string>
+        | undefined;
+      expect(declared, `${name} ${scheme} timing Tokens`).toMatchObject(
+        expectation.tokens
+      );
+      expect(
+        Object.keys(declared ?? {}).filter((token) =>
+          token.startsWith('motion-')
+        ),
+        `${name} declares stale motion Tokens in ${scheme}`
+      ).toEqual([]);
+    }
+  }
+});
+
 // biome-ignore format: the shared timeout keeps this declaration on one line
 test('installing state-coloured items without the preset compiles their utilities', async () => {
   const build = await buildRegistry('zen');
@@ -1248,24 +1359,24 @@ test('installing state-coloured items without the preset compiles their utilitie
         'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       drawer: {
-        'motion-drawer-duration': '450ms',
-        'motion-drawer-easing': 'cubic-bezier(0.32, 0.72, 0, 1)',
+        'duration-drawer': '450ms',
+        'ease-spring': 'cubic-bezier(0.32, 0.72, 0, 1)',
       },
       'hover-card': {
         'motion-overlay-duration': '180ms',
         'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       meter: {
-        'motion-state-duration': '120ms',
-        'motion-state-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       'navigation-menu': {
         'motion-overlay-duration': '180ms',
         'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       progress: {
-        'motion-state-duration': '120ms',
-        'motion-state-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       select: {
         'motion-overlay-duration': '180ms',
@@ -1276,8 +1387,15 @@ test('installing state-coloured items without the preset compiles their utilitie
         'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       sidebar: {
-        'motion-expand-duration': '200ms',
-        'motion-expand-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-standard': '240ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+      toast: {
+        'duration-considered': '480ms',
+        'duration-fast': '160ms',
+        'duration-standard': '240ms',
+        'ease-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       toggle: {
         'duration-fast': '160ms',
@@ -1357,6 +1475,22 @@ test('installing state-coloured items without the preset compiles their utilitie
     expect(motionTokens, 'the installed shared easing Token').toContain(
       '--ease-standard: cubic-bezier(0.2, 0, 0, 1)'
     );
+    expect(motionTokens, 'the installed considered duration Token').toContain(
+      '--duration-considered: 480ms'
+    );
+    expect(motionTokens, 'the installed standard duration Token').toContain(
+      '--duration-standard: 240ms'
+    );
+    expect(motionTokens, 'the installed Drawer duration Token').toContain(
+      '--duration-drawer: 450ms'
+    );
+    expect(motionTokens, 'the installed Drawer easing Token').toContain(
+      '--ease-spring: cubic-bezier(0.32, 0.72, 0, 1)'
+    );
+    expect(
+      motionTokens,
+      'the installed stylesheet still declares the Drawer motion Token'
+    ).not.toContain('--motion-drawer-');
     expect(
       motionTokens,
       'the installed stylesheet still declares a press Token'
