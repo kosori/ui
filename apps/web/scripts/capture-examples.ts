@@ -1015,6 +1015,15 @@ const main = async () => {
                 popupElement: await popup.elementHandle(),
               }
             );
+            await page.keyboard.type('next');
+            await page.waitForFunction(
+              (popupElement) => {
+                const item = popupElement.querySelector('[data-highlighted]');
+                return item?.textContent?.includes('Next') ?? false;
+              },
+              await popup.elementHandle(),
+              { timeout: 5000 }
+            );
           }
 
           if (example === 'context-menu') {
