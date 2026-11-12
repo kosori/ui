@@ -1232,6 +1232,33 @@ test('the motion library owns the motion package and only its importers depend o
     'duration-fast': '160ms',
     'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
   });
+
+  for (const name of ['autocomplete', 'combobox', 'navigation-menu']) {
+    const entry = sources.find(({ item }) => item.name === name) as
+      | (typeof sources)[number]
+      | undefined;
+
+    expect(entry, `${name} is in the Zen Registry`).toBeDefined();
+    expect(entry?.source, `${name} owns its open state`).toContain(
+      'useControllableOpen'
+    );
+    expect(entry?.source, `${name} animates presence`).toContain(
+      'AnimatePresence'
+    );
+    expect(entry?.source, `${name} keeps its portal for the exit`).toContain(
+      'keepMounted'
+    );
+    expect(entry?.source, `${name} uses the snappy preset`).toContain(
+      "useMotionTransition('snappy')"
+    );
+    expect(entry?.source, `${name} still carries a motion Token`).not.toContain(
+      'motion-overlay'
+    );
+    expect(
+      entry?.item.registryDependencies,
+      `${name} installs the motion library`
+    ).toContain('@kosori/motion');
+  }
 });
 
 test('the CSS-kept items read the shared timing Tokens', async () => {
@@ -1366,16 +1393,16 @@ test('installing state-coloured items without the preset compiles their utilitie
         'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       autocomplete: {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       button: {
         'duration-fast': '160ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       combobox: {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       'context-menu': {
         'motion-overlay-duration': '180ms',
@@ -1398,8 +1425,8 @@ test('installing state-coloured items without the preset compiles their utilitie
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       'navigation-menu': {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       progress: {
         'duration-fast': '160ms',

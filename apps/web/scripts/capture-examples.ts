@@ -139,7 +139,11 @@ const isOverlayExample = (example: string): example is OverlayExample =>
  * Overlays that animate their popup through Motion instead of a CSS
  * transition, so the seam asserts an exit that outlives the open state.
  */
-const MOTION_OVERLAYS = new Set<OverlayExample>(['dialog']);
+const MOTION_OVERLAYS = new Set<OverlayExample>([
+  'combobox',
+  'dialog',
+  'navigation-menu',
+]);
 
 const openOverlay = async (trigger: Locator, action: OverlayOpenAction) => {
   if (action === 'fill') {
@@ -238,6 +242,84 @@ const waitForScale = async (
 
   return scale;
 };
+
+/**
+ * Sample an element's visual box every frame for a short window, so a size
+ * change can be told apart from an abrupt jump.
+ */
+const sampleBoxes = (
+  page: Page,
+  selector: string,
+  durationMs = 400
+): Promise<{ height: number; width: number }[]> =>
+  page.evaluate(
+    ({ selector: target, duration }) =>
+      new Promise<{ height: number; width: number }[]>((resolve) => {
+        const element = document.querySelector(target);
+
+        if (!element) {
+          resolve([]);
+          return;
+        }
+
+        const samples: { height: number; width: number }[] = [];
+        const start = performance.now();
+
+        const tick = () => {
+          const box = element.getBoundingClientRect();
+          samples.push({ height: box.height, width: box.width });
+
+          if (performance.now() - start < duration) {
+            requestAnimationFrame(tick);
+          } else {
+            resolve(samples);
+          }
+        };
+
+        requestAnimationFrame(tick);
+      }),
+    { duration: durationMs, selector }
+  );
+
+/**
+ * Record a popup's opacity every frame until it leaves the DOM, so a fast exit
+ * can still be proven to have played before unmounting.
+ */
+const watchExit = (page: Page, selector: string) =>
+  page.evaluate((target) => {
+    const element = document.querySelector(target);
+
+    if (!element) {
+      return;
+    }
+
+    const frames: { connected: boolean; opacity: number }[] = [];
+
+    const tick = () => {
+      frames.push({
+        connected: element.isConnected,
+        opacity: Number.parseFloat(getComputedStyle(element).opacity),
+      });
+
+      if (element.isConnected) {
+        requestAnimationFrame(tick);
+      } else {
+        document.documentElement.dataset.exitFrames = JSON.stringify(frames);
+      }
+    };
+
+    requestAnimationFrame(tick);
+  }, selector);
+
+/** The frames an exit played before its popup left the DOM. */
+const readExitFrames = (page: Page) =>
+  page.evaluate(() => {
+    const frames = JSON.parse(
+      document.documentElement.dataset.exitFrames ?? '[]'
+    ) as { connected: boolean; opacity: number }[];
+    delete document.documentElement.dataset.exitFrames;
+    return frames;
+  });
 
 const webDir = join(import.meta.dirname, '..');
 const outputDir = join(webDir, CAPTURE_DIR);
@@ -725,7 +807,7 @@ const main = async () => {
             .locator(`[data-slot="${triggerSlot}"]`)
             .first();
           await trigger.scrollIntoViewIfNeeded();
-          const triggerBefore = await trigger.boundingBox();
+          let triggerBefore = await trigger.boundingBox();
 
           await page.waitForTimeout(500);
           await openOverlay(trigger, openAction);
@@ -860,35 +942,82 @@ const main = async () => {
             );
           }
 
+          if (example === 'navigation-menu') {
+            const popupSelector = `[data-slot="${popupSlot}"]`;
+            const triggers = preview.locator(`[data-slot="${triggerSlot}"]`);
+            const reused = page.locator(popupSelector).first();
+            const measured = await reused.evaluate((element) => ({
+              height: (element as HTMLElement).offsetHeight,
+              width: (element as HTMLElement).offsetWidth,
+            }));
+
+            await reused.evaluate((element) => {
+              (element as HTMLElement).dataset.reused = 'true';
+            });
+            await triggers.nth(1).hover();
+            const samples = await sampleBoxes(page, popupSelector);
+            const survived = await reused.evaluate(
+              (element) => (element as HTMLElement).dataset.reused === 'true'
+            );
+
+            if (!survived) {
+              throw new Error(
+                `${example} remounted its popup while moving between triggers`
+              );
+            }
+            if (measured.width < 1 || measured.height < 1) {
+              throw new Error(
+                `${example} had no measured size before moving between triggers`
+              );
+            }
+            if (
+              samples.length === 0 ||
+              samples.some((sample) => sample.width < 1 || sample.height < 1)
+            ) {
+              throw new Error(
+                `${example} flashed the unmeasured size while moving between triggers`
+              );
+            }
+
+            // Moving between triggers may scroll the active trigger into view, so
+            // the closing check starts from where the trigger now sits.
+            triggerBefore = await trigger.boundingBox();
+          }
+
+          const popupSelector = `[data-slot="${popupSlot}"]`;
+          if (engine === 'motion') {
+            await watchExit(page, popupSelector);
+          }
           await page.keyboard.press('Escape');
           if (engine === 'motion') {
+            await popup.waitFor({ state: 'detached' });
+            await page.waitForFunction(
+              () => document.documentElement.dataset.exitFrames !== undefined,
+              undefined,
+              { timeout: 5000 }
+            );
+            const exitFrames = await readExitFrames(page);
             if (
-              (await page.locator(`[data-slot="${popupSlot}"]`).count()) === 0
+              !exitFrames.some(
+                (frame) => frame.connected && frame.opacity < 0.9
+              )
             ) {
               throw new Error(
                 `${example} removed its popup before the exit animation`
               );
             }
-            await page.waitForFunction(
-              (selector) => {
-                const element = document.querySelector(selector);
-                return (
-                  element !== null &&
-                  Number.parseFloat(getComputedStyle(element).opacity) < 0.9
-                );
-              },
-              `[data-slot="${popupSlot}"]`,
-              { timeout: 5000 }
-            );
-            await popup.waitFor({ state: 'detached' });
           } else {
             await popup.waitFor({ state: 'hidden' });
           }
           await trigger.waitFor({ state: 'visible' });
           if (
             restoreFocus &&
-            !(await trigger.evaluate(
-              (element) => element === document.activeElement
+            !(await page.evaluate(
+              (selector) =>
+                [...document.querySelectorAll(selector)].some(
+                  (element) => element === document.activeElement
+                ),
+              `${captureSelector(example)} [data-slot="${triggerSlot}"]`
             ))
           ) {
             throw new Error(`${example} did not restore focus to its trigger`);
@@ -1049,6 +1178,59 @@ const main = async () => {
               popupSelector,
               { timeout: 5000 }
             );
+          }
+
+          if (example === 'combobox') {
+            const popupSelector = `[data-slot="${popupSlot}"]`;
+            await trigger.fill('a');
+            const measured = page.locator(popupSelector).first();
+            await measured.waitFor({ state: 'visible' });
+            const measuredWidth = await measured.evaluate(
+              (element) => (element as HTMLElement).offsetWidth
+            );
+
+            if (measuredWidth < 1) {
+              throw new Error(
+                `${example} measured no width while its entrance played`
+              );
+            }
+
+            // Filtering narrows the list while the entrance spring is in flight.
+            await trigger.fill('design');
+            const samples = await sampleBoxes(page, popupSelector);
+            const finalWidth = await measured.evaluate(
+              (element) => (element as HTMLElement).offsetWidth
+            );
+            const heights = samples.map((sample) => sample.height);
+            const shortest = Math.min(...heights);
+            const tallest = Math.max(...heights);
+            const animated = heights.some(
+              (height) => height > shortest + 2 && height < tallest - 2
+            );
+
+            if (finalWidth !== measuredWidth) {
+              throw new Error(
+                `${example} changed its measured width from ${measuredWidth}px to ${finalWidth}px`
+              );
+            }
+            if (tallest - shortest < 4) {
+              throw new Error(
+                `${example} did not change size when the list filtered`
+              );
+            }
+            if (!animated) {
+              throw new Error(
+                `${example} resized abruptly when the list filtered`
+              );
+            }
+            if (samples.some((sample) => sample.width < measuredWidth - 1)) {
+              throw new Error(
+                `${example} lost its measured width while filtering`
+              );
+            }
+
+            await page.keyboard.press('Escape');
+            await page.locator(popupSelector).waitFor({ state: 'detached' });
           }
         }
 
