@@ -28,6 +28,15 @@ const OVERLAY_EXAMPLES = {
     transitionProperty: 'opacity',
     triggerSlot: 'combobox-input',
   },
+  command: {
+    focusPopup: true,
+    mobileViewport: false,
+    openAction: 'click',
+    popupSlot: 'command-dialog-popup',
+    restoreFocus: true,
+    transitionProperty: 'opacity',
+    triggerSlot: 'command-dialog-trigger',
+  },
   'context-menu': {
     focusPopup: false,
     mobileViewport: false,
@@ -153,8 +162,11 @@ const isOverlayExample = (example: string): example is OverlayExample =>
  * transition, so the seam asserts an exit that outlives the open state.
  */
 const MOTION_OVERLAYS = new Set<OverlayExample>([
+  'alert-dialog',
+  'command',
   'dialog',
   'hover-card',
+  'sheet',
   'tooltip',
 ]);
 
@@ -162,35 +174,40 @@ const MOTION_OVERLAYS = new Set<OverlayExample>([
 const isCheapOverlay = (example: OverlayExample) =>
   example === 'hover-card' || example === 'tooltip';
 
-/** Record the computed opacity of an element once per frame. */
-const startOpacitySampler = async (target: Locator) => {
-  await target.evaluate((element) => {
-    const host = element as HTMLElement & { opacitySamples?: number[] };
-    host.opacitySamples = [];
-    const sample = () => {
-      if (!host.opacitySamples) {
-        return;
+/**
+ * Poll an element's computed opacity while an action runs, then for a short
+ * settle window. Polling from the harness keeps sampling off the page's own
+ * frame scheduler, which a busy capture can starve.
+ */
+const sampleOpacityWhile = async (
+  target: Locator,
+  action: () => Promise<void>,
+  settleMs = 600
+): Promise<number[]> => {
+  const samples: number[] = [];
+  const state: { running: boolean } = { running: true };
+  const poll = (async () => {
+    while (state.running) {
+      try {
+        // biome-ignore lint/performance/noAwaitInLoops: one sample at a time keeps readings ordered
+        const opacity = await target.evaluate((element) =>
+          Number.parseFloat(getComputedStyle(element).opacity)
+        );
+        samples.push(opacity);
+      } catch {
+        // The action may detach the popup; keep the samples already taken.
       }
+      await new Promise((resolve) => setTimeout(resolve, 16));
+    }
+  })();
 
-      host.opacitySamples.push(
-        Number.parseFloat(getComputedStyle(host).opacity)
-      );
+  await action();
+  await new Promise((resolve) => setTimeout(resolve, settleMs));
+  state.running = false;
+  await poll;
 
-      if (host.opacitySamples.length < 240) {
-        requestAnimationFrame(sample);
-      }
-    };
-    requestAnimationFrame(sample);
-  });
+  return samples;
 };
-
-/** The opacity values an element reported between two sampler resets. */
-const readOpacitySamples = async (target: Locator): Promise<number[]> =>
-  target.evaluate(
-    (element) =>
-      (element as HTMLElement & { opacitySamples?: number[] }).opacitySamples ??
-      []
-  );
 
 /** Poll a popup until its computed opacity reaches the expected value. */
 const waitForOpacity = async (
@@ -239,20 +256,15 @@ const openOverlay = async (trigger: Locator, action: OverlayOpenAction) => {
   );
 };
 
-/**
- * Open an overlay, retrying so a cold dev server can finish hydrating before
- * the attempt whose entrance the seam samples.
- */
+/** Open an overlay, retrying so a cold dev server can finish hydrating. */
 const openOverlayWhenReady = async (
   page: Page,
   trigger: Locator,
   popup: Locator,
-  action: OverlayOpenAction,
-  onAttempt?: () => Promise<void>
+  action: OverlayOpenAction
 ): Promise<void> => {
   for (let attempt = 0; attempt < 3; attempt += 1) {
-    // biome-ignore lint/performance/noAwaitInLoops: attempts are ordered so the sampler resets before each open
-    await onAttempt?.();
+    // biome-ignore lint/performance/noAwaitInLoops: attempts are ordered so a cold page can hydrate between them
     await openOverlay(trigger, action);
 
     try {
@@ -263,7 +275,6 @@ const openOverlayWhenReady = async (
     }
   }
 
-  await onAttempt?.();
   await openOverlay(trigger, action);
   await popup.waitFor({ state: 'visible' });
 };
@@ -348,6 +359,29 @@ const waitForScale = async (
   }
 
   return scale;
+};
+
+/** Whether a computed transform is the identity, so no travel is applied. */
+const isIdentityTransform = (transform: string): boolean => {
+  if (transform === 'none') {
+    return true;
+  }
+
+  const matrix = transform.match(/^matrix\(([^)]+)\)$/)?.[1]?.split(',');
+  if (matrix?.length !== 6) {
+    return false;
+  }
+
+  const [a = 'NaN', b, c, d, e, f] = matrix;
+
+  return (
+    Number(a) === 1 &&
+    Number(b) === 0 &&
+    Number(c) === 0 &&
+    Number(d) === 1 &&
+    Number(e) === 0 &&
+    Number(f) === 0
+  );
 };
 
 const webDir = join(import.meta.dirname, '..');
@@ -843,18 +877,15 @@ const main = async () => {
 
           await page.waitForTimeout(500);
           const popup = page.locator(popupSelector).first();
-          const sampleEntrance = async () => {
-            if ((await popup.count()) > 0) {
-              await startOpacitySampler(popup);
-            }
-          };
-          await openOverlayWhenReady(
-            page,
-            trigger,
-            popup,
-            openAction,
-            cheapOverlay ? sampleEntrance : undefined
-          );
+          const entranceSamples: number[] = cheapOverlay
+            ? await sampleOpacityWhile(popup, () =>
+                openOverlayWhenReady(page, trigger, popup, openAction)
+              )
+            : [];
+          if (!cheapOverlay) {
+            await openOverlayWhenReady(page, trigger, popup, openAction);
+          }
+          let commandSize: { height: number; width: number } | undefined;
           if (focusPopup) {
             try {
               await page.waitForFunction(
@@ -870,6 +901,38 @@ const main = async () => {
                 cause: error,
               });
             }
+          }
+          if (example === 'command' && engine === 'motion') {
+            const entering = await popup.evaluate((element) => ({
+              height: (element as HTMLElement).offsetHeight,
+              opacity: Number.parseFloat(getComputedStyle(element).opacity),
+              pointerEvents: getComputedStyle(element).pointerEvents,
+              width: (element as HTMLElement).offsetWidth,
+            }));
+            if (entering.opacity >= 1) {
+              throw new Error(
+                'command finished entering before its list was used'
+              );
+            }
+            if (entering.pointerEvents === 'none') {
+              throw new Error(
+                'command popup blocked pointer events while entering'
+              );
+            }
+            await page.keyboard.type('lin');
+            const query = await popup.locator('input').first().inputValue();
+            if (query !== 'lin') {
+              throw new Error(
+                `command input ignored typing while entering (got "${query}")`
+              );
+            }
+            const remaining = await popup
+              .locator('[data-slot="command-item"]')
+              .allTextContents();
+            if (remaining.length !== 1 || !remaining[0]?.includes('Linear')) {
+              throw new Error('command list did not filter while entering');
+            }
+            commandSize = entering;
           }
           if (engine === 'css') {
             const motion = await popup.evaluate((element) => {
@@ -909,7 +972,6 @@ const main = async () => {
                 throw new Error(`${example} has no positioner slot`);
               }
 
-              const entranceSamples = await readOpacitySamples(popup);
               if (
                 !entranceSamples.some((value) => value > 0.05 && value < 0.95)
               ) {
@@ -942,6 +1004,42 @@ const main = async () => {
                 (scale) => scale > 0.999,
                 `${example} open scale`
               );
+            }
+          }
+
+          if (example === 'command' && commandSize) {
+            const settled = await popup.evaluate((element) => ({
+              height: (element as HTMLElement).offsetHeight,
+              width: (element as HTMLElement).offsetWidth,
+            }));
+            if (settled.width !== commandSize.width) {
+              throw new Error(
+                `command popup width changed while entering (${commandSize.width} to ${settled.width})`
+              );
+            }
+            commandSize = settled;
+          }
+
+          if (example === 'alert-dialog' && engine === 'motion') {
+            const actionOrder = await popup
+              .getByRole('button')
+              .evaluateAll((elements) =>
+                elements.map((element) => element.textContent?.trim())
+              );
+            if (actionOrder.join('|') !== 'Cancel|Continue') {
+              throw new Error(
+                `alert dialog action order was ${actionOrder.join('|')}`
+              );
+            }
+            for (let press = 0; press < 6; press += 1) {
+              // biome-ignore lint/performance/noAwaitInLoops: tabs run one at a time so each focus reading is attributable
+              await page.keyboard.press('Tab');
+              const trapped = await popup.evaluate((element) =>
+                element.contains(document.activeElement)
+              );
+              if (!trapped) {
+                throw new Error('alert dialog lost its focus trap');
+              }
             }
           }
 
@@ -1002,21 +1100,21 @@ const main = async () => {
               `${example} interrupted open scale`
             );
 
-            await startOpacitySampler(popup);
-            await page.mouse.move(0, 0);
-            await page.waitForFunction(
-              (selector) =>
-                !document.querySelector(selector)?.hasAttribute('data-open'),
-              popupSelector,
-              { timeout: 5000 }
-            );
+            const exitSamples = await sampleOpacityWhile(popup, async () => {
+              await page.mouse.move(0, 0);
+              await page.waitForFunction(
+                (selector) =>
+                  !document.querySelector(selector)?.hasAttribute('data-open'),
+                popupSelector,
+                { timeout: 5000 }
+              );
+            });
             await waitForOpacity(
               page,
               popupSelector,
               0,
               `${example} popup closed`
             );
-            const exitSamples = await readOpacitySamples(popup);
             if (!exitSamples.some((value) => value > 0.05 && value < 0.95)) {
               throw new Error(
                 `${example} popup disappeared without an exit fade`
@@ -1090,6 +1188,30 @@ const main = async () => {
           }
 
           await page.keyboard.press('Escape');
+          if (example === 'command' && engine === 'motion') {
+            const exiting = await popup.evaluate((element) => ({
+              height: (element as HTMLElement).offsetHeight,
+              items: element.querySelectorAll('[data-slot="command-item"]')
+                .length,
+              pointerEvents: getComputedStyle(element).pointerEvents,
+              width: (element as HTMLElement).offsetWidth,
+            }));
+            if (exiting.items === 0) {
+              throw new Error('command list emptied while exiting');
+            }
+            if (exiting.pointerEvents === 'none') {
+              throw new Error(
+                'command popup blocked pointer events while exiting'
+              );
+            }
+            if (
+              commandSize &&
+              (exiting.width !== commandSize.width ||
+                exiting.height !== commandSize.height)
+            ) {
+              throw new Error('command popup changed size while exiting');
+            }
+          }
           if (engine === 'motion' && !cheapOverlay) {
             if (
               (await page.locator(`[data-slot="${popupSlot}"]`).count()) === 0
@@ -1181,17 +1303,11 @@ const main = async () => {
           const reducedPopup = reducedPage
             .locator(`[data-slot="${popupSlot}"]`)
             .first();
-          const sampleReducedEntrance = async () => {
-            if ((await reducedPopup.count()) > 0) {
-              await startOpacitySampler(reducedPopup);
-            }
-          };
           await openOverlayWhenReady(
             reducedPage,
             reducedTrigger,
             reducedPopup,
-            openAction,
-            cheapOverlay ? sampleReducedEntrance : undefined
+            openAction
           );
           if (engine === 'motion' && focusPopup) {
             await reducedPage.waitForFunction(
@@ -1223,6 +1339,14 @@ const main = async () => {
             reducedTransition.scale !== '1'
           ) {
             throw new Error(`${example} retained scaling with reduced motion`);
+          }
+          if (
+            engine === 'motion' &&
+            !isIdentityTransform(reducedTransition.transform)
+          ) {
+            throw new Error(
+              `${example} retained transform travel with reduced motion`
+            );
           }
           if (reducedTransition.translate !== 'none') {
             throw new Error(
@@ -1327,6 +1451,85 @@ const main = async () => {
               popupSelector,
               { timeout: 5000 }
             );
+          }
+
+          if (example === 'sheet' && engine === 'motion') {
+            const popupSelector = `[data-slot="${popupSlot}"]`;
+            const mobile = await page.context().newPage();
+            await mobile.setViewportSize({ height: 844, width: 390 });
+            await mobile.goto(`${server.baseUrl}${route}`, {
+              waitUntil: 'load',
+            });
+            await mobile.waitForLoadState('networkidle');
+            await mobile.waitForTimeout(500);
+            const travelFrom = async (triggerIndex: number) => {
+              const travel = await mobile.evaluate(
+                async ({ index, selector }) => {
+                  const triggers = document.querySelectorAll<HTMLElement>(
+                    '[data-slot="sheet-trigger"]'
+                  );
+                  triggers[index]?.click();
+
+                  return await new Promise<{ x: number; y: number } | null>(
+                    (resolve) => {
+                      const deadline = performance.now() + 3000;
+                      const sample = () => {
+                        const element = document.querySelector(selector);
+                        const matrix = element
+                          ? getComputedStyle(element)
+                              .transform.match(/^matrix\(([^)]+)\)$/)?.[1]
+                              ?.split(',')
+                          : undefined;
+                        const x = Number(matrix?.[4] ?? 0);
+                        const y = Number(matrix?.[5] ?? 0);
+
+                        if (Math.abs(x) > 0.5 || Math.abs(y) > 0.5) {
+                          resolve({ x, y });
+                          return;
+                        }
+
+                        if (performance.now() > deadline) {
+                          resolve(null);
+                          return;
+                        }
+
+                        requestAnimationFrame(sample);
+                      };
+
+                      requestAnimationFrame(sample);
+                    }
+                  );
+                },
+                { index: triggerIndex, selector: popupSelector }
+              );
+              await mobile.keyboard.press('Escape');
+              await mobile.waitForFunction(
+                (selector) => document.querySelector(selector) === null,
+                popupSelector,
+                { timeout: 5000 }
+              );
+              return travel;
+            };
+            const edges = [
+              { axis: 'x' as const, direction: 1, name: 'right' },
+              { axis: 'x' as const, direction: -1, name: 'left' },
+              { axis: 'y' as const, direction: -1, name: 'top' },
+              { axis: 'y' as const, direction: 1, name: 'bottom' },
+            ];
+
+            for (const [index, edge] of edges.entries()) {
+              // biome-ignore lint/performance/noAwaitInLoops: one Sheet edge is measured per iteration so each travel reading is attributable
+              const travel = await travelFrom(index);
+              const distance = (travel?.[edge.axis] ?? 0) * edge.direction;
+
+              if (distance <= 0) {
+                throw new Error(
+                  `sheet did not travel from its ${edge.name} edge on a small screen (${JSON.stringify(travel)})`
+                );
+              }
+            }
+
+            await mobile.close();
           }
         }
 

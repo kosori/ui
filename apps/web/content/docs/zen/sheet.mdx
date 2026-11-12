@@ -7,7 +7,9 @@ Sheet wraps the [Base UI Dialog](https://base-ui.com/react/components/dialog)
 primitive, composes [Button](/docs/zen/button) and its scrollable panel through
 Base UI's `render` prop, and marks each part with `data-slot`. It is a client
 component: it opens from any edge, uses a portal, manages focus, and animates
-with `tw-animate-css`.
+its popup in and out from its edge with [Motion](/docs/zen/motion). Closing
+keeps the popup mounted until its travel ends. With reduced motion the sheet
+fades on opacity alone and does not travel.
 
 ## Installation
 

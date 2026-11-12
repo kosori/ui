@@ -7,7 +7,10 @@ Alert Dialog wraps the
 [Base UI Alert Dialog](https://base-ui.com/react/components/alert-dialog)
 primitive, composes [Button](/docs/zen/button) through Base UI's `render` prop,
 and marks each part with `data-slot`. It is a client component: it uses a
-portal, manages focus, and animates with `tw-animate-css`.
+portal, traps focus, and animates its popup in and out with
+[Motion](/docs/zen/motion). Closing keeps the popup mounted until the exit
+animation ends, while the focus trap, Escape dismissal and action order stay
+Base UI's.
 
 ## Installation
 
