@@ -1172,8 +1172,8 @@ test('the motion library owns the motion package and only its importers depend o
     .filter(({ source }) => /from ['"]@\/lib\/motion['"]/.test(source))
     .map(({ item }) => item.name)
     .sort();
-  expect(importers, 'Button and Toggle press run on the library').toEqual(
-    expect.arrayContaining(['button', 'toggle'])
+  expect(importers, 'Presses and overlays run on the library').toEqual(
+    expect.arrayContaining(['button', 'dialog', 'toggle'])
   );
 
   for (const { item, source } of sources) {
@@ -1209,6 +1209,29 @@ test('the motion library owns the motion package and only its importers depend o
       'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
     });
   }
+
+  const dialog = sources.find(({ item }) => item.name === 'dialog') as
+    | (typeof sources)[number]
+    | undefined;
+
+  expect(dialog, 'the Dialog is in the Zen Registry').toBeDefined();
+  expect(dialog?.source, 'the Dialog owns its open state').toContain(
+    'useControllableOpen'
+  );
+  expect(dialog?.source, 'the Dialog animates presence').toContain(
+    'AnimatePresence'
+  );
+  expect(dialog?.source, 'the Dialog keeps its portal for the exit').toContain(
+    'keepMounted'
+  );
+  expect(
+    dialog?.source,
+    'the Dialog kept a motion Token after moving to Motion'
+  ).not.toContain('motion-overlay');
+  expect(dialog?.item.cssVars?.light).toMatchObject({
+    'duration-fast': '160ms',
+    'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+  });
 });
 
 // biome-ignore format: the shared timeout keeps this declaration on one line
@@ -1246,6 +1269,10 @@ test('installing state-coloured items without the preset compiles their utilitie
       'context-menu': {
         'motion-overlay-duration': '180ms',
         'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+      dialog: {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       drawer: {
         'motion-drawer-duration': '450ms',
