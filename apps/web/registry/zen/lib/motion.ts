@@ -20,7 +20,7 @@ import {
   useState,
 } from 'react';
 
-/** The spring presets and press feedback every animated component references. */
+/** The spring presets, press feedback and short state tween every animated component references. */
 export const motionTokens = {
   press: {
     down: { duration: 0.1, ease: [0.2, 0, 0, 1] as const },
@@ -34,6 +34,7 @@ export const motionTokens = {
     smooth: { bounce: 0, visualDuration: 0.4 },
     snappy: { bounce: 0, visualDuration: 0.26 },
   },
+  state: { duration: 0.12, ease: [0.2, 0, 0, 1] as const },
 } as const;
 
 export type MotionPreset = keyof typeof motionTokens.spring;

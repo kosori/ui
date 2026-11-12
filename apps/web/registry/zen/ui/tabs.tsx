@@ -77,7 +77,7 @@ function TabsIndicator({
   style,
   ...props
 }: TabsIndicatorProps): React.ReactElement {
-  const transition = useMotionTransition('morph');
+  const transition = useMotionTransition('snappy');
   const reduce = useReducedMotion();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
