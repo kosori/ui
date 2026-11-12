@@ -82,6 +82,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --duration-considered: 480ms;
+  --duration-drawer: 450ms;
   --duration-fast: 160ms;
   --duration-standard: 240ms;
   --ease-enter: cubic-bezier(0.2, 0, 0, 1);
@@ -129,6 +130,7 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
   --duration-considered: 480ms;
+  --duration-drawer: 450ms;
   --duration-fast: 160ms;
   --duration-standard: 240ms;
   --ease-enter: cubic-bezier(0.2, 0, 0, 1);

@@ -904,22 +904,27 @@ const main = async () => {
                 }
               };
               const sample = async (count: number) => {
-                const samples: number[] = [];
+                const clips: string[] = [];
+                const heights: number[] = [];
 
                 for (let index = 0; index < count; index += 1) {
                   // biome-ignore lint/performance/noAwaitInLoops: frames are sampled in order to keep the height continuous
                   await frame();
-                  samples.push(height());
+                  clips.push(getComputedStyle(panelElement).overflow);
+                  heights.push(height());
                 }
 
-                return samples;
+                return { clips, heights };
               };
               const toggleAndSample = async (count: number) => {
                 const before = await sample(2);
                 trigger.click();
                 const after = await sample(count);
 
-                return [...before, ...after];
+                return {
+                  clips: [...before.clips, ...after.clips],
+                  samples: [...before.heights, ...after.heights],
+                };
               };
 
               trigger.click();
@@ -934,7 +939,14 @@ const main = async () => {
               const beforeReopen = height();
               const reopening = await toggleAndSample(10);
 
-              return { beforeClose, beforeReopen, closing, reopening };
+              return {
+                beforeClose,
+                beforeReopen,
+                closing: closing.samples,
+                closingClips: closing.clips,
+                reopening: reopening.samples,
+                reopeningClips: reopening.clips,
+              };
             },
             {
               midHeight: expandedHeight * 0.25,
@@ -943,9 +955,22 @@ const main = async () => {
             }
           );
 
-          const { beforeClose, beforeReopen, closing, reopening } =
-            interruption;
+          const {
+            beforeClose,
+            beforeReopen,
+            closing,
+            closingClips,
+            reopening,
+            reopeningClips,
+          } = interruption;
           const reversal = 2;
+          const releasedClip = (heights: number[], clips: string[]) =>
+            clips.filter(
+              (clip, index) =>
+                index >= reversal &&
+                (heights[index] ?? 0) < expandedHeight * 0.9 &&
+                clip !== 'hidden'
+            );
 
           if (
             (closing[reversal - 1] ?? 0) <= expandedHeight * 0.1 ||
@@ -969,6 +994,14 @@ const main = async () => {
             (reopening[reversal] ?? 0) + 5
           ) {
             throw new Error(`${example} did not move up while reopening`);
+          }
+          if (releasedClip(closing, closingClips).length > 0) {
+            throw new Error(`${example} released its clip as it closed`);
+          }
+          if (releasedClip(reopening, reopeningClips).length > 0) {
+            throw new Error(
+              `${example} released its clip while reopening mid-close`
+            );
           }
 
           await waitForHeight(
@@ -1631,6 +1664,19 @@ const main = async () => {
                 `${example} popup did not animate its open state`
               );
             }
+            if (example === 'drawer') {
+              const durations = motion.duration
+                .split(',')
+                .map((value) => Number.parseFloat(value));
+              if (
+                !durations.includes(0.24) ||
+                durations.some((value) => value > 0.25)
+              ) {
+                throw new Error(
+                  `${example} opened over ${motion.duration} instead of the standard duration`
+                );
+              }
+            }
           } else {
             await page.waitForFunction(
               (selector) => {
@@ -1973,6 +2019,30 @@ const main = async () => {
 
           await watchPopupExit(page, `[data-slot="${popupSlot}"]`);
           await page.keyboard.press('Escape');
+          if (example === 'drawer') {
+            await page.waitForFunction(
+              (selector) =>
+                document
+                  .querySelector(selector)
+                  ?.hasAttribute('data-ending-style') ?? false,
+              popupSelector,
+              { timeout: 5000 }
+            );
+            const exitDuration = await popup.evaluate(
+              (element) => getComputedStyle(element).transitionDuration
+            );
+            const durations = exitDuration
+              .split(',')
+              .map((value) => Number.parseFloat(value));
+            if (
+              !durations.includes(0.24) ||
+              durations.some((value) => value > 0.25)
+            ) {
+              throw new Error(
+                `drawer closed over ${exitDuration} instead of the standard duration`
+              );
+            }
+          }
           if (example === 'command' && engine === 'motion') {
             const exiting = await popup.evaluate((element) => ({
               height: (element as HTMLElement).offsetHeight,
@@ -3134,6 +3204,33 @@ const main = async () => {
           await preview.getByRole('button', { name: 'Default Toast' }).click();
           const toast = page.locator('[data-slot="toast"]').first();
           await toast.waitFor({ state: 'visible' });
+          const timing = await toast.evaluate((element) => {
+            const content = element.querySelector(
+              '[data-slot="toast-content"]'
+            );
+            if (!content) {
+              throw new Error('The toast has no content');
+            }
+
+            return {
+              content: getComputedStyle(content).transitionDuration,
+              root: getComputedStyle(element).transitionDuration,
+            };
+          });
+          const rootDurations = timing.root
+            .split(',')
+            .map((value) => Number.parseFloat(value));
+          const contentDurations = timing.content
+            .split(',')
+            .map((value) => Number.parseFloat(value));
+          if (
+            !rootDurations.includes(0.48) ||
+            contentDurations.some((value) => value !== 0.48)
+          ) {
+            throw new Error(
+              `toast ran two timings (root ${timing.root}, content ${timing.content})`
+            );
+          }
           const { page: reduced } = await openReducedMotionPage(route, scheme);
           await reduced
             .locator(captureSelector(example))

@@ -667,11 +667,13 @@
       "cssVars": {
         "light": {
           "duration-drawer": "450ms",
+          "duration-standard": "240ms",
           "ease-spring": "cubic-bezier(0.32, 0.72, 0, 1)",
           "destructive-foreground": "var(--color-red-700)"
         },
         "dark": {
           "duration-drawer": "450ms",
+          "duration-standard": "240ms",
           "ease-spring": "cubic-bezier(0.32, 0.72, 0, 1)",
           "destructive-foreground": "var(--color-red-400)"
         },
@@ -1629,7 +1631,6 @@
         "light": {
           "duration-considered": "480ms",
           "duration-fast": "160ms",
-          "duration-standard": "240ms",
           "ease-enter": "cubic-bezier(0.2, 0, 0, 1)",
           "ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
           "success": "var(--color-emerald-500)",
@@ -1639,7 +1640,6 @@
         "dark": {
           "duration-considered": "480ms",
           "duration-fast": "160ms",
-          "duration-standard": "240ms",
           "ease-enter": "cubic-bezier(0.2, 0, 0, 1)",
           "ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
           "success": "var(--color-emerald-500)",

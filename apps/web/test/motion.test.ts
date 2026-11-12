@@ -145,11 +145,6 @@ test('the Motion page limits the state tween to a click', async () => {
 
 test('the Motion page documents the CSS timing Tokens that ship', async () => {
   const page = await readMotionPage();
-  const registry = JSON.parse(
-    await readFile(join(webDir, 'registry/zen/registry.json'), 'utf8')
-  ) as {
-    items: { cssVars?: Record<string, Record<string, string>>; name: string }[];
-  };
   const stylesheet = await readFile(join(webDir, 'app/tokens.css'), 'utf8');
   const declared = new Map<string, string>(
     [...stylesheet.matchAll(/--([a-z-]+):\s*([^;]+);/g)].map((match) => [
@@ -157,11 +152,6 @@ test('the Motion page documents the CSS timing Tokens that ship', async () => {
       match[2] ?? '',
     ])
   );
-  const drawer = registry.items.find((item) => item.name === 'drawer');
-
-  for (const [token, value] of Object.entries(drawer?.cssVars?.light ?? {})) {
-    declared.set(`--${token}`, value);
-  }
 
   const rows = tableAfter(page, 'Easing and duration');
 
