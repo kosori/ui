@@ -1185,6 +1185,10 @@ test('the motion library owns the motion package and only its importers depend o
       'tooltip',
     ])
   );
+  expect(
+    importers,
+    'The expandables and the tab highlight run on the library'
+  ).toEqual(expect.arrayContaining(['accordion', 'collapsible', 'tabs']));
 
   for (const name of ['hover-card', 'tooltip']) {
     const item = items.find((registryItem) => registryItem.name === name);
@@ -1213,6 +1217,55 @@ test('the motion library owns the motion package and only its importers depend o
       `${item.name} ${importsLibrary ? 'imports' : 'does not import'} the library`
     ).toBe(importsLibrary && !isLibrary);
   }
+
+  for (const [name, preset] of [
+    ['accordion', 'smooth'],
+    ['collapsible', 'smooth'],
+    ['tabs', 'morph'],
+  ] as const) {
+    const { item, source } = sources.find(
+      ({ item }) => item.name === name
+    ) as (typeof sources)[number];
+
+    expect(source, `${name} does not animate on the ${preset} preset`).toMatch(
+      new RegExp(`useMotionTransition\\(\\s*'${preset}'\\s*\\)`)
+    );
+    expect(
+      JSON.stringify(item.cssVars ?? {}),
+      `${name} keeps an old --motion-* Token`
+    ).not.toContain('motion-');
+  }
+
+  const expandables = sources.filter(({ item }) =>
+    ['accordion', 'collapsible'].includes(item.name)
+  );
+  for (const { item, source } of expandables) {
+    expect(
+      source,
+      `${item.name} keeps its CSS height transition`
+    ).not.toContain('transition-[height]');
+    expect(source, `${item.name} keeps the old expand Token`).not.toContain(
+      'motion-expand'
+    );
+  }
+
+  const tabs = sources.find(({ item }) => item.name === 'tabs');
+  const segmentedControl = sources.find(
+    ({ item }) => item.name === 'segmented-control'
+  );
+  expect(tabs, 'Tabs is in the Zen Registry').toBeDefined();
+  expect(
+    segmentedControl,
+    'segmented-control is in the Zen Registry'
+  ).toBeDefined();
+  expect(
+    tabs?.source,
+    'Tabs still positions its highlight with the CSS variable transition'
+  ).not.toContain('--active-tab');
+  expect(
+    segmentedControl?.source,
+    'the shared highlight keeps its CSS variable transition'
+  ).not.toMatch(/transition-[^;]*var\(--active/);
 
   for (const name of ['button', 'toggle']) {
     const { item, source } = sources.find(
@@ -1541,6 +1594,10 @@ test('installing state-coloured items without the preset compiles their utilitie
 
     const registryItems = await readCatalog('zen');
     const motionTokensByItem = {
+      accordion: {
+        'duration-standard': '240ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
       'alert-dialog': {
         'duration-fast': '160ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
@@ -1698,12 +1755,10 @@ test('installing state-coloured items without the preset compiles their utilitie
       motionTokens,
       'the installed stylesheet still declares a press Token'
     ).not.toContain('--motion-press-');
-    expect(motionTokens, 'the installed expansion duration Token').toContain(
-      '--motion-expand-duration: 200ms'
-    );
-    expect(motionTokens, 'the installed expansion easing Token').toContain(
-      '--motion-expand-easing: cubic-bezier(0.2, 0, 0, 1)'
-    );
+    expect(
+      motionTokens,
+      'the installed stylesheet still declares an expansion Token'
+    ).not.toContain('--motion-expand-');
     expect(motionTokens, 'the installed overlay duration Token').toContain(
       '--motion-overlay-duration: 180ms'
     );

@@ -3,7 +3,50 @@
 import { Accordion as AccordionPrimitive } from '@base-ui/react/accordion';
 import { IconChevronDown } from '@tabler/icons-react';
 import { cn } from 'cn';
+import { motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
+import { useCallback, useState } from 'react';
+
+import { useMotionTransition } from '@/lib/motion';
+
+type MotionPanelProps = React.ComponentProps<typeof motion.div> & {
+  'data-open'?: string;
+};
+
+/**
+ * Spring a panel between its measured height and zero, releasing the clip once
+ * it settles open so nested content is not cut off.
+ */
+function MotionPanel({
+  className,
+  ...props
+}: MotionPanelProps): React.ReactElement {
+  const reduce = useReducedMotion();
+  const transition = useMotionTransition('smooth');
+  const open = props['data-open'] !== undefined;
+  const [settledOpen, setSettledOpen] = useState(open);
+  const clipped = !(open && (reduce || settledOpen));
+  const handleAnimationComplete = useCallback(
+    () => setSettledOpen(open),
+    [open]
+  );
+
+  return (
+    <motion.div
+      {...props}
+      animate={{ height: open ? 'auto' : 0 }}
+      aria-hidden={open ? undefined : true}
+      className={cn(
+        clipped ? 'overflow-hidden' : 'overflow-visible',
+        className
+      )}
+      inert={open ? undefined : true}
+      initial={false}
+      onAnimationComplete={handleAnimationComplete}
+      transition={transition}
+    />
+  );
+}
 
 export function Accordion(
   props: AccordionPrimitive.Root.Props
@@ -41,7 +84,7 @@ export function AccordionTrigger({
       >
         {children}
         <IconChevronDown
-          className='pointer-events-none size-4 shrink-0 translate-y-0.5 opacity-80 transition-transform duration-[var(--motion-expand-duration,200ms)] ease-[var(--motion-expand-easing,cubic-bezier(0.2,0,0,1))] motion-reduce:transition-none'
+          className='pointer-events-none size-4 shrink-0 translate-y-0.5 opacity-80 transition-transform duration-[var(--duration-standard,240ms)] ease-[var(--ease-standard,cubic-bezier(0.2,0,0,1))] motion-reduce:transition-none'
           data-slot='accordion-indicator'
         />
       </AccordionPrimitive.Trigger>
@@ -56,9 +99,12 @@ export function AccordionPanel({
 }: AccordionPrimitive.Panel.Props): React.ReactElement {
   return (
     <AccordionPrimitive.Panel
-      className='h-(--accordion-panel-height) overflow-hidden text-muted-foreground text-sm transition-[height] duration-[var(--motion-expand-duration,200ms)] ease-[var(--motion-expand-easing,cubic-bezier(0.2,0,0,1))] data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none'
-      data-slot='accordion-panel'
       {...props}
+      className='text-muted-foreground text-sm'
+      data-slot='accordion-panel'
+      hidden={undefined}
+      keepMounted
+      render={<MotionPanel />}
     >
       <div className={cn('pt-0 pb-4', className)}>{children}</div>
     </AccordionPrimitive.Panel>

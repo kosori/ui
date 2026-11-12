@@ -433,6 +433,90 @@ const waitForScale = async (
   return scale;
 };
 
+/** The height a rendered element currently occupies. */
+const heightOf = (element: Element): number =>
+  element.getBoundingClientRect().height;
+
+/** The left edge a rendered element currently occupies. */
+const leftOf = (element: Element): number =>
+  element.getBoundingClientRect().left;
+
+/** Poll a rendered element until its height satisfies a predicate. */
+const waitForHeight = async (
+  target: Locator,
+  predicate: (height: number) => boolean,
+  label: string,
+  timeout = 5000
+): Promise<number> => {
+  const deadline = Date.now() + timeout;
+  let height = await target.evaluate(heightOf);
+
+  while (!predicate(height)) {
+    if (Date.now() >= deadline) {
+      throw new Error(`${label} did not reach its height (last ${height})`);
+    }
+
+    // biome-ignore lint/performance/noAwaitInLoops: one element is sampled at a time so height readings stay ordered
+    await new Promise((resolve) => setTimeout(resolve, 16));
+    height = await target.evaluate(heightOf);
+  }
+
+  return height;
+};
+
+/** Poll an element until its left edge satisfies a predicate. */
+const waitForLeft = async (
+  target: Locator,
+  predicate: (left: number) => boolean,
+  label: string,
+  timeout = 5000
+): Promise<number> => {
+  const deadline = Date.now() + timeout;
+  let left = await target.evaluate(leftOf);
+
+  while (!predicate(left)) {
+    if (Date.now() >= deadline) {
+      throw new Error(`${label} did not reach its left edge (last ${left})`);
+    }
+
+    // biome-ignore lint/performance/noAwaitInLoops: one element is sampled at a time so movement stays ordered
+    await new Promise((resolve) => setTimeout(resolve, 16));
+    left = await target.evaluate(leftOf);
+  }
+
+  return left;
+};
+
+type Bounds = { height: number; left: number; top: number; width: number };
+
+/** The box a rendered element occupies, or null when it is not laid out. */
+const boundsOf = async (target: Locator): Promise<Bounds | null> => {
+  const box = await target.boundingBox();
+
+  return (
+    box && { height: box.height, left: box.x, top: box.y, width: box.width }
+  );
+};
+
+/** Throw unless two boxes coincide within a pixel of measurement noise. */
+const expectSameBounds = (
+  actual: Bounds | null,
+  expected: Bounds | null,
+  label: string
+) => {
+  if (!(actual && expected)) {
+    throw new Error(`${label} has no rendered box`);
+  }
+
+  const tolerance = 1.5;
+  for (const key of ['height', 'left', 'top', 'width'] as const) {
+    if (Math.abs(actual[key] - expected[key]) > tolerance) {
+      throw new Error(
+        `${label} sits ${key}=${actual[key]} instead of ${expected[key]}`
+      );
+    }
+  }
+};
 /** Whether a computed transform is the identity, so no travel is applied. */
 const isIdentityTransform = (transform: string): boolean => {
   if (transform === 'none') {
@@ -662,15 +746,14 @@ const main = async () => {
 
         if (example === 'accordion' || example === 'collapsible') {
           await page.waitForLoadState('networkidle');
+          const panelSlot =
+            example === 'accordion' ? 'accordion-panel' : 'collapsible-panel';
           const trigger = preview
             .locator(`[data-slot="${example}-trigger"]`)
             .first();
-          const panel = preview
-            .locator(
-              '[data-slot="accordion-panel"], [data-slot="collapsible-panel"]'
-            )
-            .first();
-          const triggerSelector = `[data-example="${example}"] [data-slot="${example === 'accordion' ? 'accordion-trigger' : 'collapsible-trigger'}"]`;
+          const panel = preview.locator(`[data-slot="${panelSlot}"]`).first();
+          const triggerSelector = `${captureSelector(example)} [data-slot="${example}-trigger"]`;
+          const panelSelector = `${captureSelector(example)} [data-slot="${panelSlot}"]`;
           const clickAndExpect = async (expanded: boolean) => {
             await trigger.click();
             try {
@@ -690,40 +773,162 @@ const main = async () => {
               );
             }
           };
-          await clickAndExpect(true);
-          await clickAndExpect(false);
-          await page.waitForTimeout(300);
-          const closedPanelCount = await panel.count();
-          if (closedPanelCount > 0) {
-            const collapsedHeight = await panel.evaluate(
-              (element) => element.getBoundingClientRect().height
+          const expectUnclipped = async (label: string) => {
+            const overflow = await panel.evaluate(
+              (element) => getComputedStyle(element).overflow
             );
-            if (collapsedHeight > 1) {
-              throw new Error(`${example} did not finish collapsing`);
+            if (overflow === 'hidden') {
+              throw new Error(`${label} still clips its nested content`);
             }
-          }
-          await clickAndExpect(true);
-          await trigger.click();
-          await trigger.click();
-          const finalExpanded =
-            (await trigger.getAttribute('aria-expanded')) === 'true';
-          await page.waitForTimeout(300);
-          const settledPanelCount = await panel.count();
-          if (finalExpanded && settledPanelCount === 0) {
-            throw new Error(
-              `${example} did not settle open after interruption`
+          };
+          const expectPanelState = async (expanded: boolean, label: string) => {
+            if (
+              (await trigger.getAttribute('aria-expanded')) !== String(expanded)
+            ) {
+              throw new Error(`${label} did not keep aria-expanded`);
+            }
+          };
+          const openHeight = async () => {
+            await clickAndExpect(true);
+            await waitForHeight(
+              panel,
+              (height) => height > 1,
+              `${example} open`
             );
-          }
-          if (settledPanelCount > 0) {
-            const settledHeight = await panel.evaluate(
-              (element) => element.getBoundingClientRect().height
+            await page.waitForTimeout(700);
+
+            return panel.evaluate(heightOf);
+          };
+          const closeHeight = async () => {
+            await clickAndExpect(false);
+            await waitForHeight(
+              panel,
+              (height) => height <= 1,
+              `${example} close`
             );
-            if (finalExpanded ? settledHeight < 1 : settledHeight > 1) {
-              throw new Error(
-                `${example} did not settle to its current state after interruption`
+          };
+
+          const expandedHeight = await openHeight();
+          if (expandedHeight <= 1) {
+            throw new Error(`${example} never reached an open height`);
+          }
+          await expectUnclipped(`${example} open`);
+          await closeHeight();
+
+          const interruption = await page.evaluate(
+            async ({ midHeight, panelTarget, triggerTarget }) => {
+              const trigger = document.querySelector(triggerTarget);
+              const panelElement = document.querySelector(panelTarget);
+              if (
+                !(
+                  trigger instanceof HTMLElement &&
+                  panelElement instanceof HTMLElement
+                )
+              ) {
+                throw new Error('The expandable is not rendered');
+              }
+
+              const frame = () =>
+                new Promise((resolve) =>
+                  requestAnimationFrame(() => resolve(0))
+                );
+              const height = () => panelElement.getBoundingClientRect().height;
+              const expanded = () =>
+                trigger.getAttribute('aria-expanded') === 'true';
+              const waitFor = async (
+                predicate: () => boolean,
+                message: string
+              ) => {
+                const deadline = performance.now() + 2000;
+
+                while (!predicate()) {
+                  if (performance.now() > deadline) {
+                    throw new Error(message);
+                  }
+                  // biome-ignore lint/performance/noAwaitInLoops: frames are sampled in order to keep the height continuous
+                  await frame();
+                }
+              };
+              const sample = async (count: number) => {
+                const samples: number[] = [];
+
+                for (let index = 0; index < count; index += 1) {
+                  // biome-ignore lint/performance/noAwaitInLoops: frames are sampled in order to keep the height continuous
+                  await frame();
+                  samples.push(height());
+                }
+
+                return samples;
+              };
+              const toggleAndSample = async (count: number) => {
+                const before = await sample(2);
+                trigger.click();
+                const after = await sample(count);
+
+                return [...before, ...after];
+              };
+
+              trigger.click();
+              await waitFor(expanded, 'The expandable did not open');
+              await waitFor(
+                () => height() > midHeight,
+                'The expandable never reached a mid-open height'
               );
+
+              const beforeClose = height();
+              const closing = await toggleAndSample(4);
+              const beforeReopen = height();
+              const reopening = await toggleAndSample(10);
+
+              return { beforeClose, beforeReopen, closing, reopening };
+            },
+            {
+              midHeight: expandedHeight * 0.25,
+              panelTarget: panelSelector,
+              triggerTarget: triggerSelector,
             }
+          );
+
+          const { beforeClose, beforeReopen, closing, reopening } =
+            interruption;
+          const reversal = 2;
+
+          if (
+            (closing[reversal - 1] ?? 0) <= expandedHeight * 0.1 ||
+            (closing[reversal - 1] ?? 0) >= expandedHeight * 0.97
+          ) {
+            throw new Error(`${example} did not close from a mid-open height`);
           }
+          if (
+            (closing.at(-1) ?? beforeClose) >=
+            (closing[reversal - 1] ?? 0) - 1
+          ) {
+            throw new Error(`${example} did not move down while closing`);
+          }
+          if ((reopening[reversal - 1] ?? 0) >= expandedHeight * 0.5) {
+            throw new Error(
+              `${example} did not reopen from a mid-close height`
+            );
+          }
+          if (
+            (reopening.at(-1) ?? beforeReopen) <=
+            (reopening[reversal] ?? 0) + 5
+          ) {
+            throw new Error(`${example} did not move up while reopening`);
+          }
+
+          await waitForHeight(
+            panel,
+            (height) => height >= expandedHeight * 0.9,
+            `${example} settle open after interruption`
+          );
+          await page.waitForTimeout(300);
+          await expectPanelState(true, `${example} after interruption`);
+          await expectUnclipped(`${example} after interruption`);
+
+          await closeHeight();
+          await page.waitForTimeout(300);
+          await expectPanelState(false, `${example} closed`);
 
           const { context: reducedContext, page: reducedPage } =
             await openReducedMotionPage(route, scheme);
@@ -732,9 +937,7 @@ const main = async () => {
             .locator(`[data-slot="${example}-trigger"]`)
             .first();
           const reducedPanel = reducedPreview
-            .locator(
-              '[data-slot="accordion-panel"], [data-slot="collapsible-panel"]'
-            )
+            .locator(`[data-slot="${panelSlot}"]`)
             .first();
           await reducedTrigger.click();
           try {
@@ -751,12 +954,269 @@ const main = async () => {
               cause: error,
             });
           }
-          const transitionProperty = await reducedPanel.evaluate(
-            (element) => getComputedStyle(element).transitionProperty
+          const reducedOpenHeight = await waitForHeight(
+            reducedPanel,
+            (height) => height > 1,
+            `${example} reduced-motion open`,
+            500
           );
-          if (transitionProperty !== 'none') {
+          if (reducedOpenHeight < expandedHeight * 0.9) {
+            throw new Error(
+              `${example} travelled to ${reducedOpenHeight} with reduced motion`
+            );
+          }
+          const reducedState = await reducedPanel.evaluate((element) => {
+            const style = getComputedStyle(element);
+            return {
+              durations: style.transitionDuration,
+              overflow: style.overflow,
+              property: style.transitionProperty,
+            };
+          });
+          const moving = reducedState.durations
+            .split(',')
+            .some((duration) => Number.parseFloat(duration) > 0);
+          if (reducedState.property !== 'none' && moving) {
             throw new Error(
               `${example} retains a transition with reduced motion`
+            );
+          }
+          if (reducedState.overflow === 'hidden') {
+            throw new Error(
+              `${example} clips content with reduced motion when open`
+            );
+          }
+          if (
+            !(await reducedTrigger.evaluate(
+              (element) => element === document.activeElement
+            ))
+          ) {
+            throw new Error(
+              `${example} lost trigger focus with reduced motion`
+            );
+          }
+          await reducedTrigger.click();
+          await reducedPage.waitForFunction(
+            (selector) =>
+              document
+                .querySelector(selector)
+                ?.getAttribute('aria-expanded') === 'false',
+            triggerSelector,
+            { timeout: 5000 }
+          );
+          await waitForHeight(
+            reducedPanel,
+            (height) => height <= 1,
+            `${example} reduced-motion close`,
+            500
+          );
+          if (
+            !(await reducedTrigger.evaluate(
+              (element) => element === document.activeElement
+            ))
+          ) {
+            throw new Error(
+              `${example} lost trigger focus when closed with reduced motion`
+            );
+          }
+          await reducedContext.close();
+        }
+
+        if (example === 'tabs') {
+          const indicator = preview.locator('[data-slot="tab-indicator"]');
+          if ((await indicator.count()) !== 1) {
+            throw new Error('Tabs rendered more than one highlight element');
+          }
+
+          const tabs = preview.locator('[data-slot="tabs-tab"]');
+          const first = tabs.nth(0);
+          const second = tabs.nth(1);
+          const third = tabs.nth(2);
+          const boundsOfTab = async (tab: Locator, label: string) => {
+            const bounds = await boundsOf(tab);
+            if (!bounds) {
+              throw new Error(`${label} has no visible box`);
+            }
+            return bounds;
+          };
+          const settleOn = async (tab: Locator, label: string) => {
+            const expected = await boundsOfTab(tab, label);
+            const deadline = Date.now() + 5000;
+            let left = await indicator.evaluate(leftOf);
+
+            while (Math.abs(left - expected.left) > 1.5) {
+              if (Date.now() > deadline) {
+                throw new Error(
+                  `${label} settled at ${left} instead of ${expected.left}`
+                );
+              }
+              // biome-ignore lint/performance/noAwaitInLoops: one element is sampled at a time so movement stays ordered
+              await new Promise((resolve) => setTimeout(resolve, 16));
+              left = await indicator.evaluate(leftOf);
+            }
+            await page.waitForTimeout(80);
+            expectSameBounds(await boundsOf(indicator), expected, label);
+          };
+          const expectTravel = async (
+            from: number,
+            to: number,
+            label: string
+          ) => {
+            const direction = Math.sign(to - from);
+            const startedAt = await waitForLeft(
+              indicator,
+              (left) => (left - from) * direction > 2,
+              `${label} start`
+            );
+            if ((to - startedAt) * direction <= 2) {
+              throw new Error(
+                `${label} jumped to ${startedAt} instead of gliding`
+              );
+            }
+          };
+          const startLeftSampler = async () => {
+            await indicator.evaluate((element) => {
+              const samples: number[] = [];
+              (
+                window as Window & { __tabsLeftSamples?: number[] }
+              ).__tabsLeftSamples = samples;
+              const startedAt = performance.now();
+              const step = () => {
+                samples.push(element.getBoundingClientRect().left);
+                if (performance.now() - startedAt < 1500) {
+                  requestAnimationFrame(step);
+                }
+              };
+              requestAnimationFrame(step);
+            });
+          };
+          const readLeftSamples = () =>
+            page.evaluate(
+              () =>
+                (window as Window & { __tabsLeftSamples?: number[] })
+                  .__tabsLeftSamples ?? []
+            );
+
+          await second.evaluate((element) => (element as HTMLElement).click());
+          await settleOn(second, 'Tabs warm highlight');
+          await first.evaluate((element) => (element as HTMLElement).click());
+          await settleOn(first, 'Tabs initial highlight');
+          const firstBounds = await boundsOfTab(first, 'Tabs first tab');
+          const secondBounds = await boundsOfTab(second, 'Tabs second tab');
+          await second.evaluate((element) => (element as HTMLElement).click());
+          await expectTravel(firstBounds.left, secondBounds.left, 'Tabs click');
+          await settleOn(second, 'Tabs click highlight');
+          if (
+            (await first.getAttribute('aria-selected')) !== 'false' ||
+            (await second.getAttribute('aria-selected')) !== 'true'
+          ) {
+            throw new Error('Tabs lost its selection after a pointer change');
+          }
+
+          await first.click();
+          await settleOn(first, 'Tabs reset highlight');
+          await first.focus();
+          await page.keyboard.press('ArrowRight');
+          if (
+            !(await second.evaluate(
+              (element) => element === document.activeElement
+            ))
+          ) {
+            throw new Error('Tabs arrow key did not move focus');
+          }
+          const keyboardFrom = await boundsOfTab(first, 'Tabs keyboard origin');
+          const keyboardTo = await boundsOfTab(second, 'Tabs keyboard target');
+          await startLeftSampler();
+          await page.keyboard.press('Enter');
+          if ((await second.getAttribute('aria-selected')) !== 'true') {
+            throw new Error('Tabs keyboard activation did not move selection');
+          }
+          await settleOn(second, 'Tabs keyboard highlight');
+          const keyboardSamples = await readLeftSamples();
+          if (
+            !keyboardSamples.some(
+              (left) =>
+                left > keyboardFrom.left + 2 && left < keyboardTo.left - 2
+            )
+          ) {
+            throw new Error(
+              'Tabs keyboard jumped the highlight instead of gliding'
+            );
+          }
+
+          await preview.evaluate((element) =>
+            element.setAttribute('dir', 'rtl')
+          );
+          const rtlTarget = await boundsOfTab(third, 'Tabs RTL target');
+          const rtlFrom = await indicator.evaluate(leftOf);
+          await third.evaluate((element) => (element as HTMLElement).click());
+          await expectTravel(rtlFrom, rtlTarget.left, 'Tabs RTL');
+          await settleOn(third, 'Tabs RTL highlight');
+          await preview.evaluate((element) => element.removeAttribute('dir'));
+          await first.click();
+          await settleOn(first, 'Tabs restored highlight');
+
+          const { context: reducedContext, page: reducedPage } =
+            await openReducedMotionPage(route, scheme);
+          const reducedPreview = reducedPage.locator(captureSelector(example));
+          const reducedIndicator = reducedPreview.locator(
+            '[data-slot="tab-indicator"]'
+          );
+          if ((await reducedIndicator.count()) !== 1) {
+            throw new Error(
+              'Reduced-motion Tabs rendered more than one highlight element'
+            );
+          }
+          const reducedTabs = reducedPreview.locator('[data-slot="tabs-tab"]');
+          const reducedSecond = reducedTabs.nth(1);
+          await reducedSecond.click();
+          await reducedPage.waitForFunction(
+            (selector) =>
+              document
+                .querySelector(selector)
+                ?.getAttribute('aria-selected') === 'true',
+            `${captureSelector(example)} [data-slot="tabs-tab"]:nth-of-type(2)`,
+            { timeout: 5000 }
+          );
+          await reducedPage.evaluate(
+            () =>
+              new Promise((resolve) => requestAnimationFrame(() => resolve(1)))
+          );
+          expectSameBounds(
+            await boundsOf(reducedIndicator),
+            await boundsOf(reducedSecond),
+            'Reduced-motion Tabs highlight'
+          );
+
+          const reducedFirst = reducedTabs.nth(0);
+          await reducedFirst.click();
+          await reducedFirst.focus();
+          await reducedPage.keyboard.press('ArrowRight');
+          await reducedPage.keyboard.press('Enter');
+          await reducedPage.waitForFunction(
+            (selector) =>
+              document
+                .querySelector(selector)
+                ?.getAttribute('aria-selected') === 'true',
+            `${captureSelector(example)} [data-slot="tabs-tab"]:nth-of-type(2)`,
+            { timeout: 5000 }
+          );
+          await reducedPage.evaluate(
+            () =>
+              new Promise((resolve) => requestAnimationFrame(() => resolve(1)))
+          );
+          expectSameBounds(
+            await boundsOf(reducedIndicator),
+            await boundsOf(reducedSecond),
+            'Reduced-motion Tabs keyboard highlight'
+          );
+          if (
+            !(await reducedSecond.evaluate(
+              (element) => element === document.activeElement
+            ))
+          ) {
+            throw new Error(
+              'Reduced-motion Tabs lost keyboard focus after navigation'
             );
           }
           await reducedContext.close();
