@@ -2,12 +2,19 @@
 
 import { Checkbox as CheckboxPrimitive } from '@base-ui/react/checkbox';
 import { cn } from 'cn';
+import type { HTMLMotionProps } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
+
+import { useMotionTransition } from '@/lib/motion';
 
 export function Checkbox({
   className,
   ...props
 }: CheckboxPrimitive.Root.Props): React.ReactElement {
+  const reduce = useReducedMotion();
+  const transition = useMotionTransition('snappy');
+
   return (
     <CheckboxPrimitive.Root
       className={cn(
@@ -18,14 +25,23 @@ export function Checkbox({
       {...props}
     >
       <CheckboxPrimitive.Indicator
-        className='absolute -inset-px flex scale-90 items-center justify-center rounded-[.25rem] text-primary-foreground opacity-0 transition-[opacity,scale] duration-[var(--motion-state-duration,120ms)] ease-[var(--motion-state-easing,cubic-bezier(0.2,0,0,1))] data-checked:scale-100 data-indeterminate:scale-100 data-checked:bg-primary data-indeterminate:text-foreground data-checked:opacity-100 data-indeterminate:opacity-100 motion-reduce:scale-100 motion-reduce:transition-none'
+        className='absolute -inset-px flex items-center justify-center rounded-[.25rem] text-primary-foreground data-checked:bg-primary data-indeterminate:text-foreground'
         data-slot='checkbox-indicator'
         // biome-ignore lint/performance/noJsxPropsBind: Base UI's render prop receives the indicator state
         render={(
-          props: React.ComponentProps<'span'>,
+          indicatorProps: React.ComponentProps<'span'>,
           state: CheckboxPrimitive.Indicator.State
         ) => (
-          <span {...props}>
+          <motion.span
+            {...(indicatorProps as HTMLMotionProps<'span'>)}
+            animate={{ scale: 1 }}
+            initial={
+              reduce || state.transitionStatus !== 'starting'
+                ? false
+                : { scale: 0.9 }
+            }
+            transition={transition}
+          >
             {state.indeterminate ? (
               <svg
                 aria-hidden='true'
@@ -59,7 +75,7 @@ export function Checkbox({
                 <path d='M5.252 12.7 10.2 18.63 18.748 5.37' />
               </svg>
             )}
-          </span>
+          </motion.span>
         )}
       />
     </CheckboxPrimitive.Root>

@@ -14,7 +14,8 @@ position.
 | Surface | Engine | Preset |
 | --- | --- | --- |
 | Button and Toggle press | Motion | `snappy` |
-| Switch thumb, Checkbox, Slider | Motion | `snappy`, `responsive` |
+| Switch thumb and Checkbox mark | Motion | `snappy` |
+| Slider thumb | Motion | `responsive` |
 | Accordion and Collapsible height | Motion | `smooth` |
 | Dialog, Sheet, Alert Dialog | Motion | `smooth` |
 | Popover, menus, Command, Select, Combobox, Autocomplete | Motion | `snappy` |
@@ -87,6 +88,8 @@ Under reduced motion the end state, focus and feedback are kept and travel is
 removed:
 
 - Presses and toggles jump to their end state; colour feedback still runs.
+- The Switch thumb and the Checkbox mark keep their end state without travel
+  or scale, and the Slider thumb keeps tracking the pointer without scaling.
 - Expandables snap open and closed.
 - Dialogs, sheets and popups fade on opacity alone, with no scale and no travel.
 
