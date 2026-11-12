@@ -132,6 +132,9 @@ const OVERLAY_EXAMPLES = {
 type OverlayExample = keyof typeof OVERLAY_EXAMPLES;
 type OverlayOpenAction = 'click' | 'fill' | 'hover' | 'right-click';
 
+/** The point inside a Context Menu trigger a right click lands on. */
+const CONTEXT_MENU_POINT = { x: 20, y: 16 };
+
 const isOverlayExample = (example: string): example is OverlayExample =>
   Object.hasOwn(OVERLAY_EXAMPLES, example);
 
@@ -139,7 +142,76 @@ const isOverlayExample = (example: string): example is OverlayExample =>
  * Overlays that animate their popup through Motion instead of a CSS
  * transition, so the seam asserts an exit that outlives the open state.
  */
-const MOTION_OVERLAYS = new Set<OverlayExample>(['dialog']);
+const MOTION_OVERLAYS = new Set<OverlayExample>([
+  'context-menu',
+  'dialog',
+  'dropdown-menu',
+  'popover',
+  'select',
+]);
+
+type PopupExitProof = { ending: boolean; faded: boolean };
+
+/**
+ * Record a popup's closing state before it leaves the DOM, so an exit that
+ * finishes between two protocol calls cannot hide from the seam.
+ */
+const watchPopupExit = async (page: Page, selector: string) => {
+  await page.evaluate((popupSelector: string) => {
+    const proof = { ending: false, faded: false };
+    (window as unknown as { popupExitProof: PopupExitProof }).popupExitProof =
+      proof;
+
+    const inspect = (element: Element | null) => {
+      if (!(element instanceof HTMLElement)) {
+        return;
+      }
+
+      if (
+        element.hasAttribute('data-ending-style') ||
+        element.hasAttribute('data-closed')
+      ) {
+        proof.ending = true;
+      }
+
+      const opacity = Number.parseFloat(element.style.opacity);
+      if (Number.isFinite(opacity) && opacity < 0.99) {
+        proof.faded = true;
+      }
+    };
+
+    const observer = new MutationObserver((records) => {
+      inspect(document.querySelector(popupSelector));
+      for (const record of records) {
+        if (
+          record.target instanceof Element &&
+          record.target.matches(popupSelector)
+        ) {
+          inspect(record.target);
+        }
+      }
+    });
+    observer.observe(document.body, {
+      attributeFilter: ['data-closed', 'data-ending-style', 'style'],
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+    (
+      window as unknown as { popupExitObserver: MutationObserver }
+    ).popupExitObserver = observer;
+  }, selector);
+};
+
+/** Read the exit a popup went through and stop watching it. */
+const readPopupExit = async (page: Page) =>
+  page.evaluate(() => {
+    (
+      window as unknown as { popupExitObserver?: MutationObserver }
+    ).popupExitObserver?.disconnect();
+    return (window as unknown as { popupExitProof: PopupExitProof })
+      .popupExitProof;
+  });
 
 const openOverlay = async (trigger: Locator, action: OverlayOpenAction) => {
   if (action === 'fill') {
@@ -153,7 +225,9 @@ const openOverlay = async (trigger: Locator, action: OverlayOpenAction) => {
   }
 
   await trigger.click(
-    action === 'right-click' ? { button: 'right' } : undefined
+    action === 'right-click'
+      ? { button: 'right', position: CONTEXT_MENU_POINT }
+      : undefined
   );
 };
 
@@ -727,6 +801,17 @@ const main = async () => {
           await trigger.scrollIntoViewIfNeeded();
           const triggerBefore = await trigger.boundingBox();
 
+          if (example === 'select') {
+            const mountedBeforeInteraction = await page
+              .locator(`[data-slot="${popupSlot}"]`)
+              .count();
+            if (mountedBeforeInteraction !== 0) {
+              throw new Error(
+                `${example} mounted its popup before the first interaction`
+              );
+            }
+          }
+
           await page.waitForTimeout(500);
           await openOverlay(trigger, openAction);
           const popup = page.locator(`[data-slot="${popupSlot}"]`).first();
@@ -791,6 +876,26 @@ const main = async () => {
           }
 
           if (example === 'dropdown-menu') {
+            const anchorWidth = await page.evaluate(() => {
+              const positioner = document.querySelector(
+                '[data-slot="menu-positioner"]'
+              );
+              return positioner
+                ? Number.parseFloat(
+                    getComputedStyle(positioner).getPropertyValue(
+                      '--anchor-width'
+                    )
+                  )
+                : Number.NaN;
+            });
+            if (
+              !(triggerBefore && Number.isFinite(anchorWidth)) ||
+              Math.abs(anchorWidth - triggerBefore.width) > 1
+            ) {
+              throw new Error(
+                `${example} lost its anchor width (${anchorWidth} vs ${triggerBefore?.width})`
+              );
+            }
             await page.keyboard.press('ArrowDown');
             const highlightedItem = popup.locator('[data-highlighted]').first();
             await highlightedItem.waitFor({ state: 'visible' });
@@ -806,6 +911,31 @@ const main = async () => {
                 popupElement: await popup.elementHandle(),
               }
             );
+          }
+
+          if (example === 'context-menu') {
+            const pointer = triggerBefore
+              ? {
+                  x: triggerBefore.x + CONTEXT_MENU_POINT.x,
+                  y: triggerBefore.y + CONTEXT_MENU_POINT.y,
+                }
+              : null;
+            const origin = await popup.evaluate((element) => {
+              const rect = element.getBoundingClientRect();
+              const [x = Number.NaN, y = Number.NaN] = getComputedStyle(element)
+                .transformOrigin.split(' ')
+                .map((value) => Number.parseFloat(value));
+              return { x: rect.x + x, y: rect.y + y };
+            });
+            if (
+              !pointer ||
+              Math.abs(origin.x - pointer.x) > 2 ||
+              Math.abs(origin.y - pointer.y) > 4
+            ) {
+              throw new Error(
+                `${example} did not scale from the pointer (origin ${origin.x},${origin.y} vs pointer ${pointer?.x},${pointer?.y})`
+              );
+            }
           }
 
           if (example === 'dialog') {
@@ -860,27 +990,33 @@ const main = async () => {
             );
           }
 
+          if (example === 'select') {
+            await popup.evaluate((element) => {
+              (element as HTMLElement).dataset.mountProbe = 'first';
+            });
+          }
+
+          await watchPopupExit(page, `[data-slot="${popupSlot}"]`);
           await page.keyboard.press('Escape');
           if (engine === 'motion') {
-            if (
-              (await page.locator(`[data-slot="${popupSlot}"]`).count()) === 0
-            ) {
+            if (example === 'select') {
+              await popup.waitFor({ state: 'hidden' });
+              if (
+                (await page.locator(`[data-slot="${popupSlot}"]`).count()) === 0
+              ) {
+                throw new Error(
+                  `${example} unmounted after its first interaction`
+                );
+              }
+            } else {
+              await popup.waitFor({ state: 'detached' });
+            }
+            const exit = await readPopupExit(page);
+            if (!(exit.ending && exit.faded)) {
               throw new Error(
                 `${example} removed its popup before the exit animation`
               );
             }
-            await page.waitForFunction(
-              (selector) => {
-                const element = document.querySelector(selector);
-                return (
-                  element !== null &&
-                  Number.parseFloat(getComputedStyle(element).opacity) < 0.9
-                );
-              },
-              `[data-slot="${popupSlot}"]`,
-              { timeout: 5000 }
-            );
-            await popup.waitFor({ state: 'detached' });
           } else {
             await popup.waitFor({ state: 'hidden' });
           }
@@ -900,6 +1036,25 @@ const main = async () => {
             triggerBefore.y !== triggerAfterClose.y
           ) {
             throw new Error(`${example} trigger moved while its popup closed`);
+          }
+
+          if (example === 'select') {
+            await trigger.click();
+            await popup.waitFor({ state: 'visible' });
+            await page.waitForFunction(
+              (selector) => {
+                const element = document.querySelector<HTMLElement>(selector);
+                return (
+                  element !== null &&
+                  element.dataset.mountProbe === 'first' &&
+                  Number.parseFloat(getComputedStyle(element).opacity) > 0.99
+                );
+              },
+              `[data-slot="${popupSlot}"]`,
+              { timeout: 5000 }
+            );
+            await page.keyboard.press('Escape');
+            await popup.waitFor({ state: 'hidden' });
           }
 
           const { page: reducedPage } = await openReducedMotionPage(

@@ -1173,7 +1173,15 @@ test('the motion library owns the motion package and only its importers depend o
     .map(({ item }) => item.name)
     .sort();
   expect(importers, 'Presses and overlays run on the library').toEqual(
-    expect.arrayContaining(['button', 'dialog', 'toggle'])
+    expect.arrayContaining([
+      'button',
+      'context-menu',
+      'dialog',
+      'dropdown-menu',
+      'popover',
+      'select',
+      'toggle',
+    ])
   );
 
   for (const { item, source } of sources) {
@@ -1232,6 +1240,47 @@ test('the motion library owns the motion package and only its importers depend o
     'duration-fast': '160ms',
     'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
   });
+
+  for (const name of [
+    'popover',
+    'dropdown-menu',
+    'context-menu',
+    'select',
+  ] as const) {
+    const entry = sources.find(({ item }) => item.name === name) as
+      | (typeof sources)[number]
+      | undefined;
+
+    expect(entry, `the ${name} is in the Zen Registry`).toBeDefined();
+    expect(entry?.source, `${name} owns its open state`).toContain(
+      'useControllableOpen'
+    );
+    expect(entry?.source, `${name} animates presence`).toContain(
+      'AnimatePresence'
+    );
+    expect(entry?.source, `${name} uses the snappy preset`).toContain(
+      'motionTokens.spring.snappy'
+    );
+    expect(entry?.source, `${name} still carries a motion Token`).not.toContain(
+      'motion-overlay'
+    );
+    expect(
+      Object.keys(entry?.item.cssVars?.light ?? {}).filter((token) =>
+        token.startsWith('motion-')
+      ),
+      `${name} still carries a motion Token`
+    ).toEqual([]);
+  }
+
+  for (const name of ['popover', 'dropdown-menu', 'context-menu'] as const) {
+    const entry = sources.find(({ item }) => item.name === name) as
+      | (typeof sources)[number]
+      | undefined;
+
+    expect(entry?.source, `${name} keeps its portal for the exit`).toContain(
+      'keepMounted'
+    );
+  }
 });
 
 test('the CSS-kept items read the shared timing Tokens', async () => {
@@ -1377,10 +1426,6 @@ test('installing state-coloured items without the preset compiles their utilitie
         'motion-overlay-duration': '180ms',
         'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
       },
-      'context-menu': {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
-      },
       dialog: {
         'duration-fast': '160ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
@@ -1404,10 +1449,6 @@ test('installing state-coloured items without the preset compiles their utilitie
       progress: {
         'duration-fast': '160ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
-      },
-      select: {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       sheet: {
         'motion-overlay-duration': '180ms',
