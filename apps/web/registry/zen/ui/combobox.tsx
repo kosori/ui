@@ -262,7 +262,6 @@ export function ComboboxPopup({
                   }}
                   exit={{ opacity: 0, scale }}
                   initial={{ opacity: 0, scale }}
-                  layout={reduce ? false : 'size'}
                   transition={transition}
                 />
               ))

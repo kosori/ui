@@ -2291,46 +2291,56 @@ const main = async () => {
             await trigger.fill('a');
             const measured = page.locator(popupSelector).first();
             await measured.waitFor({ state: 'visible' });
-            const measuredWidth = await measured.evaluate(
-              (element) => (element as HTMLElement).offsetWidth
+            await waitForScale(
+              measured,
+              (scale) => scale > 0.999,
+              `${example} open scale`
             );
+            const measuredBox = await measured.evaluate((element) => ({
+              height: (element as HTMLElement).getBoundingClientRect().height,
+              width: (element as HTMLElement).offsetWidth,
+            }));
 
-            if (measuredWidth < 1) {
+            if (measuredBox.width < 1) {
               throw new Error(
                 `${example} measured no width while its entrance played`
               );
             }
 
-            // Filtering narrows the list while the entrance spring is in flight.
             await trigger.fill('design');
             const samples = await sampleBoxes(page, popupSelector);
             const finalWidth = await measured.evaluate(
               (element) => (element as HTMLElement).offsetWidth
             );
-            const heights = samples.map((sample) => sample.height);
-            const shortest = Math.min(...heights);
-            const tallest = Math.max(...heights);
-            const animated = heights.some(
-              (height) => height > shortest + 2 && height < tallest - 2
+            const finalHeight = await measured.evaluate(
+              (element) =>
+                (element as HTMLElement).getBoundingClientRect().height
+            );
+            const animated = samples.some(
+              (sample) =>
+                sample.height > finalHeight + 2 &&
+                sample.height < measuredBox.height - 2
             );
 
-            if (finalWidth !== measuredWidth) {
+            if (finalWidth !== measuredBox.width) {
               throw new Error(
-                `${example} changed its measured width from ${measuredWidth}px to ${finalWidth}px`
+                `${example} changed its measured width from ${measuredBox.width}px to ${finalWidth}px`
               );
             }
-            if (tallest - shortest < 4) {
+            if (measuredBox.height - finalHeight < 4) {
               throw new Error(
                 `${example} did not change size when the list filtered`
               );
             }
-            if (!animated) {
+            if (animated) {
               throw new Error(
-                `${example} resized abruptly when the list filtered`
+                `${example} animated its list resize instead of resizing immediately`
               );
             }
             if (
-              samples.some((sample) => sample.layoutWidth < measuredWidth - 1)
+              samples.some(
+                (sample) => sample.layoutWidth < measuredBox.width - 1
+              )
             ) {
               throw new Error(
                 `${example} lost its measured width while filtering`
