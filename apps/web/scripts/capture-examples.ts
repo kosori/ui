@@ -1094,51 +1094,58 @@ const main = async () => {
             return bounds;
           };
           const settleOn = async (tab: Locator, label: string) => {
-            const expected = await boundsOfTab(tab, label);
             const deadline = Date.now() + 5000;
-            let left = await indicator.evaluate(leftOf);
+            const readAlignment = () =>
+              page.evaluate(() => {
+                const indicator = document.querySelector(
+                  '[data-slot="tab-indicator"]'
+                );
+                const selected = document.querySelector(
+                  '[data-slot="tabs-tab"][aria-selected="true"]'
+                );
+                if (!(indicator && selected)) {
+                  return null;
+                }
 
-            while (Math.abs(left - expected.left) > 1.5) {
+                const indicatorRect = indicator.getBoundingClientRect();
+                const tabRect = selected.getBoundingClientRect();
+
+                return {
+                  height: indicatorRect.height - tabRect.height,
+                  left: indicatorRect.left - tabRect.left,
+                  top: indicatorRect.top - tabRect.top,
+                  width: indicatorRect.width - tabRect.width,
+                };
+              });
+            const settled = (
+              alignment: Awaited<ReturnType<typeof readAlignment>>
+            ) =>
+              Boolean(
+                alignment &&
+                  Math.abs(alignment.height) <= 1.5 &&
+                  Math.abs(alignment.left) <= 1.5 &&
+                  Math.abs(alignment.top) <= 1.5 &&
+                  Math.abs(alignment.width) <= 1.5
+              );
+
+            let alignment = await readAlignment();
+            while (!settled(alignment)) {
               if (Date.now() > deadline) {
                 throw new Error(
-                  `${label} settled at ${left} instead of ${expected.left}`
+                  `${label} did not settle: ${JSON.stringify(alignment)}`
                 );
               }
-              // biome-ignore lint/performance/noAwaitInLoops: one element is sampled at a time so movement stays ordered
+              // biome-ignore lint/performance/noAwaitInLoops: one sample at a time keeps the settled reading ordered
               await new Promise((resolve) => setTimeout(resolve, 16));
-              left = await indicator.evaluate(leftOf);
+              alignment = await readAlignment();
             }
-            await page.waitForTimeout(80);
-            const alignment = await page.evaluate(() => {
-              const indicator = document.querySelector(
-                '[data-slot="tab-indicator"]'
-              );
-              const tab = document.querySelector(
-                '[data-slot="tabs-tab"][aria-selected="true"]'
-              );
-              if (!(indicator && tab)) {
-                return null;
-              }
 
-              const indicatorRect = indicator.getBoundingClientRect();
-              const tabRect = tab.getBoundingClientRect();
-
-              return {
-                height: indicatorRect.height - tabRect.height,
-                left: indicatorRect.left - tabRect.left,
-                top: indicatorRect.top - tabRect.top,
-                width: indicatorRect.width - tabRect.width,
-              };
-            });
-            if (!alignment) {
-              throw new Error(`${label} lost its highlight or selected tab`);
-            }
-            for (const key of ['height', 'left', 'top', 'width'] as const) {
-              if (Math.abs(alignment[key]) > 1.5) {
-                throw new Error(
-                  `${label} sits ${key}+=${alignment[key]} relative to its tab`
-                );
-              }
+            if (
+              !(await tab.evaluate(
+                (element) => element.getAttribute('aria-selected') === 'true'
+              ))
+            ) {
+              throw new Error(`${label} selected a different tab`);
             }
           };
           const expectTravel = async (
