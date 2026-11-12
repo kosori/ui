@@ -17,9 +17,6 @@ export const segmentedControlRootClassName =
 export const segmentedControlIndicatorSurfaceClassName =
   'rounded-md bg-background shadow-sm/5 dark:bg-input';
 
-/** The single highlight a segmented control moves over its active item. */
-export const segmentedControlIndicatorClassName = `pointer-events-none absolute top-0 left-0 -z-1 ${segmentedControlIndicatorSurfaceClassName}`;
-
 /** The single highlight Tabs moves under its active tab, sharing the same surface. */
 export const tabsIndicatorClassName =
   'pointer-events-none absolute top-0 left-0';
