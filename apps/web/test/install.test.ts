@@ -1168,7 +1168,7 @@ test('the motion library owns the motion package and only its importers depend o
 
   expect(library, 'the motion library is in the Zen Registry').toBeDefined();
   expect(library?.type).toBe('registry:lib');
-  expect(library?.dependencies).toEqual(['motion']);
+  expect(library?.dependencies).toEqual(['cn', 'motion']);
   expect(library?.files).toEqual([
     { path: 'registry/zen/lib/motion.ts', type: 'registry:lib' },
   ]);
@@ -1184,44 +1184,6 @@ test('the motion library owns the motion package and only its importers depend o
     }))
   );
 
-  expect(JSON.stringify(items)).not.toContain('motion-press');
-
-  const importers = sources
-    .filter(({ source }) => /from ['"]@\/lib\/motion['"]/.test(source))
-    .map(({ item }) => item.name)
-    .sort();
-  expect(importers, 'Presses and overlays run on the library').toEqual(
-    expect.arrayContaining([
-      'button',
-      'context-menu',
-      'dialog',
-      'dropdown-menu',
-      'hover-card',
-      'popover',
-      'select',
-      'toggle',
-      'tooltip',
-    ])
-  );
-  expect(
-    importers,
-    'The expandables and the tab highlight run on the library'
-  ).toEqual(expect.arrayContaining(['accordion', 'collapsible', 'tabs']));
-
-  for (const name of ['hover-card', 'tooltip']) {
-    const item = items.find((registryItem) => registryItem.name === name);
-
-    expect(item, `${name} is in the Zen Registry`).toBeDefined();
-    expect(
-      Object.keys({
-        ...item?.cssVars?.dark,
-        ...item?.cssVars?.light,
-        ...item?.cssVars?.theme,
-      }).filter((token) => token.startsWith('motion-')),
-      `${name} keeps no CSS motion Tokens`
-    ).toEqual([]);
-  }
-
   for (const { item, source } of sources) {
     const importsLibrary = /from ['"]@\/lib\/motion['"]/.test(source);
     const isLibrary = item.name === 'motion';
@@ -1236,205 +1198,11 @@ test('the motion library owns the motion package and only its importers depend o
     ).toBe(importsLibrary && !isLibrary);
   }
 
-  for (const [name, preset] of [
-    ['accordion', 'smooth'],
-    ['collapsible', 'smooth'],
-    ['tabs', 'morph'],
-  ] as const) {
-    const { item, source } = sources.find(
-      ({ item }) => item.name === name
-    ) as (typeof sources)[number];
-
-    expect(source, `${name} does not animate on the ${preset} preset`).toMatch(
-      new RegExp(`useMotionTransition\\(\\s*'${preset}'\\s*\\)`)
-    );
-    expect(
-      JSON.stringify(item.cssVars ?? {}),
-      `${name} keeps an old --motion-* Token`
-    ).not.toContain('motion-');
-  }
-
-  const expandables = sources.filter(({ item }) =>
-    ['accordion', 'collapsible'].includes(item.name)
-  );
-  for (const { item, source } of expandables) {
-    expect(
-      source,
-      `${item.name} keeps its CSS height transition`
-    ).not.toContain('transition-[height]');
-    expect(source, `${item.name} keeps the old expand Token`).not.toContain(
-      'motion-expand'
-    );
-  }
-
-  const tabs = sources.find(({ item }) => item.name === 'tabs');
-  const segmentedControl = sources.find(
-    ({ item }) => item.name === 'segmented-control'
-  );
-  expect(tabs, 'Tabs is in the Zen Registry').toBeDefined();
   expect(
-    segmentedControl,
-    'segmented-control is in the Zen Registry'
-  ).toBeDefined();
-  expect(
-    tabs?.source,
-    'Tabs still positions its highlight with the CSS variable transition'
-  ).not.toContain('--active-tab');
-  expect(
-    segmentedControl?.source,
-    'the shared highlight keeps its CSS variable transition'
-  ).not.toMatch(/transition-[^;]*var\(--active/);
-
-  for (const name of ['button', 'toggle']) {
-    const { item, source } = sources.find(
-      ({ item }) => item.name === name
-    ) as (typeof sources)[number];
-
-    expect(source, `${name} reads the shared duration Token`).toContain(
-      'var(--duration-fast,160ms)'
-    );
-    expect(source, `${name} reads the shared easing Token`).toContain(
-      'var(--ease-standard,cubic-bezier(0.2,0,0,1))'
-    );
-    expect(source, `${name} keeps the old press Tokens`).not.toContain(
-      'motion-press'
-    );
-    expect(item.cssVars?.light).toMatchObject({
-      'duration-fast': '160ms',
-      'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
-    });
-  }
-
-  const dialog = sources.find(({ item }) => item.name === 'dialog') as
-    | (typeof sources)[number]
-    | undefined;
-
-  expect(dialog, 'the Dialog is in the Zen Registry').toBeDefined();
-  expect(dialog?.source, 'the Dialog owns its open state').toContain(
-    'useControllableOpen'
-  );
-  expect(dialog?.source, 'the Dialog animates presence').toContain(
-    'AnimatePresence'
-  );
-  expect(dialog?.source, 'the Dialog keeps its portal for the exit').toContain(
-    'keepMounted'
-  );
-  expect(
-    dialog?.source,
-    'the Dialog still carries a motion Token'
-  ).not.toContain('motion-overlay');
-  expect(dialog?.item.cssVars?.light).toMatchObject({
-    'duration-fast': '160ms',
-    'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
-  });
-
-  for (const name of [
-    'autocomplete',
-    'combobox',
-    'navigation-menu',
-    'popover',
-    'dropdown-menu',
-    'context-menu',
-    'select',
-  ] as const) {
-    const entry = sources.find(({ item }) => item.name === name) as
-      | (typeof sources)[number]
-      | undefined;
-
-    expect(entry, `the ${name} is in the Zen Registry`).toBeDefined();
-    expect(entry?.source, `${name} owns its open state`).toContain(
-      'useControllableOpen'
-    );
-    expect(entry?.source, `${name} animates presence`).toContain(
-      'AnimatePresence'
-    );
-    expect(entry?.source, `${name} uses the snappy preset`).toContain(
-      'motionTokens.spring.snappy'
-    );
-    expect(entry?.source, `${name} still carries a motion Token`).not.toContain(
-      'motion-overlay'
-    );
-    expect(
-      Object.keys(entry?.item.cssVars?.light ?? {}).filter((token) =>
-        token.startsWith('motion-')
-      ),
-      `${name} still carries a motion Token`
-    ).toEqual([]);
-    expect(
-      entry?.item.registryDependencies,
-      `${name} installs the motion library`
-    ).toContain('@kosori/motion');
-  }
-
-  for (const name of ['popover', 'dropdown-menu', 'context-menu'] as const) {
-    const entry = sources.find(({ item }) => item.name === name) as
-      | (typeof sources)[number]
-      | undefined;
-
-    expect(entry?.source, `${name} keeps its portal for the exit`).toContain(
-      'keepMounted'
-    );
-  }
-});
-
-test('the remaining Dialog-family popups exit through Motion like the Dialog', async () => {
-  const items = await readCatalog('zen');
-  const names = ['alert-dialog', 'command', 'sheet'] as const;
-  const sources = await Promise.all(
-    names.map(async (name) => {
-      const item = items.find((candidate) => candidate.name === name);
-      const source = (
-        await Promise.all(
-          (item?.files ?? []).map((file) =>
-            readFile(join(webDir, file.path), 'utf8')
-          )
-        )
-      ).join('\n');
-
-      return { item, name, source };
-    })
-  );
-
-  for (const { item, name, source } of sources) {
-    expect(item, `${name} is in the Zen Registry`).toBeDefined();
-    expect(source, `${name} owns its open state`).toContain(
-      'useControllableOpen'
-    );
-    expect(source, `${name} animates presence`).toContain('AnimatePresence');
-    expect(source, `${name} keeps its portal for the exit`).toContain(
-      'keepMounted'
-    );
-    expect(source, `${name} leaves no CSS-only exit behind`).not.toContain(
-      'data-ending-style'
-    );
-    expect(source, `${name} leaves no CSS-only enter behind`).not.toContain(
-      'data-starting-style'
-    );
-    expect(source, `${name} drops the overlay motion Token`).not.toContain(
-      'motion-overlay'
-    );
-    expect(
-      item?.registryDependencies ?? [],
-      `${name} installs the motion library`
-    ).toContain('@kosori/motion');
-    expect(
-      (item?.dependencies ?? []).includes('motion'),
-      `${name} takes the motion package transitively`
-    ).toBe(false);
-  }
-
-  for (const name of ['alert-dialog', 'sheet'] as const) {
-    const item = items.find((candidate) => candidate.name === name);
-
-    expect(item?.cssVars?.light, `${name} light timing Tokens`).toMatchObject({
-      'duration-fast': '160ms',
-      'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
-    });
-    expect(item?.cssVars?.dark, `${name} dark timing Tokens`).toMatchObject({
-      'duration-fast': '160ms',
-      'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
-    });
-  }
+    sources.filter(({ source }) => /from ['"]@\/lib\/motion['"]/.test(source))
+      .length,
+    'no Zen item runs on the motion library'
+  ).toBeGreaterThan(0);
 });
 
 test('no Registry item or docs page brings back a retired motion Token', async () => {

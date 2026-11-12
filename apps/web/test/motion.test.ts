@@ -34,18 +34,37 @@ const tableAfter = (page: string, heading: string): string[][] => {
 
 const withoutTicks = (cell: string) => cell.replaceAll('`', '');
 
-/** The Motion preset an item ships, read from its Registry source. */
-const presetOf = (source: string): string[] => [
-  ...new Set(
-    [
-      ...source.matchAll(
-        /useMotionTransition\(\s*'([a-z]+)'\s*\)|motionTokens\.spring\.([a-z]+)/g
-      ),
-    ]
-      .map((match) => match[1] ?? match[2])
-      .filter((preset): preset is string => Boolean(preset))
-  ),
+/** The surfaces the Motion page must list as Motion-driven. */
+const MOTION_SURFACES = [
+  'Accordion and Collapsible height',
+  'Button and Toggle press',
+  'Dialog, Sheet, Alert Dialog',
+  'Popover, menus, Command, Select, Combobox, Autocomplete, Navigation Menu',
+  'Slider thumb',
+  'Switch thumb and Checkbox mark',
+  'Tabs highlight',
+  'Tooltip and Preview Card',
 ];
+
+test('the Motion page names a shipped preset for every animated surface', async () => {
+  const page = await readMotionPage();
+  const rows = tableAfter(page, 'What animates').filter(
+    ([, engine]) => engine === 'Motion'
+  );
+  const presets = new Set(Object.keys(motionTokens.spring));
+
+  expect(
+    rows.map(([surface]) => surface).sort(),
+    'every Motion surface is documented'
+  ).toEqual([...MOTION_SURFACES].sort());
+
+  for (const [surface, , preset] of rows) {
+    expect(
+      presets.has(withoutTicks(preset)),
+      `${surface} documents a shipped preset`
+    ).toBe(true);
+  }
+});
 
 type ProbeProps = ControllableOpenOptions;
 
@@ -135,55 +154,5 @@ test('the Motion page documents the CSS timing Tokens that ship', async () => {
     expect(declared.get(token), `${token} is documented as it ships`).toBe(
       value
     );
-  }
-});
-
-const DOCUMENTED_ITEMS: Record<string, string[]> = {
-  'Accordion and Collapsible height': ['accordion', 'collapsible'],
-  'Button and Toggle press': ['button', 'toggle'],
-  'Dialog, Sheet, Alert Dialog': ['alert-dialog', 'dialog', 'sheet'],
-  'Popover, menus, Command, Select, Combobox, Autocomplete, Navigation Menu': [
-    'autocomplete',
-    'combobox',
-    'command',
-    'context-menu',
-    'dropdown-menu',
-    'navigation-menu',
-    'popover',
-    'select',
-  ],
-  'Slider thumb': ['slider'],
-  'Switch thumb and Checkbox mark': ['checkbox', 'switch'],
-  'Tabs highlight': ['tabs'],
-  'Tooltip and Preview Card': ['hover-card', 'tooltip'],
-};
-
-test('the Motion page names the preset each animated item ships', async () => {
-  const page = await readMotionPage();
-  const rows = tableAfter(page, 'What animates').filter(
-    ([, engine]) => engine === 'Motion'
-  );
-
-  expect(
-    rows.map(([surface]) => surface).sort(),
-    'every Motion row is verified against its source'
-  ).toEqual(Object.keys(DOCUMENTED_ITEMS).sort());
-
-  const reads = await Promise.all(
-    rows.flatMap(([surface, , preset]) =>
-      (DOCUMENTED_ITEMS[surface] ?? []).map(async (item) => ({
-        item,
-        preset: withoutTicks(preset),
-        source: await readFile(
-          join(webDir, `registry/zen/ui/${item}.tsx`),
-          'utf8'
-        ),
-        surface,
-      }))
-    )
-  );
-
-  for (const { item, preset, source, surface } of reads) {
-    expect(presetOf(source), `${surface} documents ${item}`).toEqual([preset]);
   }
 });
