@@ -57,6 +57,24 @@ const NON_COMPONENT_PAGES = [
 ];
 
 /**
+ * The motion Tokens the two-engine migration retired. One returning means a
+ * component or page still describes the CSS-only motion model.
+ */
+const RETIRED_MOTION_TOKENS = [
+  '--motion-drawer-duration',
+  '--motion-drawer-easing',
+  '--motion-expand-duration',
+  '--motion-expand-easing',
+  '--motion-overlay-duration',
+  '--motion-overlay-easing',
+  '--motion-press-duration',
+  '--motion-press-easing',
+  '--motion-press-scale',
+  '--motion-state-duration',
+  '--motion-state-easing',
+] as const;
+
+/**
  * The semantic state Tokens coss ships. State colour is independent of Base
  * color, so every palette must declare these exact values.
  */
@@ -1419,6 +1437,51 @@ test('the remaining Dialog-family popups exit through Motion like the Dialog', a
   }
 });
 
+test('no Registry item or docs page brings back a retired motion Token', async () => {
+  const items = await readCatalog('zen');
+  const docsDir = join(webDir, 'content/docs/zen');
+  const docsPages = (await readdir(docsDir)).filter((file) =>
+    file.endsWith('.mdx')
+  );
+
+  const sources = await Promise.all([
+    ...items.map(async (item) => ({
+      cssVars: item.cssVars,
+      label: item.name,
+      source: (
+        await Promise.all(
+          item.files.map((file) => readFile(join(webDir, file.path), 'utf8'))
+        )
+      ).join('\n'),
+    })),
+    ...docsPages.map(async (file) => ({
+      cssVars: undefined,
+      label: `content/docs/zen/${file}`,
+      source: await readFile(join(docsDir, file), 'utf8'),
+    })),
+  ]);
+
+  for (const { cssVars, label, source } of sources) {
+    expect(source, `${label} keeps a retired --motion-* Token`).not.toContain(
+      '--motion-'
+    );
+    for (const token of RETIRED_MOTION_TOKENS) {
+      expect(source, `${label} keeps the retired ${token}`).not.toContain(
+        token
+      );
+    }
+
+    expect(
+      Object.keys({
+        ...(cssVars?.dark ?? {}),
+        ...(cssVars?.light ?? {}),
+        ...(cssVars?.theme ?? {}),
+      }).filter((token) => token.replace(/^--/, '').startsWith('motion-')),
+      `${label} declares a retired motion Token`
+    ).toEqual([]);
+  }
+});
+
 test('the CSS-kept items read the shared timing Tokens', async () => {
   const items = await readCatalog('zen');
   const expectations: Record<
@@ -1766,16 +1829,18 @@ test('installing state-coloured items without the preset compiles their utilitie
       motionTokens,
       'the installed stylesheet still declares an expansion Token'
     ).not.toContain('--motion-expand-');
-    expect(motionTokens, 'the installed overlay duration Token').toContain(
-      '--motion-overlay-duration: 180ms'
-    );
-    expect(motionTokens, 'the installed overlay easing Token').toContain(
-      '--motion-overlay-easing: cubic-bezier(0.2, 0, 0, 1)'
-    );
+    expect(
+      motionTokens,
+      'the installed stylesheet still declares the overlay motion Tokens'
+    ).not.toContain('--motion-overlay-');
     expect(
       motionTokens,
       'the installed stylesheet declares no control state Token'
     ).not.toContain('--motion-state-');
+    expect(
+      motionTokens,
+      'the installed stylesheet declares a retired motion Token'
+    ).not.toContain('--motion-');
     const theme = declarations(css, '@theme inline');
     for (const [token, value] of Object.entries(STATE_TOKENS.light)) {
       expect(declarations(css, ':root'), `partial light ${token}`).toContain(
