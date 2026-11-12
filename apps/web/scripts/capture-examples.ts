@@ -233,6 +233,72 @@ const waitForScale = async (
   return scale;
 };
 
+/** The frames a toggle is sampled for, enough to cover a spring settling. */
+const SAMPLE_FRAMES = 30;
+
+type MotionSample = { checked: string | null; samples: number[] };
+
+/**
+ * Toggle an Example's label and sample its motion target every frame inside
+ * the page, so a fast spring is observed even when the round trip is slow.
+ */
+const toggleAndSample = (
+  preview: Locator,
+  selector: string,
+  mode: 'scale' | 'translateX'
+): Promise<MotionSample> =>
+  preview.evaluate(
+    (root, options) => {
+      const read = (): number => {
+        const element = root.querySelector(options.selector);
+        const identity = options.mode === 'scale' ? 1 : 0;
+        if (!(element instanceof HTMLElement)) {
+          return identity;
+        }
+        const style = getComputedStyle(element);
+        if (options.mode === 'scale') {
+          if (style.scale !== 'none') {
+            return Number.parseFloat(style.scale);
+          }
+          if (style.transform === 'none') {
+            return 1;
+          }
+        } else if (style.transform === 'none') {
+          return 0;
+        }
+        const matrix = style.transform
+          .match(/^matrix\(([^)]+)\)$/)?.[1]
+          ?.split(',');
+        if (!matrix) {
+          return identity;
+        }
+        return options.mode === 'scale'
+          ? Math.hypot(Number(matrix[0]), Number(matrix[1]))
+          : Number.parseFloat(matrix[4] ?? '0');
+      };
+      const control = root.querySelector('[role="checkbox"], [role="switch"]');
+      const label = root.querySelector('label');
+      label?.click();
+
+      return new Promise<MotionSample>((resolve) => {
+        const samples: number[] = [];
+        const tick = () => {
+          samples.push(read());
+          if (samples.length < options.frames) {
+            requestAnimationFrame(tick);
+            return;
+          }
+          resolve({
+            checked: control?.getAttribute('aria-checked') ?? null,
+            samples,
+          });
+        };
+        requestAnimationFrame(tick);
+      });
+    },
+    { frames: SAMPLE_FRAMES, mode, selector }
+  );
+
 const webDir = join(import.meta.dirname, '..');
 const outputDir = join(webDir, CAPTURE_DIR);
 const port = Number(process.env.VISUAL_PORT ?? 3210);
@@ -898,10 +964,8 @@ const main = async () => {
         const hasNoTravel = (element: Element) =>
           getComputedStyle(element).transitionProperty === 'none';
 
-        if (example === 'checkbox' || example === 'switch') {
-          const control = preview.getByRole(
-            example === 'checkbox' ? 'checkbox' : 'switch'
-          );
+        if (example === 'checkbox') {
+          const control = preview.getByRole('checkbox');
           const before = await control.evaluate(selectionState);
           await preview.getByText('Enable notifications').click();
           await page.waitForTimeout(100);
@@ -911,36 +975,261 @@ const main = async () => {
               `${example} did not communicate its toggled state: ${before} -> ${after}`
             );
           }
-          const reduced = await page.context().newPage();
-          await reduced.emulateMedia({ reducedMotion: 'reduce' });
-          await reduced.goto(`${server.baseUrl}${route}`, {
-            waitUntil: 'load',
-          });
-          await reduced.waitForLoadState('networkidle');
-          const reducedControl = reduced
-            .locator(captureSelector(example))
-            .getByRole(example === 'checkbox' ? 'checkbox' : 'switch');
-          const motionTarget =
-            example === 'checkbox'
-              ? reduced
-                  .locator(captureSelector(example))
-                  .locator('[data-slot="checkbox-indicator"]')
-              : reducedControl;
-          if (!(await motionTarget.evaluate(hasNoTravel))) {
-            throw new Error(`${example} moved with reduced motion enabled`);
+
+          const settle = await toggleAndSample(
+            preview,
+            '[data-slot="checkbox-indicator"]',
+            'scale'
+          );
+          const settled = settle.samples.at(-1) ?? 1;
+          if (!settle.samples.some((scale) => scale < 0.999)) {
+            throw new Error(
+              `Checkbox mark snapped instead of settling: ${JSON.stringify(settle.samples)}`
+            );
           }
+          if (settle.checked !== 'true') {
+            throw new Error('Checkbox mark did not follow its state');
+          }
+          if (Math.abs(settled - 1) > 0.001) {
+            throw new Error(`Checkbox mark did not settle: ${settled}`);
+          }
+
+          const { page: reduced } = await openReducedMotionPage(route, scheme);
+          const reducedPreview = reduced.locator(captureSelector(example));
+          const reducedControl = reducedPreview.getByRole('checkbox');
           const reducedBefore = await reducedControl.evaluate(selectionState);
-          await reduced
-            .locator(captureSelector(example))
-            .getByText('Enable notifications')
-            .click();
+          await reducedPreview.getByText('Enable notifications').click();
           await reduced.waitForTimeout(100);
           if (
             (await reducedControl.evaluate(selectionState)) === reducedBefore
           ) {
             throw new Error(`${example} lost its state with reduced motion`);
           }
+          const reducedSettle = await toggleAndSample(
+            reducedPreview,
+            '[data-slot="checkbox-indicator"]',
+            'scale'
+          );
           await reduced.close();
+          if (reducedSettle.checked !== 'true') {
+            throw new Error('Checkbox lost its state with reduced motion');
+          }
+          if (
+            reducedSettle.samples.some((scale) => Math.abs(scale - 1) > 0.001)
+          ) {
+            throw new Error(
+              `Checkbox scaled with reduced motion: ${JSON.stringify(reducedSettle.samples)}`
+            );
+          }
+        }
+
+        if (example === 'switch') {
+          const control = preview.getByRole('switch');
+          const thumb = preview.locator('[data-slot="switch-thumb"]');
+          const thumbBox = await thumb.boundingBox();
+          if (!thumbBox) {
+            throw new Error('Switch thumb is not visible');
+          }
+          const travel = thumbBox.width - 4;
+
+          const before = await control.evaluate(selectionState);
+          await preview.getByText('Enable notifications').click();
+          await page.waitForTimeout(400);
+          const after = await control.evaluate(selectionState);
+          if (before === after) {
+            throw new Error(
+              `${example} did not communicate its toggled state: ${before} -> ${after}`
+            );
+          }
+
+          const toggle = await toggleAndSample(
+            preview,
+            '[data-slot="switch-thumb"]',
+            'translateX'
+          );
+          const travelled = toggle.samples.at(-1) ?? 0;
+          if (toggle.checked !== 'true') {
+            throw new Error('Switch thumb did not follow its state');
+          }
+          if (!toggle.samples.some((x) => x > 1 && x < travel - 1)) {
+            throw new Error(
+              `Switch jumped without travelling: ${JSON.stringify(toggle.samples)}`
+            );
+          }
+          if (Math.abs(travelled - travel) > 1) {
+            throw new Error(
+              `Switch thumb settled at ${travelled}, expected ${travel}`
+            );
+          }
+
+          const controlBox = await control.boundingBox();
+          if (!controlBox) {
+            throw new Error('Switch has no visible bounds');
+          }
+          await page.mouse.move(
+            controlBox.x + controlBox.width / 2,
+            controlBox.y + controlBox.height / 2
+          );
+          await page.mouse.down();
+          const pointerSquash = await waitForScale(
+            thumb,
+            (scale) => scale > 1.05,
+            'Switch pointer squash'
+          );
+          await page.mouse.up();
+          await waitForScale(
+            thumb,
+            (scale) => scale < 1.005,
+            'Switch pointer release'
+          );
+          if (pointerSquash <= 1.05) {
+            throw new Error(`Switch pointer squash was ${pointerSquash}`);
+          }
+
+          const keyboardPage = await page.context().newPage();
+          await keyboardPage.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          await keyboardPage.waitForLoadState('networkidle');
+          const keyboardControl = keyboardPage
+            .locator(captureSelector(example))
+            .getByRole('switch');
+          const keyboardThumb = keyboardPage
+            .locator(captureSelector(example))
+            .locator('[data-slot="switch-thumb"]');
+          const focusControl = async () => {
+            await keyboardControl.evaluate((element) =>
+              (element as HTMLElement).blur()
+            );
+            await keyboardControl.focus();
+            await keyboardPage.waitForTimeout(100);
+          };
+          const pressWithKeyboard = async (key: string) => {
+            await focusControl();
+            await keyboardPage.keyboard.down(key);
+            try {
+              return await waitForScale(
+                keyboardThumb,
+                (scale) => scale > 1.05,
+                `Switch keyboard squash (${key})`,
+                1500
+              );
+            } finally {
+              await keyboardPage.keyboard.up(key);
+            }
+          };
+          const pressUntilSquashed = async (key: string): Promise<number> => {
+            try {
+              return await pressWithKeyboard(key);
+            } catch {
+              // A cold dev server can hydrate after `load`, so retry once the
+              // page has certainly attached its focus listeners.
+              try {
+                return await pressWithKeyboard(key);
+              } catch (retryError) {
+                const state = await keyboardControl.evaluate((element) => ({
+                  active: document.activeElement === element,
+                  focused: document.hasFocus(),
+                  reduced: matchMedia('(prefers-reduced-motion: reduce)')
+                    .matches,
+                  transform: getComputedStyle(
+                    element.querySelector('[data-slot="switch-thumb"]') ??
+                      element
+                  ).transform,
+                }));
+                throw new Error(
+                  `Switch keyboard squash (${key}) never ran: ${JSON.stringify(state)}`,
+                  { cause: retryError }
+                );
+              }
+            }
+          };
+          const keyboardSquashes: number[] = [];
+          for (const key of ['Enter', ' ']) {
+            // biome-ignore lint/performance/noAwaitInLoops: presses run one at a time so each sampled scale is attributable
+            keyboardSquashes.push(await pressUntilSquashed(key));
+            await waitForScale(
+              keyboardThumb,
+              (scale) => scale < 1.005,
+              `Switch keyboard release (${key})`
+            );
+          }
+          await keyboardPage.close();
+          if (keyboardSquashes.some((squash) => squash <= 1.05)) {
+            throw new Error(
+              `Switch keyboard squash was ${keyboardSquashes.join(', ')}`
+            );
+          }
+
+          const reduced = await page.context().newPage();
+          await reduced.emulateMedia({ reducedMotion: 'reduce' });
+          await reduced.goto(`${server.baseUrl}${route}`, {
+            waitUntil: 'load',
+          });
+          await reduced.waitForLoadState('networkidle');
+          const reducedPreview = reduced.locator(captureSelector(example));
+          const reducedThumb = reducedPreview.locator(
+            '[data-slot="switch-thumb"]'
+          );
+          const reducedBox = await reducedThumb.boundingBox();
+          if (!reducedBox) {
+            throw new Error('Reduced-motion Switch thumb is not visible');
+          }
+          const reducedTravel = reducedBox.width - 4;
+          await reducedPreview.getByRole('switch').click();
+          await reduced.waitForTimeout(100);
+          const reducedToggle = await toggleAndSample(
+            reducedPreview,
+            '[data-slot="switch-thumb"]',
+            'translateX'
+          );
+          await reduced.close();
+          if (reducedToggle.checked !== 'true') {
+            throw new Error('Switch lost its state with reduced motion');
+          }
+          if (
+            reducedToggle.samples.some(
+              (x) => Math.abs(x) > 1 && Math.abs(x - reducedTravel) > 1
+            )
+          ) {
+            throw new Error(
+              `Switch travelled with reduced motion: ${JSON.stringify(reducedToggle.samples)}`
+            );
+          }
+          if (
+            Math.abs((reducedToggle.samples.at(-1) ?? 0) - reducedTravel) > 1
+          ) {
+            throw new Error(
+              `Switch did not reach ${reducedTravel} with reduced motion`
+            );
+          }
+
+          const rtl = await page.context().newPage();
+          await rtl.goto(`${server.baseUrl}${route}`, { waitUntil: 'load' });
+          await rtl.waitForLoadState('networkidle');
+          await rtl.evaluate(() => {
+            document.documentElement.dir = 'rtl';
+          });
+          const rtlPreview = rtl.locator(captureSelector(example));
+          const rtlThumb = rtlPreview.locator('[data-slot="switch-thumb"]');
+          await rtlPreview.getByRole('switch').click();
+          await rtl.waitForTimeout(100);
+          const rtlToggle = await toggleAndSample(
+            rtlPreview,
+            '[data-slot="switch-thumb"]',
+            'translateX'
+          );
+          const rtlBox = await rtlThumb.boundingBox();
+          await rtl.close();
+          if (!rtlBox) {
+            throw new Error('Right-to-left Switch thumb is not visible');
+          }
+          const rtlEnd = rtlToggle.samples.at(-1) ?? 0;
+          if (Math.abs(rtlEnd + (rtlBox.width - 4)) > 1) {
+            throw new Error(
+              `Switch right-to-left travel was ${rtlEnd}, expected ${-(rtlBox.width - 4)}`
+            );
+          }
         }
 
         if (example === 'radio-group') {
@@ -1043,6 +1332,8 @@ const main = async () => {
           if (!thumbBox) {
             throw new Error('Slider thumb is not visible');
           }
+          const input = thumb.locator('input');
+          const valueBefore = Number(await input.getAttribute('aria-valuenow'));
           await page.mouse.move(
             thumbBox.x + thumbBox.width / 2,
             thumbBox.y + thumbBox.height / 2
@@ -1052,16 +1343,47 @@ const main = async () => {
             thumbBox.x + thumbBox.width / 2 + 12,
             thumbBox.y + thumbBox.height / 2
           );
-          await page.waitForFunction(
-            (element) =>
-              Number.parseFloat(getComputedStyle(element).scale) > 1.15,
-            await thumb.elementHandle(),
-            { timeout: 1500 }
+          await page.waitForTimeout(50);
+          const trackedBox = await thumb.boundingBox();
+          const draggingScale = await waitForScale(
+            thumb,
+            (scale) => scale > 1.1,
+            'Slider drag scale'
           );
-          const draggingScale = await thumb.evaluate(
-            (element) => getComputedStyle(element).scale
+          const draggingValue = Number(
+            await input.getAttribute('aria-valuenow')
           );
           await page.mouse.up();
+          await waitForScale(thumb, (scale) => scale < 1.02, 'Slider release');
+          await page.waitForTimeout(400);
+          const settledScale = await thumb.evaluate(scaleOf);
+          const settledValue = Number(
+            await input.getAttribute('aria-valuenow')
+          );
+
+          if (!trackedBox || trackedBox.x - thumbBox.x < 6) {
+            throw new Error(
+              `Slider thumb did not track the drag: ${
+                trackedBox ? trackedBox.x - thumbBox.x : 'no bounds'
+              }`
+            );
+          }
+          if (draggingScale < 1.1) {
+            throw new Error(`Slider drag feedback scale was ${draggingScale}`);
+          }
+          if (draggingValue <= valueBefore) {
+            throw new Error(
+              `Slider did not move during the drag: ${valueBefore} -> ${draggingValue}`
+            );
+          }
+          if (settledValue !== draggingValue) {
+            throw new Error(
+              `Slider overshot on release: ${draggingValue} -> ${settledValue}`
+            );
+          }
+          if (Math.abs(settledScale - 1) > 0.01) {
+            throw new Error(`Slider did not settle its scale: ${settledScale}`);
+          }
 
           const { page: reduced } = await openReducedMotionPage(route, scheme);
           const reducedThumb = reduced
@@ -1072,6 +1394,10 @@ const main = async () => {
           if (!reducedThumbBox) {
             throw new Error('Reduced-motion Slider thumb is not visible');
           }
+          const reducedInput = reducedThumb.locator('input');
+          const reducedValueBefore = Number(
+            await reducedInput.getAttribute('aria-valuenow')
+          );
           await reduced.mouse.move(
             reducedThumbBox.x + reducedThumbBox.width / 2,
             reducedThumbBox.y + reducedThumbBox.height / 2
@@ -1081,24 +1407,24 @@ const main = async () => {
             reducedThumbBox.x + reducedThumbBox.width / 2 + 12,
             reducedThumbBox.y + reducedThumbBox.height / 2
           );
-          await reduced.waitForTimeout(50);
+          await reduced.waitForTimeout(80);
           const reducedMotion = await reducedThumb.evaluate((element) => {
             const style = getComputedStyle(element);
-            return { scale: style.scale, transition: style.transitionProperty };
+            return { scale: style.scale, transform: style.transform };
           });
+          const reducedValue = Number(
+            await reducedInput.getAttribute('aria-valuenow')
+          );
           await reduced.mouse.up();
           await reduced.close();
 
-          if (Number.parseFloat(draggingScale) < 1.1) {
-            throw new Error(`Slider drag feedback scale was ${draggingScale}`);
-          }
-          if (
-            reducedMotion.scale !== '1' ||
-            reducedMotion.transition !== 'none'
-          ) {
+          if (reducedMotion.transform !== 'none') {
             throw new Error(
-              `Slider retained motion with reduced motion: ${JSON.stringify(reducedMotion)}`
+              `Slider retained scale with reduced motion: ${JSON.stringify(reducedMotion)}`
             );
+          }
+          if (reducedValue <= reducedValueBefore) {
+            throw new Error('Slider stopped tracking with reduced motion');
           }
         }
 
