@@ -5,19 +5,17 @@ import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';
 import { IconX } from '@tabler/icons-react';
 import { cn } from 'cn';
-import {
-  AnimatePresence,
-  type HTMLMotionProps,
-  motion,
-  useReducedMotion,
-} from 'motion/react';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
-import { createContext, useContext } from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { motionTokens, useControllableOpen } from '@/lib/motion';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
 
-const DialogOpenContext = createContext<boolean | null>(null);
+const DialogOpen = createOverlayPresence();
 
 export const DialogCreateHandle: typeof DialogPrimitive.createHandle =
   DialogPrimitive.createHandle;
@@ -37,7 +35,7 @@ export function Dialog<Payload = unknown>({
   });
 
   return (
-    <DialogOpenContext.Provider value={dialog.open}>
+    <DialogOpen.Provider value={dialog.open}>
       <DialogPrimitive.Root
         onOpenChange={dialog.setOpen}
         open={dialog.open}
@@ -45,7 +43,7 @@ export function Dialog<Payload = unknown>({
       >
         {children}
       </DialogPrimitive.Root>
-    </DialogOpenContext.Provider>
+    </DialogOpen.Provider>
   );
 }
 
@@ -124,13 +122,13 @@ export function DialogPopup({
   closeProps?: DialogPrimitive.Close.Props;
   portalProps?: DialogPrimitive.Portal.Props;
 }): React.ReactElement {
-  const open = useContext(DialogOpenContext);
+  const presence = DialogOpen.usePresence();
   const reduce = useReducedMotion();
   const transition = motionTokens.spring.smooth;
   const scale = reduce ? 1 : 0.98;
 
   const popup = (
-    <DialogPortal keepMounted={open !== null} {...portalProps}>
+    <DialogPortal keepMounted={presence.keepMounted} {...portalProps}>
       <DialogBackdrop />
       <DialogViewport
         className={cn(
@@ -180,11 +178,7 @@ export function DialogPopup({
     </DialogPortal>
   );
 
-  if (open === null) {
-    return popup;
-  }
-
-  return <AnimatePresence>{open && popup}</AnimatePresence>;
+  return presence.wrap(popup);
 }
 
 export function DialogHeader({

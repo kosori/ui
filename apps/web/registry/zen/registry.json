@@ -1051,7 +1051,7 @@
     {
       "name": "motion",
       "type": "registry:lib",
-      "dependencies": ["motion"],
+      "dependencies": ["cn", "motion"],
       "files": [
         {
           "path": "registry/zen/lib/motion.ts",

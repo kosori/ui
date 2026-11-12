@@ -3,50 +3,9 @@
 import { Accordion as AccordionPrimitive } from '@base-ui/react/accordion';
 import { IconChevronDown } from '@tabler/icons-react';
 import { cn } from 'cn';
-import { motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
-import { useCallback, useState } from 'react';
 
-import { useMotionTransition } from '@/lib/motion';
-
-type MotionPanelProps = React.ComponentProps<typeof motion.div> & {
-  'data-open'?: string;
-};
-
-/**
- * Spring a panel between its measured height and zero, releasing the clip once
- * it settles open so nested content is not cut off.
- */
-function MotionPanel({
-  className,
-  ...props
-}: MotionPanelProps): React.ReactElement {
-  const reduce = useReducedMotion();
-  const transition = useMotionTransition('smooth');
-  const open = props['data-open'] !== undefined;
-  const [settledOpen, setSettledOpen] = useState(open);
-  const clipped = !(open && (reduce || settledOpen));
-  const handleAnimationComplete = useCallback(
-    () => setSettledOpen(open),
-    [open]
-  );
-
-  return (
-    <motion.div
-      {...props}
-      animate={{ height: open ? 'auto' : 0 }}
-      aria-hidden={open ? undefined : true}
-      className={cn(
-        clipped ? 'overflow-hidden' : 'overflow-visible',
-        className
-      )}
-      inert={open ? undefined : true}
-      initial={false}
-      onAnimationComplete={handleAnimationComplete}
-      transition={transition}
-    />
-  );
-}
+import { MotionPanel } from '@/lib/motion';
 
 export function Accordion(
   props: AccordionPrimitive.Root.Props

@@ -3,17 +3,15 @@
 import { Menu as MenuPrimitive } from '@base-ui/react/menu';
 import { IconChevronRight } from '@tabler/icons-react';
 import { cn } from 'cn';
-import {
-  AnimatePresence,
-  type HTMLMotionProps,
-  motion,
-  useReducedMotion,
-} from 'motion/react';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type * as React from 'react';
-import { createContext, useContext } from 'react';
-import { motionTokens, useControllableOpen } from '@/lib/motion';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
 
-const MenuOpenContext = createContext<boolean | null>(null);
+const MenuOpen = createOverlayPresence();
 
 export const MenuCreateHandle: typeof MenuPrimitive.createHandle =
   MenuPrimitive.createHandle;
@@ -33,7 +31,7 @@ export function Menu<Payload = unknown>({
   });
 
   return (
-    <MenuOpenContext.Provider value={menu.open}>
+    <MenuOpen.Provider value={menu.open}>
       <MenuPrimitive.Root
         onOpenChange={menu.setOpen}
         open={menu.open}
@@ -41,7 +39,7 @@ export function Menu<Payload = unknown>({
       >
         {children}
       </MenuPrimitive.Root>
-    </MenuOpenContext.Provider>
+    </MenuOpen.Provider>
   );
 }
 
@@ -82,13 +80,13 @@ export function MenuPopup({
   anchor?: MenuPrimitive.Positioner.Props['anchor'];
   portalProps?: MenuPrimitive.Portal.Props;
 }): React.ReactElement {
-  const open = useContext(MenuOpenContext);
+  const presence = MenuOpen.usePresence();
   const reduce = useReducedMotion();
   const transition = motionTokens.spring.snappy;
   const scale = reduce ? 1 : 0.98;
 
   const popup = (
-    <MenuPortal keepMounted={open !== null} {...portalProps}>
+    <MenuPortal keepMounted={presence.keepMounted} {...portalProps}>
       <MenuPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -126,11 +124,7 @@ export function MenuPopup({
     </MenuPortal>
   );
 
-  if (open === null) {
-    return popup;
-  }
-
-  return <AnimatePresence>{open && popup}</AnimatePresence>;
+  return presence.wrap(popup);
 }
 
 export function MenuGroup(
@@ -350,7 +344,7 @@ export function MenuSub({
     });
 
   return (
-    <MenuOpenContext.Provider value={submenu.open}>
+    <MenuOpen.Provider value={submenu.open}>
       <MenuPrimitive.SubmenuRoot
         data-slot='menu-sub'
         onOpenChange={submenu.setOpen}
@@ -359,7 +353,7 @@ export function MenuSub({
       >
         {children}
       </MenuPrimitive.SubmenuRoot>
-    </MenuOpenContext.Provider>
+    </MenuOpen.Provider>
   );
 }
 

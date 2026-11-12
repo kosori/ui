@@ -2,17 +2,15 @@
 
 import { Popover as PopoverPrimitive } from '@base-ui/react/popover';
 import { cn } from 'cn';
-import {
-  AnimatePresence,
-  type HTMLMotionProps,
-  motion,
-  useReducedMotion,
-} from 'motion/react';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
-import { createContext, useContext } from 'react';
-import { motionTokens, useControllableOpen } from '@/lib/motion';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
 
-const PopoverOpenContext = createContext<boolean | null>(null);
+const PopoverOpen = createOverlayPresence();
 
 export const PopoverCreateHandle: typeof PopoverPrimitive.createHandle =
   PopoverPrimitive.createHandle;
@@ -34,7 +32,7 @@ export function Popover<Payload = unknown>({
   );
 
   return (
-    <PopoverOpenContext.Provider value={popover.open}>
+    <PopoverOpen.Provider value={popover.open}>
       <PopoverPrimitive.Root
         onOpenChange={popover.setOpen}
         open={popover.open}
@@ -42,7 +40,7 @@ export function Popover<Payload = unknown>({
       >
         {children}
       </PopoverPrimitive.Root>
-    </PopoverOpenContext.Provider>
+    </PopoverOpen.Provider>
   );
 }
 
@@ -83,13 +81,16 @@ export function PopoverPopup({
   tooltipStyle?: boolean;
   anchor?: PopoverPrimitive.Positioner.Props['anchor'];
 }): React.ReactElement {
-  const open = useContext(PopoverOpenContext);
+  const presence = PopoverOpen.usePresence();
   const reduce = useReducedMotion();
   const transition = motionTokens.spring.snappy;
   const scale = reduce ? 1 : 0.98;
 
   const popup = (
-    <PopoverPrimitive.Portal keepMounted={open !== null} {...portalProps}>
+    <PopoverPrimitive.Portal
+      keepMounted={presence.keepMounted}
+      {...portalProps}
+    >
       <PopoverPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -137,11 +138,7 @@ export function PopoverPopup({
     </PopoverPrimitive.Portal>
   );
 
-  if (open === null) {
-    return popup;
-  }
-
-  return <AnimatePresence>{open && popup}</AnimatePresence>;
+  return presence.wrap(popup);
 }
 
 export function PopoverClose({

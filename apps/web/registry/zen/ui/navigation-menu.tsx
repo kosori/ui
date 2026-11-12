@@ -12,7 +12,7 @@ import {
 } from 'motion/react';
 import type * as React from 'react';
 import { createContext, useCallback, useContext, useState } from 'react';
-import { motionTokens, useControllableOpen } from '@/lib/motion';
+import { motionTokens } from '@/lib/motion';
 
 const NavigationMenuOpenContext = createContext<boolean | null>(null);
 
@@ -28,11 +28,8 @@ export function NavigationMenu({
 }: NavigationMenuPrimitive.Root.Props &
   Pick<NavigationMenuPrimitive.Positioner.Props, 'align'>): React.ReactElement {
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
-  const { open, setOpen } =
-    useControllableOpen<NavigationMenuPrimitive.Root.ChangeEventDetails>({
-      defaultOpen: defaultValue !== null,
-      open: value === undefined ? undefined : value !== null,
-    });
+  const resolvedValue = value === undefined ? uncontrolledValue : value;
+  const open = resolvedValue !== null;
   const setValue = useCallback(
     (
       nextValue: NavigationMenuPrimitive.Root.Value<unknown>,
@@ -41,10 +38,9 @@ export function NavigationMenu({
       if (value === undefined) {
         setUncontrolledValue(nextValue);
       }
-      setOpen(nextValue !== null, details);
       onValueChange?.(nextValue, details);
     },
-    [onValueChange, setOpen, value]
+    [onValueChange, value]
   );
 
   return (
@@ -56,7 +52,7 @@ export function NavigationMenu({
         )}
         data-slot='navigation-menu'
         onValueChange={setValue}
-        value={value === undefined ? uncontrolledValue : value}
+        value={resolvedValue}
         {...props}
       >
         {children}

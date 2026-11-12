@@ -5,19 +5,17 @@ import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';
 import { IconX } from '@tabler/icons-react';
 import { cn } from 'cn';
-import {
-  AnimatePresence,
-  type HTMLMotionProps,
-  motion,
-  useReducedMotion,
-} from 'motion/react';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
-import { createContext, useContext } from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { motionTokens, useControllableOpen } from '@/lib/motion';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
 
-const SheetOpenContext = createContext<boolean | null>(null);
+const SheetOpen = createOverlayPresence();
 
 /** Resolve a Sheet's open state so its popup can exit before unmounting. */
 export function Sheet<Payload = unknown>({
@@ -34,7 +32,7 @@ export function Sheet<Payload = unknown>({
   });
 
   return (
-    <SheetOpenContext.Provider value={sheet.open}>
+    <SheetOpen.Provider value={sheet.open}>
       <SheetPrimitive.Root
         onOpenChange={sheet.setOpen}
         open={sheet.open}
@@ -42,7 +40,7 @@ export function Sheet<Payload = unknown>({
       >
         {children}
       </SheetPrimitive.Root>
-    </SheetOpenContext.Provider>
+    </SheetOpen.Provider>
   );
 }
 
@@ -149,13 +147,13 @@ export function SheetPopup({
   closeProps?: SheetPrimitive.Close.Props;
   portalProps?: SheetPrimitive.Portal.Props;
 }): React.ReactElement {
-  const open = useContext(SheetOpenContext);
+  const presence = SheetOpen.usePresence();
   const reduce = useReducedMotion();
   const transition = motionTokens.spring.smooth;
   const offset = edgeOffset(side, reduce ? 0 : 32);
 
   const popup = (
-    <SheetPortal keepMounted={open !== null} {...portalProps}>
+    <SheetPortal keepMounted={presence.keepMounted} {...portalProps}>
       <SheetBackdrop />
       <SheetViewport side={side} variant={variant}>
         <SheetPrimitive.Popup
@@ -203,11 +201,7 @@ export function SheetPopup({
     </SheetPortal>
   );
 
-  if (open === null) {
-    return popup;
-  }
-
-  return <AnimatePresence>{open && popup}</AnimatePresence>;
+  return presence.wrap(popup);
 }
 
 export function SheetHeader({

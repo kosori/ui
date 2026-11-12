@@ -2,18 +2,16 @@
 
 import { AlertDialog as AlertDialogPrimitive } from '@base-ui/react/alert-dialog';
 import { cn } from 'cn';
-import {
-  AnimatePresence,
-  type HTMLMotionProps,
-  motion,
-  useReducedMotion,
-} from 'motion/react';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
-import { createContext, useContext } from 'react';
 import { Button } from '@/components/ui/button';
-import { motionTokens, useControllableOpen } from '@/lib/motion';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
 
-const AlertDialogOpenContext = createContext<boolean | null>(null);
+const AlertDialogOpen = createOverlayPresence();
 
 export const AlertDialogCreateHandle: typeof AlertDialogPrimitive.createHandle =
   AlertDialogPrimitive.createHandle;
@@ -34,7 +32,7 @@ export function AlertDialog<Payload = unknown>({
     });
 
   return (
-    <AlertDialogOpenContext.Provider value={alertDialog.open}>
+    <AlertDialogOpen.Provider value={alertDialog.open}>
       <AlertDialogPrimitive.Root
         onOpenChange={alertDialog.setOpen}
         open={alertDialog.open}
@@ -42,7 +40,7 @@ export function AlertDialog<Payload = unknown>({
       >
         {children}
       </AlertDialogPrimitive.Root>
-    </AlertDialogOpenContext.Provider>
+    </AlertDialogOpen.Provider>
   );
 }
 
@@ -112,13 +110,13 @@ export function AlertDialogPopup({
   bottomStickOnMobile?: boolean;
   portalProps?: AlertDialogPrimitive.Portal.Props;
 }): React.ReactElement {
-  const open = useContext(AlertDialogOpenContext);
+  const presence = AlertDialogOpen.usePresence();
   const reduce = useReducedMotion();
   const transition = motionTokens.spring.smooth;
   const scale = reduce ? 1 : 0.98;
 
   const popup = (
-    <AlertDialogPortal keepMounted={open !== null} {...portalProps}>
+    <AlertDialogPortal keepMounted={presence.keepMounted} {...portalProps}>
       <AlertDialogBackdrop />
       <AlertDialogViewport
         className={cn(
@@ -155,11 +153,7 @@ export function AlertDialogPopup({
     </AlertDialogPortal>
   );
 
-  if (open === null) {
-    return popup;
-  }
-
-  return <AnimatePresence>{open && popup}</AnimatePresence>;
+  return presence.wrap(popup);
 }
 
 export function AlertDialogHeader({

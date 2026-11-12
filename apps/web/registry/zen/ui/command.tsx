@@ -3,14 +3,8 @@
 import { Dialog as CommandDialogPrimitive } from '@base-ui/react/dialog';
 import { IconSearch } from '@tabler/icons-react';
 import { cn } from 'cn';
-import {
-  AnimatePresence,
-  type HTMLMotionProps,
-  motion,
-  useReducedMotion,
-} from 'motion/react';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type * as React from 'react';
-import { createContext, useContext } from 'react';
 import {
   Autocomplete,
   AutocompleteCollection,
@@ -22,9 +16,13 @@ import {
   AutocompleteList,
   AutocompleteSeparator,
 } from '@/components/ui/autocomplete';
-import { motionTokens, useControllableOpen } from '@/lib/motion';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
 
-const CommandDialogOpenContext = createContext<boolean | null>(null);
+const CommandDialogOpen = createOverlayPresence();
 
 /** Resolve a Command's open state so its popup can exit before unmounting. */
 export function CommandDialog<Payload = unknown>({
@@ -42,7 +40,7 @@ export function CommandDialog<Payload = unknown>({
     });
 
   return (
-    <CommandDialogOpenContext.Provider value={commandDialog.open}>
+    <CommandDialogOpen.Provider value={commandDialog.open}>
       <CommandDialogPrimitive.Root
         onOpenChange={commandDialog.setOpen}
         open={commandDialog.open}
@@ -50,7 +48,7 @@ export function CommandDialog<Payload = unknown>({
       >
         {children}
       </CommandDialogPrimitive.Root>
-    </CommandDialogOpenContext.Provider>
+    </CommandDialogOpen.Provider>
   );
 }
 
@@ -125,13 +123,13 @@ export function CommandDialogPopup({
 }: CommandDialogPrimitive.Popup.Props & {
   portalProps?: CommandDialogPrimitive.Portal.Props;
 }): React.ReactElement {
-  const open = useContext(CommandDialogOpenContext);
+  const presence = CommandDialogOpen.usePresence();
   const reduce = useReducedMotion();
   const transition = motionTokens.spring.snappy;
   const scale = reduce ? 1 : 0.98;
 
   const popup = (
-    <CommandDialogPortal keepMounted={open !== null} {...portalProps}>
+    <CommandDialogPortal keepMounted={presence.keepMounted} {...portalProps}>
       <CommandDialogBackdrop />
       <CommandDialogViewport>
         <CommandDialogPrimitive.Popup
@@ -163,11 +161,7 @@ export function CommandDialogPopup({
     </CommandDialogPortal>
   );
 
-  if (open === null) {
-    return popup;
-  }
-
-  return <AnimatePresence>{open && popup}</AnimatePresence>;
+  return presence.wrap(popup);
 }
 
 export function Command({

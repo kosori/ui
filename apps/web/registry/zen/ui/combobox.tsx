@@ -3,12 +3,7 @@
 import { Combobox as ComboboxPrimitive } from '@base-ui/react/combobox';
 import { IconSelector, IconX } from '@tabler/icons-react';
 import { cn } from 'cn';
-import {
-  AnimatePresence,
-  type HTMLMotionProps,
-  motion,
-  useReducedMotion,
-} from 'motion/react';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import {
   type Context,
   createContext,
@@ -21,7 +16,11 @@ import {
 } from 'react';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { motionTokens, useControllableOpen } from '@/lib/motion';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
 
 /** Return a ref that anchors a combobox popup to an element of the caller's choosing. */
 export function useComboboxAnchor(): RefObject<HTMLDivElement | null> {
@@ -39,7 +38,7 @@ export const ComboboxContext: Context<{
   multiple: false,
 });
 
-const ComboboxOpenContext = createContext<boolean | null>(null);
+const ComboboxOpen = createOverlayPresence();
 
 /** Resolve a Combobox's open state so its popup can exit before unmounting. */
 export function Combobox<
@@ -62,7 +61,7 @@ export function Combobox<
     });
 
   return (
-    <ComboboxOpenContext.Provider value={combobox.open}>
+    <ComboboxOpen.Provider value={combobox.open}>
       <ComboboxContext.Provider
         value={{ chipsRef, multiple: !!props.multiple }}
       >
@@ -74,7 +73,7 @@ export function Combobox<
           {children}
         </ComboboxPrimitive.Root>
       </ComboboxContext.Provider>
-    </ComboboxOpenContext.Provider>
+    </ComboboxOpen.Provider>
   );
 }
 
@@ -225,14 +224,17 @@ export function ComboboxPopup({
   portalProps?: ComboboxPrimitive.Portal.Props;
 }): ReactElement {
   const { chipsRef } = useContext(ComboboxContext);
-  const open = useContext(ComboboxOpenContext);
+  const presence = ComboboxOpen.usePresence();
   const reduce = useReducedMotion();
   const transition = motionTokens.spring.snappy;
   const scale = reduce ? 1 : 0.98;
   const anchor = anchorProp ?? chipsRef;
 
   const popup = (
-    <ComboboxPrimitive.Portal keepMounted={open !== null} {...portalProps}>
+    <ComboboxPrimitive.Portal
+      keepMounted={presence.keepMounted}
+      {...portalProps}
+    >
       <ComboboxPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -274,11 +276,7 @@ export function ComboboxPopup({
     </ComboboxPrimitive.Portal>
   );
 
-  if (open === null) {
-    return popup;
-  }
-
-  return <AnimatePresence>{open && popup}</AnimatePresence>;
+  return presence.wrap(popup);
 }
 
 export function ComboboxItem({

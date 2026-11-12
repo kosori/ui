@@ -1,7 +1,24 @@
 'use client';
 
-import { type MotionProps, useReducedMotion } from 'motion/react';
-import { type KeyboardEvent, useCallback, useMemo, useState } from 'react';
+import { cn } from 'cn';
+import {
+  AnimatePresence,
+  type HTMLMotionProps,
+  type MotionProps,
+  motion,
+  useReducedMotion,
+} from 'motion/react';
+import {
+  type ComponentProps,
+  createContext,
+  createElement,
+  type KeyboardEvent,
+  type ReactElement,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 
 /** The spring presets and press scale every animated component references. */
 export const motionTokens = {
@@ -64,24 +81,121 @@ export function useKeyboardPress(): KeyboardPress {
   return { handlers, pressed };
 }
 
-export type ControllableOpenOptions<Details = undefined> = {
+export type PressFeedback = Pick<
+  HTMLMotionProps<'button'>,
+  'animate' | 'initial' | 'transition' | 'whileTap'
+> &
+  KeyboardPress['handlers'];
+
+/**
+ * Resolve the press feedback a Button or Toggle spreads onto its
+ * `motion.button`, leaving a popup trigger still so its positioning holds.
+ */
+export function usePressFeedback(hasPopup: boolean): PressFeedback {
+  const reduce = useReducedMotion();
+  const transition = useMotionTransition('snappy');
+  const keyboard = useKeyboardPress();
+  const enabled = !(reduce || hasPopup);
+
+  return {
+    ...(enabled
+      ? {
+          animate: { scale: keyboard.pressed ? motionTokens.pressScale : 1 },
+          initial: false,
+        }
+      : {}),
+    ...keyboard.handlers,
+    transition,
+    whileTap: enabled ? { scale: motionTokens.pressScale } : undefined,
+  };
+}
+
+export type MotionPanelProps = ComponentProps<typeof motion.div> & {
+  'data-open'?: string;
+};
+
+/**
+ * Spring a panel between its measured height and zero, releasing the clip once
+ * it settles open so nested content is not cut off.
+ */
+export function MotionPanel({
+  className,
+  ...props
+}: MotionPanelProps): ReactElement {
+  const reduce = useReducedMotion();
+  const transition = useMotionTransition('smooth');
+  const open = props['data-open'] !== undefined;
+  const [settledOpen, setSettledOpen] = useState(open);
+  const clipped = !(open && (reduce || settledOpen));
+  const handleAnimationComplete = useCallback(
+    () => setSettledOpen(open),
+    [open]
+  );
+
+  return createElement(motion.div, {
+    ...props,
+    animate: { height: open ? 'auto' : 0 },
+    'aria-hidden': open ? undefined : true,
+    className: cn(clipped ? 'overflow-hidden' : 'overflow-visible', className),
+    inert: open ? undefined : true,
+    initial: false,
+    onAnimationComplete: handleAnimationComplete,
+    transition,
+  });
+}
+
+export type OverlayPresence = {
+  keepMounted: boolean;
+  wrap: (popup: ReactElement) => ReactElement;
+};
+
+/**
+ * Create the open context a Motion popup shares with its Root, together with
+ * the presence helper that keeps the portal mounted until the exit ends.
+ */
+export function createOverlayPresence() {
+  const OpenContext = createContext<boolean | null>(null);
+
+  const usePresence = (): OverlayPresence => {
+    const open = useContext(OpenContext);
+
+    return {
+      keepMounted: open !== null,
+      wrap: (popup) =>
+        open === null
+          ? popup
+          : createElement(AnimatePresence, null, open ? popup : null),
+    };
+  };
+
+  return { Provider: OpenContext.Provider, usePresence };
+}
+
+export type OpenChangeDetails = { isCanceled?: boolean };
+
+export type ControllableOpenOptions<
+  Details extends OpenChangeDetails = OpenChangeDetails,
+> = {
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean, details: Details) => void;
   open?: boolean;
 };
 
-export type ControllableOpen<Details = undefined> = {
+export type ControllableOpen<
+  Details extends OpenChangeDetails = OpenChangeDetails,
+> = {
   open: boolean;
   setOpen: (open: boolean, details: Details) => void;
 };
 
 /**
  * Resolve a popup's `open` prop against its uncontrolled default, forwarding
- * every change to the caller without altering the component's public API.
+ * every change to the caller and honouring a cancelled change without altering
+ * the component's public API.
  */
-export function useControllableOpen<Details = undefined>(
-  options: ControllableOpenOptions<Details> = {}
-): ControllableOpen<Details> {
+export function useControllableOpen<
+  Details extends OpenChangeDetails = OpenChangeDetails,
+>(options: ControllableOpenOptions<Details> = {}): ControllableOpen<Details> {
   const { defaultOpen = false, onOpenChange, open } = options;
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
   const isControlled = open !== undefined;
@@ -89,11 +203,15 @@ export function useControllableOpen<Details = undefined>(
 
   const setOpen = useCallback(
     (nextOpen: boolean, details: Details) => {
+      onOpenChange?.(nextOpen, details);
+
+      if (details.isCanceled) {
+        return;
+      }
+
       if (!isControlled) {
         setUncontrolledOpen(nextOpen);
       }
-
-      onOpenChange?.(nextOpen, details);
     },
     [isControlled, onOpenChange]
   );

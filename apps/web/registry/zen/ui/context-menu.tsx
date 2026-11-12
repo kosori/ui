@@ -3,17 +3,15 @@
 import { ContextMenu as ContextMenuPrimitive } from '@base-ui/react/context-menu';
 import { IconChevronRight } from '@tabler/icons-react';
 import { cn } from 'cn';
-import {
-  AnimatePresence,
-  type HTMLMotionProps,
-  motion,
-  useReducedMotion,
-} from 'motion/react';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type * as React from 'react';
-import { createContext, useContext } from 'react';
-import { motionTokens, useControllableOpen } from '@/lib/motion';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
 
-const ContextMenuOpenContext = createContext<boolean | null>(null);
+const ContextMenuOpen = createOverlayPresence();
 
 /** Resolve a Context Menu's open state so its popup exits before unmounting. */
 export function ContextMenu({
@@ -31,7 +29,7 @@ export function ContextMenu({
     });
 
   return (
-    <ContextMenuOpenContext.Provider value={menu.open}>
+    <ContextMenuOpen.Provider value={menu.open}>
       <ContextMenuPrimitive.Root
         onOpenChange={menu.setOpen}
         open={menu.open}
@@ -39,7 +37,7 @@ export function ContextMenu({
       >
         {children}
       </ContextMenuPrimitive.Root>
-    </ContextMenuOpenContext.Provider>
+    </ContextMenuOpen.Provider>
   );
 }
 
@@ -81,13 +79,13 @@ export function ContextMenuPopup({
   anchor?: ContextMenuPrimitive.Positioner.Props['anchor'];
   portalProps?: ContextMenuPrimitive.Portal.Props;
 }): React.ReactElement {
-  const open = useContext(ContextMenuOpenContext);
+  const presence = ContextMenuOpen.usePresence();
   const reduce = useReducedMotion();
   const transition = motionTokens.spring.snappy;
   const scale = reduce ? 1 : 0.98;
 
   const popup = (
-    <ContextMenuPortal keepMounted={open !== null} {...portalProps}>
+    <ContextMenuPortal keepMounted={presence.keepMounted} {...portalProps}>
       <ContextMenuPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -125,11 +123,7 @@ export function ContextMenuPopup({
     </ContextMenuPortal>
   );
 
-  if (open === null) {
-    return popup;
-  }
-
-  return <AnimatePresence>{open && popup}</AnimatePresence>;
+  return presence.wrap(popup);
 }
 
 export function ContextMenuGroup(

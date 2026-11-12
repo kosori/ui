@@ -3,34 +3,20 @@
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete';
 import { IconSelector, IconX } from '@tabler/icons-react';
 import { cn } from 'cn';
-import {
-  AnimatePresence,
-  type HTMLMotionProps,
-  motion,
-  useReducedMotion,
-} from 'motion/react';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
-import { createContext, type ReactElement, useContext } from 'react';
+import type { ReactElement } from 'react';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { motionTokens, useControllableOpen } from '@/lib/motion';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
 
-const AutocompleteOpenContext = createContext<boolean | null>(null);
+const AutocompleteOpen = createOverlayPresence();
 
 /** Resolve an Autocomplete's open state so its popup can exit before unmounting. */
-export function Autocomplete<
-  Items extends readonly { items: readonly unknown[] }[],
->(
-  props: Omit<
-    AutocompletePrimitive.Root.Props<Items[number]['items'][number]>,
-    'items'
-  > & { items: Items }
-): ReactElement;
-export function Autocomplete<ItemValue>(
-  props: Omit<AutocompletePrimitive.Root.Props<ItemValue>, 'items'> & {
-    items?: readonly ItemValue[];
-  }
-): ReactElement;
 export function Autocomplete<ItemValue>({
   children,
   defaultOpen,
@@ -44,12 +30,12 @@ export function Autocomplete<ItemValue>({
       onOpenChange,
       open,
     });
-  const Root = AutocompletePrimitive.Root as unknown as (
+  const Root: (
     rootProps: AutocompletePrimitive.Root.Props<ItemValue>
-  ) => ReactElement;
+  ) => ReactElement = AutocompletePrimitive.Root;
 
   return (
-    <AutocompleteOpenContext.Provider value={autocomplete.open}>
+    <AutocompleteOpen.Provider value={autocomplete.open}>
       <Root
         onOpenChange={autocomplete.setOpen}
         open={autocomplete.open}
@@ -57,7 +43,7 @@ export function Autocomplete<ItemValue>({
       >
         {children}
       </Root>
-    </AutocompleteOpenContext.Provider>
+    </AutocompleteOpen.Provider>
   );
 }
 
@@ -160,13 +146,16 @@ export function AutocompletePopup({
   anchor?: AutocompletePrimitive.Positioner.Props['anchor'];
   portalProps?: AutocompletePrimitive.Portal.Props;
 }): React.ReactElement {
-  const open = useContext(AutocompleteOpenContext);
+  const presence = AutocompleteOpen.usePresence();
   const reduce = useReducedMotion();
   const transition = motionTokens.spring.snappy;
   const scale = reduce ? 1 : 0.98;
 
   const popup = (
-    <AutocompletePrimitive.Portal keepMounted={open !== null} {...portalProps}>
+    <AutocompletePrimitive.Portal
+      keepMounted={presence.keepMounted}
+      {...portalProps}
+    >
       <AutocompletePrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -208,11 +197,7 @@ export function AutocompletePopup({
     </AutocompletePrimitive.Portal>
   );
 
-  if (open === null) {
-    return popup;
-  }
-
-  return <AnimatePresence>{open && popup}</AnimatePresence>;
+  return presence.wrap(popup);
 }
 
 export function AutocompleteItem({
