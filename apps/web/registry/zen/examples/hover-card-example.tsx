@@ -1,5 +1,7 @@
+'use client';
+
 import { IconCornerUpLeft, IconStar } from '@tabler/icons-react';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import {
   HoverCard,
   HoverCardContent,
@@ -8,7 +10,14 @@ import {
 
 const HoverCardExample = () => (
   <HoverCard>
-    <HoverCardTrigger render={<Button variant='ghost' />}>
+    <HoverCardTrigger
+      render={
+        <button
+          className={buttonVariants({ variant: 'ghost' })}
+          type='button'
+        />
+      }
+    >
       kosori
     </HoverCardTrigger>
     <HoverCardContent>

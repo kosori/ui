@@ -23,7 +23,9 @@ npx shadcn@latest add @kosori/tooltip
 ## Usage
 
 ```tsx
-import { Button } from '@/components/ui/button';
+'use client';
+
+import { buttonVariants } from '@/components/ui/button';
 import {
   Tooltip,
   TooltipPopup,
@@ -32,7 +34,14 @@ import {
 
 const TooltipDemo = () => (
   <Tooltip>
-    <TooltipTrigger render={<Button variant='outline' />}>
+    <TooltipTrigger
+      render={
+        <button
+          className={buttonVariants({ variant: 'outline' })}
+          type='button'
+        />
+      }
+    >
       Hover me
     </TooltipTrigger>
     <TooltipPopup>Helpful hint</TooltipPopup>

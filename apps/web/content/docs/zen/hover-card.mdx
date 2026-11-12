@@ -23,7 +23,9 @@ npx shadcn@latest add @kosori/hover-card
 ## Usage
 
 ```tsx
-import { Button } from '@/components/ui/button';
+'use client';
+
+import { buttonVariants } from '@/components/ui/button';
 import {
   HoverCard,
   HoverCardContent,
@@ -32,7 +34,11 @@ import {
 
 const HoverCardDemo = () => (
   <HoverCard>
-    <HoverCardTrigger render={<Button variant='ghost' />}>
+    <HoverCardTrigger
+      render={
+        <button className={buttonVariants({ variant: 'ghost' })} type='button' />
+      }
+    >
       coss.com/ui
     </HoverCardTrigger>
     <HoverCardContent>
