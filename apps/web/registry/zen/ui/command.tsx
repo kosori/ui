@@ -74,7 +74,7 @@ export function CommandDialogBackdrop({
   render,
   ...props
 }: CommandDialogPrimitive.Backdrop.Props): React.ReactElement {
-  const transition = motionTokens.spring.snappy;
+  const transition = motionTokens.spring.smooth;
 
   return (
     <CommandDialogPrimitive.Backdrop
@@ -125,7 +125,7 @@ export function CommandDialogPopup({
 }): React.ReactElement {
   const presence = CommandDialogOpen.usePresence();
   const reduce = useReducedMotion();
-  const transition = motionTokens.spring.snappy;
+  const transition = motionTokens.spring.smooth;
   const scale = reduce ? 1 : 0.98;
 
   const popup = (

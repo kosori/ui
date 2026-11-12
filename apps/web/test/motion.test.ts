@@ -38,8 +38,8 @@ const withoutTicks = (cell: string) => cell.replaceAll('`', '');
 const MOTION_SURFACES = [
   'Accordion and Collapsible height',
   'Button and Toggle press',
-  'Dialog, Sheet, Alert Dialog',
-  'Popover, menus, Command, Select, Combobox, Autocomplete, Navigation Menu',
+  'Dialog, Sheet, Alert Dialog, Command',
+  'Popover, menus, Select, Combobox, Autocomplete, Navigation Menu',
   'Slider thumb',
   'Switch thumb and Checkbox mark',
   'Tabs highlight',
