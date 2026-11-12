@@ -2,12 +2,49 @@
 
 import { Popover as PopoverPrimitive } from '@base-ui/react/popover';
 import { cn } from 'cn';
+import {
+  AnimatePresence,
+  type HTMLMotionProps,
+  motion,
+  useReducedMotion,
+} from 'motion/react';
 import type React from 'react';
+import { createContext, useContext } from 'react';
+import { motionTokens, useControllableOpen } from '@/lib/motion';
+
+const PopoverOpenContext = createContext<boolean | null>(null);
 
 export const PopoverCreateHandle: typeof PopoverPrimitive.createHandle =
   PopoverPrimitive.createHandle;
 
-export const Popover: typeof PopoverPrimitive.Root = PopoverPrimitive.Root;
+/** Resolve a Popover's open state so its popup can exit before unmounting. */
+export function Popover<Payload = unknown>({
+  children,
+  defaultOpen,
+  onOpenChange,
+  open,
+  ...props
+}: PopoverPrimitive.Root.Props<Payload>): React.ReactElement {
+  const popover = useControllableOpen<PopoverPrimitive.Root.ChangeEventDetails>(
+    {
+      defaultOpen,
+      onOpenChange,
+      open,
+    }
+  );
+
+  return (
+    <PopoverOpenContext.Provider value={popover.open}>
+      <PopoverPrimitive.Root
+        onOpenChange={popover.setOpen}
+        open={popover.open}
+        {...props}
+      >
+        {children}
+      </PopoverPrimitive.Root>
+    </PopoverOpenContext.Provider>
+  );
+}
 
 export function PopoverTrigger({
   className,
@@ -35,6 +72,7 @@ export function PopoverPopup({
   tooltipStyle = false,
   anchor,
   portalProps,
+  render,
   ...props
 }: PopoverPrimitive.Popup.Props & {
   portalProps?: PopoverPrimitive.Portal.Props;
@@ -45,8 +83,13 @@ export function PopoverPopup({
   tooltipStyle?: boolean;
   anchor?: PopoverPrimitive.Positioner.Props['anchor'];
 }): React.ReactElement {
-  return (
-    <PopoverPrimitive.Portal {...portalProps}>
+  const open = useContext(PopoverOpenContext);
+  const reduce = useReducedMotion();
+  const transition = motionTokens.spring.snappy;
+  const scale = reduce ? 1 : 0.98;
+
+  const popup = (
+    <PopoverPrimitive.Portal keepMounted={open !== null} {...portalProps}>
       <PopoverPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -58,12 +101,24 @@ export function PopoverPopup({
       >
         <PopoverPrimitive.Popup
           className={cn(
-            'relative flex h-(--popup-height,auto) w-(--popup-width,auto) origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding text-popover-foreground shadow-lg/5 outline-none transition-[width,height,scale,opacity] duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] has-data-[slot=calendar]:rounded-xl has-data-[slot=calendar]:before:rounded-[calc(var(--radius-xl)-1px)] data-ending-style:opacity-0 data-starting-style:opacity-0 motion-safe:data-ending-style:scale-98 motion-safe:data-starting-style:scale-98 motion-reduce:scale-100 motion-reduce:transition-none dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
+            'relative flex h-(--popup-height,auto) w-(--popup-width,auto) origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding text-popover-foreground shadow-lg/5 outline-none transition-[width,height] duration-[var(--duration-fast,160ms)] ease-[var(--ease-standard,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] has-data-[slot=calendar]:rounded-xl has-data-[slot=calendar]:before:rounded-[calc(var(--radius-xl)-1px)] motion-reduce:transition-none dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
             tooltipStyle &&
               'w-fit text-balance rounded-md text-xs shadow-md/5 before:rounded-[calc(var(--radius-md)-1px)]',
             className
           )}
           data-slot='popover-popup'
+          render={
+            render ??
+            ((elementProps, state) => (
+              <motion.div
+                {...(elementProps as HTMLMotionProps<'div'>)}
+                animate={{ opacity: state.open ? 1 : 0, scale: 1 }}
+                exit={{ opacity: 0, scale }}
+                initial={{ opacity: 0, scale }}
+                transition={transition}
+              />
+            ))
+          }
           {...props}
         >
           <PopoverPrimitive.Viewport
@@ -81,6 +136,12 @@ export function PopoverPopup({
       </PopoverPrimitive.Positioner>
     </PopoverPrimitive.Portal>
   );
+
+  if (open === null) {
+    return popup;
+  }
+
+  return <AnimatePresence>{open && popup}</AnimatePresence>;
 }
 
 export function PopoverClose({
