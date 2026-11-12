@@ -1173,7 +1173,15 @@ test('the motion library owns the motion package and only its importers depend o
     .map(({ item }) => item.name)
     .sort();
   expect(importers, 'Presses and overlays run on the library').toEqual(
-    expect.arrayContaining(['button', 'dialog', 'toggle'])
+    expect.arrayContaining([
+      'button',
+      'context-menu',
+      'dialog',
+      'dropdown-menu',
+      'popover',
+      'select',
+      'toggle',
+    ])
   );
 
   for (const { item, source } of sources) {
@@ -1232,6 +1240,47 @@ test('the motion library owns the motion package and only its importers depend o
     'duration-fast': '160ms',
     'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
   });
+
+  for (const name of [
+    'popover',
+    'dropdown-menu',
+    'context-menu',
+    'select',
+  ] as const) {
+    const entry = sources.find(({ item }) => item.name === name) as
+      | (typeof sources)[number]
+      | undefined;
+
+    expect(entry, `the ${name} is in the Zen Registry`).toBeDefined();
+    expect(entry?.source, `${name} owns its open state`).toContain(
+      'useControllableOpen'
+    );
+    expect(entry?.source, `${name} animates presence`).toContain(
+      'AnimatePresence'
+    );
+    expect(entry?.source, `${name} uses the snappy preset`).toContain(
+      'motionTokens.spring.snappy'
+    );
+    expect(entry?.source, `${name} still carries a motion Token`).not.toContain(
+      'motion-overlay'
+    );
+    expect(
+      Object.keys(entry?.item.cssVars?.light ?? {}).filter((token) =>
+        token.startsWith('motion-')
+      ),
+      `${name} still carries a motion Token`
+    ).toEqual([]);
+  }
+
+  for (const name of ['popover', 'dropdown-menu', 'context-menu'] as const) {
+    const entry = sources.find(({ item }) => item.name === name) as
+      | (typeof sources)[number]
+      | undefined;
+
+    expect(entry?.source, `${name} keeps its portal for the exit`).toContain(
+      'keepMounted'
+    );
+  }
 });
 
 test('the remaining Dialog-family popups exit through Motion like the Dialog', async () => {
@@ -1405,6 +1454,61 @@ test('the CSS-kept items read the shared timing Tokens', async () => {
   }
 });
 
+test('the stateful controls own their state motion through the library', async () => {
+  const items = await readCatalog('zen');
+  const sources = new Map(
+    await Promise.all(
+      items.map(async (item) => [
+        item.name,
+        (
+          await Promise.all(
+            item.files.map((file) => readFile(join(webDir, file.path), 'utf8'))
+          )
+        ).join('\n'),
+      ])
+    )
+  );
+
+  for (const name of ['checkbox', 'slider', 'switch']) {
+    const item = items.find((registryItem) => registryItem.name === name);
+    const source = sources.get(name) ?? '';
+
+    expect(source, `${name} imports the motion library`).toMatch(
+      /from ['"]@\/lib\/motion['"]/
+    );
+    expect(
+      item?.registryDependencies ?? [],
+      `${name} depends on the motion library`
+    ).toContain('@kosori/motion');
+    expect(
+      item?.dependencies ?? [],
+      `${name} does not declare the motion package`
+    ).not.toContain('motion');
+    expect(
+      JSON.stringify(item?.cssVars ?? {}),
+      `${name} declares no motion Tokens`
+    ).not.toContain('motion-');
+    if (name === 'switch') {
+      expect(item?.cssVars?.light, 'switch light Tokens').toMatchObject({
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      });
+      expect(item?.cssVars?.dark, 'switch dark Tokens').toMatchObject({
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      });
+    } else {
+      expect(item?.cssVars, `${name} declares no Tokens`).toBeUndefined();
+    }
+    expect(source, `${name} keeps no CSS travel`).not.toMatch(
+      /transition[^\s'"]*translate|translate-x-|\[transition:translate/
+    );
+    expect(source, `${name} keeps no CSS state scale`).not.toMatch(
+      /data-(?:checked|dragging):scale-|scale-90/
+    );
+  }
+});
+
 // biome-ignore format: the shared timeout keeps this declaration on one line
 test('installing state-coloured items without the preset compiles their utilities', async () => {
   const build = await buildRegistry('zen');
@@ -1437,10 +1541,6 @@ test('installing state-coloured items without the preset compiles their utilitie
         'motion-overlay-duration': '180ms',
         'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
       },
-      'context-menu': {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
-      },
       dialog: {
         'duration-fast': '160ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
@@ -1465,16 +1565,16 @@ test('installing state-coloured items without the preset compiles their utilitie
         'duration-fast': '160ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
-      select: {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
-      },
       sheet: {
         'duration-fast': '160ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       sidebar: {
         'duration-standard': '240ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+      switch: {
+        'duration-fast': '160ms',
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       toast: {
@@ -1594,12 +1694,10 @@ test('installing state-coloured items without the preset compiles their utilitie
     expect(motionTokens, 'the installed overlay easing Token').toContain(
       '--motion-overlay-easing: cubic-bezier(0.2, 0, 0, 1)'
     );
-    expect(motionTokens, 'the installed control state duration Token').toContain(
-      '--motion-state-duration: 120ms'
-    );
-    expect(motionTokens, 'the installed control state easing Token').toContain(
-      '--motion-state-easing: cubic-bezier(0.2, 0, 0, 1)'
-    );
+    expect(
+      motionTokens,
+      'the installed stylesheet declares no control state Token'
+    ).not.toContain('--motion-state-');
     const theme = declarations(css, '@theme inline');
     for (const [token, value] of Object.entries(STATE_TOKENS.light)) {
       expect(declarations(css, ':root'), `partial light ${token}`).toContain(
