@@ -13,14 +13,15 @@ position.
 
 | Surface | Engine | Preset |
 | --- | --- | --- |
-| Button and Toggle press | Motion | `press` |
-| Switch thumb and Checkbox mark | Motion | `snappy` |
-| Slider thumb | Motion | `responsive` |
+| Button, Toggle and Switch press | Motion | `press` |
+| Switch thumb travel | Motion | `snappy` |
+| Checkbox mark | Motion | `state` |
+| Slider thumb grab | Motion | `press` |
 | Accordion and Collapsible height | Motion | `smooth` |
 | Dialog, Sheet, Alert Dialog, Command | Motion | `smooth` |
 | Popover, menus, Select, Combobox, Autocomplete, Navigation Menu | Motion | `snappy` |
 | Tooltip and Preview Card | Motion | `snappy` |
-| Tabs highlight | Motion | `morph` |
+| Tabs highlight | Motion | `snappy` |
 | Toast and Drawer | CSS | — |
 | Sidebar collapse | CSS | — |
 | Progress and Meter | CSS | — |
@@ -35,22 +36,27 @@ update, and an animation repeated that often stops reading as feedback.
 
 ## Presets
 
-Springs ship in `lib/motion.ts`. Every install of a component that needs Motion
-writes that file, and it is yours to edit.
+Springs and the short tweens ship in `lib/motion.ts`. Every install of a
+component that needs Motion writes that file, and it is yours to edit.
 
 | Preset | Values | Used for |
 | --- | --- | --- |
-| `snappy` | `visualDuration: 0.26`, `bounce: 0` | Toggles, thumbs, small indicators |
+| `snappy` | `visualDuration: 0.26`, `bounce: 0` | Toggles, thumbs, small indicators and the Tabs highlight |
 | `smooth` | `visualDuration: 0.4`, `bounce: 0` | Panels, height changes, dialogs, sheets |
-| `morph` | `visualDuration: 0.42`, `bounce: 0` | Shared highlights and widths that follow content |
-| `responsive` | `stiffness: 520`, `damping: 44` | Direct manipulation that tracks the pointer |
+| `morph` | `visualDuration: 0.42`, `bounce: 0` | Available for shared highlights and widths that follow content; no zen component selects it yet |
+| `responsive` | `stiffness: 520`, `damping: 44` | Available for direct manipulation that tracks the pointer; no zen component selects it yet |
 | `gentle` | `stiffness: 340`, `damping: 34` | Available for larger layout changes; no zen component selects it yet |
 
 Press feedback is a scale, not a spring: `motionTokens.pressScale` defaults to
 `0.97`, pressed in 100ms and released in 160ms by `motionTokens.press`. A click
 is shorter than a spring, so the press and its release use short tweens instead
 of the `snappy` preset; a spring there leaves the button still shrinking when
-the click ends.
+the click ends. The Switch thumb's stretch and the Slider thumb's grab use the
+same tween, so they track the pointer instead of growing after it has moved.
+
+A state change that has to land with the click is a tween too:
+`motionTokens.state` completes the Checkbox mark's pop in 120ms, so the mark is
+whole by the time the click ends while its colour changes on the same click.
 
 ```tsx
 import { motion } from 'motion/react';

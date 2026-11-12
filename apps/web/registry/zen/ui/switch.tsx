@@ -6,7 +6,11 @@ import type { HTMLMotionProps } from 'motion/react';
 import { motion, useReducedMotion } from 'motion/react';
 import { useCallback, useState } from 'react';
 
-import { useKeyboardPress, useMotionTransition } from '@/lib/motion';
+import {
+  motionTokens,
+  useKeyboardPress,
+  useMotionTransition,
+} from '@/lib/motion';
 
 /**
  * The thumb's resting and travelling distance. The trailing `--switch-dir`
@@ -21,6 +25,7 @@ export function Switch({
 }: SwitchPrimitive.Root.Props): React.ReactElement {
   const reduce = useReducedMotion();
   const transition = useMotionTransition('snappy');
+  const { press } = motionTokens;
   const keyboard = useKeyboardPress();
   const [tapped, setTapped] = useState(false);
   const endTap = useCallback(() => setTapped(false), []);
@@ -58,7 +63,10 @@ export function Switch({
               x: state.checked ? checkedTravel : restTravel,
             }}
             initial={false}
-            transition={transition}
+            transition={{
+              scaleX: pressed ? press.down : press.up,
+              x: transition,
+            }}
           />
         )}
       />
