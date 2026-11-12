@@ -1178,11 +1178,27 @@ test('the motion library owns the motion package and only its importers depend o
       'context-menu',
       'dialog',
       'dropdown-menu',
+      'hover-card',
       'popover',
       'select',
       'toggle',
+      'tooltip',
     ])
   );
+
+  for (const name of ['hover-card', 'tooltip']) {
+    const item = items.find((registryItem) => registryItem.name === name);
+
+    expect(item, `${name} is in the Zen Registry`).toBeDefined();
+    expect(
+      Object.keys({
+        ...item?.cssVars?.dark,
+        ...item?.cssVars?.light,
+        ...item?.cssVars?.theme,
+      }).filter((token) => token.startsWith('motion-')),
+      `${name} keeps no CSS motion Tokens`
+    ).toEqual([]);
+  }
 
   for (const { item, source } of sources) {
     const importsLibrary = /from ['"]@\/lib\/motion['"]/.test(source);
@@ -1550,8 +1566,8 @@ test('installing state-coloured items without the preset compiles their utilitie
         'ease-spring': 'cubic-bezier(0.32, 0.72, 0, 1)',
       },
       'hover-card': {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       meter: {
         'duration-fast': '160ms',
@@ -1589,8 +1605,8 @@ test('installing state-coloured items without the preset compiles their utilitie
         'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       tooltip: {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
     } as const;
     for (const [name, tokens] of Object.entries(motionTokensByItem)) {
