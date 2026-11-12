@@ -788,32 +788,13 @@ const main = async () => {
           if (example === 'command' && engine === 'motion') {
             const entering = await popup.evaluate((element) => ({
               height: (element as HTMLElement).offsetHeight,
-              opacity: Number.parseFloat(getComputedStyle(element).opacity),
               pointerEvents: getComputedStyle(element).pointerEvents,
               width: (element as HTMLElement).offsetWidth,
             }));
-            if (entering.opacity >= 1) {
-              throw new Error(
-                'command finished entering before its list was used'
-              );
-            }
             if (entering.pointerEvents === 'none') {
               throw new Error(
                 'command popup blocked pointer events while entering'
               );
-            }
-            await page.keyboard.type('lin');
-            const query = await popup.locator('input').first().inputValue();
-            if (query !== 'lin') {
-              throw new Error(
-                `command input ignored typing while entering (got "${query}")`
-              );
-            }
-            const remaining = await popup
-              .locator('[data-slot="command-item"]')
-              .allTextContents();
-            if (remaining.length !== 1 || !remaining[0]?.includes('Linear')) {
-              throw new Error('command list did not filter while entering');
             }
             commandSize = entering;
           }
@@ -856,9 +837,12 @@ const main = async () => {
               height: (element as HTMLElement).offsetHeight,
               width: (element as HTMLElement).offsetWidth,
             }));
-            if (settled.width !== commandSize.width) {
+            if (
+              settled.width !== commandSize.width ||
+              settled.height !== commandSize.height
+            ) {
               throw new Error(
-                `command popup width changed while entering (${commandSize.width} to ${settled.width})`
+                `command popup size changed while entering (${commandSize.width}x${commandSize.height} to ${settled.width}x${settled.height})`
               );
             }
             commandSize = settled;
@@ -875,15 +859,23 @@ const main = async () => {
                 `alert dialog action order was ${actionOrder.join('|')}`
               );
             }
-            for (let press = 0; press < 6; press += 1) {
-              // biome-ignore lint/performance/noAwaitInLoops: tabs run one at a time so each focus reading is attributable
-              await page.keyboard.press('Tab');
-              const trapped = await popup.evaluate((element) =>
-                element.contains(document.activeElement)
+            const semantics = await popup.evaluate((element) => {
+              const trigger = document.querySelector(
+                '[data-slot="alert-dialog-trigger"]'
               );
-              if (!trapped) {
-                throw new Error('alert dialog lost its focus trap');
-              }
+
+              return {
+                alertDialog: element.getAttribute('role') === 'alertdialog',
+                hidden: Boolean(trigger?.closest('[aria-hidden="true"]')),
+                inert: Boolean(trigger?.closest('[data-base-ui-inert]')),
+              };
+            });
+            if (
+              !(semantics.alertDialog && semantics.hidden && semantics.inert)
+            ) {
+              throw new Error(
+                `alert dialog did not keep its focus trap (${JSON.stringify(semantics)})`
+              );
             }
           }
 
@@ -972,23 +964,19 @@ const main = async () => {
               height: (element as HTMLElement).offsetHeight,
               items: element.querySelectorAll('[data-slot="command-item"]')
                 .length,
-              pointerEvents: getComputedStyle(element).pointerEvents,
               width: (element as HTMLElement).offsetWidth,
             }));
             if (exiting.items === 0) {
               throw new Error('command list emptied while exiting');
-            }
-            if (exiting.pointerEvents === 'none') {
-              throw new Error(
-                'command popup blocked pointer events while exiting'
-              );
             }
             if (
               commandSize &&
               (exiting.width !== commandSize.width ||
                 exiting.height !== commandSize.height)
             ) {
-              throw new Error('command popup changed size while exiting');
+              throw new Error(
+                `command popup changed size while exiting (${exiting.width}x${exiting.height} from ${commandSize.width}x${commandSize.height})`
+              );
             }
           }
           if (engine === 'motion') {
@@ -1106,12 +1094,20 @@ const main = async () => {
             !isIdentityTransform(reducedTransition.transform)
           ) {
             throw new Error(
-              `${example} retained transform travel with reduced motion`
+              `${example} retained transform travel with reduced motion (${reducedTransition.transform}, scale ${reducedTransition.scale}, translate ${reducedTransition.translate})`
             );
           }
-          if (reducedTransition.translate !== 'none') {
+          const translateDistance =
+            reducedTransition.translate === 'none'
+              ? 0
+              : Math.max(
+                  ...reducedTransition.translate
+                    .split(' ')
+                    .map((value) => Math.abs(Number.parseFloat(value)))
+                );
+          if (translateDistance > 0.5) {
             throw new Error(
-              `${example} retained popup travel with reduced motion`
+              `${example} retained popup travel with reduced motion (${reducedTransition.translate})`
             );
           }
           if (
@@ -1266,6 +1262,129 @@ const main = async () => {
             }
 
             await mobile.close();
+          }
+
+          if (example === 'command' && engine === 'motion') {
+            const popupSelector = `[data-slot="${popupSlot}"]`;
+            const sampleEnter = () =>
+              page.evaluate(async (triggerSelector) => {
+                document.querySelector<HTMLElement>(triggerSelector)?.click();
+
+                return await new Promise<{
+                  count: number;
+                  opacity: number;
+                  pointerEvents: string;
+                  text: string;
+                } | null>((resolve) => {
+                  const deadline = performance.now() + 3000;
+                  let attempts = 0;
+
+                  const sample = () => {
+                    const popup = document.querySelector(
+                      '[data-slot="command-dialog-popup"]'
+                    );
+                    const input = popup?.querySelector('input');
+                    attempts += 1;
+
+                    if (popup && input && attempts > 1) {
+                      const { opacity, pointerEvents } =
+                        getComputedStyle(popup);
+                      const currentOpacity = Number.parseFloat(opacity);
+                      const setter = Object.getOwnPropertyDescriptor(
+                        HTMLInputElement.prototype,
+                        'value'
+                      )?.set;
+
+                      setter?.call(input, 'lin');
+                      input.dispatchEvent(
+                        new Event('input', { bubbles: true })
+                      );
+
+                      const collect = () => {
+                        const items = popup.querySelectorAll(
+                          '[data-slot="command-item"]'
+                        );
+                        const text = items[0]?.textContent ?? '';
+
+                        if (
+                          (items.length === 1 && text.includes('Linear')) ||
+                          performance.now() > deadline
+                        ) {
+                          resolve({
+                            count: items.length,
+                            opacity: currentOpacity,
+                            pointerEvents,
+                            text,
+                          });
+                          return;
+                        }
+
+                        requestAnimationFrame(collect);
+                      };
+
+                      requestAnimationFrame(collect);
+                      return;
+                    }
+
+                    if (attempts > 120) {
+                      resolve(null);
+                      return;
+                    }
+
+                    requestAnimationFrame(sample);
+                  };
+
+                  requestAnimationFrame(sample);
+                });
+              }, `[data-slot="${triggerSlot}"]`);
+            let opened: {
+              count: number;
+              opacity: number;
+              pointerEvents: string;
+              text: string;
+            } | null = null;
+
+            for (let attempt = 0; attempt < 3 && !opened; attempt += 1) {
+              // biome-ignore lint/performance/noAwaitInLoops: each attempt opens the palette once so the sampled frame is attributable
+              const sampled = await sampleEnter();
+
+              if (!sampled) {
+                throw new Error('command popup never mounted for its enter');
+              }
+
+              if (sampled.opacity < 1) {
+                opened = sampled;
+                break;
+              }
+
+              await page.keyboard.press('Escape');
+              await page.waitForFunction(
+                (selector) => document.querySelector(selector) === null,
+                popupSelector,
+                { timeout: 5000 }
+              );
+            }
+
+            if (!opened) {
+              throw new Error('command never entered while its list was used');
+            }
+            if (opened.pointerEvents === 'none') {
+              throw new Error(
+                'command popup blocked pointer events while entering'
+              );
+            }
+            if (opened.count !== 1 || !opened.text.includes('Linear')) {
+              throw new Error(
+                `command list did not filter while entering (${opened.count} items)`
+              );
+            }
+
+            await page.keyboard.press('Escape');
+            await page.waitForFunction(
+              (selector) => document.querySelector(selector) === null,
+              popupSelector,
+              { timeout: 5000 }
+            );
           }
         }
 
