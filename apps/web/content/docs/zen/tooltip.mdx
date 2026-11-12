@@ -6,7 +6,9 @@ description: A popup that appears when an element is hovered or focused, showing
 Tooltip wraps the [Base UI Tooltip](https://base-ui.com/react/components/tooltip)
 primitive, positions its popup with Base UI's `Positioner` and marks each part
 with `data-slot`. Grouped and detached triggers are available through
-`TooltipProvider` and `TooltipCreateHandle`.
+`TooltipProvider` and `TooltipCreateHandle`. The popup stays mounted and
+animates open and closed with [Motion](/docs/zen/motion), so positioning stays
+with Base UI's `Positioner` and is never animated.
 
 ## Installation
 
