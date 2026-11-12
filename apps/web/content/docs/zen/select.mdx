@@ -6,8 +6,9 @@ description: A common form component for choosing a predefined value in a dropdo
 Select wraps the [Base UI
 Select](https://base-ui.com/react/components/select) primitive, composes its
 trigger, popup and items, and marks each part with `data-slot`. It is a client
-component: it manages focus inside a portal and animates with
-`tw-animate-css`.
+component: it manages focus inside a portal and animates its popup with
+[Motion](/docs/zen/motion). The popup stays unmounted until the first
+interaction, then remains in the DOM so reopening never remounts it.
 
 ## Installation
 

@@ -10,9 +10,43 @@ import {
 } from '@tabler/icons-react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from 'cn';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type * as React from 'react';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
 
-export const Select: typeof SelectPrimitive.Root = SelectPrimitive.Root;
+const SelectOpen = createOverlayPresence();
+
+/** Resolve a Select's open state so its popup can exit before hiding. */
+export function Select<Value, Multiple extends boolean | undefined = false>({
+  children,
+  defaultOpen,
+  onOpenChange,
+  open,
+  ...props
+}: SelectPrimitive.Root.Props<Value, Multiple>): React.ReactElement {
+  const select =
+    useControllableOpen<SelectPrimitive.Root.OpenChangeEventDetails>({
+      defaultOpen,
+      onOpenChange,
+      open,
+    });
+
+  return (
+    <SelectOpen.Provider value={select.open}>
+      <SelectPrimitive.Root
+        onOpenChange={select.setOpen}
+        open={select.open}
+        {...props}
+      >
+        {children}
+      </SelectPrimitive.Root>
+    </SelectOpen.Provider>
+  );
+}
 
 export const selectTriggerVariants = cva(
   "relative inline-flex min-h-9 w-full min-w-36 select-none items-center justify-between gap-2 rounded-lg border border-input bg-background not-dark:bg-clip-padding px-[calc(--spacing(3)-1px)] text-left text-base text-foreground shadow-xs/5 outline-none ring-ring/24 transition-shadow before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] not-data-disabled:not-focus-visible:not-aria-invalid:not-data-pressed:before:shadow-[0_1px_--theme(--color-black/4%)] pointer-coarse:after:absolute pointer-coarse:after:size-full pointer-coarse:after:min-h-11 focus-visible:border-ring focus-visible:ring-[3px] aria-invalid:border-destructive/36 focus-visible:aria-invalid:border-destructive/64 focus-visible:aria-invalid:ring-destructive/16 data-disabled:pointer-events-none data-disabled:opacity-64 sm:min-h-8 sm:text-sm dark:bg-input/32 dark:aria-invalid:ring-destructive/24 dark:not-data-disabled:not-focus-visible:not-aria-invalid:not-data-pressed:before:shadow-[0_-1px_--theme(--color-white/6%)] [&_svg:not([class*='opacity-'])]:opacity-80 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0 [[data-disabled],:focus-visible,[aria-invalid],[data-pressed]]:shadow-none",
@@ -156,6 +190,7 @@ export function SelectPopup({
   alignItemWithTrigger = true,
   anchor,
   portalProps,
+  render,
   ...props
 }: SelectPrimitive.Popup.Props & {
   portalProps?: SelectPrimitive.Portal.Props;
@@ -166,7 +201,12 @@ export function SelectPopup({
   alignItemWithTrigger?: SelectPrimitive.Positioner.Props['alignItemWithTrigger'];
   anchor?: SelectPrimitive.Positioner.Props['anchor'];
 }): React.ReactElement {
-  return (
+  const presence = SelectOpen.usePresence();
+  const reduce = useReducedMotion();
+  const transition = motionTokens.spring.snappy;
+  const scale = reduce ? 1 : 0.98;
+
+  const popup = (
     <SelectPrimitive.Portal {...portalProps}>
       <SelectPrimitive.Positioner
         align={align}
@@ -179,8 +219,20 @@ export function SelectPopup({
         sideOffset={sideOffset}
       >
         <SelectPrimitive.Popup
-          className='motion-reduce:!transition-opacity origin-(--transform-origin) text-foreground outline-none transition-[scale,opacity] duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] data-ending-style:opacity-0 data-starting-style:opacity-0 motion-safe:data-ending-style:scale-98 motion-safe:data-starting-style:scale-98 motion-reduce:scale-100'
+          className='origin-(--transform-origin) text-foreground outline-none'
           data-slot='select-popup'
+          render={
+            render ??
+            ((elementProps, state) => (
+              <motion.div
+                {...(elementProps as HTMLMotionProps<'div'>)}
+                animate={{ opacity: state.open ? 1 : 0, scale: 1 }}
+                exit={{ opacity: 0, scale }}
+                initial={{ opacity: 0, scale }}
+                transition={transition}
+              />
+            ))
+          }
           {...props}
         >
           <SelectScrollUpButton />
@@ -200,6 +252,8 @@ export function SelectPopup({
       </SelectPrimitive.Positioner>
     </SelectPrimitive.Portal>
   );
+
+  return presence.wrap(popup);
 }
 
 export function SelectItem({

@@ -3,12 +3,45 @@
 import { Menu as MenuPrimitive } from '@base-ui/react/menu';
 import { IconChevronRight } from '@tabler/icons-react';
 import { cn } from 'cn';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type * as React from 'react';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
+
+const MenuOpen = createOverlayPresence();
 
 export const MenuCreateHandle: typeof MenuPrimitive.createHandle =
   MenuPrimitive.createHandle;
 
-export const Menu: typeof MenuPrimitive.Root = MenuPrimitive.Root;
+/** Resolve a Menu's open state so its popup can exit before unmounting. */
+export function Menu<Payload = unknown>({
+  children,
+  defaultOpen,
+  onOpenChange,
+  open,
+  ...props
+}: MenuPrimitive.Root.Props<Payload>): React.ReactElement {
+  const menu = useControllableOpen<MenuPrimitive.Root.ChangeEventDetails>({
+    defaultOpen,
+    onOpenChange,
+    open,
+  });
+
+  return (
+    <MenuOpen.Provider value={menu.open}>
+      <MenuPrimitive.Root
+        onOpenChange={menu.setOpen}
+        open={menu.open}
+        {...props}
+      >
+        {children}
+      </MenuPrimitive.Root>
+    </MenuOpen.Provider>
+  );
+}
 
 export const MenuPortal: typeof MenuPrimitive.Portal = MenuPrimitive.Portal;
 
@@ -37,6 +70,7 @@ export function MenuPopup({
   side = 'bottom',
   anchor,
   portalProps,
+  render,
   ...props
 }: MenuPrimitive.Popup.Props & {
   align?: MenuPrimitive.Positioner.Props['align'];
@@ -46,8 +80,13 @@ export function MenuPopup({
   anchor?: MenuPrimitive.Positioner.Props['anchor'];
   portalProps?: MenuPrimitive.Portal.Props;
 }): React.ReactElement {
-  return (
-    <MenuPortal {...portalProps}>
+  const presence = MenuOpen.usePresence();
+  const reduce = useReducedMotion();
+  const transition = motionTokens.spring.snappy;
+  const scale = reduce ? 1 : 0.98;
+
+  const popup = (
+    <MenuPortal keepMounted={presence.keepMounted} {...portalProps}>
       <MenuPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -59,10 +98,22 @@ export function MenuPopup({
       >
         <MenuPrimitive.Popup
           className={cn(
-            "relative flex not-[class*='w-']:min-w-32 origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding shadow-lg/5 outline-none transition-[scale,opacity] duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] focus:outline-none data-ending-style:opacity-0 data-starting-style:opacity-0 motion-safe:data-ending-style:scale-98 motion-safe:data-starting-style:scale-98 motion-reduce:scale-100 motion-reduce:transition-none dark:before:shadow-[0_-1px_--theme(--color-white/6%)]",
+            "relative flex not-[class*='w-']:min-w-32 origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding shadow-lg/5 outline-none before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] focus:outline-none dark:before:shadow-[0_-1px_--theme(--color-white/6%)]",
             className
           )}
           data-slot='menu-popup'
+          render={
+            render ??
+            ((elementProps, state) => (
+              <motion.div
+                {...(elementProps as HTMLMotionProps<'div'>)}
+                animate={{ opacity: state.open ? 1 : 0, scale: 1 }}
+                exit={{ opacity: 0, scale }}
+                initial={{ opacity: 0, scale }}
+                transition={transition}
+              />
+            ))
+          }
           {...props}
         >
           <div className='max-h-(--available-height) w-full overflow-y-auto p-1'>
@@ -72,6 +123,8 @@ export function MenuPopup({
       </MenuPrimitive.Positioner>
     </MenuPortal>
   );
+
+  return presence.wrap(popup);
 }
 
 export function MenuGroup(
@@ -275,10 +328,33 @@ export function MenuShortcut({
   );
 }
 
-export function MenuSub(
-  props: MenuPrimitive.SubmenuRoot.Props
-): React.ReactElement {
-  return <MenuPrimitive.SubmenuRoot data-slot='menu-sub' {...props} />;
+/** Resolve a submenu's open state so its popup can exit before unmounting. */
+export function MenuSub({
+  children,
+  defaultOpen,
+  onOpenChange,
+  open,
+  ...props
+}: MenuPrimitive.SubmenuRoot.Props): React.ReactElement {
+  const submenu =
+    useControllableOpen<MenuPrimitive.SubmenuRoot.ChangeEventDetails>({
+      defaultOpen,
+      onOpenChange,
+      open,
+    });
+
+  return (
+    <MenuOpen.Provider value={submenu.open}>
+      <MenuPrimitive.SubmenuRoot
+        data-slot='menu-sub'
+        onOpenChange={submenu.setOpen}
+        open={submenu.open}
+        {...props}
+      >
+        {children}
+      </MenuPrimitive.SubmenuRoot>
+    </MenuOpen.Provider>
+  );
 }
 
 export function MenuSubTrigger({

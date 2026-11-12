@@ -41,8 +41,19 @@ export const STATE_TOKEN_NAMES = [
 
 export type StateTokenName = (typeof STATE_TOKEN_NAMES)[number];
 
+/** The shared CSS timing scale every Zen transition reads. */
+const MOTION_TOKENS = {
+  'duration-considered': '480ms',
+  'duration-drawer': '450ms',
+  'duration-fast': '160ms',
+  'duration-standard': '240ms',
+  'ease-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+  'ease-spring': 'cubic-bezier(0.32, 0.72, 0, 1)',
+  'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+} as const;
+
 /** Token keys in a Base color block that do not produce a colour utility. */
-const NON_COLOR_TOKEN_KEYS = new Set(['radius']);
+const NON_COLOR_TOKEN_KEYS = new Set(['radius', ...Object.keys(MOTION_TOKENS)]);
 
 /**
  * Derive the `@theme inline` colour mappings a scheme's Token declarations
@@ -129,6 +140,10 @@ export const zen = defineStyle({
   devDependencies: STYLE_DEV_DEPENDENCIES,
   name: 'zen',
   pending: PENDING_COMPONENTS,
+  tokens: {
+    dark: { ...MOTION_TOKENS },
+    light: { ...MOTION_TOKENS },
+  },
 });
 
 /** Airier than `zen`: a larger radius, taller controls and softer focus. */

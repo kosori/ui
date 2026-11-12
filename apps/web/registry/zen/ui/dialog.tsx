@@ -5,14 +5,47 @@ import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';
 import { IconX } from '@tabler/icons-react';
 import { cn } from 'cn';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
+
+const DialogOpen = createOverlayPresence();
 
 export const DialogCreateHandle: typeof DialogPrimitive.createHandle =
   DialogPrimitive.createHandle;
 
-export const Dialog: typeof DialogPrimitive.Root = DialogPrimitive.Root;
+/** Resolve a Dialog's open state so its popup can exit before unmounting. */
+export function Dialog<Payload = unknown>({
+  children,
+  defaultOpen,
+  onOpenChange,
+  open,
+  ...props
+}: DialogPrimitive.Root.Props<Payload>): React.ReactElement {
+  const dialog = useControllableOpen<DialogPrimitive.Root.ChangeEventDetails>({
+    defaultOpen,
+    onOpenChange,
+    open,
+  });
+
+  return (
+    <DialogOpen.Provider value={dialog.open}>
+      <DialogPrimitive.Root
+        onOpenChange={dialog.setOpen}
+        open={dialog.open}
+        {...props}
+      >
+        {children}
+      </DialogPrimitive.Root>
+    </DialogOpen.Provider>
+  );
+}
 
 export const DialogPortal: typeof DialogPrimitive.Portal =
   DialogPrimitive.Portal;
@@ -31,15 +64,28 @@ export function DialogClose(
 
 export function DialogBackdrop({
   className,
+  render,
   ...props
 }: DialogPrimitive.Backdrop.Props): React.ReactElement {
+  const transition = motionTokens.spring.smooth;
+
   return (
     <DialogPrimitive.Backdrop
       className={cn(
-        'fixed inset-0 z-50 bg-black/32 backdrop-blur-sm transition-opacity duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] data-ending-style:opacity-0 data-starting-style:opacity-0 supports-[-webkit-touch-callout:none]:absolute',
+        'fixed inset-0 z-50 bg-black/32 backdrop-blur-sm supports-[-webkit-touch-callout:none]:absolute',
         className
       )}
       data-slot='dialog-backdrop'
+      render={
+        render ?? (
+          <motion.div
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
+            transition={transition}
+          />
+        )
+      }
       {...props}
     />
   );
@@ -68,6 +114,7 @@ export function DialogPopup({
   bottomStickOnMobile = true,
   closeProps,
   portalProps,
+  render,
   ...props
 }: DialogPrimitive.Popup.Props & {
   showCloseButton?: boolean;
@@ -75,8 +122,13 @@ export function DialogPopup({
   closeProps?: DialogPrimitive.Close.Props;
   portalProps?: DialogPrimitive.Portal.Props;
 }): React.ReactElement {
-  return (
-    <DialogPortal {...portalProps}>
+  const presence = DialogOpen.usePresence();
+  const reduce = useReducedMotion();
+  const transition = motionTokens.spring.smooth;
+  const scale = reduce ? 1 : 0.98;
+
+  const popup = (
+    <DialogPortal keepMounted={presence.keepMounted} {...portalProps}>
       <DialogBackdrop />
       <DialogViewport
         className={cn(
@@ -86,12 +138,27 @@ export function DialogPopup({
       >
         <DialogPrimitive.Popup
           className={cn(
-            'motion-reduce:!translate-none motion-reduce:!transition-opacity relative row-start-2 flex max-h-full min-h-0 w-full min-w-0 max-w-lg origin-center flex-col rounded-2xl border bg-popover not-dark:bg-clip-padding text-popover-foreground opacity-[calc(1-var(--nested-dialogs))] shadow-lg/5 outline-none transition-[scale,opacity,translate] duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] will-change-transform before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-2xl)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] data-ending-style:opacity-0 data-starting-style:opacity-0 motion-reduce:scale-100 sm:scale-[calc(1-0.1*var(--nested-dialogs))] motion-safe:sm:data-ending-style:scale-98 motion-safe:sm:data-starting-style:scale-98 dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
+            'relative row-start-2 flex max-h-full min-h-0 w-full min-w-0 max-w-lg origin-center flex-col rounded-2xl border bg-popover not-dark:bg-clip-padding text-popover-foreground shadow-lg/5 outline-none transition-[scale,translate] duration-[var(--duration-fast,160ms)] ease-[var(--ease-standard,cubic-bezier(0.2,0,0,1))] will-change-transform before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-2xl)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] motion-reduce:scale-100 motion-reduce:transition-none sm:scale-[calc(1-0.1*var(--nested-dialogs))] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
             bottomStickOnMobile &&
               'max-sm:max-w-none max-sm:origin-bottom max-sm:rounded-none max-sm:border-x-0 max-sm:border-t max-sm:border-b-0 motion-safe:max-sm:data-ending-style:translate-y-4 motion-safe:max-sm:data-starting-style:translate-y-4 max-sm:before:hidden max-sm:before:rounded-none',
             className
           )}
           data-slot='dialog-popup'
+          render={
+            render ??
+            ((elementProps, state) => (
+              <motion.div
+                {...(elementProps as HTMLMotionProps<'div'>)}
+                animate={{
+                  opacity: state.open && !state.nestedDialogOpen ? 1 : 0,
+                  scale: 1,
+                }}
+                exit={{ opacity: 0, scale }}
+                initial={{ opacity: 0, scale }}
+                transition={transition}
+              />
+            ))
+          }
           {...props}
         >
           {children}
@@ -110,6 +177,8 @@ export function DialogPopup({
       </DialogViewport>
     </DialogPortal>
   );
+
+  return presence.wrap(popup);
 }
 
 export function DialogHeader({

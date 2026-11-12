@@ -3,12 +3,49 @@
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete';
 import { IconSelector, IconX } from '@tabler/icons-react';
 import { cn } from 'cn';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
+import type { ReactElement } from 'react';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
 
-export const Autocomplete: typeof AutocompletePrimitive.Root =
-  AutocompletePrimitive.Root;
+const AutocompleteOpen = createOverlayPresence();
+
+/** Resolve an Autocomplete's open state so its popup can exit before unmounting. */
+export function Autocomplete<ItemValue>({
+  children,
+  defaultOpen,
+  onOpenChange,
+  open,
+  ...props
+}: AutocompletePrimitive.Root.Props<ItemValue>): ReactElement {
+  const autocomplete =
+    useControllableOpen<AutocompletePrimitive.Root.OpenChangeEventDetails>({
+      defaultOpen,
+      onOpenChange,
+      open,
+    });
+  const Root: (
+    rootProps: AutocompletePrimitive.Root.Props<ItemValue>
+  ) => ReactElement = AutocompletePrimitive.Root;
+
+  return (
+    <AutocompleteOpen.Provider value={autocomplete.open}>
+      <Root
+        onOpenChange={autocomplete.setOpen}
+        open={autocomplete.open}
+        {...props}
+      >
+        {children}
+      </Root>
+    </AutocompleteOpen.Provider>
+  );
+}
 
 export function AutocompleteInput({
   className,
@@ -99,6 +136,7 @@ export function AutocompletePopup({
   align = 'start',
   anchor,
   portalProps,
+  render,
   ...props
 }: AutocompletePrimitive.Popup.Props & {
   align?: AutocompletePrimitive.Positioner.Props['align'];
@@ -108,8 +146,16 @@ export function AutocompletePopup({
   anchor?: AutocompletePrimitive.Positioner.Props['anchor'];
   portalProps?: AutocompletePrimitive.Portal.Props;
 }): React.ReactElement {
-  return (
-    <AutocompletePrimitive.Portal {...portalProps}>
+  const presence = AutocompleteOpen.usePresence();
+  const reduce = useReducedMotion();
+  const transition = motionTokens.spring.snappy;
+  const scale = reduce ? 1 : 0.98;
+
+  const popup = (
+    <AutocompletePrimitive.Portal
+      keepMounted={presence.keepMounted}
+      {...portalProps}
+    >
       <AutocompletePrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -119,15 +165,28 @@ export function AutocompletePopup({
         side={side}
         sideOffset={sideOffset}
       >
-        <span
-          className={cn(
-            'motion-reduce:!transition-opacity relative flex max-h-full min-w-(--anchor-width) max-w-(--available-width) origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding shadow-lg/5 transition-[scale,opacity] duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] has-data-[ending-style]:opacity-0 has-data-[starting-style]:opacity-0 motion-safe:has-data-[ending-style]:scale-98 motion-safe:has-data-[starting-style]:scale-98 motion-reduce:scale-100 dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
-            className
-          )}
-        >
+        <span className='relative flex max-h-full min-w-(--anchor-width) max-w-(--available-width)'>
           <AutocompletePrimitive.Popup
-            className='motion-reduce:!transition-opacity flex max-h-[min(var(--available-height),23rem)] flex-1 flex-col text-foreground transition-opacity duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] data-ending-style:opacity-0 data-starting-style:opacity-0'
+            className={cn(
+              'relative flex max-h-[min(var(--available-height),23rem)] flex-1 origin-(--transform-origin) flex-col rounded-lg border bg-popover not-dark:bg-clip-padding text-foreground shadow-lg/5 before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
+              className
+            )}
             data-slot='autocomplete-popup'
+            render={
+              render ??
+              ((elementProps, state) => (
+                <motion.div
+                  {...(elementProps as HTMLMotionProps<'div'>)}
+                  animate={{
+                    opacity: state.open ? 1 : 0,
+                    scale: 1,
+                  }}
+                  exit={{ opacity: 0, scale }}
+                  initial={{ opacity: 0, scale }}
+                  transition={transition}
+                />
+              ))
+            }
             {...props}
           >
             {children}
@@ -136,6 +195,8 @@ export function AutocompletePopup({
       </AutocompletePrimitive.Positioner>
     </AutocompletePrimitive.Portal>
   );
+
+  return presence.wrap(popup);
 }
 
 export function AutocompleteItem({

@@ -5,11 +5,44 @@ import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';
 import { IconX } from '@tabler/icons-react';
 import { cn } from 'cn';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
 
-export const Sheet: typeof SheetPrimitive.Root = SheetPrimitive.Root;
+const SheetOpen = createOverlayPresence();
+
+/** Resolve a Sheet's open state so its popup can exit before unmounting. */
+export function Sheet<Payload = unknown>({
+  children,
+  defaultOpen,
+  onOpenChange,
+  open,
+  ...props
+}: SheetPrimitive.Root.Props<Payload>): React.ReactElement {
+  const sheet = useControllableOpen<SheetPrimitive.Root.ChangeEventDetails>({
+    defaultOpen,
+    onOpenChange,
+    open,
+  });
+
+  return (
+    <SheetOpen.Provider value={sheet.open}>
+      <SheetPrimitive.Root
+        onOpenChange={sheet.setOpen}
+        open={sheet.open}
+        {...props}
+      >
+        {children}
+      </SheetPrimitive.Root>
+    </SheetOpen.Provider>
+  );
+}
 
 export const SheetPortal: typeof SheetPrimitive.Portal = SheetPrimitive.Portal;
 
@@ -27,15 +60,28 @@ export function SheetClose(
 
 export function SheetBackdrop({
   className,
+  render,
   ...props
 }: SheetPrimitive.Backdrop.Props): React.ReactElement {
+  const transition = motionTokens.spring.smooth;
+
   return (
     <SheetPrimitive.Backdrop
       className={cn(
-        'fixed inset-0 z-50 bg-black/32 backdrop-blur-sm transition-opacity duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] data-ending-style:opacity-0 data-starting-style:opacity-0 supports-[-webkit-touch-callout:none]:absolute',
+        'fixed inset-0 z-50 bg-black/32 backdrop-blur-sm supports-[-webkit-touch-callout:none]:absolute',
         className
       )}
       data-slot='sheet-backdrop'
+      render={
+        render ?? (
+          <motion.div
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
+            transition={transition}
+          />
+        )
+      }
       {...props}
     />
   );
@@ -67,6 +113,23 @@ export function SheetViewport({
   );
 }
 
+/** The offset a Sheet enters and exits from, along the edge it opens at. */
+const edgeOffset = (
+  side: 'right' | 'left' | 'top' | 'bottom',
+  distance: number
+) => {
+  switch (side) {
+    case 'left':
+      return { x: -distance, y: 0 };
+    case 'top':
+      return { x: 0, y: -distance };
+    case 'bottom':
+      return { x: 0, y: distance };
+    default:
+      return { x: distance, y: 0 };
+  }
+};
+
 export function SheetPopup({
   className,
   children,
@@ -75,6 +138,7 @@ export function SheetPopup({
   variant = 'default',
   closeProps,
   portalProps,
+  render,
   ...props
 }: SheetPrimitive.Popup.Props & {
   showCloseButton?: boolean;
@@ -83,26 +147,41 @@ export function SheetPopup({
   closeProps?: SheetPrimitive.Close.Props;
   portalProps?: SheetPrimitive.Portal.Props;
 }): React.ReactElement {
-  return (
-    <SheetPortal {...portalProps}>
+  const presence = SheetOpen.usePresence();
+  const reduce = useReducedMotion();
+  const transition = motionTokens.spring.smooth;
+  const offset = edgeOffset(side, reduce ? 0 : 32);
+
+  const popup = (
+    <SheetPortal keepMounted={presence.keepMounted} {...portalProps}>
       <SheetBackdrop />
       <SheetViewport side={side} variant={variant}>
         <SheetPrimitive.Popup
           className={cn(
-            'motion-reduce:!transition-opacity relative flex max-h-full min-h-0 w-full min-w-0 flex-col bg-popover not-dark:bg-clip-padding text-popover-foreground shadow-lg/5 transition-[opacity,translate] duration-[var(--motion-overlay-duration,180ms)] ease-[var(--motion-overlay-easing,cubic-bezier(0.2,0,0,1))] will-change-transform before:pointer-events-none before:absolute before:inset-0 before:shadow-[0_1px_--theme(--color-black/4%)] data-ending-style:opacity-0 data-starting-style:opacity-0 max-sm:before:hidden dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
-            side === 'bottom' &&
-              'row-start-2 border-t motion-safe:data-ending-style:translate-y-8 motion-safe:data-starting-style:translate-y-8',
-            side === 'top' &&
-              'border-b motion-safe:data-ending-style:-translate-y-8 motion-safe:data-starting-style:-translate-y-8',
+            'relative flex max-h-full min-h-0 w-full min-w-0 flex-col bg-popover not-dark:bg-clip-padding text-popover-foreground shadow-lg/5 will-change-transform before:pointer-events-none before:absolute before:inset-0 before:shadow-[0_1px_--theme(--color-black/4%)] max-sm:before:hidden dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
+            side === 'bottom' && 'row-start-2 border-t',
+            side === 'top' && 'border-b',
             side === 'left' &&
-              'w-[calc(100%-(--spacing(12)))] max-w-md border-e motion-safe:data-ending-style:-translate-x-8 motion-safe:data-starting-style:-translate-x-8',
+              'w-[calc(100%-(--spacing(12)))] max-w-md border-e',
             side === 'right' &&
-              'col-start-2 w-[calc(100%-(--spacing(12)))] max-w-md border-s motion-safe:data-ending-style:translate-x-8 motion-safe:data-starting-style:translate-x-8',
+              'col-start-2 w-[calc(100%-(--spacing(12)))] max-w-md border-s',
             variant === 'inset' &&
               'before:hidden sm:rounded-2xl sm:border sm:before:rounded-[calc(var(--radius-2xl)-1px)] sm:**:data-[slot=sheet-footer]:rounded-b-[calc(var(--radius-2xl)-1px)]',
             className
           )}
           data-slot='sheet-popup'
+          render={
+            render ??
+            ((elementProps, state) => (
+              <motion.div
+                {...(elementProps as HTMLMotionProps<'div'>)}
+                animate={{ opacity: state.open ? 1 : 0, x: 0, y: 0 }}
+                exit={{ opacity: 0, ...offset }}
+                initial={{ opacity: 0, ...offset }}
+                transition={transition}
+              />
+            ))
+          }
           {...props}
         >
           {children}
@@ -121,6 +200,8 @@ export function SheetPopup({
       </SheetViewport>
     </SheetPortal>
   );
+
+  return presence.wrap(popup);
 }
 
 export function SheetHeader({

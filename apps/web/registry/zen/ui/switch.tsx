@@ -2,26 +2,73 @@
 
 import { Switch as SwitchPrimitive } from '@base-ui/react/switch';
 import { cn } from 'cn';
-import type React from 'react';
+import type { HTMLMotionProps } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
+import { useCallback, useState } from 'react';
+
+import {
+  motionTokens,
+  useKeyboardPress,
+  useMotionTransition,
+} from '@/lib/motion';
+
+/**
+ * The thumb's resting and travelling distance. The trailing `--switch-dir`
+ * mirrors it for a right-to-left layout without measuring the thumb.
+ */
+const restTravel = 'calc((0% - 0px) * var(--switch-dir, 1))';
+const checkedTravel = 'calc((100% - 4px) * var(--switch-dir, 1))';
 
 export function Switch({
   className,
   ...props
 }: SwitchPrimitive.Root.Props): React.ReactElement {
+  const reduce = useReducedMotion();
+  const transition = useMotionTransition('snappy');
+  const { press } = motionTokens;
+  const keyboard = useKeyboardPress();
+  const [tapped, setTapped] = useState(false);
+  const endTap = useCallback(() => setTapped(false), []);
+  const startTap = useCallback(() => setTapped(true), []);
+  const pressed = !reduce && (tapped || keyboard.pressed);
+
   return (
     <SwitchPrimitive.Root
       className={cn(
-        'inline-flex h-[calc(var(--thumb-size)+2px)] w-[calc(var(--thumb-size)*2-2px)] shrink-0 items-center rounded-full p-px outline-none transition-[background-color,box-shadow] duration-[var(--motion-state-duration,120ms)] ease-[var(--motion-state-easing,cubic-bezier(0.2,0,0,1))] [--thumb-size:--spacing(5)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background data-disabled:cursor-not-allowed data-checked:bg-primary data-unchecked:bg-input data-disabled:opacity-64 motion-reduce:transition-none sm:[--thumb-size:--spacing(4)]',
+        'inline-flex h-[calc(var(--thumb-size)+2px)] w-[calc(var(--thumb-size)*2-2px)] shrink-0 items-center rounded-full p-px outline-none transition-[background-color,box-shadow] duration-[var(--duration-fast,160ms)] ease-[var(--ease-standard,cubic-bezier(0.2,0,0,1))] [--switch-dir:1] [--thumb-size:--spacing(5)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background data-disabled:cursor-not-allowed data-checked:bg-primary data-unchecked:bg-input data-disabled:opacity-64 motion-reduce:transition-none sm:[--thumb-size:--spacing(4)] rtl:[--switch-dir:-1]',
         className
       )}
       data-slot='switch'
       {...props}
+      // biome-ignore lint/performance/noJsxPropsBind: Base UI's render prop receives the root state
+      render={(rootProps) => (
+        <motion.span
+          {...(rootProps as HTMLMotionProps<'span'>)}
+          {...keyboard.handlers}
+          onTap={endTap}
+          onTapCancel={endTap}
+          onTapStart={startTap}
+        />
+      )}
     >
       <SwitchPrimitive.Thumb
-        className={cn(
-          'pointer-events-none block aspect-square h-full origin-left in-[[role=switch]:active,[data-slot=label]:active,[data-slot=field-label]:active]:not-data-disabled:scale-x-110 in-[[role=switch]:active,[data-slot=label]:active,[data-slot=field-label]:active]:rounded-[var(--thumb-size)/calc(var(--thumb-size)*1.1)] rounded-(--thumb-size) bg-background shadow-sm/5 will-change-transform [transition:translate_var(--motion-state-duration,120ms)_var(--motion-state-easing,cubic-bezier(0.2,0,0,1)),border-radius_.1s,scale_.1s_.1s,transform-origin_.15s] data-checked:origin-[var(--thumb-size)_50%] data-checked:translate-x-[calc(var(--thumb-size)-4px)] motion-reduce:transition-none rtl:origin-right rtl:data-checked:origin-left rtl:data-checked:-translate-x-[calc(var(--thumb-size)-4px)]'
-        )}
+        className='pointer-events-none block aspect-square h-full origin-left rounded-(--thumb-size) bg-background shadow-sm/5 will-change-transform data-checked:origin-[var(--thumb-size)_50%] rtl:origin-right rtl:data-checked:origin-left'
         data-slot='switch-thumb'
+        // biome-ignore lint/performance/noJsxPropsBind: Base UI's render prop receives the thumb state
+        render={(thumbProps, state) => (
+          <motion.span
+            {...(thumbProps as HTMLMotionProps<'span'>)}
+            animate={{
+              scaleX: pressed && !state.disabled ? 1.1 : 1,
+              x: state.checked ? checkedTravel : restTravel,
+            }}
+            initial={false}
+            transition={{
+              scaleX: pressed ? press.down : press.up,
+              x: transition,
+            }}
+          />
+        )}
       />
     </SwitchPrimitive.Root>
   );

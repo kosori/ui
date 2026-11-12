@@ -1,3 +1,5 @@
 # Motion is a separate component responsibility
 
+> **Superseded by [ADR-0011](0011-motion-presets-and-two-engines.md).**
+
 `zen` keeps coss/ui as the source of Design and shadcn/ui as the source of Structure and compatibility, and adds Motion as a separate responsibility informed by Arc UI's [motion guidance](https://uiarc.dev/docs/motion). Zen will define shared motion tokens and principles, use CSS for simple transitions and Motion where spring behavior or interruption handling warrants it, and declare dependencies per registry item, following Arc's [per-component installation model](https://uiarc.dev/docs/installation). Motion must preserve the public API and visual Design, support keyboard, pointer and touch activation, honor reduced-motion preferences, skip high-frequency actions, and avoid moving popup trigger buttons in ways that can affect positioning. Start with button press feedback, then adapt functional state transitions component by component, using Arc's motion categories as defaults tuned for Zen.

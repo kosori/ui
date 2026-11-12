@@ -1,0 +1,111 @@
+---
+title: Motion
+description: What animates in zen, which engine runs it, and how to tune it.
+---
+
+Motion is the time-based feedback a component gives in response to interaction
+or a state change. `zen` runs it on two engines: the [`motion`
+package](https://motion.dev) for anything that springs, travels or has to be
+interrupted, and CSS for everything that only changes colour, shadow or
+position.
+
+## What animates
+
+| Surface | Engine | Preset |
+| --- | --- | --- |
+| Button, Toggle and Switch press | Motion | `press` |
+| Switch thumb travel | Motion | `snappy` |
+| Checkbox mark | Motion | `state` |
+| Slider thumb grab | Motion | `press` |
+| Accordion and Collapsible height | Motion | `smooth` |
+| Dialog, Sheet, Alert Dialog, Command | Motion | `smooth` |
+| Popover, menus, Select, Combobox, Autocomplete, Navigation Menu | Motion | `snappy` |
+| Tooltip and Preview Card | Motion | `snappy` |
+| Tabs highlight | Motion | `snappy` |
+| Toast and Drawer | CSS | — |
+| Sidebar collapse | CSS | — |
+| Progress and Meter | CSS | — |
+| Colour, shadow, border, hover, focus | CSS | — |
+
+Toast and Drawer stay on CSS on purpose. Both run on Base UI's per-frame swipe
+and stack variables — `--toast-index`, `--drawer-swipe-progress`,
+`--drawer-swipe-strength` — and moving them to Motion would mean reimplementing
+that math in JavaScript. Sidebar animates `width` and `margin`, where a spring
+would distort the content inside it. Progress and Meter change on every value
+update, and an animation repeated that often stops reading as feedback.
+
+## Presets
+
+Springs and the short tweens ship in `lib/motion.ts`. Every install of a
+component that needs Motion writes that file, and it is yours to edit.
+
+| Preset | Values | Used for |
+| --- | --- | --- |
+| `snappy` | `visualDuration: 0.26`, `bounce: 0` | Toggles, thumbs, small indicators and the Tabs highlight |
+| `smooth` | `visualDuration: 0.4`, `bounce: 0` | Panels, height changes, dialogs, sheets |
+| `morph` | `visualDuration: 0.42`, `bounce: 0` | Available for shared highlights and widths that follow content; no zen component selects it yet |
+| `responsive` | `stiffness: 520`, `damping: 44` | Available for direct manipulation that tracks the pointer; no zen component selects it yet |
+| `gentle` | `stiffness: 340`, `damping: 34` | Available for larger layout changes; no zen component selects it yet |
+
+Press feedback is a scale, not a spring: `motionTokens.pressScale` defaults to
+`0.97`, pressed in 100ms and released in 160ms by `motionTokens.press`. A click
+is shorter than a spring, so the press and its release use short tweens instead
+of the `snappy` preset; a spring there leaves the button still shrinking when
+the click ends. The Switch thumb's stretch and the Slider thumb's grab use the
+same tween, so they track the pointer instead of growing after it has moved.
+
+A state change that has to land with the click is a tween too:
+`motionTokens.state` completes the Checkbox mark's pop in 120ms, so the mark is
+whole by the time the click ends while its colour changes on the same click.
+
+```tsx
+import { motion } from 'motion/react';
+import { useMotionTransition } from '@/lib/motion';
+
+export function Thumb({ on }: { on: boolean }) {
+  const transition = useMotionTransition('snappy');
+
+  return <motion.span animate={{ x: on ? 20 : 0 }} transition={transition} />;
+}
+```
+
+## Easing and duration
+
+CSS transitions use the Style's Tokens, so a Theme change moves them with
+everything else.
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| `--ease-standard` | `cubic-bezier(0.2, 0, 0, 1)` | Default for UI transitions |
+| `--ease-enter` | `cubic-bezier(0.2, 0, 0, 1)` | Elements arriving on screen |
+| `--ease-spring` | `cubic-bezier(0.32, 0.72, 0, 1)` | A gentle settle, used by the Drawer |
+| `--duration-fast` | `160ms` | Hover, colour, small state and Progress/Meter changes |
+| `--duration-standard` | `240ms` | The accordion indicator, a Drawer opened or closed by click, and the Sidebar collapse |
+| `--duration-considered` | `480ms` | The Toast and other deliberate reveals |
+| `--duration-drawer` | `450ms` | The Drawer's swipe settle |
+
+A timing value belongs to one engine. Springs are never mirrored as CSS
+variables, and easing is never duplicated in `lib/motion.ts`.
+
+## Reduced motion
+
+Every component reads the preference itself through Motion's
+`useReducedMotion()`. `useMotionTransition()` wraps it and collapses a spring
+preset to an instant change; overlays read the preference directly so they can
+drop their scale and travel while keeping the fade. There is no provider to
+mount and no change to your layout — installing a component is the whole setup.
+
+Under reduced motion the end state, focus and feedback are kept and travel is
+removed:
+
+- Presses and toggles jump to their end state; colour feedback still runs.
+- The Switch thumb and the Checkbox mark keep their end state without travel
+  or scale, and the Slider thumb keeps tracking the pointer without scaling.
+- Expandables snap open and closed.
+- Dialogs, sheets and popups fade on opacity alone, with no scale and no travel.
+
+## Editing
+
+`lib/motion.ts` and the Tokens are copied source, like every kosori component.
+Tune a preset once and every component that references it follows. Nothing in
+the library reads your animation configuration from anywhere else.

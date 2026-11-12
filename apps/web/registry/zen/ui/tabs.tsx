@@ -3,7 +3,21 @@
 import { Tabs as TabsPrimitive } from '@base-ui/react/tabs';
 import { cva } from 'class-variance-authority';
 import { cn } from 'cn';
-import { type Context, createContext, useContext } from 'react';
+import {
+  animate,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+} from 'motion/react';
+import {
+  type Context,
+  createContext,
+  useContext,
+  useLayoutEffect,
+  useRef,
+} from 'react';
+
+import { useMotionTransition } from '@/lib/motion';
 import {
   type SegmentedControlSize,
   segmentedControlIndicatorSurfaceClassName,
@@ -36,6 +50,133 @@ export const tabsListVariants = cva(
 
 const TabsListContext: Context<TabsSize> = createContext<TabsSize>('default');
 
+/** The offset of the active item from the list's unscrolled padding box. */
+const activeItemOffset = (list: HTMLElement, tab: HTMLElement) => {
+  const listRect = list.getBoundingClientRect();
+  const tabRect = tab.getBoundingClientRect();
+
+  return {
+    height: tabRect.height,
+    left: tabRect.left - listRect.left + list.scrollLeft - list.clientLeft,
+    top: tabRect.top - listRect.top + list.scrollTop - list.clientTop,
+    width: tabRect.width,
+  };
+};
+
+type TabsIndicatorProps = React.ComponentProps<typeof motion.span> & {
+  underline: boolean;
+};
+
+/**
+ * Keep one highlight aligned with the measured active tab, springing it to the
+ * new offset whenever the selection or the layout changes.
+ */
+function TabsIndicator({
+  className,
+  underline,
+  style,
+  ...props
+}: TabsIndicatorProps): React.ReactElement {
+  const transition = useMotionTransition('snappy');
+  const reduce = useReducedMotion();
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const width = useMotionValue(0);
+  const height = useMotionValue(0);
+  const elementRef = useRef<HTMLSpanElement>(null);
+  const measurement = useRef<{ settled: boolean }>({ settled: false });
+  const latest = useRef({ reduce, transition });
+
+  useLayoutEffect(() => {
+    latest.current = { reduce, transition };
+  });
+
+  useLayoutEffect(() => {
+    const element = elementRef.current;
+    const list = element?.parentElement;
+    if (!(element && list)) {
+      return;
+    }
+
+    const measure = () => {
+      const tab = list.querySelector<HTMLElement>(
+        '[data-slot="tabs-tab"][aria-selected="true"]'
+      );
+      if (!tab) {
+        return;
+      }
+
+      const offset = activeItemOffset(list, tab);
+      const vertical =
+        element
+          .closest('[data-slot="tabs"]')
+          ?.getAttribute('data-orientation') === 'vertical';
+      const targets = underline
+        ? vertical
+          ? {
+              height: offset.height,
+              width: 2,
+              x: offset.left - 1,
+              y: offset.top,
+            }
+          : {
+              height: 2,
+              width: offset.width,
+              x: offset.left,
+              y: offset.top + offset.height - 1,
+            }
+        : {
+            height: offset.height,
+            width: offset.width,
+            x: offset.left,
+            y: offset.top,
+          };
+      const apply = (value: typeof x, target: number) => {
+        if (!measurement.current.settled || latest.current.reduce) {
+          value.set(target);
+          return;
+        }
+
+        animate(value, target, latest.current.transition);
+      };
+
+      apply(x, targets.x);
+      apply(y, targets.y);
+      apply(width, targets.width);
+      apply(height, targets.height);
+      measurement.current.settled = true;
+    };
+
+    measure();
+
+    const resize = new ResizeObserver(measure);
+    resize.observe(list);
+
+    const mutations = new MutationObserver(measure);
+    mutations.observe(list, {
+      attributeFilter: ['aria-selected'],
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      resize.disconnect();
+      mutations.disconnect();
+    };
+  }, [height, underline, width, x, y]);
+
+  return (
+    <motion.span
+      {...props}
+      className={className}
+      hidden={undefined}
+      ref={elementRef}
+      style={{ ...style, height, width, x, y }}
+    />
+  );
+}
+
 export function Tabs({
   className,
   ...props
@@ -62,6 +203,8 @@ export function TabsList({
   size?: TabsSize;
   variant?: TabsVariant;
 }): React.ReactElement {
+  const underline = variant === 'underline' || variant === 'line';
+
   return (
     <TabsPrimitive.List
       className={cn(tabsListVariants({ variant }), className)}
@@ -75,11 +218,12 @@ export function TabsList({
       <TabsPrimitive.Indicator
         className={cn(
           tabsIndicatorClassName,
-          variant === 'underline' || variant === 'line'
-            ? 'z-10 bg-primary data-[orientation=horizontal]:h-0.5 data-[orientation=vertical]:w-0.5 data-[orientation=vertical]:-translate-x-px data-[orientation=horizontal]:translate-y-px'
+          underline
+            ? 'z-10 bg-primary data-[orientation=horizontal]:h-0.5 data-[orientation=vertical]:w-0.5'
             : cn('-z-1', segmentedControlIndicatorSurfaceClassName)
         )}
         data-slot='tab-indicator'
+        render={<TabsIndicator underline={underline} />}
       />
     </TabsPrimitive.List>
   );

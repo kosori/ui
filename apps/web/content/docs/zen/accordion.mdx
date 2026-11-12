@@ -5,9 +5,10 @@ description: A set of collapsible panels with headings and content.
 
 Accordion wraps the
 [Base UI Accordion](https://base-ui.com/react/components/accordion) primitive,
-animates its panel height, and rotates a Tabler chevron as each item expands. It
-is a client component: it manages open state and exposes `AccordionPanel` as
-`AccordionContent`.
+springs its panel height open and closed on the `smooth` preset, and rotates a
+Tabler chevron as each item expands. Once a panel settles open it stops clipping,
+so nested content is not cut off. It is a client component: it manages open state
+and exposes `AccordionPanel` as `AccordionContent`.
 
 ## Installation
 

@@ -52,8 +52,27 @@ const NON_COMPONENT_PAGES = [
   'components',
   'index',
   'installation',
+  'motion',
   'theming',
 ];
+
+/**
+ * The motion Tokens the two-engine migration retired. One returning means a
+ * component or page still describes the CSS-only motion model.
+ */
+const RETIRED_MOTION_TOKENS = [
+  '--motion-drawer-duration',
+  '--motion-drawer-easing',
+  '--motion-expand-duration',
+  '--motion-expand-easing',
+  '--motion-overlay-duration',
+  '--motion-overlay-easing',
+  '--motion-press-duration',
+  '--motion-press-easing',
+  '--motion-press-scale',
+  '--motion-state-duration',
+  '--motion-state-easing',
+] as const;
 
 /**
  * The semantic state Tokens coss ships. State colour is independent of Base
@@ -1100,6 +1119,324 @@ test('the documentation stylesheet is generated from the neutral preset', async 
       `the docs stylesheet omits the --color-${token} mapping`
     ).toContain(`--color-${token}: var(--${token});`);
   }
+
+  for (const token of [
+    'ease-standard',
+    'ease-enter',
+    'ease-spring',
+    'duration-fast',
+    'duration-standard',
+    'duration-considered',
+  ]) {
+    expect(committed, `the docs stylesheet omits --${token}`).toContain(
+      `--${token}:`
+    );
+    expect(
+      committed,
+      `the docs stylesheet maps --${token} as a colour`
+    ).not.toContain(`--color-${token}:`);
+  }
+});
+
+test('the preset declares the shared easing and duration scale', () => {
+  const zenStyle = STYLES.find((style) => style.name === 'zen');
+  expect(zenStyle).toBeDefined();
+
+  const item = composeStyleItem(zenStyle ?? STYLES[0], 'neutral');
+  const scale = {
+    'duration-considered': '480ms',
+    'duration-drawer': '450ms',
+    'duration-fast': '160ms',
+    'duration-standard': '240ms',
+    'ease-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+    'ease-spring': 'cubic-bezier(0.32, 0.72, 0, 1)',
+    'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+  };
+
+  expect(item.cssVars?.light).toMatchObject(scale);
+  expect(item.cssVars?.dark).toMatchObject(scale);
+  for (const token of Object.keys(scale)) {
+    expect(
+      item.cssVars?.theme?.[`--color-${token}`],
+      `the preset maps --${token} as a colour`
+    ).toBeUndefined();
+  }
+});
+
+test('the motion library owns the motion package and only its importers depend on it', async () => {
+  const items = await readCatalog('zen');
+  const library = items.find((item) => item.name === 'motion');
+
+  expect(library, 'the motion library is in the Zen Registry').toBeDefined();
+  expect(library?.type).toBe('registry:lib');
+  expect(library?.dependencies).toEqual(['cn', 'motion']);
+  expect(library?.files).toEqual([
+    { path: 'registry/zen/lib/motion.ts', type: 'registry:lib' },
+  ]);
+
+  const sources = await Promise.all(
+    items.map(async (item) => ({
+      item,
+      source: (
+        await Promise.all(
+          item.files.map((file) => readFile(join(webDir, file.path), 'utf8'))
+        )
+      ).join('\n'),
+    }))
+  );
+
+  for (const { item, source } of sources) {
+    const importsLibrary = /from ['"]@\/lib\/motion['"]/.test(source);
+    const isLibrary = item.name === 'motion';
+
+    expect(
+      (item.dependencies ?? []).includes('motion'),
+      `${item.name} declares the motion package`
+    ).toBe(isLibrary);
+    expect(
+      (item.registryDependencies ?? []).includes('@kosori/motion'),
+      `${item.name} ${importsLibrary ? 'imports' : 'does not import'} the library`
+    ).toBe(importsLibrary && !isLibrary);
+  }
+
+  expect(
+    sources.filter(({ source }) => /from ['"]@\/lib\/motion['"]/.test(source))
+      .length,
+    'no Zen item runs on the motion library'
+  ).toBeGreaterThan(0);
+});
+
+test('no Registry item or docs page brings back a retired motion Token', async () => {
+  const items = await readCatalog('zen');
+  const docsDir = join(webDir, 'content/docs/zen');
+  const docsPages = (await readdir(docsDir)).filter((file) =>
+    file.endsWith('.mdx')
+  );
+
+  const sources = await Promise.all([
+    ...items.map(async (item) => ({
+      cssVars: item.cssVars,
+      label: item.name,
+      source: (
+        await Promise.all(
+          item.files.map((file) => readFile(join(webDir, file.path), 'utf8'))
+        )
+      ).join('\n'),
+    })),
+    ...docsPages.map(async (file) => ({
+      cssVars: undefined,
+      label: `content/docs/zen/${file}`,
+      source: await readFile(join(docsDir, file), 'utf8'),
+    })),
+  ]);
+
+  for (const { cssVars, label, source } of sources) {
+    expect(source, `${label} keeps a retired --motion-* Token`).not.toContain(
+      '--motion-'
+    );
+    for (const token of RETIRED_MOTION_TOKENS) {
+      expect(source, `${label} keeps the retired ${token}`).not.toContain(
+        token
+      );
+    }
+
+    expect(
+      Object.keys({
+        ...(cssVars?.dark ?? {}),
+        ...(cssVars?.light ?? {}),
+        ...(cssVars?.theme ?? {}),
+      }).filter((token) => token.replace(/^--/, '').startsWith('motion-')),
+      `${label} declares a retired motion Token`
+    ).toEqual([]);
+  }
+});
+
+test('the CSS-kept items read the shared timing Tokens', async () => {
+  const items = await readCatalog('zen');
+  const expectations: Record<
+    string,
+    { reads: string[]; tokens: Record<string, string> }
+  > = {
+    drawer: {
+      reads: [
+        'var(--duration-drawer,450ms)',
+        'var(--duration-standard,240ms)',
+        'var(--ease-spring,cubic-bezier(0.32,0.72,0,1))',
+      ],
+      tokens: {
+        'duration-drawer': '450ms',
+        'duration-standard': '240ms',
+        'ease-spring': 'cubic-bezier(0.32, 0.72, 0, 1)',
+      },
+    },
+    meter: {
+      reads: [
+        'var(--duration-fast,160ms)',
+        'var(--ease-standard,cubic-bezier(0.2,0,0,1))',
+      ],
+      tokens: {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+    progress: {
+      reads: [
+        'var(--duration-fast,160ms)',
+        'var(--ease-standard,cubic-bezier(0.2,0,0,1))',
+      ],
+      tokens: {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+    sidebar: {
+      reads: [
+        'var(--duration-standard,240ms)',
+        'var(--ease-standard,cubic-bezier(0.2,0,0,1))',
+      ],
+      tokens: {
+        'duration-standard': '240ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+    toast: {
+      reads: [
+        'var(--duration-considered,480ms)',
+        'var(--duration-fast,160ms)',
+        'var(--ease-enter,cubic-bezier(0.2,0,0,1))',
+        'var(--ease-standard,cubic-bezier(0.2,0,0,1))',
+      ],
+      tokens: {
+        'duration-considered': '480ms',
+        'duration-fast': '160ms',
+        'ease-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+  };
+
+  for (const name of Object.keys(expectations)) {
+    expect(
+      items.some((candidate) => candidate.name === name),
+      `${name} is present in the Zen Registry`
+    ).toBe(true);
+  }
+
+  const sources = await Promise.all(
+    Object.entries(expectations).map(async ([name, expectation]) => {
+      const item = items.find((candidate) => candidate.name === name);
+      const source = (
+        await Promise.all(
+          (item?.files ?? []).map((file) =>
+            readFile(join(webDir, file.path), 'utf8')
+          )
+        )
+      ).join('\n');
+
+      return { expectation, item, name, source };
+    })
+  );
+
+  for (const { expectation, item, name, source } of sources) {
+    expect(source, `${name} keeps an old motion Token`).not.toContain(
+      '--motion-'
+    );
+    for (const read of expectation.reads) {
+      expect(source, `${name} reads ${read}`).toContain(read);
+    }
+
+    for (const scheme of ['light', 'dark'] as const) {
+      const declared = item?.cssVars?.[scheme] as
+        | Record<string, string>
+        | undefined;
+      expect(declared, `${name} ${scheme} timing Tokens`).toMatchObject(
+        expectation.tokens
+      );
+      expect(
+        Object.keys(declared ?? {}).filter((token) =>
+          token.startsWith('motion-')
+        ),
+        `${name} declares stale motion Tokens in ${scheme}`
+      ).toEqual([]);
+    }
+  }
+});
+
+test('the Toast runs one timing across its root, content and anchored popups', async () => {
+  const items = await readCatalog('zen');
+  const item = items.find((candidate) => candidate.name === 'toast');
+  const source = (
+    await Promise.all(
+      (item?.files ?? []).map((file) =>
+        readFile(join(webDir, file.path), 'utf8')
+      )
+    )
+  ).join('\n');
+
+  expect(source, 'the toast content fades on the root duration').toContain(
+    'transition-opacity duration-[var(--duration-considered,480ms)]'
+  );
+  expect(source, 'the anchored toast fades on the root duration').toMatch(
+    /transition-\[scale,opacity\] duration-\[var\(--duration-considered,480ms\)\]/
+  );
+  expect(source, 'the toast content keeps a shorter duration').not.toContain(
+    'var(--duration-standard,240ms)'
+  );
+});
+
+test('the stateful controls own their state motion through the library', async () => {
+  const items = await readCatalog('zen');
+  const sources = new Map(
+    await Promise.all(
+      items.map(async (item) => [
+        item.name,
+        (
+          await Promise.all(
+            item.files.map((file) => readFile(join(webDir, file.path), 'utf8'))
+          )
+        ).join('\n'),
+      ])
+    )
+  );
+
+  for (const name of ['checkbox', 'slider', 'switch']) {
+    const item = items.find((registryItem) => registryItem.name === name);
+    const source = sources.get(name) ?? '';
+
+    expect(source, `${name} imports the motion library`).toMatch(
+      /from ['"]@\/lib\/motion['"]/
+    );
+    expect(
+      item?.registryDependencies ?? [],
+      `${name} depends on the motion library`
+    ).toContain('@kosori/motion');
+    expect(
+      item?.dependencies ?? [],
+      `${name} does not declare the motion package`
+    ).not.toContain('motion');
+    expect(
+      JSON.stringify(item?.cssVars ?? {}),
+      `${name} declares no motion Tokens`
+    ).not.toContain('motion-');
+    if (name === 'switch') {
+      expect(item?.cssVars?.light, 'switch light Tokens').toMatchObject({
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      });
+      expect(item?.cssVars?.dark, 'switch dark Tokens').toMatchObject({
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      });
+    } else {
+      expect(item?.cssVars, `${name} declares no Tokens`).toBeUndefined();
+    }
+    expect(source, `${name} keeps no CSS travel`).not.toMatch(
+      /transition[^\s'"]*translate|translate-x-|\[transition:translate/
+    );
+    expect(source, `${name} keeps no CSS state scale`).not.toMatch(
+      /data-(?:checked|dragging):scale-|scale-90/
+    );
+  }
 });
 
 // biome-ignore format: the shared timeout keeps this declaration on one line
@@ -1118,57 +1455,76 @@ test('installing state-coloured items without the preset compiles their utilitie
 
     const registryItems = await readCatalog('zen');
     const motionTokensByItem = {
+      accordion: {
+        'duration-standard': '240ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
       'alert-dialog': {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       autocomplete: {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+      button: {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       combobox: {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
-      'context-menu': {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+      dialog: {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       drawer: {
-        'motion-drawer-duration': '450ms',
-        'motion-drawer-easing': 'cubic-bezier(0.32, 0.72, 0, 1)',
+        'duration-drawer': '450ms',
+        'duration-standard': '240ms',
+        'ease-spring': 'cubic-bezier(0.32, 0.72, 0, 1)',
       },
       'hover-card': {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       meter: {
-        'motion-state-duration': '120ms',
-        'motion-state-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       'navigation-menu': {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       progress: {
-        'motion-state-duration': '120ms',
-        'motion-state-easing': 'cubic-bezier(0.2, 0, 0, 1)',
-      },
-      select: {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       sheet: {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       sidebar: {
-        'motion-expand-duration': '200ms',
-        'motion-expand-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-standard': '240ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+      switch: {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+      toast: {
+        'duration-considered': '480ms',
+        'duration-fast': '160ms',
+        'ease-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+      toggle: {
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
       tooltip: {
-        'motion-overlay-duration': '180ms',
-        'motion-overlay-easing': 'cubic-bezier(0.2, 0, 0, 1)',
+        'duration-fast': '160ms',
+        'ease-standard': 'cubic-bezier(0.2, 0, 0, 1)',
       },
     } as const;
     for (const [name, tokens] of Object.entries(motionTokensByItem)) {
@@ -1234,33 +1590,48 @@ test('installing state-coloured items without the preset compiles their utilitie
     const cssPath = join(scratch, CSS_ENTRY);
     const css = await readFile(cssPath, 'utf8');
     const motionTokens = declarations(css, ':root');
-    expect(motionTokens, 'the installed Button press scale Token').toContain(
-      '--motion-press-scale: 0.97'
+    expect(motionTokens, 'the installed shared duration Token').toContain(
+      '--duration-fast: 160ms'
     );
-    expect(motionTokens, 'the installed Button press duration Token').toContain(
-      '--motion-press-duration: 120ms'
+    expect(motionTokens, 'the installed shared easing Token').toContain(
+      '--ease-standard: cubic-bezier(0.2, 0, 0, 1)'
     );
-    expect(motionTokens, 'the installed Button press easing Token').toContain(
-      '--motion-press-easing: cubic-bezier(0.2, 0, 0, 1)'
+    expect(motionTokens, 'the installed considered duration Token').toContain(
+      '--duration-considered: 480ms'
     );
-    expect(motionTokens, 'the installed expansion duration Token').toContain(
-      '--motion-expand-duration: 200ms'
+    expect(motionTokens, 'the installed standard duration Token').toContain(
+      '--duration-standard: 240ms'
     );
-    expect(motionTokens, 'the installed expansion easing Token').toContain(
-      '--motion-expand-easing: cubic-bezier(0.2, 0, 0, 1)'
+    expect(motionTokens, 'the installed Drawer duration Token').toContain(
+      '--duration-drawer: 450ms'
     );
-    expect(motionTokens, 'the installed overlay duration Token').toContain(
-      '--motion-overlay-duration: 180ms'
+    expect(motionTokens, 'the installed Drawer easing Token').toContain(
+      '--ease-spring: cubic-bezier(0.32, 0.72, 0, 1)'
     );
-    expect(motionTokens, 'the installed overlay easing Token').toContain(
-      '--motion-overlay-easing: cubic-bezier(0.2, 0, 0, 1)'
-    );
-    expect(motionTokens, 'the installed control state duration Token').toContain(
-      '--motion-state-duration: 120ms'
-    );
-    expect(motionTokens, 'the installed control state easing Token').toContain(
-      '--motion-state-easing: cubic-bezier(0.2, 0, 0, 1)'
-    );
+    expect(
+      motionTokens,
+      'the installed stylesheet still declares the Drawer motion Token'
+    ).not.toContain('--motion-drawer-');
+    expect(
+      motionTokens,
+      'the installed stylesheet still declares a press Token'
+    ).not.toContain('--motion-press-');
+    expect(
+      motionTokens,
+      'the installed stylesheet still declares an expansion Token'
+    ).not.toContain('--motion-expand-');
+    expect(
+      motionTokens,
+      'the installed stylesheet still declares the overlay motion Tokens'
+    ).not.toContain('--motion-overlay-');
+    expect(
+      motionTokens,
+      'the installed stylesheet declares no control state Token'
+    ).not.toContain('--motion-state-');
+    expect(
+      motionTokens,
+      'the installed stylesheet declares a retired motion Token'
+    ).not.toContain('--motion-');
     const theme = declarations(css, '@theme inline');
     for (const [token, value] of Object.entries(STATE_TOKENS.light)) {
       expect(declarations(css, ':root'), `partial light ${token}`).toContain(
@@ -1530,6 +1901,12 @@ export default Page;
         cliEnv
       );
       expect(add.exitCode, add.stdout + add.stderr).toBe(0);
+
+      // A new package dependency makes the CLI run its package manager, which
+      // replaces the harness's symlink with a separate dependency tree. Point
+      // it back at the workspace so Next and its CLI share one React instance.
+      await rm(join(scratch, 'node_modules'), { force: true, recursive: true });
+      await symlink(join(webDir, 'node_modules'), join(scratch, 'node_modules'));
 
       const manifest = await readFile(join(scratch, 'package.json'), 'utf8');
       expect(manifest, 'sonner is installed').not.toContain('sonner');
