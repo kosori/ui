@@ -37,11 +37,12 @@ const withoutTicks = (cell: string) => cell.replaceAll('`', '');
 /** The surfaces the Motion page must list as Motion-driven. */
 const MOTION_SURFACES = [
   'Accordion and Collapsible height',
-  'Button and Toggle press',
+  'Button, Toggle and Switch press',
+  'Checkbox mark',
   'Dialog, Sheet, Alert Dialog',
   'Popover, menus, Command, Select, Combobox, Autocomplete, Navigation Menu',
-  'Slider thumb',
-  'Switch thumb and Checkbox mark',
+  'Slider thumb grab',
+  'Switch thumb travel',
   'Tabs highlight',
   'Tooltip and Preview Card',
 ];
@@ -51,7 +52,11 @@ test('the Motion page names a shipped preset for every animated surface', async 
   const rows = tableAfter(page, 'What animates').filter(
     ([, engine]) => engine === 'Motion'
   );
-  const presets = new Set([...Object.keys(motionTokens.spring), 'press']);
+  const presets = new Set([
+    ...Object.keys(motionTokens.spring),
+    'press',
+    'state',
+  ]);
 
   expect(
     rows.map(([surface]) => surface).sort(),
@@ -121,6 +126,21 @@ test('the Motion page lists every preset with the values that ship', async () =>
   ).toContain(
     `\`motionTokens.pressScale\` defaults to \`${motionTokens.pressScale}\``
   );
+});
+
+test('the Motion page limits the state tween to a click', async () => {
+  const page = await readMotionPage();
+  const { state } = motionTokens;
+
+  expect(
+    state.duration,
+    'the state tween finishes inside a click'
+  ).toBeLessThanOrEqual(0.13);
+  expect(state.duration, 'the state tween still takes time').toBeGreaterThan(0);
+  expect(
+    page.replaceAll(/\s+/g, ' '),
+    'the page documents the state tween'
+  ).toContain('`motionTokens.state`');
 });
 
 test('the Motion page documents the CSS timing Tokens that ship', async () => {

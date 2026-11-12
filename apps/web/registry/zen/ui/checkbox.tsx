@@ -6,14 +6,14 @@ import type { HTMLMotionProps } from 'motion/react';
 import { motion, useReducedMotion } from 'motion/react';
 import type React from 'react';
 
-import { useMotionTransition } from '@/lib/motion';
+import { motionTokens } from '@/lib/motion';
 
 export function Checkbox({
   className,
   ...props
 }: CheckboxPrimitive.Root.Props): React.ReactElement {
   const reduce = useReducedMotion();
-  const transition = useMotionTransition('snappy');
+  const transition = motionTokens.state;
 
   return (
     <CheckboxPrimitive.Root

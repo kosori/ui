@@ -6,7 +6,7 @@ import type { HTMLMotionProps } from 'motion/react';
 import { motion, useReducedMotion } from 'motion/react';
 import { useMemo } from 'react';
 
-import { useMotionTransition } from '@/lib/motion';
+import { motionTokens } from '@/lib/motion';
 
 export function Slider({
   className,
@@ -20,7 +20,7 @@ export function Slider({
 }: SliderPrimitive.Root.Props &
   Pick<SliderPrimitive.Thumb.Props, 'getAriaLabel'>): React.ReactElement {
   const reduce = useReducedMotion();
-  const transition = useMotionTransition('responsive');
+  const { press } = motionTokens;
   const _values = useMemo(() => {
     if (value !== undefined) {
       return Array.isArray(value) ? value : [value];
@@ -69,7 +69,9 @@ export function Slider({
                     scale: reduce ? 1 : state.dragging ? 1.2 : 1,
                   }}
                   initial={false}
-                  transition={transition}
+                  transition={{
+                    scale: state.dragging ? press.down : press.up,
+                  }}
                 />
               )}
             />
