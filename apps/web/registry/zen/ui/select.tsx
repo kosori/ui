@@ -10,17 +10,15 @@ import {
 } from '@tabler/icons-react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from 'cn';
-import {
-  AnimatePresence,
-  type HTMLMotionProps,
-  motion,
-  useReducedMotion,
-} from 'motion/react';
+import { type HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import type * as React from 'react';
-import { createContext, useCallback, useContext, useState } from 'react';
-import { motionTokens, useControllableOpen } from '@/lib/motion';
+import {
+  createOverlayPresence,
+  motionTokens,
+  useControllableOpen,
+} from '@/lib/motion';
 
-const SelectOpenContext = createContext<boolean | null>(null);
+const SelectOpen = createOverlayPresence();
 
 /** Resolve a Select's open state so its popup can exit before hiding. */
 export function Select<Value, Multiple extends boolean | undefined = false>({
@@ -38,7 +36,7 @@ export function Select<Value, Multiple extends boolean | undefined = false>({
     });
 
   return (
-    <SelectOpenContext.Provider value={select.open}>
+    <SelectOpen.Provider value={select.open}>
       <SelectPrimitive.Root
         onOpenChange={select.setOpen}
         open={select.open}
@@ -46,7 +44,7 @@ export function Select<Value, Multiple extends boolean | undefined = false>({
       >
         {children}
       </SelectPrimitive.Root>
-    </SelectOpenContext.Provider>
+    </SelectOpen.Provider>
   );
 }
 
@@ -203,18 +201,10 @@ export function SelectPopup({
   alignItemWithTrigger?: SelectPrimitive.Positioner.Props['alignItemWithTrigger'];
   anchor?: SelectPrimitive.Positioner.Props['anchor'];
 }): React.ReactElement {
-  const controlledOpen = useContext(SelectOpenContext);
-  const open = controlledOpen ?? true;
-  const [mounted, setMounted] = useState(false);
+  const presence = SelectOpen.usePresence();
   const reduce = useReducedMotion();
   const transition = motionTokens.spring.snappy;
   const scale = reduce ? 1 : 0.98;
-
-  const positionerRef = useCallback((node: HTMLDivElement | null) => {
-    if (node) {
-      setMounted(true);
-    }
-  }, []);
 
   const popup = (
     <SelectPrimitive.Portal {...portalProps}>
@@ -225,7 +215,6 @@ export function SelectPopup({
         anchor={anchor}
         className='z-50 select-none'
         data-slot='select-positioner'
-        ref={positionerRef}
         side={side}
         sideOffset={sideOffset}
       >
@@ -234,23 +223,15 @@ export function SelectPopup({
           data-slot='select-popup'
           render={
             render ??
-            ((elementProps) =>
-              mounted ? (
-                <motion.div
-                  {...(elementProps as HTMLMotionProps<'div'>)}
-                  animate={{ opacity: open ? 1 : 0, scale: open ? 1 : scale }}
-                  initial={false}
-                  transition={transition}
-                />
-              ) : (
-                <motion.div
-                  {...(elementProps as HTMLMotionProps<'div'>)}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale }}
-                  initial={{ opacity: 0, scale }}
-                  transition={transition}
-                />
-              ))
+            ((elementProps, state) => (
+              <motion.div
+                {...(elementProps as HTMLMotionProps<'div'>)}
+                animate={{ opacity: state.open ? 1 : 0, scale: 1 }}
+                exit={{ opacity: 0, scale }}
+                initial={{ opacity: 0, scale }}
+                transition={transition}
+              />
+            ))
           }
           {...props}
         >
@@ -272,11 +253,7 @@ export function SelectPopup({
     </SelectPrimitive.Portal>
   );
 
-  if (controlledOpen === null) {
-    return popup;
-  }
-
-  return <AnimatePresence>{open || mounted ? popup : null}</AnimatePresence>;
+  return presence.wrap(popup);
 }
 
 export function SelectItem({

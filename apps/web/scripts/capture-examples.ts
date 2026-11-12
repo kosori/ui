@@ -1971,12 +1971,6 @@ const main = async () => {
             triggerBefore = await trigger.boundingBox();
           }
 
-          if (example === 'select') {
-            await popup.evaluate((element) => {
-              (element as HTMLElement).dataset.mountProbe = 'first';
-            });
-          }
-
           await watchPopupExit(page, `[data-slot="${popupSlot}"]`);
           await page.keyboard.press('Escape');
           if (example === 'command' && engine === 'motion') {
@@ -2014,19 +2008,7 @@ const main = async () => {
                 );
               }
             } else {
-              if (example === 'select') {
-                await popup.waitFor({ state: 'hidden' });
-                if (
-                  (await page.locator(`[data-slot="${popupSlot}"]`).count()) ===
-                  0
-                ) {
-                  throw new Error(
-                    `${example} unmounted after its first interaction`
-                  );
-                }
-              } else {
-                await popup.waitFor({ state: 'detached' });
-              }
+              await popup.waitFor({ state: 'detached' });
               const exit = await readPopupExit(page);
               if (!(exit.ending && exit.faded)) {
                 throw new Error(
@@ -2067,7 +2049,6 @@ const main = async () => {
                 const element = document.querySelector<HTMLElement>(selector);
                 return (
                   element !== null &&
-                  element.dataset.mountProbe === 'first' &&
                   Number.parseFloat(getComputedStyle(element).opacity) > 0.99
                 );
               },
@@ -2075,7 +2056,7 @@ const main = async () => {
               { timeout: 5000 }
             );
             await page.keyboard.press('Escape');
-            await popup.waitFor({ state: 'hidden' });
+            await popup.waitFor({ state: 'detached' });
           }
 
           if (keptMountedOverlay) {
